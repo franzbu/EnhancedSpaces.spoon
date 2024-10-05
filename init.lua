@@ -110,8 +110,6 @@ function Mellon:new(options)
   )
 
   --___________ mspaces ___________
-
-
   -- watchdogs
   filter = hs.window.filter --subscribe: when a new window (dis)appears, run refreshWindowsWS
   filter.default:subscribe(filter.windowNotOnScreen, function() refreshWinMSpaces() end)
@@ -128,7 +126,6 @@ function Mellon:new(options)
   keyboardTracker = hs.eventtap.new({ events.flagsChanged }, function(e)
     local flagsKeyboardTracker = eventToArray(e:getFlags())
     -- since on modifier release the flag is 'nil', prevModifier is used
-    print("======== flagsKeyboardTracker: " .. tostring(flagsKeyboardTracker))
     if modifiersEqual(flagsKeyboardTracker, modifierSwitchWin_MS_All) or modifiersEqual(prevModifier, modifierSwitchWin_MS_All) then
       cycleModCounter = cycleModCounter + 1
       if cycleModCounter % 2 == 0 then -- only when released (and not when pressed)
@@ -153,9 +150,7 @@ function Mellon:new(options)
   end)
   keyboardTracker:start()
 
-
-  --cycle through all windows, regardless of which WS they are on
-  ---[[ -- https://applehelpwriter.com/2018/01/14/how-to-add-a-window-switcher/
+  --cycle through all windows, regardless of which WS they are on (https://applehelpwriter.com/2018/01/14/how-to-add-a-window-switcher/)
   switcher = hs.window.switcher.new()   -- default windowfilter: only visible windows, all Spaces
   switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
   switcher.ui.thumbnailSize = 112
@@ -166,16 +161,14 @@ function Mellon:new(options)
   hs.hotkey.bind(modifierSwitchWin_MS_All, "tab", function()
     cycleAll = true
     switcher:nextWindow ()   --nextWindow()
-    --after release of modifierSwitchWin_MS_All, watchdog is called and does the rest
+    --after release of modifierSwitchWin_MS_All, watchdog initiates whatever needs to be done
   end)
   hs.hotkey.bind("alt-shift", "tab", function()
     cycleAll = true
     switcher:previous()
   end)
-  --]]
 
-
-  -- cycle through windows of current WS, ?todo: last focus first
+  -- cycle through windows of current WS, todo (maybe): last focus first
   local nextFMS = 1
   hs.hotkey.bind(modifierSwitchWin_MS_All, "escape", function()
     if nextFMS > #winMSpaces then nextFMS = 1 end
@@ -190,19 +183,14 @@ function Mellon:new(options)
     nextFMS = nextFMS + 1
   end)
 
-
-  --fb
   -- todo: cycle through windows of one app - in all mspaces
   hs.hotkey.bind(modifierSwitchWin_App_Ref, "tab", function()
-
   end)
-
 
   -- cycle through references of one window
   local nextFR = 1
   hs.hotkey.bind(modifierSwitchWin_App_Ref, "escape", function()
     pos = getWinMSpacesPos(hs.window.focusedWindow())
-
     nextFR = getNextSpaceNumber(currentSpace)
     while not winMSpaces[pos].mspace[nextFR] do
       if nextFR == amountSpaces then
@@ -215,33 +203,20 @@ function Mellon:new(options)
     winMSpaces[pos].win:focus()
   end)
 
-
   -- ___________ own spaces ___________
-
     -- menubar
   -- https://github.com/Hammerspoon/hammerspoon/issues/2878
   a = hs.menubar.new(true, "A"):setTitle("2")
-  a:setTooltip("Mellon - Space")
-  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "o", function()
-    a:setTitle(tostring('2'))
-  end)
-
-
-  --___________ own spaces ___________
+  a:setTooltip("Mellon")
 
   filter_all = hs.window.filter.new()
   winAll = filter_all:getWindows(hs.window.sortByFocused)
-  -- ?todo: hs.window.allWindows()
-  --winAll = hs.application.find("")
+  -- todo (maybe, problems with WhatsApp): hs.window.allWindows()
 
   --initialize winMSpaces
   winMSpaces = {}
-  refreshWinMSpaces()
+  --refreshWinMSpaces()
 
-
-
-
-  -- fb:
   --_________ reference/dereference windows to/from mspaces, goto mspaces _________
   -- reference
   for i = 1, amountSpaces do
@@ -253,7 +228,6 @@ function Mellon:new(options)
   hs.hotkey.bind(modifierReference, "0", function()
     derefWinMSpace()
   end)
-  --]]
 
   -- goto mspaces directly
   for i = 1, amountSpaces do
@@ -308,13 +282,11 @@ function Mellon:new(options)
   for i = 1, #winAll do
     if winAll[i]:topLeft().x > max.w - 30 then -- window in 'hiding spot'
       hs.timer.doAfter(0.01, function()
-        winAll[i]:setTopLeft(hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2))
+        winAll[i]:setTopLeft(hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2)) -- put window in middle of screen
       end)
 
     end
   end
-
-
 
   -- debug
   -- list all windows
@@ -323,21 +295,16 @@ function Mellon:new(options)
     for i, v in pairs(winAll) do
       print(i, v)
     end
-
-
     for i, v in pairs(winMSpaces) do
       print("_______winMSpaces_________")
       --print(i .. ": " .. "mspace " .. tostring(winMSpaces[i].mspace))
       print("id: " .. tostring(winMSpaces[i].win:application()))
-
       spaces = ""
       for j = 1, amountSpaces do
         spaces = spaces .. tostring(winMSpaces[i].mspace[j]) .. ", "
       end
-
       print("space: " .. spaces)
     end
-
     print("=====")
     print(hs.application.find("WhatsApp"))
   end)

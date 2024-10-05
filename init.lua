@@ -128,6 +128,7 @@ function Mellon:new(options)
   keyboardTracker = hs.eventtap.new({ events.flagsChanged }, function(e)
     local flagsKeyboardTracker = eventToArray(e:getFlags())
     -- since on modifier release the flag is 'nil', prevModifier is used
+    print("======== flagsKeyboardTracker: " .. tostring(flagsKeyboardTracker))
     if modifiersEqual(flagsKeyboardTracker, modifierSwitchWin_MS_All) or modifiersEqual(prevModifier, modifierSwitchWin_MS_All) then
       cycleModCounter = cycleModCounter + 1
       if cycleModCounter % 2 == 0 then -- only when released (and not when pressed)
@@ -300,7 +301,25 @@ function Mellon:new(options)
       moveToSpace(getNextSpaceNumber(currentSpace), currentSpace)
       currentSpace = getNextSpaceNumber(currentSpace)
       goToSpace(currentSpace)
-    end)
+  end)
+
+  -- recover stranded windows
+  local max = winAll[1]:screen():frame() -- max.x = 0; max.y = 0; max.w = screen width; max.h = screen height
+  for i = 1, #winAll do
+    print("___________ i ___________: " .. i)
+    print("winAll[i]: " .. tostring(winAll[i]:topLeft().x))
+    if winAll[i]:topLeft().x > max.w - 30 then
+      --fb
+      
+      hs.timer.doAfter(0.3, function()
+        --winAll[i]:move({ -500, -500 }, nil, false, 0)
+        winAll[i]:setTopLeft(hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2))
+      end)
+
+    end
+  end
+
+
 
   -- debug
   -- list all windows
@@ -958,6 +977,7 @@ end
 
 
 function modifiersEqual(a, b)
+  if a == nil or b == nil then return false end
   if #a ~= #b then 
     return false
   end 

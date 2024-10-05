@@ -34,12 +34,6 @@ local function getWindowUnderMouse()
   end)
 end
 
--- Usage:
---   resizer = Mellon:new({
---     modifier1 = { 'alt' },
---     modifier2 = { 'ctrl' },
---   })
-
 local function buttonNameToEventType(name, optionName)
   if name == 'left' then
     return hs.eventtap.event.types.leftMouseDown

@@ -4,7 +4,6 @@ local function scriptPath()
 end
 
 local Mellon = {}
-
 Mellon.author = "Franz B. <csaa6335@gmail.com>"
 Mellon.homepage = "https://github.com/franzbu/Mellon.spoon"
 Mellon.name = "Mellon"

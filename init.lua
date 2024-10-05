@@ -64,7 +64,7 @@ function Mellon:new(options)
   moveWindowPrevSpaceSwitch = options.moveWindowPrevSpaceSwitch or 'q'
   moveWindowNextSpaceSwitch = options.moveWindowNextSpaceSwitch or 'w'
   cycleModifier = options.cycleModifier or options.modifier1
-  currentSpace = options.currentSpace or 2
+  currentSpace = options.startSpace or 2
   amountSpaces = options.amountSpaces or 3
 
 
@@ -105,8 +105,6 @@ function Mellon:new(options)
   )
 
   --___________ mspaces ___________
-
-
   -- watchdogs
   filter = hs.window.filter --subscribe: when a new window (dis)appears, run refreshWindowsWS
   filter.default:subscribe(filter.windowNotOnScreen, function() refreshWinMSpaces() end)
@@ -140,7 +138,6 @@ function Mellon:new(options)
           end)
           cycleAll = false
         end
-
       end
     end
     prevModifier = flagsKeyboardTracker
@@ -149,7 +146,7 @@ function Mellon:new(options)
 
 
   --cycle through all windows, regardless of which WS they are on
-  ---[[ -- https://applehelpwriter.com/2018/01/14/how-to-add-a-window-switcher/
+  -- https://applehelpwriter.com/2018/01/14/how-to-add-a-window-switcher/
   switcher = hs.window.switcher.new()   -- default windowfilter: only visible windows, all Spaces
   switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
   switcher.ui.thumbnailSize = 112
@@ -166,10 +163,8 @@ function Mellon:new(options)
     cycleAll = true
     switcher:previous()
   end)
-  --]]
 
 
-  --fb
   -- todo: cycle through windows of one app - in all mspaces
   hs.hotkey.bind(cycleModifier, "l", function()
 
@@ -180,7 +175,6 @@ function Mellon:new(options)
   local nextFR = 1
   hs.hotkey.bind(cycleModifier, "escape", function()
     pos = getWinMSpacesPos(hs.window.focusedWindow())
-
     nextFR = getNextSpaceNumber(currentSpace)
     while not winMSpaces[pos].mspace[nextFR] do
       if nextFR == amountSpaces then
@@ -210,53 +204,32 @@ function Mellon:new(options)
   end)
 
 
-  -- ___________ own spaces ___________
-
-    -- menubar
-  -- https://github.com/Hammerspoon/hammerspoon/issues/2878
+  -- ___________ mspaces ___________
+  -- menubar (https://github.com/Hammerspoon/hammerspoon/issues/2878)
   a = hs.menubar.new(true, "A"):setTitle("2")
-  a:setTooltip("Mellon - Space")
-  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "o", function()
-    a:setTitle(tostring('2'))
-  end)
-
-
-  --___________ own spaces ___________
+  a:setTooltip("Mellon")
 
   filter_all = hs.window.filter.new()
   winAll = filter_all:getWindows(hs.window.sortByFocused)
-  -- ?todo: hs.window.allWindows()
-  --winAll = hs.application.find("")
+  -- hs.window.allWindows()
 
-  --initialize winMSpaces
   winMSpaces = {}
-  refreshWinMSpaces()
+  --refreshWinMSpaces()
 
   modRef = { 'shift', 'ctrl' }
   modDeref = { 'shift', 'ctrl', 'alt' }
   --modSwitchSpace = { 'shift', 'ctrl', 'alt', 'cmd' }
 
 
-  -- fb:
   --_________ reference/dereference windows to/from mspaces, goto mspaces _________
 
   -- reference
-  hs.hotkey.bind(modRef, "1", function()
-    refWinMSpace(1)
-  end)
-  hs.hotkey.bind(modRef, "2", function()
-    refWinMSpace(2)
-  end)
-  hs.hotkey.bind(modRef, "3", function()
-    refWinMSpace(3)
-  end)
-  hs.hotkey.bind(modRef, "4", function()
-    refWinMSpace(4)
-  end)
-  hs.hotkey.bind(modRef, "5", function()
-    refWinMSpace(5)
-  end)
-  
+  for i = 1, #amountSpaces do
+    hs.hotkey.bind(modRef, toString(i), function()
+      refWinMSpace(i)
+    end)
+  end
+
   -- de-reference
   hs.hotkey.bind(modRef, "0", function()
     derefWinMSpace()
@@ -1142,7 +1115,6 @@ function refreshWinMSpaces(w)
     -- subscribed filter for some reason takes a couple of seconds to trigger method
     --print("___correctXY_______")
     local max = w:screen():frame() 
-
     -- todo: find better way of detecting whether window has been moved manually or 'hidden' rather than 'fwin:topLeft().x < max.w - 100'
     if w:topLeft().x < max.w - 2 then   -- prevents subscriber-method to refresh coordinates of window that has just been 'hidden'
        winMSpaces[getWinMSpacesPos(w)].frame[currentSpace] = w:frame()
@@ -1162,6 +1134,7 @@ function refreshWinMSpaces(w)
 
 end
 
+
 function refWinMSpace(target) -- add 'copy' of window on current mspace to target mspace
   local fwin = hs.window.focusedWindow()
   max = fwin:screen():frame()
@@ -1176,9 +1149,7 @@ end
 function derefWinMSpace()
   local fwin = hs.window.focusedWindow()
   max = fwin:screen():frame()
-
   winMSpaces[getWinMSpacesPos(fwin)].mspace[currentSpace] = false
-
   -- in case all 'mspace' are 'false', close window
   local all_false = true
   for i = 1, #winMSpaces[getWinMSpacesPos(fwin)].mspace do
@@ -1189,10 +1160,8 @@ function derefWinMSpace()
   if all_false then
     fwin:minimize()
   end
-
   goToSpace(currentSpace) -- refresh
-
-
 end
+
 
 return Mellon

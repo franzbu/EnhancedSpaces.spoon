@@ -3,14 +3,13 @@ local function scriptPath()
   return str:match("(.*/)")
 end
 
-local WinHammer = {}
+local Mellon = {}
 
-WinHammer.author = "Franz B. <csaa6335@gmail.com>"
-WinHammer.homepage = "https://github.com/franzbu/WinHammer.spoon"
-WinHammer.winMSpaces = "MIT"
-WinHammer.name = "WinHammer"
-WinHammer.version = "0.9.2"
-WinHammer.spoonPath = scriptPath()
+Mellon.author = "Franz B. <csaa6335@gmail.com>"
+Mellon.homepage = "https://github.com/franzbu/Mellon.spoon"
+Mellon.name = "Mellon"
+Mellon.version = "0.1"
+Mellon.spoonPath = scriptPath()
 
 local dragTypes = {
   move = 1,
@@ -34,11 +33,6 @@ local function getWindowUnderMouse()
   end)
 end
 
--- Usage:
---   resizer = WinHammer:new({
---     modifier1 = { 'alt' },
---     modifier2 = { 'ctrl' },
---   })
 
 local function buttonNameToEventType(name, optionName)
   if name == 'left' then
@@ -50,8 +44,7 @@ local function buttonNameToEventType(name, optionName)
   error(optionName .. ': only "left" and "right" mouse button supported, got ' .. name)
 end
 
-function WinHammer:new(options)
-
+function Mellon:new(options)
   hs.window.animationDuration = 0
 
   options = options or {}
@@ -71,6 +64,8 @@ function WinHammer:new(options)
   moveWindowPrevSpaceSwitch = options.moveWindowPrevSpaceSwitch or 'q'
   moveWindowNextSpaceSwitch = options.moveWindowNextSpaceSwitch or 'w'
   cycleModifier = options.cycleModifier or options.modifier1
+  currentSpace = options.currentSpace or 2
+  amountSpaces = options.amountSpaces or 3
 
 
   local resizer = {
@@ -164,7 +159,7 @@ function WinHammer:new(options)
   switcher.ui.showSelectedTitle = false
   hs.hotkey.bind(cycleModifier, "tab", function()
     cycleAll = true
-    switcher:nextWindow()   --nextWindow()
+    switcher:nextWindow ()   --nextWindow()
     --after release of cycleModifier, watchdog is called and does the rest
   end)
   hs.hotkey.bind("alt-shift", "tab", function()
@@ -220,7 +215,7 @@ function WinHammer:new(options)
     -- menubar
   -- https://github.com/Hammerspoon/hammerspoon/issues/2878
   a = hs.menubar.new(true, "A"):setTitle("2")
-  a:setTooltip("WinHammer - Space")
+  a:setTooltip("Mellon - Space")
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "o", function()
     a:setTitle(tostring('2'))
   end)
@@ -232,9 +227,6 @@ function WinHammer:new(options)
   winAll = filter_all:getWindows(hs.window.sortByFocused)
   -- ?todo: hs.window.allWindows()
   --winAll = hs.application.find("")
-
-  currentSpace = 2
-  amountSpaces = 5
 
   --initialize winMSpaces
   winMSpaces = {}
@@ -349,7 +341,7 @@ function WinHammer:new(options)
 end
 
 
-function WinHammer:stop()
+function Mellon:stop()
   self.dragging = false
   self.dragType = nil
 
@@ -363,19 +355,19 @@ function WinHammer:stop()
 end
 
 
-function WinHammer:isResizing()
+function Mellon:isResizing()
   return self.dragType == dragTypes.resize
 end
 
 
-function WinHammer:isMoving()
+function Mellon:isMoving()
   return self.dragType == dragTypes.move
 end
 
 
 sumdx = 0
 sumdy = 0
-function WinHammer:handleDrag()
+function Mellon:handleDrag()
   return function(event)
     if not self.dragging then return nil end
     local currentSize = win:size() -- win:frame
@@ -471,7 +463,7 @@ function WinHammer:handleDrag()
 end
 
 
-function WinHammer:handleCancel()
+function Mellon:handleCancel()
   return function()
     if not self.dragging then return end
     self:doMagic()
@@ -480,7 +472,7 @@ function WinHammer:handleCancel()
 end
 
 
-function WinHammer:doMagic() -- automatic positioning and adjustments, for example, prevent window from moving/resizing beyond screen boundaries
+function Mellon:doMagic() -- automatic positioning and adjustments, for example, prevent window from moving/resizing beyond screen boundaries
   if not self.targetWindow then return end
 
   modifierDM = eventToArray(hs.eventtap.checkKeyboardModifiers()) -- modifiers (still) pressed after releasing mouse button
@@ -823,7 +815,7 @@ function WinHammer:doMagic() -- automatic positioning and adjustments, for examp
 end
 
 
-function WinHammer:handleClick()
+function Mellon:handleClick()
   return function(event)
     if self.dragging then return true end
     flags = eventToArray(event:getFlags())
@@ -1203,4 +1195,4 @@ function derefWinMSpace()
 
 end
 
-return WinHammer
+return Mellon

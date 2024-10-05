@@ -306,13 +306,8 @@ function Mellon:new(options)
   -- recover stranded windows
   local max = winAll[1]:screen():frame() -- max.x = 0; max.y = 0; max.w = screen width; max.h = screen height
   for i = 1, #winAll do
-    print("___________ i ___________: " .. i)
-    print("winAll[i]: " .. tostring(winAll[i]:topLeft().x))
-    if winAll[i]:topLeft().x > max.w - 30 then
-      --fb
-      
-      hs.timer.doAfter(0.3, function()
-        --winAll[i]:move({ -500, -500 }, nil, false, 0)
+    if winAll[i]:topLeft().x > max.w - 30 then -- window in 'hiding spot'
+      hs.timer.doAfter(0.01, function()
         winAll[i]:setTopLeft(hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2))
       end)
 

@@ -62,16 +62,16 @@ function Mellon:new(options)
   useResize = options.resize or false
 
   useMSpaces = options.useMSpaces or true
-  ratioSpaces = options.ratioSpaces or 0.8
-  amountSpaces = options. amountSpaces or 3
-  currentSpace = options.startSpace or 2
+  ratioSpaces = options.ratioMSpaces or 0.8
+  amountSpaces = options. amountMSpaces or 3
+  currentSpace = options.startMSpace or 2
   
-  prevSpace = options.prevSpace or 'a'
-  nextSpace = options.nextSpace or 's'
-  moveWindowPrevSpace = options.moveWindowPrevSpace or 'd'
-  moveWindowNextSpace = options.moveWindowNextSpace or 'f'
-  moveWindowPrevSpaceSwitch = options.moveWindowPrevSpaceSwitch or 'q'
-  moveWindowNextSpaceSwitch = options.moveWindowNextSpaceSwitch or 'w'
+  prevSpace = options.prevMSpace or 'a'
+  nextSpace = options.nextMSpace or 's'
+  moveWindowPrevSpace = options.moveWindowPrevMSpace or 'd'
+  moveWindowNextSpace = options.moveWindowNextMSpace or 'f'
+  moveWindowPrevSpaceSwitch = options.moveWindowPrevMSpaceSwitch or 'q'
+  moveWindowNextSpaceSwitch = options.moveWindowNextMSpaceSwitch or 'w'
 
   local resizer = {
     disabledApps = tableToMap(options.disabledApps or {}),

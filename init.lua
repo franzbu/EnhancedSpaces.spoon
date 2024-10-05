@@ -9,7 +9,7 @@ Mellon.author = "Franz B. <csaa6335@gmail.com>"
 Mellon.homepage = "https://github.com/franzbu/Mellon.spoon"
 Mellon.winMSpaces = "MIT"
 Mellon.name = "Mellon"
-Mellon.version = "0.9.2"
+Mellon.version = "0.1"
 Mellon.spoonPath = scriptPath()
 
 local dragTypes = {

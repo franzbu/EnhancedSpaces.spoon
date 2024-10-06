@@ -54,23 +54,24 @@ function Mellon:new(options)
   modifierSwitchWin = options.modifierSwitchWin or options.modifier1
   modifierSwitchMS = options.modifierSwitchMS or { 'shift', 'ctrl', 'alt', 'cmd' } -- { 'ctrl', 'shift' }
   modifierReference = options.modifierReference or { 'ctrl', 'shift' } -- { 'alt', 'ctrl', 'shift' } -- create references of windows on other mspaces
-  
+    
+  prevMSpace = options.prevMSpace or 'a'
+  nextMSpace = options.nextMSpace or 's'
+  moveWindowPrevMSpace = options.moveWindowPrevMSpace or 'd'
+  moveWindowNextMSpace = options.moveWindowNextMSpace or 'f'
+  moveWindowPrevMSpaceSwitch = options.moveWindowPrevMSpaceSwitch or 'q'
+  moveWindowNextMSpaceSwitch = options.moveWindowNextMSpaceSwitch or 'w'
+
   margin = options.margin or 0.3
   m = margin * 100 / 2
 
   useResize = options.resize or false
 
   useMSpaces = options.useMSpaces or true
-  ratioSpaces = options.ratioMSpaces or 0.8
+  ratioMSpaces = options.ratioMSpaces or 0.8
   mspaces = options.MSpaces or { '1', '2', '3' }
-  currentSpace = indexOf(options.MSpaces, options.startMSpace) or 2
-  
-  prevSpace = options.prevMSpace or 'a'
-  nextSpace = options.nextMSpace or 's'
-  moveWindowPrevSpace = options.moveWindowPrevMSpace or 'd'
-  moveWindowNextSpace = options.moveWindowNextMSpace or 'f'
-  moveWindowPrevSpaceSwitch = options.moveWindowPrevMSpaceSwitch or 'q'
-  moveWindowNextSpaceSwitch = options.moveWindowNextMSpaceSwitch or 'w'
+  currentMSpace = indexOf(options.MSpaces, options.startMSpace) or 2
+
 
   local resizer = {
     disabledApps = tableToMap(options.disabledApps or {}),
@@ -177,7 +178,7 @@ function Mellon:new(options)
   local nextFMS = 1
   hs.hotkey.bind(modifierSwitchWin, "tab", function()
     if nextFMS > #winMSpaces then nextFMS = 1 end
-    while not winMSpaces[nextFMS].mspace[currentSpace] do
+    while not winMSpaces[nextFMS].mspace[currentMSpace] do
       if nextFMS == #winMSpaces then
         nextFMS = 1
       else
@@ -193,7 +194,7 @@ function Mellon:new(options)
   local nextFR = 1
   hs.hotkey.bind(modifierSwitchWin, "escape", function()
     pos = getWinMSpacesPos(hs.window.focusedWindow())
-    nextFR = getNextSpaceNumber(currentSpace)
+    nextFR = getnextMSpaceNumber(currentMSpace)
     while not winMSpaces[pos].mspace[nextFR] do
       if nextFR == #mspaces then
         nextFR = 1
@@ -208,7 +209,7 @@ function Mellon:new(options)
   -- ___________ own spaces ___________
     -- menubar
   -- https://github.com/Hammerspoon/hammerspoon/issues/2878
-  menubar = hs.menubar.new(true, "A"):setTitle(mspaces[currentSpace])
+  menubar = hs.menubar.new(true, "A"):setTitle(mspaces[currentMSpace])
   menubar:setTooltip("Mellon")
 
   filter_all = hs.window.filter.new()
@@ -239,43 +240,43 @@ function Mellon:new(options)
 
 
   --_________ switching spaces / moving windows _________
-  hs.hotkey.bind(modifierSwitchMS, prevSpace, function() -- previous space (incl. cycle)
-    currentSpace = getPrevSpaceNumber(currentSpace)
-    goToSpace(currentSpace)
+  hs.hotkey.bind(modifierSwitchMS, prevMSpace, function() -- previous space (incl. cycle)
+    currentMSpace = getprevMSpaceNumber(currentMSpace)
+    goToSpace(currentMSpace)
   end)
 
 
-  hs.hotkey.bind(modifierSwitchMS, nextSpace, function() -- next space (incl. cycle)
-    currentSpace = getNextSpaceNumber(currentSpace)
-    goToSpace(currentSpace)
+  hs.hotkey.bind(modifierSwitchMS, nextMSpace, function() -- next space (incl. cycle)
+    currentMSpace = getnextMSpaceNumber(currentMSpace)
+    goToSpace(currentMSpace)
   end)
 
 
-  hs.hotkey.bind(modifierSwitchMS, moveWindowPrevSpace, function() -- move active window to previous space (incl. cycle)
+  hs.hotkey.bind(modifierSwitchMS, moveWindowPrevMSpace, function() -- move active window to previous space (incl. cycle)
     -- move window to prev space
-    moveToSpace(getPrevSpaceNumber(currentSpace), currentSpace)
+    moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace)
   end)
 
 
-  hs.hotkey.bind(modifierSwitchMS, moveWindowNextSpace, function() -- move active window to next space (incl. cycle)
+  hs.hotkey.bind(modifierSwitchMS, moveWindowNextMSpace, function() -- move active window to next space (incl. cycle)
     -- move window to next space
-    moveToSpace(getNextSpaceNumber(currentSpace), currentSpace)
+    moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace)
   end)
 
 
-  hs.hotkey.bind(modifierSwitchMS, moveWindowPrevSpaceSwitch, function() -- move active window to previous space and switch there (incl. cycle)
+  hs.hotkey.bind(modifierSwitchMS, moveWindowPrevMSpaceSwitch, function() -- move active window to previous space and switch there (incl. cycle)
     -- move window to prev space and switch there
-    moveToSpace(getPrevSpaceNumber(currentSpace), currentSpace)
-    currentSpace = getPrevSpaceNumber(currentSpace)
-    goToSpace(currentSpace)
+    moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace)
+    currentMSpace = getprevMSpaceNumber(currentMSpace)
+    goToSpace(currentMSpace)
   end)
 
 
-  hs.hotkey.bind(modifierSwitchMS, moveWindowNextSpaceSwitch, function() -- move active window to next space and switch there (incl. cycle)
+  hs.hotkey.bind(modifierSwitchMS, moveWindowNextMSpaceSwitch, function() -- move active window to next space and switch there (incl. cycle)
     -- move window to next space and switch there
-      moveToSpace(getNextSpaceNumber(currentSpace), currentSpace)
-      currentSpace = getNextSpaceNumber(currentSpace)
-      goToSpace(currentSpace)
+      moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace)
+      currentMSpace = getnextMSpaceNumber(currentMSpace)
+      goToSpace(currentMSpace)
   end)
 
   -- recover stranded windows
@@ -313,7 +314,7 @@ function Mellon:new(options)
     refreshWinMSpaces()
   end)
 
-  goToSpace(currentSpace) -- refresh
+  goToSpace(currentMSpace) -- refresh
   resizer.clickHandler:start()
   return resizer
 end
@@ -362,12 +363,12 @@ function Mellon:handleDrag()
       moveLeftAS = false -- these two variables are also needed in case AeroSpace is deactivated
       moveRightAS = false
       if useMSpaces then
-        if current.x + currentSize.w * ratioSpaces < 0 then -- left
+        if current.x + currentSize.w * ratioMSpaces < 0 then -- left
           for i = 1, #cv do
             cv[ i ]:hide() 
           end
           moveLeftAS = true
-        elseif current.x + currentSize.w > max.w + currentSize.w * ratioSpaces then -- right
+        elseif current.x + currentSize.w > max.w + currentSize.w * ratioMSpaces then -- right
           for i = 1, #cv do
             cv[ i ]:hide()
           end
@@ -380,7 +381,7 @@ function Mellon:handleDrag()
           moveRightAS = false
         end
       else
-        ratioSpaces = 1 -- if 'useMSpaces' is disabled, enable automatic snapping and resizing beyond 'ratioSpaces', i.e., for dragging windows as far as possible (= 1)
+        ratioMSpaces = 1 -- if 'useMSpaces' is disabled, enable automatic snapping and resizing beyond 'ratioMSpaces', i.e., for dragging windows as far as possible (= 1)
       end
       return true
     elseif self:isResizing() and useResize then
@@ -748,26 +749,26 @@ function Mellon:doMagic() -- automatic positioning and adjustments, for example,
   -- mspaces
   elseif useMSpaces and movedNotResized then
     if moveLeftAS then
-     moveToSpace(getPrevSpaceNumber(currentSpace), currentSpace)
+     moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace)
       hs.timer.doAfter(0.1, function()
-        goToSpace(currentSpace) -- refresh (otherwise window still visible in former mspace)
+        goToSpace(currentMSpace) -- refresh (otherwise window still visible in former mspace)
       end)
       if modifiersEqual(modifierDM, flags) then -- if modifier is still pressed, switch to where window has been moved
       
         hs.timer.doAfter(0.02, function()
-          currentSpace = getPrevSpaceNumber(currentSpace)
-          goToSpace(currentSpace)
+          currentMSpace = getprevMSpaceNumber(currentMSpace)
+          goToSpace(currentMSpace)
         end)
       end
     elseif moveRightAS then
-      moveToSpace(getNextSpaceNumber(currentSpace), currentSpace)
+      moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace)
       hs.timer.doAfter(0.1, function()
-        goToSpace(currentSpace) -- refresh (otherwise window still visible in former mspace)
+        goToSpace(currentMSpace) -- refresh (otherwise window still visible in former mspace)
       end)
       if modifiersEqual(modifierDM, flags) then
         hs.timer.doAfter(0.02, function()
-          currentSpace = getNextSpaceNumber(currentSpace)
-          goToSpace(currentSpace)
+          currentMSpace = getnextMSpaceNumber(currentMSpace)
+          goToSpace(currentMSpace)
         end)
       end
     end
@@ -1005,7 +1006,7 @@ end
 
 
 --spaces
-function getPrevSpaceNumber(cS)
+function getprevMSpaceNumber(cS)
   if cS == 1 then
     return #mspaces
   else
@@ -1014,7 +1015,7 @@ function getPrevSpaceNumber(cS)
 end
 
 
-function getNextSpaceNumber(cS)
+function getnextMSpaceNumber(cS)
   if cS == #mspaces then
     return 1
   else
@@ -1037,7 +1038,7 @@ function goToSpace(target)
     end
   end
   menubar:setTitle(tostring(mspaces[target])) -- menubar
-  currentSpace = target
+  currentMSpace = target
 end
 
 
@@ -1079,7 +1080,7 @@ function refreshWinMSpaces()
       winMSpaces[i].frame = {}
 
       for k = 1, #mspaces do
-        if k == currentSpace then
+        if k == currentMSpace then
           winMSpaces[i].mspace[k] = true
           winMSpaces[i].frame[k] = winAll[i]:frame()
         else
@@ -1123,7 +1124,7 @@ function refreshWinMSpaces()
       winMSpaces[#winMSpaces].frame = {}
 
       for k = 1, #mspaces do
-        if k == currentSpace then
+        if k == currentMSpace then
           winMSpaces[#winMSpaces].mspace[k] = true
           winMSpaces[#winMSpaces].frame[k] = winAll[i]:frame()
         else
@@ -1138,7 +1139,7 @@ function refreshWinMSpaces()
   --fb
   if winOnlyMoved == false then
     local pos = getWinMSpacesPos(hs.window.focusedWindow())
-    if not winMSpaces[pos].mspace[currentSpace] then -- nothing to do in case window is on current mspace
+    if not winMSpaces[pos].mspace[currentMSpace] then -- nothing to do in case window is on current mspace
       for i = 1, #mspaces do
         if winMSpaces[pos].mspace[i] then
           goToSpace(i)        
@@ -1157,7 +1158,7 @@ function correctXY(w)
   local max = w:screen():frame() 
   -- todo: find better way of detecting whether window has been moved manually or 'hidden' rather than 'fwin:topLeft().x < max.w - 100'
   if w:topLeft().x < max.w - 2 then   -- prevents subscriber-method to refresh coordinates of window that has just been 'hidden'
-      winMSpaces[getWinMSpacesPos(w)].frame[currentSpace] = w:frame()
+      winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = w:frame()
   end
 end
 
@@ -1177,14 +1178,14 @@ function refWinMSpace(target) -- add 'copy' of window on current mspace to targe
   max = fwin:screen():frame()
   winMSpaces[getWinMSpacesPos(fwin)].mspace[target] = true
   -- keep frame of MSpase of origin
-  winMSpaces[getWinMSpacesPos(fwin)].frame[target] = winMSpaces[getWinMSpacesPos(fwin)].frame[currentSpace]
+  winMSpaces[getWinMSpacesPos(fwin)].frame[target] = winMSpaces[getWinMSpacesPos(fwin)].frame[currentMSpace]
 end
 
 
 function derefWinMSpace()
   local fwin = hs.window.focusedWindow()
   max = fwin:screen():frame()
-  winMSpaces[getWinMSpacesPos(fwin)].mspace[currentSpace] = false
+  winMSpaces[getWinMSpacesPos(fwin)].mspace[currentMSpace] = false
   -- in case all 'mspace' are 'false', close window
   local all_false = true
   for i = 1, #winMSpaces[getWinMSpacesPos(fwin)].mspace do
@@ -1195,7 +1196,7 @@ function derefWinMSpace()
   if all_false then
     fwin:minimize()
   end
-  goToSpace(currentSpace) -- refresh
+  goToSpace(currentMSpace) -- refresh
 end
 
 

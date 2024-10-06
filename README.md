@@ -116,7 +116,7 @@ To resize and move the active window into a 2x2 grid position, use your 'modifie
 
 ```lua
   ...
-  modifierSwitchWin = { 'alt', 'ctrl', 'shift' }, -- default: modifier1 
+  modifierSnap2 = { 'ctrl', 'shift' }, -- default: modifier1 
   ...
 ```
 

@@ -109,3 +109,16 @@ As long as windows are resized - or moved within the borders of the screen -, it
 
 All this is been implemented with the goal of being as intuitive as possible; therefore, you shoud be able to build up your muscle memory quickly.
 
+### Keyboard Shortcuts for Resizing and Positioning Wiondows
+
+To resize and move the active window into a 2x2 grid position, use your 'modifier1' and number keys 1-7. In case you would like to use a different modifier key, add the following line to your 'init.lua':
+
+
+```lua
+  ...
+  modifierSwitchWin = { 'alt', 'ctrl', 'shift' }, -- default: modifier1 
+  ...
+```
+
+3x3 grid is coming.
+

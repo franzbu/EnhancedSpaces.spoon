@@ -1,10 +1,10 @@
 # Mellon
 
-Mellon is a Hammerspoon-based tool for managing windows and spaces. Due to limitations of Apple's implementation of spaces, Mellon incorporates a mended and improved version; from now on they are referred to as MSpaces or, simply, mspaces.
+Mellon is a Hammerspoon-based tool for managing windows and spaces. Due to limitations of Apple's implementation of spaces, Mellon incorporates a mended and improved version; from now on they are referred to as MSpaces.
 
-MSpaces are fast and powerful: fast in the sense of that switching between them is instantaneous, and powerful in the sense of that the implementation of additional features such as 'sticky windows'. 'Sticky window' denotes a window that is present on as many mspaces as you like. All 'sticky windows' are full-featured references, meaning they can have different sizes and positions on different mspaces.
+MSpaces are fast and powerful: fast in the sense of that switching between them is instantaneous, and powerful in the sense of that the implementation of additional features such as 'sticky windows'. 'Sticky window' denotes a window that is present on as many MSpaces as you like. All 'sticky windows' are full-featured references, meaning they can have different sizes and positions on different MSpaces.
 
-Mellon has been developed with the goal of saving time when working, and that starts with organizing windows and mspaces. Therefore, windows and mspaces can be handled using keyboard shortcuts. However, at times it can be a sensible approach to also use your pointer device, and that is why many of the tasks can be aided by your mouse or trackpad.
+Mellon has been developed with the goal of saving time when working, and that starts with organizing windows and MSpaces. Therefore, windows and MSpaces can be handled using keyboard shortcuts. However, at times it can be a sensible approach to also use your pointer device, and that is why many of the tasks can be aided by your mouse or trackpad.
 
 Mellon is easiest explained on the go. Therefore, simply go ahead with its installation.
 
@@ -67,7 +67,7 @@ In case you would like to change the default modifier key and or some of the oth
 
 ## MSpaces Can Be More
 
-However, this has just been the start. MSpaces can be so much more. See MSpaces as representations of your windows, which means that, for instance, you can have two mspaces with the same windows on them, but in different sizes and in different locations.
+However, this has just been the start. MSpaces can be so much more. See MSpaces as representations of your windows, which means that, for instance, you can have two MSpaces with the same windows on them, but in different sizes and in different locations.
   
 
 To create such representations of windows, press your 'ctrl' and 'shift' keys simultaneously and additionally press the key corresponding to the mspace you would like to create a reference of the currently active window on, for instance, '3'. In case you would like to adjust the modifier keys, add the following line to your 'init.lua':
@@ -93,7 +93,7 @@ For switching between all windows on your current mspace, press 'modifier1' and 
 ```lua
   ...
   -- keyboard shortcuts for switching between windows on one mspace...
-  -- ... and between references of one and the same window on different mspaces
+  -- ... and between references of one and the same window on different MSpaces
   modifierSwitchWin = { 'alt' }, -- default: modifier1
   modifierSwitchWinKeys = { 'tab', 'escape' }, -- default: { 'tab', 'escape' }
   ...
@@ -106,7 +106,7 @@ For switching between references of windows ('sticky windows), press 'modifier1'
 
 ## A few further hints, more to follow:
 
-Mellon can automatically resize your windows on your mspaces on a dynamically (according to your intentions, of course) changing grid size. You can use your mouse or trackpad by using your modifier keys and dragging your windows beyond certain areas of the borders of your screen. But first to manual moving and resizing:
+Mellon can automatically resize your windows on your MSpaces on a dynamically (according to your intentions, of course) changing grid size. You can use your mouse or trackpad by using your modifier keys and dragging your windows beyond certain areas of the borders of your screen. But first to manual moving and resizing:
 
 
 ### Manual Moving and Positioning

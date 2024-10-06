@@ -60,6 +60,7 @@ In case you would like to change the default modifier keys (default modifier1) f
   modifierSwitchMS = { 'shift', 'ctrl', 'alt', 'cmd' },
   ...
 ```
+## MSpaces
 
 Now, by pressing 'modifierSwitchMS' and 'moveWindowPrevMSpaceSwitch', for instance, you move the active window on your mspace to the adjacent mspace to the left and switch there as well. For moving the window without switching or switching without moving press the proper keyboard shortcuts.
 
@@ -86,4 +87,26 @@ For switching between all windows on your current mspace, press 'modifier1' and 
 
 
 
-More to follow.
+## In short a few further hints, more to follow:
+
+### Manual Moving and Positioning
+
+To move a window, hold your 'modifier1' or 'modifier2' key(s) down, then click the left mouse button and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond the 10-percent-margin, things are getting interesting because then window management with automatic resizing and positioning comes into play.
+
+### Automatic Resizing and Positioning 
+
+For automatic resizing and positioning of a window, you simply have to move between 10 and 80 percent of the window beyond the left, right, or bottom (no upper limit here) borders of your screen using your left mouse button. 
+
+As long as windows are resized - or moved within the borders of the screen -, it makes no difference whether you use  'modifier1' or 'modifier2'. However, once a window is moved beyond the screen borders (10 - 80 percent of the window), different positioning and resizing scenarios are called into action; they are as follows:
+
+* modifier1: 
+  * If windows are moved beyond the left (right) borders of the screen: imagine your screen border divided into three equally long sections: if the cursor crosses the screen border in the middle third of the border, the window snaps into the left (right) half of the screen. Crossing the screen border in the upper and lower thirds, the window snaps into the respective quarters of the screen.
+  * If windows are moved beyond the bottom border of the screen: imagine your bottom screen border divided into three equally long sections: if the cursor crosses the screen border in the middle third of the bottom border, the window snaps into full screen. Crossing the screen border in the left or right thirds, the window snaps into the respective halfs of the screen.
+
+* modifier2: 
+  * The difference to 'modifier1' is that your screen has a 3x3 grid. This means that windows snap into the left third of the 3x3 grid when dragged beyond the left screen border and into the right third when dragged beyond the right screen border. If 'modifier2' is released before the left mouse button, the window will snap into the middle.
+ 
+* The moment dragging of a window starts, indicators appear to guide the user as to where to drag the window for different window managing scenarios.
+
+All this is been implemented with the goal of being as intuitive as possible; therefore, you shoud be able to build up your muscle memory quickly.
+

@@ -50,12 +50,11 @@ function Mellon:new(options)
 
   modifier1 = options.modifier1 or { 'alt' } -- for mouse and potentially modifierSwitchWin_MS_All
   modifier2 = options.modifier2 or { 'ctrl' } -- for mouse and potentially modifierSwitchWin_App_Ref
-  modifier1_2 = mergeModifiers(modifier1, modifier2) -- could be used for modSwitchSpace (or something else)
-  modSwitchSpace =  { 'shift', 'ctrl', 'alt', 'cmd' } -- { 'ctrl', 'shift' }
-  modifierReference = { 'ctrl', 'shift' } -- { 'alt', 'ctrl', 'shift' }
-  modifierSwitchWin_MS_All = options.modifierSwitchWin_MS_All or options.modifier1
-  modifierSwitchWin_App_Ref = options.modifierSwitchWin_App_Ref or options.modifier2
-
+  modifier1_2 = mergeModifiers(modifier1, modifier2) -- could be used for modifierSwitchMS (or something else)
+  modifierSwitchWin = options.modifierSwitchWin or options.modifier1
+  modifierSwitchMS = options.modifierSwitchMS or { 'shift', 'ctrl', 'alt', 'cmd' } -- { 'ctrl', 'shift' }
+  modifierReference = options.modifierReference or { 'ctrl', 'shift' } -- { 'alt', 'ctrl', 'shift' } -- create references of windows on other mspaces
+  
   margin = options.margin or 0.3
   m = margin * 100 / 2
 
@@ -63,8 +62,8 @@ function Mellon:new(options)
 
   useMSpaces = options.useMSpaces or true
   ratioSpaces = options.ratioMSpaces or 0.8
-  amountSpaces = options. amountMSpaces or 3
-  currentSpace = options.startMSpace or 2
+  mspaces = options.MSpaces or { '1', '2', '3' }
+  currentSpace = indexOf(options.MSpaces, options.startMSpace) or 2
   
   prevSpace = options.prevMSpace or 'a'
   nextSpace = options.nextMSpace or 's'
@@ -114,10 +113,11 @@ function Mellon:new(options)
   filter = hs.window.filter --subscribe: when a new window (dis)appears, run refreshWindowsWS
   filter.default:subscribe(filter.windowNotOnScreen, function() refreshWinMSpaces() end)
   filter.default:subscribe(filter.windowOnScreen, function() refreshWinMSpaces() end)
-  filter.default:subscribe(filter.windowFocused, function(w) refreshWinMSpaces(w) end)
+  filter.default:subscribe(filter.windowFocused, function() refreshWinMSpaces() end)
   filter.default:subscribe(filter.windowMoved, function(w) correctXY(w) end)
-  --?todo: also react to resizing (perhaps incl. subscription)
+  --todo: ?need to react to resizing?
 
+  --[[ -- flagsKeyboardTracker
   -- 'subscribe', watchdog for modifier keys
   cycleModCounter = 0 
   local events = hs.eventtap.event.types
@@ -125,8 +125,8 @@ function Mellon:new(options)
   cycleAll = false
   keyboardTracker = hs.eventtap.new({ events.flagsChanged }, function(e)
     local flagsKeyboardTracker = eventToArray(e:getFlags())
-    -- since on modifier release the flag is 'nil', prevModifier is used
-    if modifiersEqual(flagsKeyboardTracker, modifierSwitchWin_MS_All) or modifiersEqual(prevModifier, modifierSwitchWin_MS_All) then
+    -- on modifier release flag is assigned 'nil' -> prevModifier remedies that
+    if modifiersEqual(flagsKeyboardTracker, modifierSwitchWin) or modifiersEqual(prevModifier, modifierSwitchWin) then
       cycleModCounter = cycleModCounter + 1
       if cycleModCounter % 2 == 0 then -- only when released (and not when pressed)
         prevModifier = nil
@@ -134,7 +134,7 @@ function Mellon:new(options)
           hs.timer.doAfter(0.02, function()
             cycleModCounter = 0
             pos = getWinMSpacesPos(hs.window.focusedWindow())
-            for i = 1, amountSpaces do
+            for i = 1, #mspaces do
               if winMSpaces[pos].mspace[i] then
                 goToSpace(i)
                 break 
@@ -149,7 +149,10 @@ function Mellon:new(options)
     prevModifier = flagsKeyboardTracker
   end)
   keyboardTracker:start()
+  
 
+
+  
   --cycle through all windows, regardless of which WS they are on (https://applehelpwriter.com/2018/01/14/how-to-add-a-window-switcher/)
   switcher = hs.window.switcher.new()   -- default windowfilter: only visible windows, all Spaces
   switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
@@ -167,10 +170,12 @@ function Mellon:new(options)
     cycleAll = true
     switcher:previous()
   end)
+  --]]
+
 
   -- cycle through windows of current WS, todo (maybe): last focus first
   local nextFMS = 1
-  hs.hotkey.bind(modifierSwitchWin_MS_All, "escape", function()
+  hs.hotkey.bind(modifierSwitchWin, "tab", function()
     if nextFMS > #winMSpaces then nextFMS = 1 end
     while not winMSpaces[nextFMS].mspace[currentSpace] do
       if nextFMS == #winMSpaces then
@@ -183,17 +188,14 @@ function Mellon:new(options)
     nextFMS = nextFMS + 1
   end)
 
-  -- todo: cycle through windows of one app - in all mspaces
-  hs.hotkey.bind(modifierSwitchWin_App_Ref, "tab", function()
-  end)
 
   -- cycle through references of one window
   local nextFR = 1
-  hs.hotkey.bind(modifierSwitchWin_App_Ref, "escape", function()
+  hs.hotkey.bind(modifierSwitchWin, "escape", function()
     pos = getWinMSpacesPos(hs.window.focusedWindow())
     nextFR = getNextSpaceNumber(currentSpace)
     while not winMSpaces[pos].mspace[nextFR] do
-      if nextFR == amountSpaces then
+      if nextFR == #mspaces then
         nextFR = 1
       else
         nextFR = nextFR + 1
@@ -206,20 +208,19 @@ function Mellon:new(options)
   -- ___________ own spaces ___________
     -- menubar
   -- https://github.com/Hammerspoon/hammerspoon/issues/2878
-  a = hs.menubar.new(true, "A"):setTitle("2")
-  a:setTooltip("Mellon")
+  menubar = hs.menubar.new(true, "A"):setTitle(mspaces[currentSpace])
+  menubar:setTooltip("Mellon")
 
   filter_all = hs.window.filter.new()
   winAll = filter_all:getWindows(hs.window.sortByFocused)
   -- todo (maybe, problems with WhatsApp): hs.window.allWindows()
-
-  --initialize winMSpaces
   winMSpaces = {}
-  --refreshWinMSpaces()
+  --initialize winMSpaces
+  refreshWinMSpaces()
 
   --_________ reference/dereference windows to/from mspaces, goto mspaces _________
   -- reference
-  for i = 1, amountSpaces do
+  for i = 1, #mspaces do
     hs.hotkey.bind(modifierReference, tostring(i), function()
       refWinMSpace(i)
     end)
@@ -229,40 +230,40 @@ function Mellon:new(options)
     derefWinMSpace()
   end)
 
-  -- goto mspaces directly
-  for i = 1, amountSpaces do
-    hs.hotkey.bind(modSwitchSpace, tostring(i), function()
+  -- goto mspaces directly with 'modifierSwitchMS-<name of mspace>'
+  for i = 1, #mspaces do
+    hs.hotkey.bind(modifierSwitchMS, mspaces[i], function()
       goToSpace(i)
     end)
   end
 
 
   --_________ switching spaces / moving windows _________
-  hs.hotkey.bind(modSwitchSpace, prevSpace, function() -- previous space (incl. cycle)
+  hs.hotkey.bind(modifierSwitchMS, prevSpace, function() -- previous space (incl. cycle)
     currentSpace = getPrevSpaceNumber(currentSpace)
     goToSpace(currentSpace)
   end)
 
 
-  hs.hotkey.bind(modSwitchSpace, nextSpace, function() -- next space (incl. cycle)
+  hs.hotkey.bind(modifierSwitchMS, nextSpace, function() -- next space (incl. cycle)
     currentSpace = getNextSpaceNumber(currentSpace)
     goToSpace(currentSpace)
   end)
 
 
-  hs.hotkey.bind(modSwitchSpace, moveWindowPrevSpace, function() -- move active window to previous space (incl. cycle)
+  hs.hotkey.bind(modifierSwitchMS, moveWindowPrevSpace, function() -- move active window to previous space (incl. cycle)
     -- move window to prev space
     moveToSpace(getPrevSpaceNumber(currentSpace), currentSpace)
   end)
 
 
-  hs.hotkey.bind(modSwitchSpace, moveWindowNextSpace, function() -- move active window to next space (incl. cycle)
+  hs.hotkey.bind(modifierSwitchMS, moveWindowNextSpace, function() -- move active window to next space (incl. cycle)
     -- move window to next space
     moveToSpace(getNextSpaceNumber(currentSpace), currentSpace)
   end)
 
 
-  hs.hotkey.bind(modSwitchSpace, moveWindowPrevSpaceSwitch, function() -- move active window to previous space and switch there (incl. cycle)
+  hs.hotkey.bind(modifierSwitchMS, moveWindowPrevSpaceSwitch, function() -- move active window to previous space and switch there (incl. cycle)
     -- move window to prev space and switch there
     moveToSpace(getPrevSpaceNumber(currentSpace), currentSpace)
     currentSpace = getPrevSpaceNumber(currentSpace)
@@ -270,7 +271,7 @@ function Mellon:new(options)
   end)
 
 
-  hs.hotkey.bind(modSwitchSpace, moveWindowNextSpaceSwitch, function() -- move active window to next space and switch there (incl. cycle)
+  hs.hotkey.bind(modifierSwitchMS, moveWindowNextSpaceSwitch, function() -- move active window to next space and switch there (incl. cycle)
     -- move window to next space and switch there
       moveToSpace(getNextSpaceNumber(currentSpace), currentSpace)
       currentSpace = getNextSpaceNumber(currentSpace)
@@ -278,13 +279,12 @@ function Mellon:new(options)
   end)
 
   -- recover stranded windows
-  local max = winAll[1]:screen():frame() -- max.x = 0; max.y = 0; max.w = screen width; max.h = screen height
+  local max = winAll[1]:screen():frame()
   for i = 1, #winAll do
     if winAll[i]:topLeft().x > max.w - 30 then -- window in 'hiding spot'
       hs.timer.doAfter(0.01, function()
         winAll[i]:setTopLeft(hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2)) -- put window in middle of screen
       end)
-
     end
   end
 
@@ -300,7 +300,7 @@ function Mellon:new(options)
       --print(i .. ": " .. "mspace " .. tostring(winMSpaces[i].mspace))
       print("id: " .. tostring(winMSpaces[i].win:application()))
       spaces = ""
-      for j = 1, amountSpaces do
+      for j = 1, #mspaces do
         spaces = spaces .. tostring(winMSpaces[i].mspace[j]) .. ", "
       end
       print("space: " .. spaces)
@@ -314,9 +314,7 @@ function Mellon:new(options)
   end)
 
   goToSpace(currentSpace) -- refresh
-
   resizer.clickHandler:start()
-
   return resizer
 end
 
@@ -324,11 +322,9 @@ end
 function Mellon:stop()
   self.dragging = false
   self.dragType = nil
-
   for i = 1, #cv do -- delete canvases
     cv[i]:delete()
   end
-
   self.cancelHandler:stop()
   self.dragHandler:stop()
   self.clickHandler:start()
@@ -351,16 +347,12 @@ function Mellon:handleDrag()
   return function(event)
     if not self.dragging then return nil end
     local currentSize = win:size() -- win:frame
-    local current = win:topLeft()
-      
+    local current = win:topLeft() 
     local dx = event:getProperty(hs.eventtap.event.properties.mouseEventDeltaX)
     local dy = event:getProperty(hs.eventtap.event.properties.mouseEventDeltaY)
-
     if self:isMoving() then
-
-      local point = win:topLeft()
       local frame = win:size() -- win:frame
-      --win:move(hs.geometry.new(point.x + dx, point.y + dy, frame.w, frame.h), nil, false, 0)
+      --win:move(hs.geometry.new(frame.x + dx, frame.y + dy, frame.w, frame.h), nil, false, 0)
       win:move({ dx, dy }, nil, false, 0)
       sumdy = sumdy + dy
       sumdx = sumdx + dx
@@ -390,7 +382,6 @@ function Mellon:handleDrag()
       else
         ratioSpaces = 1 -- if 'useMSpaces' is disabled, enable automatic snapping and resizing beyond 'ratioSpaces', i.e., for dragging windows as far as possible (= 1)
       end
-
       return true
     elseif self:isResizing() and useResize then
       movedNotResized = false
@@ -430,8 +421,7 @@ function Mellon:handleDrag()
       elseif mH <= -m and mV > m then -- 7:30
         win:move(hs.geometry.new(current.x + dx, current.y, currentSize.w - dx, currentSize.h + dy), nil, false, 0)
       else -- middle -> moving (not resizing) window
-        local point = win:topLeft()
-        local frame = win:frame()
+        --local frame = win:frame()
         win:move({ dx, dy }, nil, false, 0)
         movedNotResized = true
       end
@@ -454,18 +444,14 @@ end
 
 function Mellon:doMagic() -- automatic positioning and adjustments, for example, prevent window from moving/resizing beyond screen boundaries
   if not self.targetWindow then return end
-
-  modifierDM = eventToArray(hs.eventtap.checkKeyboardModifiers()) -- modifiers (still) pressed after releasing mouse button
-  
+  modifierDM = eventToArray(hs.eventtap.checkKeyboardModifiers()) -- modifiers (still) pressed after releasing mouse button 
   local frame = win:frame()
-  local point = win:topLeft()
   -- 'max' should not be reintialized here because if there is another adjacent display with different resolution, windows are adjusted according to that resolution (as cursor gets moved there)
-  -- local max = win:screen():frame() -- max.x = 0; max.y = 0; max.w = screen width; max.h = screen height without menu bar
-  local xNew = point.x
-  local yNew = point.y
+  -- local max = win:screen():frame()
+  local xNew = frame.x
+  local yNew = frame.y
   local wNew = frame.w
   local hNew = frame.h
-
   if not moveLeftAS and not moveRightAS then -- if moved to other workspace, no resizing/repositioning wanted/necessary
     if movedNotResized then
       -- window moved past left screen border
@@ -478,8 +464,8 @@ function Mellon:doMagic() -- automatic positioning and adjustments, for example,
       end
 
       if modifiersEqual(flags, modifier1) then
-        if point.x < 0 and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- left and not bottom
-          if math.abs(point.x) < wNew / 10 then -- moved past border by 10 or less percent: move window as is back within boundaries of screen
+        if frame.x < 0 and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- left and not bottom
+          if math.abs(frame.x) < wNew / 10 then -- moved past border by 10 or less percent: move window as is back within boundaries of screen
             xNew = 0
           -- window moved past left screen border
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
@@ -504,8 +490,8 @@ function Mellon:doMagic() -- automatic positioning and adjustments, for example,
             end
           end
         -- moved window past right screen border
-        elseif point.x + frame.w > max.w and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- right and not bottom
-          if max.w - point.x > math.abs(max.w - point.x - wNew) * 9 then -- 9 times as much inside screen than outside = 10 percent outside; move window back within boundaries of screen (keep size)
+        elseif frame.x + frame.w > max.w and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- right and not bottom
+          if max.w - frame.x > math.abs(max.w - frame.x - wNew) * 9 then -- 9 times as much inside screen than outside = 10 percent outside; move window back within boundaries of screen (keep size)
             wNew = frame.w
             xNew = max.w - wNew
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
@@ -530,8 +516,8 @@ function Mellon:doMagic() -- automatic positioning and adjustments, for example,
             end
           end
         -- moved window below bottom of screen
-        elseif point.y + hNew > maxWithMB.h and hs.mouse.getRelativePosition().x + sumdx < max.w and hs.mouse.getRelativePosition().x + sumdx > 0 then
-          if max.h - point.y > math.abs(max.h - point.y - hNew) * 9 then -- and flags:containExactly(modifier1) then -- move window as is back within boundaries
+        elseif frame.y + hNew > maxWithMB.h and hs.mouse.getRelativePosition().x + sumdx < max.w and hs.mouse.getRelativePosition().x + sumdx > 0 then
+          if max.h - frame.y > math.abs(max.h - frame.y - hNew) * 9 then -- and flags:containExactly(modifier1) then -- move window as is back within boundaries
             yNew = maxWithMB.h - hNew
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
             for i = 1, gridX, 1 do
@@ -558,8 +544,8 @@ function Mellon:doMagic() -- automatic positioning and adjustments, for example,
           end
         end
       elseif modifiersEqual(flags, modifier2) and modifiersEqual(flags, modifierDM) then --todo: ?not necessary? -> and eventType == self.moveStartMouseEvent
-        if point.x < 0 and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- left and not bottom
-          if math.abs(point.x) < wNew / 10 then -- moved past border by 10 or less percent: move window as is back within boundaries of screen
+        if frame.x < 0 and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- left and not bottom
+          if math.abs(frame.x) < wNew / 10 then -- moved past border by 10 or less percent: move window as is back within boundaries of screen
             xNew = 0
           -- window moved past left screen border
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
@@ -589,8 +575,8 @@ function Mellon:doMagic() -- automatic positioning and adjustments, for example,
             end
           end
         -- moved window past right screen border
-        elseif point.x + frame.w > max.w and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- right and not bottom
-          if max.w - point.x > math.abs(max.w - point.x - wNew) * 9 then  -- 9 times as much inside screen than outside = 10 percent outside; move window back within boundaries of screen (keep size)
+        elseif frame.x + frame.w > max.w and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- right and not bottom
+          if max.w - frame.x > math.abs(max.w - frame.x - wNew) * 9 then  -- 9 times as much inside screen than outside = 10 percent outside; move window back within boundaries of screen (keep size)
             wNew = frame.w
             xNew = max.w - wNew
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
@@ -620,8 +606,8 @@ function Mellon:doMagic() -- automatic positioning and adjustments, for example,
             end
           end
         -- moved window below bottom of screen
-        elseif point.y + hNew > maxWithMB.h and hs.mouse.getRelativePosition().x + sumdx < max.w and hs.mouse.getRelativePosition().x + sumdx > 0 then
-          if max.h - point.y > math.abs(max.h - point.y - hNew) * 9 then -- and flags:containExactly(modifier1) then -- move window as is back within boundaries
+        elseif frame.y + hNew > maxWithMB.h and hs.mouse.getRelativePosition().x + sumdx < max.w and hs.mouse.getRelativePosition().x + sumdx > 0 then
+          if max.h - frame.y > math.abs(max.h - frame.y - hNew) * 9 then -- and flags:containExactly(modifier1) then -- move window as is back within boundaries
             yNew = maxWithMB.h - hNew
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
             if (hs.mouse.getRelativePosition().x + sumdx <= max.w / 5) or (hs.mouse.getRelativePosition().x + sumdx > max.w / 5 * 2 and hs.mouse.getRelativePosition().x + sumdx <= max.w / 5 * 3) or (hs.mouse.getRelativePosition().x + sumdx > max.w / 5 * 4) then
@@ -652,8 +638,8 @@ function Mellon:doMagic() -- automatic positioning and adjustments, for example,
       -- if dragged beyond left/right screen border, window snaps to middle column
       --elseif modifiersEqual(flags, modifier1_2) then --todo: ?not necessary? -> and eventType == self.moveStartMouseEvent
       elseif modifiersEqual(flags, modifier2) and #modifierDM == 0 then --todo: ?not necessary? -> and eventType == self.moveStartMouseEvent
-        if point.x < 0 and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- left and not bottom
-          if math.abs(point.x) < wNew / 10 then -- moved past border by 10 or less percent: move window as is back within boundaries of screen
+        if frame.x < 0 and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- left and not bottom
+          if math.abs(frame.x) < wNew / 10 then -- moved past border by 10 or less percent: move window as is back within boundaries of screen
             xNew = 0
           -- window moved past left screen border
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
@@ -683,8 +669,8 @@ function Mellon:doMagic() -- automatic positioning and adjustments, for example,
             end
           end
         -- moved window past right screen border
-        elseif point.x + frame.w > max.w and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- right and not bottom
-          if max.w - point.x > math.abs(max.w - point.x - wNew) * 9 then  -- 9 times as much inside screen than outside = 10 percent outside; move window back within boundaries of screen (keep size)
+        elseif frame.x + frame.w > max.w and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- right and not bottom
+          if max.w - frame.x > math.abs(max.w - frame.x - wNew) * 9 then  -- 9 times as much inside screen than outside = 10 percent outside; move window back within boundaries of screen (keep size)
             wNew = frame.w
             xNew = max.w - wNew
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
@@ -714,8 +700,8 @@ function Mellon:doMagic() -- automatic positioning and adjustments, for example,
             end
           end
         -- moved window below bottom of screen
-        elseif point.y + hNew > maxWithMB.h and hs.mouse.getRelativePosition().x + sumdx < max.w and hs.mouse.getRelativePosition().x + sumdx > 0 then
-          if max.h - point.y > math.abs(max.h - point.y - hNew) * 9 then -- and flags:containExactly(modifier1) then -- move window as is back within boundaries
+        elseif frame.y + hNew > maxWithMB.h and hs.mouse.getRelativePosition().x + sumdx < max.w and hs.mouse.getRelativePosition().x + sumdx > 0 then
+          if max.h - frame.y > math.abs(max.h - frame.y - hNew) * 9 then -- and flags:containExactly(modifier1) then -- move window as is back within boundaries
             yNew = maxWithMB.h - hNew
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
             if (hs.mouse.getRelativePosition().x + sumdx <= max.w / 5) or (hs.mouse.getRelativePosition().x + sumdx > max.w / 5 * 2 and hs.mouse.getRelativePosition().x + sumdx <= max.w / 5 * 3) or (hs.mouse.getRelativePosition().x + sumdx > max.w / 5 * 4) then
@@ -745,15 +731,15 @@ function Mellon:doMagic() -- automatic positioning and adjustments, for example,
         end
       end
     else -- if window has been resized (and not moved)
-      if point.x < 0 then -- window resized past left screen border
-        wNew = frame.w + point.x
+      if frame.x < 0 then -- window resized past left screen border
+        wNew = frame.w + frame.x
         xNew = 0
-      elseif point.x + frame.w > max.w then -- window resized past right screen border
-        wNew = max.w - point.x
+      elseif frame.x + frame.w > max.w then -- window resized past right screen border
+        wNew = max.w - frame.x
         xNew = max.w - wNew
       end
-      if point.y < heightMB then -- if window has been resized past beginning of menu bar, height of window is corrected accordingly
-        hNew = frame.h + point.y - heightMB
+      if frame.y < heightMB then -- if window has been resized past beginning of menu bar, height of window is corrected accordingly
+        hNew = frame.h + frame.y - heightMB
         yNew = heightMB
       end
     end
@@ -801,7 +787,7 @@ function Mellon:handleClick()
     flags = eventToArray(event:getFlags())
     eventType = event:getType()
 
-    -- enable active modifiers (modifier1, modifier2, modSwitchSpace, modifier4)
+    -- enable active modifiers (modifier1, modifier2, modifierSwitchMS, modifier4)
     isMoving = false
     isResizing = false
     if eventType == self.moveStartMouseEvent then
@@ -809,7 +795,7 @@ function Mellon:handleClick()
         isMoving = true
       elseif modifier2 ~= nil and modifiersEqual(flags, modifier2) then
         isMoving = true
-      elseif modSwitchSpace ~= nil and modifiersEqual(flags, modSwitchSpace) then
+      elseif modifierSwitchMS ~= nil and modifiersEqual(flags, modifierSwitchMS) then
         isMoving = true
       elseif modifier4 ~= nil and modifiersEqual(flags, modifier4) then
         isMoving = true
@@ -821,7 +807,7 @@ function Mellon:handleClick()
         isResizing = true
       elseif modifier2 ~= nil and modifiersEqual(flags, modifier2) then
         isResizing = true
-      elseif modSwitchSpace ~= nil and modifiersEqual(flags, modSwitchSpace) then
+      elseif modifierSwitchMS ~= nil and modifiersEqual(flags, modifierSwitchMS) then
         isResizing = true
       elseif modifier4 ~= nil and modifiersEqual(flags, modifier4) then
         isResizing = true
@@ -859,13 +845,12 @@ function Mellon:handleClick()
       --]]
 
       win = getWindowUnderMouse():focus() --todo (?done? ->experimental): error if clicked on screen (and not window)
-      local point = win:topLeft()
       local frame = win:frame()
-      max = win:screen():frame() -- max.x = 0; max.y = 0; max.w = screen width; max.h = screen height
+      max = win:screen():frame() 
       maxWithMB = win:screen():fullFrame()
       heightMB = maxWithMB.h - max.h   -- height menu bar
-      local xNew = point.x
-      local yNew = point.y
+      local xNew = frame.x
+      local yNew = frame.y
       local wNew = frame.w
       local hNew = frame.h
 
@@ -893,11 +878,9 @@ function Mellon:handleClick()
         createCanvas(5, max.w - thickness, max.h / 5, thickness, max.h / 5)
         createCanvas(6, max.w - thickness, max.h / 5 * 3, thickness, max.h / 5)
       end
-
       self.cancelHandler:start()
       self.dragHandler:start()
       self.clickHandler:stop()
-
       -- Prevent selection
       return true
     else
@@ -1009,11 +992,22 @@ function copyTable(a)
 end
 
 
+function indexOf(array, value)
+  if array == nil then return nil end
+  for i, v in ipairs(array) do
+      if v == value then
+          return i
+      end
+  end
+  return nil
+end
+
+
 
 --spaces
 function getPrevSpaceNumber(cS)
   if cS == 1 then
-    return amountSpaces
+    return #mspaces
   else
     return cS - 1
   end
@@ -1021,7 +1015,7 @@ end
 
 
 function getNextSpaceNumber(cS)
-  if cS == amountSpaces then
+  if cS == #mspaces then
     return 1
   else
     return cS + 1
@@ -1029,9 +1023,11 @@ function getNextSpaceNumber(cS)
 end
 
 
+winOnlyMoved = false -- prevent watchdog from giving focus to window if it has been moved to other mspace without switching there
 function goToSpace(target)
+  winOnlyMoved = false
   local win = winAll[1]
-  local max = win:screen():frame() -- max.x = 0; max.y = 0; max.w = screen width; max.h = screen height
+  local max = win:screen():frame()
 
   for i,v in pairs(winMSpaces) do
     if winMSpaces[i].mspace[target] == true then
@@ -1040,12 +1036,13 @@ function goToSpace(target)
       winMSpaces[i].win:setTopLeft(hs.geometry.point(max.w - 1, max.h))
     end
   end
-  a:setTitle(tostring(target)) -- menubar
+  menubar:setTitle(tostring(mspaces[target])) -- menubar
   currentSpace = target
 end
 
 
 function moveToSpace(target, origin)
+  winOnlyMoved = true
   local fwin = hs.window.focusedWindow()
   max = fwin:screen():frame()
   fwin:setTopLeft(hs.geometry.point(max.w - 1, max.h))
@@ -1060,20 +1057,19 @@ function moveToSpace(target, origin)
 end
 
 
-function refreshWinMSpaces(w)
-  print("_____refreshWinMSpaces_____")
+function refreshWinMSpaces()
+  --print("_____refreshWinMSpaces_____")
   filter_all = hs.window.filter.new()
   winAll = filter_all:getWindows(hs.window.sortByFocused)
-  --winAll = hs.application.find("")
 
-  print("___#winAll_____" .. #winAll)
-  print("winMSpaces length: " .. #winMSpaces)
+  --print("___#winAll_____" .. #winAll)
+  --print("winMSpaces length: " .. #winMSpaces)
 
   if #winMSpaces == 0 then   -- at first start
   --if #winMSpaces < #winAll then   -- at first start
-    print("_______winMSpaces populated_________")
+    --print("_______winMSpaces populated_________")
     for i, v in pairs(winAll) do
-      print(i, v)
+      --print(i, v)
     end
 
     for i = 1, #winAll do
@@ -1082,7 +1078,7 @@ function refreshWinMSpaces(w)
       winMSpaces[i].mspace = {}
       winMSpaces[i].frame = {}
 
-      for k = 1, amountSpaces do
+      for k = 1, #mspaces do
         if k == currentSpace then
           winMSpaces[i].mspace[k] = true
           winMSpaces[i].frame[k] = winAll[i]:frame()
@@ -1091,9 +1087,7 @@ function refreshWinMSpaces(w)
           winMSpaces[i].frame[k] = winAll[i]:frame()
         end
       end
-
     end
-
   end
 
 
@@ -1109,7 +1103,6 @@ function refreshWinMSpaces(w)
       --print("___present______")
     end
     --print("____winspaces length: " .. #winMSpaces)
-
   end
 
 
@@ -1122,14 +1115,14 @@ function refreshWinMSpaces(w)
       end
     end
     if not there then
-      print("______adding window________")
+      --print("______adding window________")
       table.insert(winMSpaces, {})
       winMSpaces[#winMSpaces].win = winAll[i]
 
       winMSpaces[#winMSpaces].mspace = {}
       winMSpaces[#winMSpaces].frame = {}
 
-      for k = 1, amountSpaces do
+      for k = 1, #mspaces do
         if k == currentSpace then
           winMSpaces[#winMSpaces].mspace[k] = true
           winMSpaces[#winMSpaces].frame[k] = winAll[i]:frame()
@@ -1138,41 +1131,51 @@ function refreshWinMSpaces(w)
           winMSpaces[#winMSpaces].frame[k] = winAll[i]:frame()
         end
       end
-
     end
   end
 
-
-  function correctXY(w)
-    -- subscribed filter for some reason takes a couple of seconds to trigger method
-    --print("___correctXY_______")
-    local max = w:screen():frame() 
-
-    -- todo: find better way of detecting whether window has been moved manually or 'hidden' rather than 'fwin:topLeft().x < max.w - 100'
-    if w:topLeft().x < max.w - 2 then   -- prevents subscriber-method to refresh coordinates of window that has just been 'hidden'
-       winMSpaces[getWinMSpacesPos(w)].frame[currentSpace] = w:frame()
-    end
-
-  end
-
-
-  function getWinMSpacesPos(w)
-    for i = 1, #winMSpaces do
-      if w:id() == winMSpaces[i].win:id() then
-        return i
+  -- go to mspace with window that has just got fucus (this way the macOS cmd-tab window switcher can be used)
+  --fb
+  if winOnlyMoved == false then
+    local pos = getWinMSpacesPos(hs.window.focusedWindow())
+    if not winMSpaces[pos].mspace[currentSpace] then -- nothing to do in case window is on current mspace
+      for i = 1, #mspaces do
+        if winMSpaces[pos].mspace[i] then
+          goToSpace(i)        
+          break
+        end
       end
     end
-    return 0
   end
-
+  winOnlyMoved = false
 end
+
+
+function correctXY(w)
+  -- subscribed filter for some reason takes a couple of seconds to trigger method
+  --print("___correctXY_______")
+  local max = w:screen():frame() 
+  -- todo: find better way of detecting whether window has been moved manually or 'hidden' rather than 'fwin:topLeft().x < max.w - 100'
+  if w:topLeft().x < max.w - 2 then   -- prevents subscriber-method to refresh coordinates of window that has just been 'hidden'
+      winMSpaces[getWinMSpacesPos(w)].frame[currentSpace] = w:frame()
+  end
+end
+
+
+function getWinMSpacesPos(w)
+  for i = 1, #winMSpaces do
+    if w:id() == winMSpaces[i].win:id() then
+      return i
+    end
+  end
+  return nil
+end
+
 
 function refWinMSpace(target) -- add 'copy' of window on current mspace to target mspace
   local fwin = hs.window.focusedWindow()
   max = fwin:screen():frame()
-
   winMSpaces[getWinMSpacesPos(fwin)].mspace[target] = true
-
   -- keep frame of MSpase of origin
   winMSpaces[getWinMSpacesPos(fwin)].frame[target] = winMSpaces[getWinMSpacesPos(fwin)].frame[currentSpace]
 end
@@ -1181,9 +1184,7 @@ end
 function derefWinMSpace()
   local fwin = hs.window.focusedWindow()
   max = fwin:screen():frame()
-
   winMSpaces[getWinMSpacesPos(fwin)].mspace[currentSpace] = false
-
   -- in case all 'mspace' are 'false', close window
   local all_false = true
   for i = 1, #winMSpaces[getWinMSpacesPos(fwin)].mspace do
@@ -1194,10 +1195,9 @@ function derefWinMSpace()
   if all_false then
     fwin:minimize()
   end
-
   goToSpace(currentSpace) -- refresh
-
-
 end
+
+
 
 return Mellon

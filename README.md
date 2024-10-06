@@ -78,6 +78,8 @@ To create such representations of windows, press your 'ctrl' and 'shift' keys si
   modifierReference = { 'alt', 'ctrl' },
   ...
 ```
+To delete a reference, press 'modifierReference' and '0'. In case this happens to be the last window, it gets minimized.
+
 
 ## Switching Between Windows
 

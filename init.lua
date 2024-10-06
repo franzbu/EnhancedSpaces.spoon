@@ -9,7 +9,7 @@ Mellon.author = "Franz B. <csaa6335@gmail.com>"
 Mellon.homepage = "https://github.com/franzbu/Mellon.spoon"
 Mellon.winMSpaces = "MIT"
 Mellon.name = "Mellon"
-Mellon.version = "0.1"
+Mellon.version = "0.2"
 Mellon.spoonPath = scriptPath()
 
 local dragTypes = {
@@ -51,10 +51,9 @@ function Mellon:new(options)
   modifier1 = options.modifier1 or { 'alt' } -- for mouse and potentially modifierSwitchWin_MS_All
   modifier2 = options.modifier2 or { 'ctrl' } -- for mouse and potentially modifierSwitchWin_App_Ref
   modifier1_2 = mergeModifiers(modifier1, modifier2) -- could be used for modifierSwitchMS (or something else)
-  modifierSwitchWin = options.modifierSwitchWin or options.modifier1
-  modifierSwitchMS = options.modifierSwitchMS or { 'shift', 'ctrl', 'alt', 'cmd' } -- { 'ctrl', 'shift' }
   modifierReference = options.modifierReference or { 'ctrl', 'shift' } -- { 'alt', 'ctrl', 'shift' } -- create references of windows on other mspaces
     
+  modifierSwitchMS = options.modifierSwitchMS or modifier1
   prevMSpace = options.prevMSpace or 'a'
   nextMSpace = options.nextMSpace or 's'
   moveWindowPrevMSpace = options.moveWindowPrevMSpace or 'd'
@@ -62,8 +61,13 @@ function Mellon:new(options)
   moveWindowPrevMSpaceSwitch = options.moveWindowPrevMSpaceSwitch or 'q'
   moveWindowNextMSpaceSwitch = options.moveWindowNextMSpaceSwitch or 'w'
 
+  modifierSwitchWin = options.modifierSwitchWin or modifier1
   switchCurrentMS = options.switchCurrentMS or 'tab'
   switchReferences = options.switchReferences or 'escape'
+
+  modifierSnap2 = options.modifierSnap2 or modifier1
+  modifierSnap3 = options.modifierSnap3 or modifier2 
+  modifierSnap3_2 = options.modifierSnap3 or modifier1_2
 
   margin = options.margin or 0.3
   m = margin * 100 / 2
@@ -119,6 +123,63 @@ function Mellon:new(options)
   filter.default:subscribe(filter.windowOnScreen, function() refreshWinMSpaces() end)
   filter.default:subscribe(filter.windowFocused, function() refreshWinMSpaces() end)
   filter.default:subscribe(filter.windowMoved, function(w) correctXY(w) end)
+  --todo: ?need to react to resizing?
+
+  --[[ -- flagsKeyboardTracker
+  -- 'subscribe', watchdog for modifier keys
+  cycleModCounter = 0 
+  local events = hs.eventtap.event.types
+  local prevModifier = nil --{ "xyz" }
+  cycleAll = false
+  keyboardTracker = hs.eventtap.new({ events.flagsChanged }, function(e)
+    local flagsKeyboardTracker = eventToArray(e:getFlags())
+    -- on modifier release flag is assigned 'nil' -> prevModifier remedies that
+    if modifiersEqual(flagsKeyboardTracker, modifierSwitchWin) or modifiersEqual(prevModifier, modifierSwitchWin) then
+      cycleModCounter = cycleModCounter + 1
+      if cycleModCounter % 2 == 0 then -- only when released (and not when pressed)
+        prevModifier = nil
+        if cycleAll then
+          hs.timer.doAfter(0.02, function()
+            cycleModCounter = 0
+            pos = getWinMSpacesPos(hs.window.focusedWindow())
+            for i = 1, #mspaces do
+              if winMSpaces[pos].mspace[i] then
+                goToSpace(i)
+                break 
+              end
+            end
+          end)
+          cycleAll = false
+        end
+
+      end
+    end
+    prevModifier = flagsKeyboardTracker
+  end)
+  keyboardTracker:start()
+  
+
+
+  
+  --cycle through all windows, regardless of which WS they are on (https://applehelpwriter.com/2018/01/14/how-to-add-a-window-switcher/)
+  switcher = hs.window.switcher.new()   -- default windowfilter: only visible windows, all Spaces
+  switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
+  switcher.ui.thumbnailSize = 112
+  switcher.ui.selectedThumbnailSize = 284
+  switcher.ui.backgroundColor = { 0.3, 0.3, 0.3, 0.5 }
+  switcher.ui.textSize = 14
+  switcher.ui.showSelectedTitle = false
+  hs.hotkey.bind(modifierSwitchWin_MS_All, "tab", function()
+    cycleAll = true
+    switcher:nextWindow ()   --nextWindow()
+    --after release of modifierSwitchWin_MS_All, watchdog initiates whatever needs to be done
+  end)
+  hs.hotkey.bind("alt-shift", "tab", function()
+    cycleAll = true
+    switcher:previous()
+  end)
+  --]]
+
 
   -- cycle through windows of current WS, todo (maybe): last focus first
   local nextFMS = 1
@@ -234,6 +295,21 @@ function Mellon:new(options)
       end)
     end
   end
+
+
+  -- ___________ keyboard shortcuts - snap windows into grid postions ___________
+-- fb:
+  for i = 1, 7 do
+    hs.hotkey.bind(modifierSnap2, tostring(i), function()
+      snap2(i)
+    end)
+  end
+
+
+
+
+
+
 
   -- debug
   -- list all windows
@@ -1082,7 +1158,6 @@ function refreshWinMSpaces()
   end
 
   -- go to mspace with window that has just got fucus (this way the macOS cmd-tab window switcher can be used)
-  --fb
   if winOnlyMoved == false then
     local pos = getWinMSpacesPos(hs.window.focusedWindow())
     if not winMSpaces[pos].mspace[currentMSpace] then -- nothing to do in case window is on current mspace
@@ -1143,6 +1218,56 @@ function derefWinMSpace()
     fwin:minimize()
   end
   goToSpace(currentMSpace) -- refresh
+end
+
+-- keyboard shortcuts - snap window into grid positons
+--fb:
+function snap2(pos)
+  local fwin = hs.window.focusedWindow()
+  local maxWithMB = fwin:screen():fullFrame()
+  local max = fwin:screen():frame()
+  local heightMB = maxWithMB.h - max.h   -- height menu bar
+  local xSnap
+  local ySnap
+  local wSnap
+  local hSnap
+  if pos == 1 then
+    xSnap = 0
+    ySnap = heightMB
+    wSnap = max.w / 2
+    hSnap = max.h
+  elseif pos == 2 then
+    xSnap = max.w / 2
+    ySnap = heightMB
+    wSnap = max.w / 2
+    hSnap = max.h
+  elseif pos == 3 then
+    xSnap = 0
+    ySnap = heightMB
+    wSnap = max.w / 2
+    hSnap = max.h / 2
+  elseif pos == 4 then
+    xSnap = 0
+    ySnap = heightMB + max.h / 2
+    wSnap = max.w / 2
+    hSnap = max.h / 2
+  elseif pos == 5 then
+    xSnap = max.w / 2
+    ySnap = heightMB
+    wSnap = max.w / 2
+    hSnap = max.h / 2
+  elseif pos == 6 then
+    xSnap = max.w / 2
+    ySnap = heightMB + max.h / 2
+    wSnap = max.w / 2
+    hSnap = max.h / 2
+  elseif pos == 7 then
+    xSnap = 0
+    ySnap = heightMB
+    wSnap = max.w
+    hSnap = max.h
+  end
+  fwin:move(hs.geometry.new(xSnap, ySnap, wSnap, hSnap), nil, false, 0)
 end
 
 

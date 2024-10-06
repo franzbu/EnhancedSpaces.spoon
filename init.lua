@@ -62,6 +62,9 @@ function Mellon:new(options)
   moveWindowPrevMSpaceSwitch = options.moveWindowPrevMSpaceSwitch or 'q'
   moveWindowNextMSpaceSwitch = options.moveWindowNextMSpaceSwitch or 'w'
 
+  switchCurrentMS = options.switchCurrentMS or 'tab'
+  switchReferences = options.switchReferences or 'escape'
+
   margin = options.margin or 0.3
   m = margin * 100 / 2
 
@@ -116,67 +119,10 @@ function Mellon:new(options)
   filter.default:subscribe(filter.windowOnScreen, function() refreshWinMSpaces() end)
   filter.default:subscribe(filter.windowFocused, function() refreshWinMSpaces() end)
   filter.default:subscribe(filter.windowMoved, function(w) correctXY(w) end)
-  --todo: ?need to react to resizing?
-
-  --[[ -- flagsKeyboardTracker
-  -- 'subscribe', watchdog for modifier keys
-  cycleModCounter = 0 
-  local events = hs.eventtap.event.types
-  local prevModifier = nil --{ "xyz" }
-  cycleAll = false
-  keyboardTracker = hs.eventtap.new({ events.flagsChanged }, function(e)
-    local flagsKeyboardTracker = eventToArray(e:getFlags())
-    -- on modifier release flag is assigned 'nil' -> prevModifier remedies that
-    if modifiersEqual(flagsKeyboardTracker, modifierSwitchWin) or modifiersEqual(prevModifier, modifierSwitchWin) then
-      cycleModCounter = cycleModCounter + 1
-      if cycleModCounter % 2 == 0 then -- only when released (and not when pressed)
-        prevModifier = nil
-        if cycleAll then
-          hs.timer.doAfter(0.02, function()
-            cycleModCounter = 0
-            pos = getWinMSpacesPos(hs.window.focusedWindow())
-            for i = 1, #mspaces do
-              if winMSpaces[pos].mspace[i] then
-                goToSpace(i)
-                break 
-              end
-            end
-          end)
-          cycleAll = false
-        end
-
-      end
-    end
-    prevModifier = flagsKeyboardTracker
-  end)
-  keyboardTracker:start()
-  
-
-
-  
-  --cycle through all windows, regardless of which WS they are on (https://applehelpwriter.com/2018/01/14/how-to-add-a-window-switcher/)
-  switcher = hs.window.switcher.new()   -- default windowfilter: only visible windows, all Spaces
-  switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
-  switcher.ui.thumbnailSize = 112
-  switcher.ui.selectedThumbnailSize = 284
-  switcher.ui.backgroundColor = { 0.3, 0.3, 0.3, 0.5 }
-  switcher.ui.textSize = 14
-  switcher.ui.showSelectedTitle = false
-  hs.hotkey.bind(modifierSwitchWin_MS_All, "tab", function()
-    cycleAll = true
-    switcher:nextWindow ()   --nextWindow()
-    --after release of modifierSwitchWin_MS_All, watchdog initiates whatever needs to be done
-  end)
-  hs.hotkey.bind("alt-shift", "tab", function()
-    cycleAll = true
-    switcher:previous()
-  end)
-  --]]
-
 
   -- cycle through windows of current WS, todo (maybe): last focus first
   local nextFMS = 1
-  hs.hotkey.bind(modifierSwitchWin, "tab", function()
+  hs.hotkey.bind(modifierSwitchWin, switchCurrentMS, function()
     if nextFMS > #winMSpaces then nextFMS = 1 end
     while not winMSpaces[nextFMS].mspace[currentMSpace] do
       if nextFMS == #winMSpaces then
@@ -192,7 +138,7 @@ function Mellon:new(options)
 
   -- cycle through references of one window
   local nextFR = 1
-  hs.hotkey.bind(modifierSwitchWin, "escape", function()
+  hs.hotkey.bind(modifierSwitchWin, switchReferences, function()
     pos = getWinMSpacesPos(hs.window.focusedWindow())
     nextFR = getnextMSpaceNumber(currentMSpace)
     while not winMSpaces[pos].mspace[nextFR] do

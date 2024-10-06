@@ -54,20 +54,21 @@ function Mellon:new(options)
   modifierReference = options.modifierReference or { 'ctrl', 'shift' } -- { 'alt', 'ctrl', 'shift' } -- create references of windows on other mspaces
     
   modifierSwitchMS = options.modifierSwitchMS or modifier1
-  prevMSpace = options.prevMSpace or 'a'
-  nextMSpace = options.nextMSpace or 's'
-  moveWindowPrevMSpace = options.moveWindowPrevMSpace or 'd'
-  moveWindowNextMSpace = options.moveWindowNextMSpace or 'f'
-  moveWindowPrevMSpaceSwitch = options.moveWindowPrevMSpaceSwitch or 'q'
-  moveWindowNextMSpaceSwitch = options.moveWindowNextMSpaceSwitch or 'w'
+  modifierSwitchMSKeys = {'a', 's', 'd', 'f', 'q', 'w'}
 
   modifierSwitchWin = options.modifierSwitchWin or modifier1
+  modifierSwitchWinKeys = options.modifierSwitchWinKeys or { 'tab', 'escape' }
   switchCurrentMS = options.switchCurrentMS or 'tab'
   switchReferences = options.switchReferences or 'escape'
 
-  modifierSnap2 = options.modifierSnap2 or modifier1
-  modifierSnap3 = options.modifierSnap3 or modifier2 
-  modifierSnap3_2 = options.modifierSnap3 or modifier1_2
+  modifierSnap2 = options.modifierSnap2 or modifier2
+  modifierSnap2Keys = options.modifierSnap2Keys or {'4', '5', '6', '7', '8', '9', '0'}
+
+  modifierSnap3 = options.modifierSnap3 or modifier1 
+  modifierSnap3Keys = options.modifierSnap3Keys or {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'o', 'p'}
+
+  modifierSnap3_2 = options.modifierSnap3_2 or modifier1_2
+  modifierSnap3_2Keys = options.modifierSnap3_2Keys or {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'o', 'p'}
 
   margin = options.margin or 0.3
   m = margin * 100 / 2
@@ -183,7 +184,7 @@ function Mellon:new(options)
 
   -- cycle through windows of current WS, todo (maybe): last focus first
   local nextFMS = 1
-  hs.hotkey.bind(modifierSwitchWin, switchCurrentMS, function()
+  hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[1], function()
     if nextFMS > #winMSpaces then nextFMS = 1 end
     while not winMSpaces[nextFMS].mspace[currentMSpace] do
       if nextFMS == #winMSpaces then
@@ -199,7 +200,7 @@ function Mellon:new(options)
 
   -- cycle through references of one window
   local nextFR = 1
-  hs.hotkey.bind(modifierSwitchWin, switchReferences, function()
+  hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[2], function()
     pos = getWinMSpacesPos(hs.window.focusedWindow())
     nextFR = getnextMSpaceNumber(currentMSpace)
     while not winMSpaces[pos].mspace[nextFR] do
@@ -247,31 +248,31 @@ function Mellon:new(options)
 
 
   --_________ switching spaces / moving windows _________
-  hs.hotkey.bind(modifierSwitchMS, prevMSpace, function() -- previous space (incl. cycle)
+  hs.hotkey.bind(modifierSwitchMS, modifierSwitchMSKeys[1], function() -- previous space (incl. cycle)
     currentMSpace = getprevMSpaceNumber(currentMSpace)
     goToSpace(currentMSpace)
   end)
 
 
-  hs.hotkey.bind(modifierSwitchMS, nextMSpace, function() -- next space (incl. cycle)
+  hs.hotkey.bind(modifierSwitchMS, modifierSwitchMSKeys[2], function() -- next space (incl. cycle)
     currentMSpace = getnextMSpaceNumber(currentMSpace)
     goToSpace(currentMSpace)
   end)
 
 
-  hs.hotkey.bind(modifierSwitchMS, moveWindowPrevMSpace, function() -- move active window to previous space (incl. cycle)
+  hs.hotkey.bind(modifierSwitchMS, modifierSwitchMSKeys[3], function() -- move active window to previous space (incl. cycle)
     -- move window to prev space
     moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace)
   end)
 
 
-  hs.hotkey.bind(modifierSwitchMS, moveWindowNextMSpace, function() -- move active window to next space (incl. cycle)
+  hs.hotkey.bind(modifierSwitchMS, modifierSwitchMSKeys[4], function() -- move active window to next space (incl. cycle)
     -- move window to next space
     moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace)
   end)
 
 
-  hs.hotkey.bind(modifierSwitchMS, moveWindowPrevMSpaceSwitch, function() -- move active window to previous space and switch there (incl. cycle)
+  hs.hotkey.bind(modifierSwitchMS, modifierSwitchMSKeys[5], function() -- move active window to previous space and switch there (incl. cycle)
     -- move window to prev space and switch there
     moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace)
     currentMSpace = getprevMSpaceNumber(currentMSpace)
@@ -279,7 +280,7 @@ function Mellon:new(options)
   end)
 
 
-  hs.hotkey.bind(modifierSwitchMS, moveWindowNextMSpaceSwitch, function() -- move active window to next space and switch there (incl. cycle)
+  hs.hotkey.bind(modifierSwitchMS, modifierSwitchMSKeys[6], function() -- move active window to next space and switch there (incl. cycle)
     -- move window to next space and switch there
       moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace)
       currentMSpace = getnextMSpaceNumber(currentMSpace)
@@ -300,16 +301,22 @@ function Mellon:new(options)
   -- ___________ keyboard shortcuts - snap windows into grid postions ___________
 -- fb:
   for i = 1, 7 do
-    hs.hotkey.bind(modifierSnap2, tostring(i), function()
-      snap2(i)
+    hs.hotkey.bind(modifierSnap2, modifierSnap2Keys[i], function()
+      snap2(modifierSnap2Keys[i])
     end)
   end
 
+  for i = 1, 12 do
+    hs.hotkey.bind(modifierSnap3, modifierSnap3Keys[i], function()
+      snap3(modifierSnap3Keys[i])
+    end)
+  end
 
-
-
-
-
+  for i = 1, 12 do
+    hs.hotkey.bind(modifierSnap3_2, modifierSnap3_2Keys[i], function()
+      snap3_2(modifierSnap3_2Keys[i])
+    end)
+  end
 
   -- debug
   -- list all windows
@@ -1221,7 +1228,6 @@ function derefWinMSpace()
 end
 
 -- keyboard shortcuts - snap window into grid positons
---fb:
 function snap2(pos)
   local fwin = hs.window.focusedWindow()
   local maxWithMB = fwin:screen():fullFrame()
@@ -1231,37 +1237,37 @@ function snap2(pos)
   local ySnap
   local wSnap
   local hSnap
-  if pos == 1 then
+  if pos == modifierSnap2Keys[1] then
     xSnap = 0
     ySnap = heightMB
     wSnap = max.w / 2
     hSnap = max.h
-  elseif pos == 2 then
+  elseif pos == modifierSnap2Keys[2] then
     xSnap = max.w / 2
     ySnap = heightMB
     wSnap = max.w / 2
     hSnap = max.h
-  elseif pos == 3 then
+  elseif pos == modifierSnap2Keys[3] then
     xSnap = 0
     ySnap = heightMB
     wSnap = max.w / 2
     hSnap = max.h / 2
-  elseif pos == 4 then
+  elseif pos == modifierSnap2Keys[4] then
     xSnap = 0
     ySnap = heightMB + max.h / 2
     wSnap = max.w / 2
     hSnap = max.h / 2
-  elseif pos == 5 then
+  elseif pos == modifierSnap2Keys[5] then
     xSnap = max.w / 2
     ySnap = heightMB
     wSnap = max.w / 2
     hSnap = max.h / 2
-  elseif pos == 6 then
+  elseif pos == modifierSnap2Keys[6] then
     xSnap = max.w / 2
     ySnap = heightMB + max.h / 2
     wSnap = max.w / 2
     hSnap = max.h / 2
-  elseif pos == 7 then
+  elseif pos == modifierSnap2Keys[7] then
     xSnap = 0
     ySnap = heightMB
     wSnap = max.w
@@ -1269,6 +1275,157 @@ function snap2(pos)
   end
   fwin:move(hs.geometry.new(xSnap, ySnap, wSnap, hSnap), nil, false, 0)
 end
+
+
+function snap3(pos)
+  local fwin = hs.window.focusedWindow()
+  local maxWithMB = fwin:screen():fullFrame()
+  local max = fwin:screen():frame()
+  local heightMB = maxWithMB.h - max.h   -- height menu bar
+  local xSnap
+  local ySnap
+  local wSnap
+  local hSnap
+  if pos == modifierSnap3Keys[1] then
+    xSnap = 0
+    ySnap = heightMB
+    wSnap = max.w / 3
+    hSnap = max.h
+  elseif pos == modifierSnap3Keys[2] then
+    xSnap = max.w / 3
+    ySnap = heightMB
+    wSnap = max.w / 3
+    hSnap = max.h
+  elseif pos == modifierSnap3Keys[3] then
+    xSnap = max.w - max.w / 3
+    ySnap = heightMB
+    wSnap = max.w / 3
+    hSnap = max.h
+  elseif pos == modifierSnap3Keys[4] then
+    xSnap = 0
+    ySnap = heightMB
+    wSnap = max.w / 3
+    hSnap = max.h / 3
+  elseif pos == modifierSnap3Keys[5] then
+    xSnap = 0
+    ySnap = heightMB + max.h / 3
+    wSnap = max.w / 3
+    hSnap = max.h / 3
+  elseif pos == modifierSnap3Keys[6] then
+    xSnap = 0
+    ySnap = heightMB + max.h - max.h / 3
+    wSnap = max.w / 3
+    hSnap = max.h / 3
+  elseif pos == modifierSnap3Keys[7] then
+    xSnap = max.w / 3
+    ySnap = heightMB
+    wSnap = max.w / 3
+    hSnap = max.h / 3
+  elseif pos == modifierSnap3Keys[8] then
+    xSnap = max.w / 3
+    ySnap = heightMB + max.h / 3
+    wSnap = max.w / 3
+    hSnap = max.h / 3
+  elseif pos == modifierSnap3Keys[9] then
+    xSnap = max.w / 3
+    ySnap = heightMB + max.h - max.h / 3
+    wSnap = max.w / 3
+    hSnap = max.h / 3
+  elseif pos == modifierSnap3Keys[10] then
+    xSnap = max.w - max.w / 3 
+    ySnap = heightMB
+    wSnap = max.w / 3
+    hSnap = max.h / 3
+  elseif pos == modifierSnap3Keys[11] then
+    xSnap = max.w - max.w / 3
+    ySnap = heightMB + max.h / 3
+    wSnap = max.w / 3
+    hSnap = max.h / 3
+  elseif pos == modifierSnap3Keys[12] then
+    xSnap = max.w - max.w / 3
+    ySnap = heightMB + max.h - max.h / 3
+    wSnap = max.w / 3
+    hSnap = max.h / 3
+  end
+  fwin:move(hs.geometry.new(xSnap, ySnap, wSnap, hSnap), nil, false, 0)
+end
+
+--fb
+function snap3_2(pos)
+  local fwin = hs.window.focusedWindow()
+  local maxWithMB = fwin:screen():fullFrame()
+  local max = fwin:screen():frame()
+  local heightMB = maxWithMB.h - max.h   -- height menu bar
+  local xSnap
+  local ySnap
+  local wSnap
+  local hSnap
+  if pos == modifierSnap3_2Keys[1] then
+    print("___________________________")
+    xSnap = 0
+    ySnap = heightMB
+    wSnap = max.w / 3 * 2
+    hSnap = max.h
+  elseif pos == modifierSnap3_2Keys[2] then
+    xSnap = max.w / 3
+    ySnap = heightMB
+    wSnap = max.w / 3 * 2
+    hSnap = max.h
+  elseif pos == modifierSnap3_2Keys[3] then
+    xSnap = 0
+    ySnap = heightMB
+    wSnap = max.w / 3
+    hSnap = max.h / 3 * 2
+  elseif pos == modifierSnap3_2Keys[4] then
+    xSnap = 0
+    ySnap = heightMB + max.h / 3
+    wSnap = max.w / 3
+    hSnap = max.h / 3 * 2
+  elseif pos == modifierSnap3_2Keys[5] then
+    xSnap = max.w / 3
+    ySnap = heightMB
+    wSnap = max.w / 3
+    hSnap = max.h / 3 * 2
+  elseif pos == modifierSnap3_2Keys[6] then
+    xSnap = max.w / 3
+    ySnap = heightMB + max.h / 3
+    wSnap = max.w / 3
+    hSnap = max.h / 3 * 2
+  elseif pos == modifierSnap3_2Keys[7] then
+    xSnap = max.w / 3 * 2
+    ySnap = heightMB
+    wSnap = max.w / 3
+    hSnap = max.h / 3 * 2
+  elseif pos == modifierSnap3_2Keys[8] then
+    xSnap = max.w / 3 * 2
+    ySnap = heightMB + max.h / 3
+    wSnap = max.w / 3
+    hSnap = max.h / 3 * 2
+  elseif pos == modifierSnap3_2Keys[9] then
+    xSnap = 0
+    ySnap = heightMB
+    wSnap = max.w / 3 * 2
+    hSnap = max.h / 3 * 2
+  elseif pos == modifierSnap3_2Keys[10] then
+    xSnap = 0
+    ySnap = heightMB + max.h / 3
+    wSnap = max.w / 3 * 2
+    hSnap = max.h / 3 * 2
+  elseif pos == modifierSnap3_2Keys[11] then
+    xSnap = max.w / 3
+    ySnap = heightMB
+    wSnap = max.w / 3 * 2
+    hSnap = max.h / 3 * 2
+  elseif pos == modifierSnap3_2Keys[12] then
+    xSnap = max.w / 3
+    ySnap = heightMB + max.h / 3
+    wSnap = max.w / 3 * 2
+    hSnap = max.h / 3 * 2
+  end
+  fwin:move(hs.geometry.new(xSnap, ySnap, wSnap, hSnap), nil, false, 0)
+
+end
+
 
 
 

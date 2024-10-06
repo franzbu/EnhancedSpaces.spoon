@@ -124,62 +124,7 @@ function Mellon:new(options)
   filter.default:subscribe(filter.windowMoved, function(w) correctXY(w) end)
   --todo: ?need to react to resizing?
 
-  --[[ -- flagsKeyboardTracker
-  -- 'subscribe', watchdog for modifier keys
-  cycleModCounter = 0 
-  local events = hs.eventtap.event.types
-  local prevModifier = nil --{ "xyz" }
-  cycleAll = false
-  keyboardTracker = hs.eventtap.new({ events.flagsChanged }, function(e)
-    local flagsKeyboardTracker = eventToArray(e:getFlags())
-    -- on modifier release flag is assigned 'nil' -> prevModifier remedies that
-    if modifiersEqual(flagsKeyboardTracker, modifierSwitchWin) or modifiersEqual(prevModifier, modifierSwitchWin) then
-      cycleModCounter = cycleModCounter + 1
-      if cycleModCounter % 2 == 0 then -- only when released (and not when pressed)
-        prevModifier = nil
-        if cycleAll then
-          hs.timer.doAfter(0.02, function()
-            cycleModCounter = 0
-            pos = getWinMSpacesPos(hs.window.focusedWindow())
-            for i = 1, #mspaces do
-              if winMSpaces[pos].mspace[i] then
-                goToSpace(i)
-                break 
-              end
-            end
-          end)
-          cycleAll = false
-        end
-
-      end
-    end
-    prevModifier = flagsKeyboardTracker
-  end)
-  keyboardTracker:start()
   
-
-
-  
-  --cycle through all windows, regardless of which WS they are on (https://applehelpwriter.com/2018/01/14/how-to-add-a-window-switcher/)
-  switcher = hs.window.switcher.new()   -- default windowfilter: only visible windows, all Spaces
-  switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
-  switcher.ui.thumbnailSize = 112
-  switcher.ui.selectedThumbnailSize = 284
-  switcher.ui.backgroundColor = { 0.3, 0.3, 0.3, 0.5 }
-  switcher.ui.textSize = 14
-  switcher.ui.showSelectedTitle = false
-  hs.hotkey.bind(modifierSwitchWin_MS_All, "tab", function()
-    cycleAll = true
-    switcher:nextWindow ()   --nextWindow()
-    --after release of modifierSwitchWin_MS_All, watchdog initiates whatever needs to be done
-  end)
-  hs.hotkey.bind("alt-shift", "tab", function()
-    cycleAll = true
-    switcher:previous()
-  end)
-  --]]
-
-
   -- cycle through windows of current WS, todo (maybe): last focus first
   local nextFMS = 1
   hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[1], function()
@@ -212,7 +157,7 @@ function Mellon:new(options)
     winMSpaces[pos].win:focus()
   end)
 
-  -- ___________ own spaces ___________
+  -- ___________ mspaces ___________
     -- menubar
   -- https://github.com/Hammerspoon/hammerspoon/issues/2878
   menubar = hs.menubar.new(true, "A"):setTitle(mspaces[currentMSpace])
@@ -297,7 +242,6 @@ function Mellon:new(options)
 
 
   -- ___________ keyboard shortcuts - snap windows into grid postions ___________
--- fb:
   for i = 1, 7 do
     hs.hotkey.bind(modifierSnap2, modifierSnap2Keys[i], function()
       snap2(modifierSnap2Keys[i])
@@ -1348,7 +1292,7 @@ function snap3(pos)
   fwin:move(hs.geometry.new(xSnap, ySnap, wSnap, hSnap), nil, false, 0)
 end
 
---fb
+
 function snap3_2(pos)
   local fwin = hs.window.focusedWindow()
   local maxWithMB = fwin:screen():fullFrame()
@@ -1423,8 +1367,6 @@ function snap3_2(pos)
   fwin:move(hs.geometry.new(xSnap, ySnap, wSnap, hSnap), nil, false, 0)
 
 end
-
-
 
 
 return Mellon

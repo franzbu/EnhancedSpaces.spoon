@@ -2,11 +2,11 @@
 
 Mellon is a Hammerspoon-based tool for managing windows and spaces. Due to limitations of Apple's implementation of spaces, Mellon incorporates a mended and improved version of spaces; from now on they are referred to as MSpaces or, simply, mspaces.
 
-MSpaces are fast and powerful, fast in the senso of that switching between them is instantaneous, and powerful in the sense of the implementation of additional features such as a more flexible version of 'sticky windows'. 'Sticky window' denotes a window that is present on as many mspaces as you like. All 'sticky windows' are full-featured references, meaning they can have different sizes and positions on different mspaces.
+MSpaces are fast and powerful: fast in the sense of that switching between them is instantaneous, and powerful in the sense of that the implementation of additional features such as 'sticky windows'. 'Sticky window' denotes a window that is present on as many mspaces as you like. All 'sticky windows' are full-featured references, meaning they can have different sizes and positions on different mspaces.
 
-Mellon has been developed with the goal of saving time when working on the Mac, and that starts with organizing windows and mspaces. Therefore, windows and mspaces can be organized using keyboard shortcuts. However, at times it can be a sensible alternative to use your pointer device (or devices, as some people use mosue and trackpad simultaneously), and that is why many of the tasks can be aided by your mouse or (Magic) trackpad.
+Mellon has been developed with the goal of saving time when working, and that starts with organizing windows and mspaces. Therefore, windows and mspaces can be handled using keyboard shortcuts. However, at times it can be a sensible approach to also use your pointer device, and that is why many of the tasks can be aided by your mouse or trackpad.
 
-Mellon is easiest explained on the go. Therefore, go ahead with the installation.
+Mellon is easiest explained on the go. Therefore, simply go ahead with its installation.
 
 
 ## Installation
@@ -15,7 +15,7 @@ Mellon has been built on top of Hammerspoon and consequently requires [Hammerspo
 
 To install Mellon, after downloading and unzipping, move the folder to ~/.hammerspoon/Spoons and make sure the name of the folder is 'Mellon.spoon'. 
 
-Alternatively, run the following command on a terminal:
+Alternatively, run the following command in a terminal window:
 
 ```lua
 
@@ -51,9 +51,9 @@ Mellon:new({
 
 ```
 
-Restart Hammerspoon and you are ready to go. You also might want to adjust 'MSpaces' and the default mspace after the start. 
+Restart Hammerspoon and you are ready to go. You also might want to adjust the amount and names of your 'MSpaces' and the default mspace. 
 
-In case you would like to change the default modifier keys (default modifier1) for pressing alongside prevMSpace, nextMSpace, and so on, you can add the following line with the desired modifier adjustments to 'init.lua':
+In case you would like to change the default modifier key(s) (default modifier1 = { 'alt' }) for pressing alongside prevMSpace, nextMSpace, and so on, you can add the following line with the desired modifier adjustments to 'init.lua':
 
 ```lua
   ...
@@ -62,19 +62,17 @@ In case you would like to change the default modifier keys (default modifier1) f
 ```
 ## MSpaces
 
-Now, by pressing 'modifierSwitchMS' and 'moveWindowPrevMSpaceSwitch', for instance, you move the active window on your mspace to the adjacent mspace to the left and switch there as well. For moving the window without switching or switching without moving press the proper keyboard shortcuts.
+Now, by pressing 'modifierSwitchMS' and 'moveWindowPrevMSpaceSwitch', for instance, you move the active window on your current mspace to the adjacent mspace on the left and switch there simultaneously. For moving the window without switching or switching without moving press the designated keyboard shortcuts.
 
-To create 'sticky windows', press the modifier1 and modifier2 keys simultaneously and additionally press the key corresponding to the mspace you would like to create a reference of the currently active window on, for instance, '3'. In case you would like to adjust the modifier keys, add the following line to your 'init.lua':
-
+To create 'sticky windows', press your 'ctrl' and 'shift' keys simultaneously and additionally press the key corresponding to the mspace you would like to create a reference of the currently active window on, for instance, '3'. In case you would like to adjust the modifier keys, add the following line to your 'init.lua':
 
 ```lua
   ...
-  modifierReference = { 'ctrl', 'shift' },
+  modifierReference = { 'alt', 'ctrl' },
   ...
 ```
 
-For switching between all windows on your current mspace, press 'modifier1' and 'tab'. For switching between references of windows ('sticky windows), press 'modifier1' and 'escape'. Also here the keys can be changed the following way:
-
+For switching between all windows on your current mspace, press 'modifier1' and 'tab'. For switching between references of windows ('sticky windows), press 'modifier1' and 'escape'. Add the following lines to 'init.lua' in case you prefer different key combinations:
 
 ```lua
   ...
@@ -85,23 +83,20 @@ For switching between all windows on your current mspace, press 'modifier1' and 
   ...
 ```
 
-
-
-## In short a few further hints, more to follow:
+## A few further hints, more to follow:
 
 Mellon can automatically resize your windows on your mspaces on a dynamically (according to your intentions, of course) changing grid size. You can use your mouse or trackpad by using your modifier keys and dragging your windows beyond certain areas of the borders of your screen. But first to manual moving and resizing:
 
 
-
 ### Manual Moving and Positioning
 
-To move a window, hold your 'modifier1' or 'modifier2' key(s) down, then click the left mouse button and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond the 10-percent-margin, things are getting interesting because then window management with automatic resizing and positioning comes into play.
+To move a window, hold your 'modifier1' or 'modifier2' key(s) down, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond the 10-percent-margin, things are getting interesting because then window management with automatic resizing and positioning comes into play.
 
 ### Automatic Resizing and Positioning 
 
 For automatic resizing and positioning of a window, you simply have to move between 10 and 80 percent of the window beyond the left, right, or bottom (no upper limit here) borders of your screen using your left mouse button. 
 
-As long as windows are resized - or moved within the borders of the screen -, it makes no difference whether you use  'modifier1' or 'modifier2'. However, once a window is moved beyond the screen borders (10 - 80 percent of the window), different positioning and resizing scenarios are called into action; they are as follows:
+As long as windows are resized - or moved within the borders of the screen -, it makes no difference whether you use your 'modifier1' or 'modifier2' keys. However, once a window is moved beyond the screen borders (10 - 80 percent of the window), different positioning and resizing scenarios are called into action; they are as follows:
 
 * modifier1: 
   * If windows are moved beyond the left (right) borders of the screen: imagine your screen border divided into three equally long sections: if the cursor crosses the screen border in the middle third of the border, the window snaps into the left (right) half of the screen. Crossing the screen border in the upper and lower thirds, the window snaps into the respective quarters of the screen.

@@ -48,7 +48,7 @@ Restart Hammerspoon and you are ready to go. You might additionally want to adju
 
 ## MSpaces
 
-MSpaces make your life or organizing spaces as you know them easier. The default setup uses 'modifier1' and the keys 'a', 's', 'd', 'f', 'q', and 'w' to switch to MSpace left/right ('a', 's'), move window to MSpace left/right ('d', 'f'), move window to MSpace left/right and switch there ('q', 'w'). 
+The default setup uses 'modifier1' and the keys 'a', 's', 'd', 'f', 'q', and 'w' to switch to MSpace left/right ('a', 's'), move window to MSpace left/right ('d', 'f'), move window to MSpace left/right and switch there ('q', 'w'). 
 
 Now, by pressing 'modifierSwitchMS' and 'q', for instance, you move the active window from your current MSpace to the adjacent MSpace on the left and switch there. For moving the window without switching or switching without moving use the designated keyboard shortcuts.
 

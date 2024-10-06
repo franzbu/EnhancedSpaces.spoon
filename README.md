@@ -67,7 +67,7 @@ In case you would like to change the default modifier key and or some of the oth
 
 ## MSpaces Are More
 
-However, this has just been the start. MSpaces can be more. See each MSpace as representations of your windows. This means that, for instance, you can have two MSpaces with the same windows on them, but in different sizes and in different locations.
+However, this has just been the start. MSpaces will be more if you want them to be. See each MSpace as representations of your windows. This means that, for instance, you can have two MSpaces with the same windows on them, but in different sizes and in different locations.
   
 
 To create such representations of windows, press your 'ctrl' and 'shift' keys simultaneously and additionally press the key corresponding to the MSpace you would like to create a reference of the currently active window on, for instance, '3'. In case you would like to adjust the modifier keys, add the following line to your 'init.lua':

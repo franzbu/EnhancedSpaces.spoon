@@ -58,9 +58,7 @@ function Mellon:new(options)
 
   modifierSwitchWin = options.modifierSwitchWin or modifier1
   modifierSwitchWinKeys = options.modifierSwitchWinKeys or { 'tab', 'escape' }
-  switchCurrentMS = options.switchCurrentMS or 'tab'
-  switchReferences = options.switchReferences or 'escape'
-
+  
   modifierSnap2 = options.modifierSnap2 or modifier2
   modifierSnap2Keys = options.modifierSnap2Keys or {'4', '5', '6', '7', '8', '9', '0'}
 

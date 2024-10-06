@@ -154,7 +154,48 @@ Adjust the keys to your liking; in the order of 'modifierSnap2Keys' windows are 
 - 6: bottom right quarter of screen (9)
 - 0: whole screen (0)
 
+#### 3x3 Grid
 
+Add the following lines to your 'init.lua' (in case this has not been entirely clear: if you do not add these lines, the default options are in place):
 
-3x3 grid is coming.
+```lua
+  ...
+  modifierSnap3 = { 'alt' }, -- default: modifier2
+  modifierSnap3Keys = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'o', 'p'},
+  ...
+```
+
+Adjust the keys to your liking; in the order of 'modifierSnap3Keys' windows are positioned as follows:
+- 1: left third of screen (1)
+- 2: middle third of screen (2)
+- 3: right third of screen (3)
+- 4: top left ninth of screen (4)
+- 5: middle left night of screen (5)
+- 6: bottom left ninth of screen (6)
+- ...
+
+##### 3x3 Grid - Double (and Quadruple) Sizes
+
+With the following keyboard shortcuts you can create windows that take up more cells on the 3x3 grid. The workings will be clear by now:
+
+```lua
+  ...
+  modifierSnap3_2 = { 'ctrl', 'alt', 'shift' }, -- default: modifier1 + modifier2
+  modifierSnap3_2Keys = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'o', 'p'},
+  ...
+```
+
+Adjust the keys to your liking; in the order of 'modifierSnap3_2Keys' windows are positioned as follows (descriptions might prove to be tricky, in that case trying it out will help):
+- 1: left two thirds of screen: 3 cells (1)
+- 2: right two thirds of screen: 3 cells (2)
+- 3: left third, upper two cells (3)
+- 4: left third, lower two cells (4)
+- 5: middle third, upper two cells (5)
+- 6: middle third, lower two cells (6)
+- 7: right third, upper two cells (7)
+- 8: right third, lower two cells (8)
+- 9: top left and middle thirds: 4 cells (9)
+- 10: bottom left and middle thirds: 4 cells (10)
+- 11: top middle and right thirds: 4 cells (o)
+- 12: bottom middle and right thirds: 4 cells (p)
 

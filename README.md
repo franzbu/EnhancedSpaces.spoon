@@ -38,14 +38,6 @@ Mellon:new({
 
   modifier1 = { 'alt' }, -- default: { 'alt' } -> for window management with mouse (also modifier2)
   modifier2 = { 'ctrl' }, -- default: { 'ctrl' }
-   
-  -- keyboard shortcuts (alongside modifier 1 + modifier2 -> adjustable) for moving windows to/switching mspaces
-  prevMSpace = 'a',
-  nextMSpace = 's',
-  moveWindowPrevMSpace = 'd',
-  moveWindowNextMSpace = 'f',
-  moveWindowPrevMSpaceSwitch = 'q',
-  moveWindowNextMSpaceSwitch = 'w',
 
 })
 
@@ -53,18 +45,32 @@ Mellon:new({
 
 Restart Hammerspoon and you are ready to go. You also might want to adjust the amount and names of your 'MSpaces' and the default mspace. 
 
-In case you would like to change the default modifier key(s) (default modifier1 = { 'alt' }) for pressing alongside prevMSpace, nextMSpace, and so on, you can add the following line with the desired modifier adjustments to 'init.lua':
+
+## MSpaces
+
+MSpaces make your life or organizing spaces as you know them easier when compared to macOS's spaces. The default setup uses 'modifier1' and the keys 'a', 's', 'd', 'f', 'q', and 'w' to switch to mspace left/right ('a', 's'), move window to mspace left/right ('d', 'f'), move window to mspace left/right and switch there ('q', 'w'). 
+
+Now, by pressing 'modifierSwitchMS' and 'q', for instance, you move the active window on your current mspace to the adjacent mspace on the left and switch there. For moving the window without switching or switching without moving press the designated keyboard shortcuts.
+
+In case you would like to change the default modifier key and or some of the other keys that make up your keyboard shortcuts, you can add the following line with the desired modifier adjustments to 'init.lua':
+
 
 ```lua
   ...
   modifierSwitchMS = { 'shift', 'ctrl', 'alt', 'cmd' },
+  -- 1, 2: switch to mspace left/right ('a', 's')
+  -- 3, 4: move window to mspace left/right ('d', 'f')
+  -- 5, 6: move window to mspace left/right and switch there ('q', 'w')
+  modifierSwitchMSKeys = {'a', 's', 'd', 'f', 'q', 'w'}, 
   ...
 ```
-## MSpaces
 
-Now, by pressing 'modifierSwitchMS' and 'moveWindowPrevMSpaceSwitch', for instance, you move the active window on your current mspace to the adjacent mspace on the left and switch there simultaneously. For moving the window without switching or switching without moving press the designated keyboard shortcuts.
+## MSpaces Can Be More
 
-To create 'sticky windows', press your 'ctrl' and 'shift' keys simultaneously and additionally press the key corresponding to the mspace you would like to create a reference of the currently active window on, for instance, '3'. In case you would like to adjust the modifier keys, add the following line to your 'init.lua':
+However, this has just been the start. MSpaces can be so much more. See MSpaces as representations of your windows, which means that, for instance, you can have two mspaces with the same windows on them, but in different sizes and in different locations.
+  
+
+To create such representations of windows, press your 'ctrl' and 'shift' keys simultaneously and additionally press the key corresponding to the mspace you would like to create a reference of the currently active window on, for instance, '3'. In case you would like to adjust the modifier keys, add the following line to your 'init.lua':
 
 ```lua
   ...
@@ -72,16 +78,31 @@ To create 'sticky windows', press your 'ctrl' and 'shift' keys simultaneously an
   ...
 ```
 
-For switching between all windows on your current mspace, press 'modifier1' and 'tab'. For switching between references of windows ('sticky windows), press 'modifier1' and 'escape'. Add the following lines to 'init.lua' in case you prefer different key combinations:
+## Switching Between Windows
+
+For switching between all windows you can use macOS's integrated window switcher (cmd-tab) or third party switchers such as AltTab. Also for switching between the different windows of one application you can use Apple's integrated switcher or a third party alternative.
+
+However, since MSpaces provide more features, further possibilities for switching aids your workflow.
+
+### Switching between Apps on a Single MSpace
+
+For switching between all windows on your current mspace, press 'modifier1' and 'tab'. Add the following lines to 'init.lua' in case you prefer different key combinations:
+
+
 
 ```lua
   ...
-  modifierSwitchWin = modifier1, -- default: modifier1
-  -- keyboard shortcuts alongside 'modifierSwitchWin'
-  switchCurrentMS = 'tab', -- default: 'tab' -> switch between windows of current mspace
-  switchReferences = 'escape', -- default: 'escape' -> switch between references of same window, which by design are on different mspaces
+  -- keyboard shortcuts for switching between windows on one mspace...
+  -- ... and between references of one and the same window on different mspaces
+  modifierSwitchWin = { 'alt' }, -- default: modifier1
+  modifierSwitchWinKeys = { 'tab', 'escape' }, -- default: { 'tab', 'escape' }
   ...
 ```
+
+### Switching between References of Windows
+
+For switching between references of windows ('sticky windows), press 'modifier1' and 'escape'. In case you would like to change the keys, look directly above; change the second element in the table 'modifierSwitchWinKeys'
+
 
 ## A few further hints, more to follow:
 
@@ -92,7 +113,7 @@ Mellon can automatically resize your windows on your mspaces on a dynamically (a
 
 To move a window, hold your 'modifier1' or 'modifier2' key(s) down, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond the 10-percent-margin, things are getting interesting because then window management with automatic resizing and positioning comes into play.
 
-### Automatic Resizing and Positioning 
+### Automatic Resizing and Positioning - Mouse or Trackpad
 
 For automatic resizing and positioning of a window, you simply have to move between 10 and 80 percent of the window beyond the left, right, or bottom (no upper limit here) borders of your screen using your left mouse button. 
 
@@ -109,16 +130,29 @@ As long as windows are resized - or moved within the borders of the screen -, it
 
 All this is been implemented with the goal of being as intuitive as possible; therefore, you shoud be able to build up your muscle memory quickly.
 
-### Keyboard Shortcuts for Resizing and Positioning Wiondows
+
+### Automatic Resizing and Positioning - Keyboard
 
 To resize and move the active window into a 2x2 grid position, use your 'modifier1' and number keys 1-7. In case you would like to use a different modifier key, add the following line to your 'init.lua':
 
 
 ```lua
   ...
-  modifierSnap2 = { 'ctrl', 'shift' }, -- default: modifier1 
+  modifierSnap2 = { 'ctrl' }, -- default: modifier2
+  modifierSnap2Keys = {'4', '5', '6', '7', '8', '9', '0'},
   ...
 ```
+
+Adjust the keys to your liking; in the order of 'modifierSnap2Keys' windows are positioned as follows:
+- 1: left half of screen (4)
+- 2: right half of screen (5)
+- 3: top left quarter of screen (6)
+- 4: bottom left quarter of screen (7)
+- 5: top right quarter of screen (8)
+- 6: bottom right quarter of screen (9)
+- 0: whole screen (0)
+
+
 
 3x3 grid is coming.
 

@@ -1,6 +1,6 @@
 # Mellon
 
-Mellon is a Hammerspoon-based tool for managing windows and spaces. Due to limitations of Apple's 'Spaces', Mellon incorporates a mended and extended implementation; from now on they are referred to as mSpaces.
+Mellon is a Hammerspoon-based tool for managing windows and spaces. Due to limitations of Apple's Spaces, Mellon incorporates an improved version; they will be referred to as mSpaces.
 
 mSpaces are fast and powerful: fast in the sense that switching between them is instantaneous and moving windows between mSpaces is a matter of pressing a keyboard shortcut or a flick with your pointing device, and powerful in the sense that additional features such as 'sticky windows' have been implemented. 'Sticky window' denotes a window that is present on more than one mSpace, actually on as many mSpaces as you like. 'Sticky windows' are full-featured references, meaning they can have different sizes and positions on different mSpaces. More about this feature later.
 
@@ -89,7 +89,7 @@ However, since mSpaces provide more features, further possibilities for switchin
 
 ### Switching between Apps on a Single mSpace
 
-For switching between all windows on your current mSpace, press 'modifier1' and 'tab'. Add the following lines to 'init.lua' in case you prefer different key combinations:
+For switching between all windows on your current mSpace, press 'modifier1' and 'tab' (for switching in reverse order also press 'shift'). Add the following lines to 'init.lua' in case you prefer different key combinations:
 
 
 ```lua
@@ -103,7 +103,7 @@ For switching between all windows on your current mSpace, press 'modifier1' and 
 
 ### Switching between References of Windows
 
-For switching between the references of a window ('sticky windows), press 'modifier1' and 'escape'. In case you would like to change the keys, look directly above; change the second element in the table 'modifierSwitchWinKeys'.
+For switching between the references of a window ('sticky windows), press 'modifier1' and 'escape'. In case you would like to change these keys, change the second element in the table 'modifierSwitchWinKeys' (see directly above).
 
 
 ## Moving and Resizing of Windows:

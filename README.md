@@ -65,11 +65,7 @@ In case you would like to change the default modifier key and or some of the oth
 
 ### Move Windows Directly to Any mSpace 
 
-So far you know how to move a window to the adjacent mSpace. The more mSpaces you have, though, the more cumbersome it gets to move windows from mSpace to mSpace until they reach their final destination. 
-
-In such a case you can enable a keyboard shortcut for directly moving windows to any mSpace; by default this is disabled.
-
-To enable this feature, add the following line to your 'init.lua' and change it to the desired modifier key(s):
+So far you have learned how to move a window to the adjacent mSpace. In case you would like to have a keyboard shortcut for directly moving windows to any mSpace without any potential detours, add the following line to your 'init.lua' and change it to represent your desired modifier key(s):
 
 ```lua
   ...
@@ -99,7 +95,7 @@ For switching between your windows you can use macOS's integrated window switche
 
 However, since mSpaces provide more features, further possibilities for switching are available.
 
-### Switching between Apps on a Single mSpace
+### Switching between Windows on a Single mSpace
 
 For switching between all windows on your current mSpace, press 'modifier1' and 'tab' (for switching in reverse order also press 'shift'). Add the following lines to 'init.lua' in case you prefer different key combinations:
 
@@ -222,3 +218,4 @@ Windows are positioned as follows (descriptions might prove tricky; in that case
 - A backup feature that automatically restores all windows to their original mSpaces might be coming with a future update.
 
 Enjoy!
+

@@ -1,6 +1,6 @@
 # Mellon
 
-Mellon is a Hammerspoon-based tool for managing windows and spaces. Due to limitations of Apple's Spaces, Mellon incorporates an improved version; they will be referred to as mSpaces.
+Mellon helps you manage windows and spaces. Due to limitations of Apple's Spaces, Mellon incorporates an improved version; they will be referred to as mSpaces.
 
 mSpaces have been designed with performance and flexibility in mind: switching between mSpaces is instantaneous while moving windows between mSpaces is a matter of pressing a keyboard shortcut or flicking your pointing device. Further, additional features such as 'sticky windows' have been implemented. 'Sticky windows' denote windows that are present on more than one mSpace, actually on as many mSpaces as you like. 'Sticky windows' are full-featured references, meaning they can have different sizes and positions on different mSpaces. More later.
 

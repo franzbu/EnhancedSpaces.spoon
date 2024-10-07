@@ -1,10 +1,10 @@
 # Mellon
 
-Mellon is a Hammerspoon-based tool for managing windows and spaces. Due to limitations of Apple's 'Spaces', Mellon incorporates a mended and extended implementation; from now on they are referred to as MSpaces.
+Mellon is a Hammerspoon-based tool for managing windows and spaces. Due to limitations of Apple's 'Spaces', Mellon incorporates a mended and extended implementation; from now on they are referred to as mSpaces.
 
-MSpaces are fast and powerful: fast in the sense that switching between them is instantaneous and moving windows between MSpaces is a matter of pressing a keyboard shortcut or a flick with your pointing device, and powerful in the sense that additional features such as 'sticky windows' have been implemented. 'Sticky window' denotes a window that is present on more than one MSpace, actually on as many MSpaces as you like. 'Sticky windows' are full-featured references, meaning they can have different sizes and positions on different MSpaces. More about this feature later.
+mSpaces are fast and powerful: fast in the sense that switching between them is instantaneous and moving windows between mSpaces is a matter of pressing a keyboard shortcut or a flick with your pointing device, and powerful in the sense that additional features such as 'sticky windows' have been implemented. 'Sticky window' denotes a window that is present on more than one mSpace, actually on as many mSpaces as you like. 'Sticky windows' are full-featured references, meaning they can have different sizes and positions on different mSpaces. More about this feature later.
 
-Mellon has been developed with the goal of saving time, which is why organizing windows and MSpaces has been optimized to be the least time consuming and the most intuitive possible. Windows and MSpaces can be handled using your keyboard only; however, at times it can be simpler and/or faster if your keyboard and pointer device team up. It will therefore also be possible to do exactly that.
+Mellon has been developed with the goal of saving time, which is why organizing windows and mSpaces has been optimized to be the least time consuming and the most intuitive possible. Windows and mSpaces can be handled using your keyboard only; however, at times it can be simpler and/or faster if your keyboard and pointer device team up. It will therefore also be possible to do exactly that.
 
 Mellon is easiest explained on the go, so simply get started with its installation.
 
@@ -32,9 +32,9 @@ local Mellon = hs.loadSpoon('Mellon')
 
 Mellon:new({
 
-  -- default MSpaces:
-  MSpaces = { '1', '2', '3', 'E', 'T' }, -- default { '1', '2', '3' }
-  startMSpace = 'E', -- default 2
+  -- default mSpaces:
+  mSpaces = { '1', '2', '3', 'E', 'T' }, -- default { '1', '2', '3' }
+  startmSpace = 'E', -- default 2
 
   modifier1 = { 'alt' }, -- default: { 'alt' }
   modifier2 = { 'ctrl' }, -- default: { 'ctrl' }
@@ -43,14 +43,14 @@ Mellon:new({
 
 ```
 
-Restart Hammerspoon and you are ready to go. You might additionally want to adjust the amount and names of your 'MSpaces' and the default mspace, see above. 
+Restart Hammerspoon and you are ready to go. You might additionally want to adjust the amount and names of your 'mSpaces' and the default mSpace, see above. 
 
 
-## MSpaces
+## mSpaces
 
-The default setup uses 'modifier1' and the keys 'a', 's', 'd', 'f', 'q', and 'w' to switch to MSpace left/right ('a', 's'), move window to MSpace left/right ('d', 'f'), move window to MSpace left/right and switch there ('q', 'w'). 
+The default setup uses 'modifier1' and the keys 'a', 's', 'd', 'f', 'q', and 'w' to switch to mSpace left/right ('a', 's'), move window to mSpace left/right ('d', 'f'), move window to mSpace left/right and switch there ('q', 'w'). 
 
-Now, by pressing 'modifierSwitchMS' and 'q', for instance, you move the active window from your current MSpace to the adjacent MSpace on the left and switch there. For moving the window without switching or switching without moving use the designated keyboard shortcuts.
+Now, by pressing 'modifierSwitchMS' and 'q', for instance, you move the active window from your current mSpace to the adjacent mSpace on the left and switch there. For moving the window without switching or switching without moving use the designated keyboard shortcuts.
 
 In case you would like to change the default modifier key and or some of the other keys that make up your keyboard shortcuts, you can add the following lines with the desired adjustments to 'init.lua':
 
@@ -58,20 +58,20 @@ In case you would like to change the default modifier key and or some of the oth
 ```lua
   ...
   modifierSwitchMS = { 'shift', 'ctrl', 'alt', 'cmd' },
-  -- 1, 2: switch to mspace left/right ('a', 's')
-  -- 3, 4: move window to mspace left/right ('d', 'f')
-  -- 5, 6: move window to mspace left/right and switch there ('q', 'w')
+  -- 1, 2: switch to mSpace left/right ('a', 's')
+  -- 3, 4: move window to mSpace left/right ('d', 'f')
+  -- 5, 6: move window to mSpace left/right and switch there ('q', 'w')
   modifierSwitchMSKeys = {'a', 's', 'd', 'f', 'q', 'w'}, 
   ...
 ```
 
-## MSpaces Are More
+## mSpaces Are More
 
-However, this has just been the start. MSpaces will be more if you want them to be. 
+However, this has just been the start. mSpaces will be more if you want them to be. 
 
-See each MSpace as representations of your windows rather than just some space to place them on; for instance, you can have two MSpaces with the same windows on them, even in different sizes and positions. Or you can have the same Notes, Calendar, Finder or Safari window on two or more MSpaces, each representation behaving as if it was the one and only, while returning to the other representations you will notice all changes that have happend in the meantime there as well.
+See each mSpace as representations of your windows rather than just some space to place them on; for instance, you can have two mSpaces with the same windows on them, even in different sizes and positions. Or you can have the same Notes, Calendar, Finder or Safari window on two or more mSpaces, each representation behaving as if it was the one and only, while returning to the other representations you will notice all changes that have happend in the meantime there as well.
   
-To create such representations of windows, press your 'ctrl' and 'shift' keys simultaneously and additionally press the key corresponding to the MSpace you would like to create a reference of the currently active window on, for instance, '3'. In case you would like to adjust the modifier keys, add the following line to your 'init.lua':
+To create such representations of windows, press your 'ctrl' and 'shift' keys simultaneously and additionally press the key corresponding to the mSpace you would like to create a reference of the currently active window on, for instance, '3'. In case you would like to adjust the modifier keys, add the following line to your 'init.lua':
 
 ```lua
   ...
@@ -85,17 +85,17 @@ To delete a reference, press 'modifierReference' and '0'. In case this happens t
 
 For switching between your windows you can use macOS's integrated window switcher (cmd-tab) or any third party switcher such as AltTab. Also for switching between the different windows of one application you can use Apple's integrated switcher or any third party alternative.
 
-However, since MSpaces provide more features, further possibilities for switching are available.
+However, since mSpaces provide more features, further possibilities for switching are available.
 
-### Switching between Apps on a Single MSpace
+### Switching between Apps on a Single mSpace
 
-For switching between all windows on your current MSpace, press 'modifier1' and 'tab'. Add the following lines to 'init.lua' in case you prefer different key combinations:
+For switching between all windows on your current mSpace, press 'modifier1' and 'tab'. Add the following lines to 'init.lua' in case you prefer different key combinations:
 
 
 ```lua
   ...
-  -- keyboard shortcuts for switching between windows on one mspace...
-  -- ... and between references of one and the same window on different MSpaces
+  -- keyboard shortcuts for switching between windows on one mSpace...
+  -- ... and between references of one and the same window on different mSpaces
   modifierSwitchWin = { 'alt' }, -- default: modifier1
   modifierSwitchWinKeys = { 'tab', 'escape' }, -- default: { 'tab', 'escape' }
   ...
@@ -108,7 +108,7 @@ For switching between the references of a window ('sticky windows), press 'modif
 
 ## Moving and Resizing of Windows:
 
-With Mellon you can automatically resize the windows on your MSpaces on a dynamically (according to your intentions, of course) changing grid size. You can use your mouse or trackpad and drag your windows beyond certain areas of the borders of your screen. Let us start with manual moving and resizing, though:
+With Mellon you can automatically resize the windows on your mSpaces on a dynamically (according to your intentions, of course) changing grid size. You can use your mouse or trackpad and drag your windows beyond certain areas of the borders of your screen. Let us start with manual moving and resizing, though:
 
 
 ### Manual Moving and Positioning

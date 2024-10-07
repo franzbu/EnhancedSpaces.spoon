@@ -59,7 +59,6 @@ function Mellon:new(options)
   modifierSwitchWin = options.modifierSwitchWin or modifier1
   modifierSwitchWinKeys = options.modifierSwitchWinKeys or { 'tab', 'escape' }
 
-
   modifierSnap2 = options.modifierSnap2 or modifier2
   modifierSnap2Keys = options.modifierSnap2Keys or {'4', '5', '6', '7', '8', '9', '0'}
 
@@ -130,14 +129,12 @@ function Mellon:new(options)
   refreshWinMSpaces()
   local max = winAll[1]:screen():frame()
 
-
   -- watchdogs
   filter = hs.window.filter --subscribe: when a new window (dis)appears, run refreshWindowsWS
   filter.default:subscribe(filter.windowNotOnScreen, function() refreshWinMSpaces() end)
   filter.default:subscribe(filter.windowOnScreen, function() refreshWinMSpaces() end)
   filter.default:subscribe(filter.windowFocused, function() refreshWinMSpaces() end)
   filter.default:subscribe(filter.windowMoved, function(w) correctXY(w) end)
-  --todo: ?need to react to resizing?
 
   ---[[ -- flagsKeyboardTracker
   -- 'subscribe', watchdog for modifier keys
@@ -165,16 +162,13 @@ function Mellon:new(options)
           end)
           cycleAll = false
         end
-
       end
     end
     prevModifier = flagsKeyboardTracker
   end)
   keyboardTracker:start()
-  
 
-
-  
+  --[[
   --cycle through all windows, regardless of which WS they are on (https://applehelpwriter.com/2018/01/14/how-to-add-a-window-switcher/)
   --switcher = hs.window.switcher.new() -- default windowfilter: only visible windows, all Spaces
   switcher = hs.window.switcher.new(hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)})) -- only windows on current mSpace
@@ -195,10 +189,9 @@ function Mellon:new(options)
   end)
   --]]
 
-
   -- cycle through windows of current WS (without UI), todo (maybe): last focus first
   local nextFMS = 1
-  hs.hotkey.bind(modifierSwitchWin, 'q', function()
+  hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[1], function()
     if nextFMS > #winMSpaces then nextFMS = 1 end
     while not winMSpaces[nextFMS].mspace[currentMSpace] do
       if nextFMS == #winMSpaces then
@@ -210,7 +203,7 @@ function Mellon:new(options)
     winMSpaces[nextFMS].win:focus()
     nextFMS = nextFMS + 1
   end)
-
+  --]]
 
   -- cycle through references of one window
   local nextFR = 1
@@ -227,9 +220,6 @@ function Mellon:new(options)
     goToSpace(nextFR)
     winMSpaces[pos].win:focus()
   end)
-
-
-  
 
   --_________ reference/dereference windows to/from mspaces, goto mspaces _________
   -- reference
@@ -249,7 +239,6 @@ function Mellon:new(options)
       goToSpace(i)
     end)
   end
-
 
   --_________ switching spaces / moving windows _________
   hs.hotkey.bind(modifierSwitchMS, modifierSwitchMSKeys[1], function() -- previous space (incl. cycle)
@@ -299,7 +288,6 @@ function Mellon:new(options)
       end)
     end
   end
-
 
   -- ___________ keyboard shortcuts - snap windows into grid postions ___________
 -- fb:
@@ -1428,8 +1416,6 @@ function snap3_2(pos)
   fwin:move(hs.geometry.new(xSnap, ySnap, wSnap, hSnap), nil, false, 0)
 
 end
-
-
 
 
 return Mellon

@@ -2,11 +2,9 @@
 
 Mellon is a Hammerspoon-based tool for managing windows and spaces. Due to limitations of Apple's Spaces, Mellon incorporates an improved version; they will be referred to as mSpaces.
 
-mSpaces are fast and powerful: fast in the sense that switching between them is instantaneous while moving windows between mSpaces is a matter of pressing a keyboard shortcut or a flick with your pointing device, and powerful in the sense that additional features such as 'sticky windows' have been implemented. 'Sticky window' denotes a window that is present on more than one mSpace, actually on as many mSpaces as you like. 'Sticky windows' are full-featured references, meaning they can have different sizes and positions on different mSpaces. More about this feature later.
+mSpaces have been designed with performance and flexibility in mind: switching between mSpaces is instantaneous while moving windows between mSpaces is a matter of pressing a keyboard shortcut or flicking your pointing device. Further, additional features such as 'sticky windows' have been implemented. 'Sticky windows' denote windows that are present on more than one mSpace, actually on as many mSpaces as you like. 'Sticky windows' are full-featured references, meaning they can have different sizes and positions on different mSpaces. More later.
 
-Mellon has been developed with the goal of saving time, which is why organizing windows and mSpaces has been optimized to be the least time consuming and the most intuitive possible. Windows and mSpaces can be handled using your keyboard only; however, at times it can be simpler and/or faster if your keyboard and pointer device team up. It will therefore also be possible to do exactly that.
-
-Mellon is easiest explained on the go, so simply get started with its installation.
+Windows and mSpaces can be handled using your keyboard only; however, like with your other workflows at times it can be simpler and faster if you use keyboard and pointer device together. Mellon is easiest learned by doing, so simply get started with its installation.
 
 
 ## Installation

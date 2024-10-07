@@ -65,11 +65,15 @@ In case you would like to change the default modifier key and or some of the oth
 
 ### Move Windows Directly to Any mSpace 
 
-The standad keyboard shortcut for moving the active window to a specific mSpace is 'alt-shift-<key for mSpace>, e.g., 'alt-shift-1' or alt-shift-t'. To change these modifier keys, add the following line to your 'init.lua' and change it to the desired modifier key(s):
+So far you know how to move a window to the adjacent mSpace. The more mSpaces you have, though, the more cumbersome it gets to move windows from mSpace to mSpace until they reach their final destination. 
+
+In such a case you can enable a keyboard shortcut for directly moving windows to any mSpace; by default this is disabled.
+
+To enable this feature, add the following line to your 'init.lua' and change it to the desired modifier key(s):
 
 ```lua
   ...
-  modifierMoveWinMSpace = { 'alt', 'shift' }, -- default: { 'alt', 'shift' }
+  modifierMoveWinMSpace = { 'alt', 'shift' }, -- default: nil
   ...
 ```
 

@@ -68,7 +68,7 @@ function Mellon:new(options)
   modifierSnap3_2 = options.modifierSnap3_2 or modifier1_2
   modifierSnap3_2Keys = options.modifierSnap3_2Keys or {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'o', 'p'}
 
-  modifierMoveWinMSpace = options.modifierMoveWinMSpace or { 'alt', 'shift' }
+  modifierMoveWinMSpace = options.modifierMoveWinMSpace or nil
 
   margin = options.margin or 0.3
   m = margin * 100 / 2

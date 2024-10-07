@@ -68,6 +68,8 @@ function Mellon:new(options)
   modifierSnap3_2 = options.modifierSnap3_2 or modifier1_2
   modifierSnap3_2Keys = options.modifierSnap3_2Keys or {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'o', 'p'}
 
+  modifierMoveWinMSpace = options.modifierMoveWinMSpace or { 'alt', 'shift' }
+
   margin = options.margin or 0.3
   m = margin * 100 / 2
 
@@ -75,7 +77,7 @@ function Mellon:new(options)
 
   useMSpaces = options.useMSpaces or true
   ratioMSpaces = options.ratioMSpaces or 0.8
-  mspaces = options.MSpaces or { '1', '2', '3' }
+  mspaces = options.mSpaces or { '1', '2', '3' }
   currentMSpace = indexOf(options.MSpaces, options.startMSpace) or 2
 
 
@@ -245,40 +247,41 @@ function Mellon:new(options)
     currentMSpace = getprevMSpaceNumber(currentMSpace)
     goToSpace(currentMSpace)
   end)
-
-
   hs.hotkey.bind(modifierSwitchMS, modifierSwitchMSKeys[2], function() -- next space (incl. cycle)
     currentMSpace = getnextMSpaceNumber(currentMSpace)
     goToSpace(currentMSpace)
   end)
-
-
   hs.hotkey.bind(modifierSwitchMS, modifierSwitchMSKeys[3], function() -- move active window to previous space (incl. cycle)
     -- move window to prev space
     moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace)
   end)
-
-
   hs.hotkey.bind(modifierSwitchMS, modifierSwitchMSKeys[4], function() -- move active window to next space (incl. cycle)
     -- move window to next space
     moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace)
   end)
-
-
   hs.hotkey.bind(modifierSwitchMS, modifierSwitchMSKeys[5], function() -- move active window to previous space and switch there (incl. cycle)
     -- move window to prev space and switch there
     moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace)
     currentMSpace = getprevMSpaceNumber(currentMSpace)
     goToSpace(currentMSpace)
   end)
-
-
   hs.hotkey.bind(modifierSwitchMS, modifierSwitchMSKeys[6], function() -- move active window to next space and switch there (incl. cycle)
     -- move window to next space and switch there
       moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace)
       currentMSpace = getnextMSpaceNumber(currentMSpace)
       goToSpace(currentMSpace)
   end)
+
+  -- fb
+  -- moving windows to mSpaces
+  for i = 1, #mspaces do
+    hs.hotkey.bind(modifierMoveWinMSpace, mspaces[i], function() -- move active window to next space and switch there (incl. cycle)
+      -- move window to specific mSpace
+      moveToSpace(i, currentMSpace)
+      --currentMSpace = getnextMSpaceNumber(currentMSpace)
+      --goToSpace(currentMSpace)
+    end)
+  end
 
   -- recover stranded windows
   for i = 1, #winAll do
@@ -289,8 +292,7 @@ function Mellon:new(options)
     end
   end
 
-  -- ___________ keyboard shortcuts - snap windows into grid postions ___________
--- fb:
+  -- ___________ keyboard shortcuts - snapping windows into grid postions ___________
   for i = 1, 7 do
     hs.hotkey.bind(modifierSnap2, modifierSnap2Keys[i], function()
       snap2(modifierSnap2Keys[i])
@@ -1341,7 +1343,7 @@ function snap3(pos)
   fwin:move(hs.geometry.new(xSnap, ySnap, wSnap, hSnap), nil, false, 0)
 end
 
---fb
+
 function snap3_2(pos)
   local fwin = hs.window.focusedWindow()
   local maxWithMB = fwin:screen():fullFrame()

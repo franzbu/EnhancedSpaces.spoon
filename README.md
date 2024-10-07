@@ -199,4 +199,12 @@ Windows are positioned as follows (descriptions might prove tricky; in that case
 - 11: top middle and right thirds: 4 cells (o)
 - 12: bottom middle and right thirds: 4 cells (p)
 
+
+
+### Additional Notes
+
+- If you restart Mellon, the windows on the current mSpace will stay untouched, and the windows that were placed on other mSpaces before the restart will also be moved onto the current mSpace. In other words, if you plan to stop using Mellon, either move all windows to one mSpace first, or restart Mellon one last time. 
+
+- A backup feature that automatically restores all windows to their original mSpaces might be coming with a future update.
+
 Enjoy!

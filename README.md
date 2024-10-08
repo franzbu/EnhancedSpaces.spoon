@@ -47,6 +47,7 @@ Mellon:new({
 
 Restart Hammerspoon and you are ready to go. You might additionally be interested in adjusting the amount and names of your mSpaces and your default mSpace; to do so see above. 
 
+All you will see for now is a new icon in your menu bar indicating your current mSpace. Let us find out now how to populate your mSpaces.
 
 ## mSpaces
 
@@ -63,13 +64,13 @@ In case you would like to change the modifier for dealing with mSpaces while kee
   -- 1, 2: switch to mSpace left/right ('a', 's')
   -- 3, 4: move window to mSpace left/right ('d', 'f')
   -- 5, 6: move window to mSpace left/right and switch there ('q', 'w')
-  modifierSwitchMSKeys = {'a', 's', 'd', 'f', 'q', 'w'}, 
+  modifierSwitchMSKeys = {'a', 's', 'd', 'f', 'q', 'w'}, -- default: {'a', 's', 'd', 'f', 'q', 'w'}
   ...
 ```
 
 ### Move Windows Directly to Any mSpace 
 
-So far I have shown how to move windows to the adjacent mSpace. In case you would like to have keyboard shortcuts for directly moving windows to any mSpace, add the following line to your 'init.lua' and make the appropriate changes for your desired modifier:
+So far you have been shown how to move windows to the adjacent mSpace. In case you would like to have keyboard shortcuts for directly moving windows to any mSpace, add the following line to your 'init.lua' and make the appropriate changes for your desired modifier:
 
 ```lua
   ...
@@ -77,11 +78,11 @@ So far I have shown how to move windows to the adjacent mSpace. In case you woul
   ...
 ```
 
-## mSpaces Have Further Potential
+## mSpaces' Further Potential
 
-However, this has just been the beginning. See each mSpace as a representation your windows rather than just some general space where your windows are placed. For instance, you can have two mSpaces with the same windows in different sizes and positions. Or you can have the same Notes, Calendar, Finder or Safari window on two, more, or all of your mSpaces.
+However, this has just been the beginning. See each mSpace as a representation of your windows rather than just some area where your windows are placed. For instance, you can have two mSpaces with the same windows in different sizes and positions. Or you can have the same Notes, Calendar, Finder or Safari window on two, three, or all of your mSpaces.
   
-To create representations of windows, press your 'ctrl' and 'shift' keys simultaneously and additionally press the key corresponding to the mSpace you would like to create a reference of the currently active window on, for instance, '3'. In case you would like to adjust the modifier keys, add the following line to your 'init.lua':
+To create representations of windows, press the 'ctrl' and 'shift' modifiers simultaneously and additionally press the key corresponding to the mSpace you would like to create a reference of the currently active window on, for instance, '3'. In case you would like to adjust the modifiers, add the following line to your 'init.lua':
 
 ```lua
   ...
@@ -93,7 +94,7 @@ To delete a reference, press 'modifierReference' and '0'. In case you are 'de-re
 
 ## Switching Between Windows
 
-You can use macOS's integrated window switcher (cmd-tab) or any third party switcher such as [AltTab]([[https://www.hammerspoon.org/](https://karabiner-elements.pqrs.org/](https://alt-tab-macos.netlify.app/))) for switching between all of your windows. Also for switching between the different windows of one application you can use Apple's own switcher or any third party alternatives.
+You can use macOS's integrated window switcher (cmd-tab) or any third party switcher such as [AltTab]([[https://www.hammerspoon.org/](https://karabiner-elements.pqrs.org/](https://alt-tab-macos.netlify.app/))) for switching between all of your windows. Also for switching between the different windows of one application you can use Apple's integrated switcher or any third party alternatives.
 
 However, since mSpaces provide additional features, Mellon provides further possibilities for switching between windows, namely switching between the windows on the current mSpace and switching between references of windows ('sticky windows').
 
@@ -123,13 +124,13 @@ With Mellon you can automatically resize and position the windows on your mSpace
 
 ### Manual Moving and Positioning
 
-To move a window, hold your 'modifier1' or 'modifier2' key(s) down, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond the 10-percent-margin, things are getting interesting because then window management with automatic resizing and positioning comes into play.
+To move a window, hold your 'modifier1' or 'modifier2' key(s) down, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
 
 ### Automatic Resizing and Positioning - Mouse and/or Trackpad
 
 For automatic resizing and positioning of a window, you simply move between 10 and 80 percent of the window beyond the left, right, or bottom borders of your screen using your left mouse button. 
 
-As long as windows are resized - or moved within the borders of the screen -, it makes no difference whether you use your 'modifier1' or 'modifier2' keys. However, once a window is moved beyond the screen borders, different positioning and resizing scenarios are called into action; they are as follows:
+As long as windows are resized - or moved within the borders of the screen -, it makes no difference whether you use your 'modifier1' or 'modifier2'. However, once a window is moved beyond the screen borders, different positioning and resizing scenarios are called into action; they are as follows:
 
 * modifier1: 
   * If windows are moved beyond the left (right) borders of the screen: imagine your screen border divided into three equally long sections: if the cursor crosses the screen border in the middle third of the border, the window snaps into the left (right) half of the screen. Crossing the screen border in the upper and lower thirds, the window snaps into the respective quarters of the screen.
@@ -147,7 +148,7 @@ All this is been implemented with the goal of being as intuitive as possible; th
 
 #### 2x2 Grid
 
-To resize and move the active window into a 2x2 grid position, use your 'modifier1' and number keys 4-9. In case you would like to use a different modifier key, add the following line to your 'init.lua':
+To resize and move the active window into a 2x2 grid position, use your 'modifier1' and number keys 4-9. In case you would like to use a different keys, add the following line to your 'init.lua':
 
 
 ```lua
@@ -197,7 +198,7 @@ With the following keyboard shortcuts, you can create windows that take up more 
   ...
 ```
 
-Windows are positioned as follows (descriptions might prove tricky; in that case simply try it out):
+Windows are positioned as follows (descriptions might be difficult to understand; so just try it out):
 - 1: left two thirds of screen: 3 cells (1)
 - 2: right two thirds of screen: 3 cells (2)
 - 3: left third, upper two cells (3)
@@ -228,16 +229,14 @@ In case you would like to change the size, color and/or opacity of the grid indi
 
 ### After Restart
 
-- If you restart Mellon, the windows on the mSpace as the were before the restart will remain unchanged, while the windows that were placed on other mSpaces before the restart will also be present on the current mSpace. In other words, if you plan to stop using Mellon, either move all windows to one mSpace first, or restart Mellon one last time.
-
-- A backup feature restoring windows too their original mSpaces are on the todo list.
+- If you restart Mellon, the windows on the mSpace as the were before the restart will remain unchanged, while the windows that were placed on other mSpaces will also be moved to the current mSpace. In other words, if you want to stop using Mellon, either move all windows to one mSpace first, or restart Mellon one last time. A backup feature restoring windows to their original mSpaces is on the todo list.
 
 
 ## Experimental Features
 
 ### Manual Resizing
 
-Similar to manual moving, manual resizing of windows can be initiated by positioning the cursor in virtually any area of the window. Be aware, though, that windows of certain applications, such as LosslessCut or Kdenlive, can behave in a stuttering and sluggish way when being resized. That being said, resizing works well with the usual suspects such as Safari, Google Chrome, Finder, and so on.
+Similar to manual moving, manual resizing of windows can be initiated by positioning the cursor in virtually any area of the window. Be aware, though, that windows of certain applications, such as LosslessCut or Kdenlive, can behave in a stuttering and sluggish way when being resized. That being said, resizing works well with the usual suspects such as Safari, Google Chrome, or Finder.
 
 In order to enable manual resizing, add the following option to your 'init.lua':
 
@@ -248,9 +247,9 @@ In order to enable manual resizing, add the following option to your 'init.lua':
   ...
 ```
 
-To manually resize a window, hold your 'modifier1' or 'modifier2' key(s) down, then click the right mouse button in any part of the window and drag the window.
+To manually resize a window, hold your 'modifier1' or 'modifier2' down, then click the right mouse button in any part of the window and drag the window.
 
-To have the additional possibility of precisely resizing windows horizontally-only and vertically-only, 30 percent of the window (15 precent left and right of the middle of each border) is reserved for horizontal-only and vertical-only resizing. The size of this area can be adjusted; for more information see below.
+To have the additional possibility of precisely resizing windows horizontally-only or vertically-only, 30 percent of the window (15 precent left and right of the middle of each border) is reserved for horizontal-only and vertical-only resizing. The size of this area can be adjusted; for more information see below.
 
 <img src="https://github.com/franzbu/WinHammer.spoon/blob/main/doc/demo1.gif" />
 

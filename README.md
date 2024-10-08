@@ -2,7 +2,7 @@
 
 Mellon has been developed because the window managers I have tried on macOS left me wanting. Mellon has been inspired by Aerospace, Moom, BetterTouchTool, and others. Mellon has helped me to simplify my workflow and save time along the way; may it do the same for you.
 
-As has been hinted at, Mellon helps you managing your windows and spaces. Due to limitations of Apple's Spaces, Mellon has its own, enhanced implementation of Spaces; they will be referred to as mSpaces.
+As has been hinted at, Mellon helps you managing your windows and spaces. Due to limitations of Apple's Spaces, Mellon has its own implementation of Spaces; they will be referred to as mSpaces.
 
 mSpaces are fast and flexible: switching between mSpaces is instantaneous, and moving windows between mSpaces is a matter of pressing keyboard shortcuts or flicking your pointing device. Additional features such as 'sticky windows' increase the possibilities for individual customization. 'Sticky windows' means that windows can be present on more than one mSpace at the same time; each is a full-featured reference, meaning references can have different sizes and positions on different mSpaces. More about this feature later.
 

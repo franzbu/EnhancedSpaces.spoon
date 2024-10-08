@@ -27,7 +27,7 @@ mkdir -p ~/.hammerspoon/Spoons && git clone https://github.com/franzbu/Mellon.sp
 
 ## Usage
 
-Once you've installed Mellon, add the following lines to your `~/.hammerspoon/init.lua` file:
+Once you have installed Mellon, add the following lines to your `~/.hammerspoon/init.lua` file:
 
 ```lua
 local Mellon = hs.loadSpoon('Mellon')

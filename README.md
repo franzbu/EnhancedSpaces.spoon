@@ -214,7 +214,7 @@ Windows are positioned as follows (descriptions might prove tricky; in that case
 
 ## Additional Information
 
-### Change Size, Color, Opacity of Grid Indicators
+### Change Size, Color, and Opacity of Grid Indicators
 
 In case you would like to change the size, color and/or opacity of the grid indicators, add the following line to your 'init.lua'. The values, in this order, stand for: width, red, green, blue, opacity. Apart from the width, values between 0 and 1 are possible:
 

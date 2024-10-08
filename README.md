@@ -13,7 +13,7 @@ Mellon is easiest learned by doing, so let us get started with its installation.
 
 ## Installation
 
-Mellon requires [Hammerspoon](https://www.hammerspoon.org/), so just go ahead and install that first.
+Mellon requires [Hammerspoon](https://www.hammerspoon.org/), so just go ahead and install it first.
 
 To install Mellon, after downloading and unzipping, move the folder to ~/.hammerspoon/Spoons and make sure the name of the folder is 'Mellon.spoon'. 
 
@@ -45,21 +45,21 @@ Mellon:new({
 
 ```
 
-Restart Hammerspoon and you are ready to go. You might additionally want to adjust the amount and names of your 'mSpaces' and the default mSpace, see above. 
+Restart Hammerspoon and you are ready to go. You might additionally be interested in adjusting the amount and names of your 'mSpaces' and the default mSpace, see above. 
 
 
 ## mSpaces
 
 The default setup uses 'modifier1' and the keys 'a', 's', 'd', 'f', 'q', and 'w' to switch to the mSpace on the left/right ('a', 's'), move window to the mSpace on the left/right ('d', 'f'), move window to the mSpace on the left/right and switch there ('q', 'w'). 
 
-Now, by pressing 'modifierSwitchMS' and 'q', for instance, you move the active window from your current mSpace to the adjacent mSpace on the left and switch there. For moving the window without switching or switching without moving any window use the other keyboard shortcuts.
+Now, by pressing 'modifier1' and 'q', for instance, you move the active window from your current mSpace to the adjacent mSpace on the left and switch there. For moving the window without switching or switching without moving any window use the other keyboard shortcuts.
 
-In case you would like to change the default modifier key and or the other keys, add the following lines with the desired adjustments to your 'init.lua':
+In case you would like to use another modifier key for dealing with mSpaces while keeping the original 'modifier1' key (which is used for various other tasks, as you will see in a minute) and/or change additional keys, add the following lines with the desired adjustments to your 'init.lua'; the example below shows my setup with CapsLock set up as hyper key with [Karabiner Elements]([https://www.hammerspoon.org/](https://karabiner-elements.pqrs.org/)):
 
 
 ```lua
   ...
-  modifierSwitchMS = { 'shift', 'ctrl', 'alt', 'cmd' },
+  modifierSwitchMS = { 'shift', 'ctrl', 'alt', 'cmd' }, -- hyper key
   -- 1, 2: switch to mSpace left/right ('a', 's')
   -- 3, 4: move window to mSpace left/right ('d', 'f')
   -- 5, 6: move window to mSpace left/right and switch there ('q', 'w')
@@ -77,25 +77,25 @@ So far you have been shown how to move windows to the adjacent mSpace. In case y
   ...
 ```
 
-## mSpaces Are More
+## mSpaces Have Further Potential
 
-However, this has just been the beginning. See each mSpace as representating your windows rather than just some space to placing them on; for instance, you can have two mSpaces with the same windows in different sizes and positions. Or you can have the same Notes, Calendar, Finder or Safari window on two or more mSpaces.
+However, this has just been the beginning. See each mSpace represents your windows rather than just some general space where the windows are placed, for instance, you can have two mSpaces with the same windows in different sizes and positions. Or you can have the same Notes, Calendar, Finder or Safari window on two, more, or even all your mSpaces.
   
 To create such representations of windows, press your 'ctrl' and 'shift' keys simultaneously and additionally press the key corresponding to the mSpace you would like to create a reference of the currently active window on, for instance, '3'. In case you would like to adjust the modifier keys, add the following line to your 'init.lua':
 
 ```lua
   ...
-  modifierReference = { 'alt', 'ctrl' }, -- default: { 'alt', 'ctrl' }
+  modifierReference = { 'ctrl', 'shift' }, -- default: { 'ctrl', 'shift' }
   ...
 ```
-To delete a reference, press 'modifierReference' and '0'. In case this happens to be the last window on your mSpaces, it gets minimized.
+To delete a reference, press 'modifierReference' and '0'. In case you are 'de-referencing' the last window on your mSpaces, the window gets minimized.
 
 
 ## Switching Between Windows
 
-For switching between all your windows you can use macOS's integrated window switcher (cmd-tab) or any third party switcher such as AltTab. Also for switching between the different windows of one application you can use Apple's integrated switcher or any third party alternative.
+You can use macOS's integrated window switcher (cmd-tab) or any third party switcher such as [AltTab]([[https://www.hammerspoon.org/](https://karabiner-elements.pqrs.org/](https://alt-tab-macos.netlify.app/))) for switching between all your windows. Also for switching between the different windows of one application you can use Apple's integrated switcher or third party alternatives.
 
-However, since mSpaces provide additional features, further possibilities for switching are available.
+However, since mSpaces provide additional features, further possibilities for switching are available, namely switching between the windows on the current mSpace and switching between references of windows ('sticky windows').
 
 ### Switching between the Windows on an mSpace
 
@@ -113,7 +113,7 @@ For switching between all windows on your current mSpace, press 'modifier1' and 
 
 ### Switching between References of Windows
 
-For switching between the references of a window ('sticky windows'), press 'modifier1' and 'escape'. In case you would like to change these keys, change the second element in the table 'modifierSwitchWinKeys' (see directly above).
+For switching between the references of a window ('sticky windows'), press 'modifier1' and 'escape'. In case you would like to change that, change the second element in the table 'modifierSwitchWinKeys' (see directly above).
 
 
 ## Moving and Resizing of Windows:

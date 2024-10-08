@@ -237,15 +237,13 @@ In order to enable manual resizing, add the following option to your 'init.lua':
 To manually resize a window, hold your 'modifier1' or 'modifier2' key(s) down, then click the right mouse button in any part of the window and drag the window.
 
 To have the additional possibility of precisely resizing windows horizontally-only and vertically-only, 30 percent of the window (15 precent left and right of the middle of each border) is reserved for horizontal-only and vertical-only resizing. The size of this area can be adjusted; for more information see below.
+<img src="https://github.com/franzbu/WinHammer.spoon/blob/main/doc/demo1.gif" />
 
-<img src="https://github.com/franzbu/WinHammer.spoon/blob/main/doc/resizing.png" width="200">
 
 At the center of the window there is an erea (M) where you can also move the window by pressing the right mouse button. 
 
-* Manual window resizing and positioning
 
-<img src="https://github.com/franzbu/WinHammer.spoon/blob/main/doc/demo1.gif" />
-
+<img src="https://github.com/franzbu/WinHammer.spoon/blob/main/doc/resizing.png" width="200">
 
 
 ### Manual Resizing of Windows - Margin

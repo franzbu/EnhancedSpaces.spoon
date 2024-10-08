@@ -19,7 +19,7 @@ To install Mellon, after downloading and unzipping it, move the folder to ~/.ham
 
 Alternatively, run the following command in a terminal window:
 
-```ruby
+```java
 
 mkdir -p ~/.hammerspoon/Spoons && git clone https://github.com/franzbu/Mellon.spoon.git ~/.hammerspoon/Spoons/Mellon.spoon
 

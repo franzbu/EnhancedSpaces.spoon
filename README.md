@@ -1,6 +1,6 @@
 # Mellon
 
-Mellon has been developed because the window managers I have tried out left me wanting. Mellon has been inspired by Aerospace and many others. Mellon has aided me in simplifying my workflow and saving time; may it so the same for you.
+Mellon has been developed because the window managers I have tried left me wanting. Mellon has been inspired by Aerospace, BetterTouchTool, and many others. Mellon has aided me in simplifying my workflow and saving time; may it do the same for you.
 
 As has been hinted at, Mellon helps you manage windows and spaces. Due to limitations of Apple's Spaces, Mellon has implemented an improved version of Spaces; they will be referred to as mSpaces.
 

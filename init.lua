@@ -272,15 +272,16 @@ function Mellon:new(options)
       goToSpace(currentMSpace)
   end)
 
-  -- fb
   -- moving windows to mSpaces
-  for i = 1, #mspaces do
-    hs.hotkey.bind(modifierMoveWinMSpace, mspaces[i], function() -- move active window to next space and switch there (incl. cycle)
-      -- move window to specific mSpace
-      moveToSpace(i, currentMSpace)
-      --currentMSpace = getnextMSpaceNumber(currentMSpace)
-      --goToSpace(currentMSpace)
-    end)
+  if modifierMoveWinMSpace ~= nil then
+    for i = 1, #mspaces do
+      hs.hotkey.bind(modifierMoveWinMSpace, mspaces[i], function() -- move active window to next space and switch there (incl. cycle)
+        -- move window to specific mSpace
+        moveToSpace(i, currentMSpace)
+        --currentMSpace = getnextMSpaceNumber(currentMSpace)
+        --goToSpace(currentMSpace)
+      end)
+    end
   end
 
   -- recover stranded windows
@@ -314,22 +315,22 @@ function Mellon:new(options)
   -- debug
   -- list all windows
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "m", function()
-    print("_______winAll_________")
+    --print("_______winAll_________")
     for i, v in pairs(winAll) do
-      print(i, v)
+      --print(i, v)
     end
     for i, v in pairs(winMSpaces) do
-      print("_______winMSpaces_________")
+      --print("_______winMSpaces_________")
       --print(i .. ": " .. "mspace " .. tostring(winMSpaces[i].mspace))
-      print("id: " .. tostring(winMSpaces[i].win:application()))
+      --print("id: " .. tostring(winMSpaces[i].win:application()))
       spaces = ""
       for j = 1, #mspaces do
         spaces = spaces .. tostring(winMSpaces[i].mspace[j]) .. ", "
       end
-      print("space: " .. spaces)
+      --print("space: " .. spaces)
     end
-    print("=====")
-    print(hs.application.find("WhatsApp"))
+    --print("=====")
+    --print(hs.application.find("WhatsApp"))
   end)
 
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "n", function()
@@ -1415,7 +1416,6 @@ function snap3_2(pos)
     hSnap = max.h / 3 * 2
   end
   fwin:move(hs.geometry.new(xSnap, ySnap, wSnap, hSnap), nil, false, 0)
-
 end
 
 

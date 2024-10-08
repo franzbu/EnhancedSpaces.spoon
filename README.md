@@ -212,13 +212,53 @@ Windows are positioned as follows (descriptions might prove tricky; in that case
 - 12: bottom middle and right thirds: 4 cells (p)
 
 
-
 ### Additional Clarifications
 
 - If you restart Mellon, the windows on the mSpace at the time of restart will remain untouched, while the windows that were placed on other mSpaces before the restart will be moved onto the current mSpace. In other words, if you plan to stop using Mellon, either move all windows to one mSpace first, or restart Mellon one last time. Alternatively, the windows on the other mSpaces can be dragged out of the bottom right corner.
 
 - A backup feature restoring windows too their original mSpaces are on the todo list.
 
+
+## Experimental Features
+
+### Manual Resizing
+
+Similar to manual moving, manual resizing of windows can be initiated by positioning the cursor in virtually any area of the window. Be aware, though, that windows of certain applications, such as LosslessCut or Kdenlive, can behave in a stuttering and sluggish way when being resized. That being said, resizing works well with the usual suspects such as Safari, Google Chrome, Finder, and so on.
+
+In order to enable manual resizing, add the following option to your 'init.lua':
+
+```lua
+  ...
+  -- enable resizing:
+  resize = true, -- default: false
+})
+```
+
+To manually resize a window, hold your 'modifier1' or 'modifier2' key(s) down, then click the right mouse button in any part of the window and drag the window.
+
+To have the additional possibility of precisely resizing windows horizontally-only and vertically-only, 30 percent of the window (15 precent left and right of the middle of each border) is reserved for horizontal-only and vertical-only resizing. The size of this area can be adjusted; for more information see below.
+
+<img src="https://github.com/franzbu/WinHammer.spoon/blob/main/doc/resizing.png" width="200">
+
+At the center of the window there is an erea (M) where you can also move the window by pressing the right mouse button. 
+
+* Manual window resizing and positioning
+
+<img src="https://github.com/franzbu/WinHammer.spoon/blob/main/doc/demo1.gif" />
+
+
+
+### Manual Resizing of Windows - Margin
+
+You can change the size of the area of the window where the vertical-only and horizontal-only resizing applies by adjusting the option 'margin'. The standard value is 0.3, which corresponds to 30 percent. Changing it to 0 results in deactivating this options, changing it to 1 results in deactivating resizing.
+
+```lua
+  ...
+  -- adjust the size of the area with vertical-only and horizontal-only resizing:
+  margin = 0.2,
+  ...
+})
+```
 
 
 

@@ -6,7 +6,7 @@ As has been hinted at, Mellon helps you manage windows and spaces. Due to limita
 
 mSpaces are fast and flexible: switching between mSpaces is instantaneous, and moving windows between mSpaces is a matter of pressing a keyboard shortcut or flicking your pointing device. Additional features such as 'sticky windows' allow for individual customization. 'Sticky windows' means that windows can be present on more than one mSpace at the same time; each is a full-featured reference, meaning references can have different sizes and positions on different mSpaces. More about this feature later.
 
-Windows and mSpaces can be handled using your keyboard only; however, like with some other workflows, at times it is simpler and faster if you use keyboard and pointer device together. Mellon is easiest learned by doing, so simply get started with its installation.
+Windows and mSpaces can be handled using your keyboard only; however, like with some other workflows, at times it is simpler and faster if you use keyboard and pointer device together. Mellon is easiest learned by doing, so let us get started with its installation.
 
 
 ## Installation

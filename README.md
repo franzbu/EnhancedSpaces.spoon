@@ -45,7 +45,7 @@ Mellon:new({
 
 ```
 
-Restart Hammerspoon and you are ready to go. You might additionally be interested in adjusting the amount and names of your 'mSpaces' and the default mSpace, see above. 
+Restart Hammerspoon and you are ready to go. You might additionally be interested in adjusting the amount and names of your mSpaces and the default mSpace, see above. 
 
 
 ## mSpaces

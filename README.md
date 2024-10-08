@@ -13,7 +13,7 @@ Mellon is easiest learned by doing, so let us get started with its installation.
 
 ## Installation
 
-Mellon requires [Hammerspoon](https://www.hammerspoon.org/), so please go ahead and install that first.
+Mellon requires [Hammerspoon](https://www.hammerspoon.org/), so just go ahead and install that first.
 
 To install Mellon, after downloading and unzipping, move the folder to ~/.hammerspoon/Spoons and make sure the name of the folder is 'Mellon.spoon'. 
 

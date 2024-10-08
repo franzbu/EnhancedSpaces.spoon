@@ -80,6 +80,8 @@ function Mellon:new(options)
   mspaces = options.mSpaces or { '1', '2', '3' }
   currentMSpace = indexOf(options.MSpaces, options.startMSpace) or 2
 
+  gridIndicator = options.gridIndicator or { 20, 1, 0, 0, 0.5 }
+
 
   local resizer = {
     disabledApps = tableToMap(options.disabledApps or {}),
@@ -888,7 +890,7 @@ function Mellon:handleClick()
       mV = dmav * 100 / hNew -- delta from mid window in %: from -50(=top border of window) to 50 (bottom border)
 
       -- show canvases for visually supporting automatic window positioning and resizing
-      local thickness = 20 -- thickness of bar
+      local thickness = gridIndicator[1] -- thickness of bar
       cv = {} -- canvases need to be reset
       if eventType == self.moveStartMouseEvent and modifiersEqual(flags, modifier1) then
         createCanvas(1, 0, max.h / 3, thickness, max.h / 3)
@@ -921,7 +923,7 @@ function createCanvas(n, x, y, w, h)
     {
       action = 'fill',
       type = 'rectangle',
-      fillColor = { red = 1, green = 0, blue = 0, alpha = 0.5 },
+      fillColor = { red = gridIndicator[2], green = gridIndicator[4], blue = gridIndicator[4], alpha = gridIndicator[5] },
       roundedRectRadii = { xRadius = 5.0, yRadius = 5.0 },
     },
     1

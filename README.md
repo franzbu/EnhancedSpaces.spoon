@@ -231,6 +231,7 @@ In order to enable manual resizing, add the following option to your 'init.lua':
   ...
   -- enable resizing:
   resize = true, -- default: false
+  ...
 })
 ```
 

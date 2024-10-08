@@ -245,7 +245,7 @@ At the center of the window there is an erea (M) where you can also move the win
 <img src="https://github.com/franzbu/WinHammer.spoon/blob/main/doc/resizing.png" width="200">
 
 
-### Manual Resizing of Windows - Margin
+#### Manual Resizing of Windows - Margin
 
 You can change the size of the area of the window where the vertical-only and horizontal-only resizing applies by adjusting the option 'margin'. The standard value is 0.3, which corresponds to 30 percent. Changing it to 0 results in deactivating this options, changing it to 1 results in deactivating resizing.
 

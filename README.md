@@ -212,9 +212,23 @@ Windows are positioned as follows (descriptions might prove tricky; in that case
 - 12: bottom middle and right thirds: 4 cells (p)
 
 
-### Additional Clarifications
+## Additional Information
 
-- If you restart Mellon, the windows on the mSpace at the time of restart will remain untouched, while the windows that were placed on other mSpaces before the restart will be moved onto the current mSpace. In other words, if you plan to stop using Mellon, either move all windows to one mSpace first, or restart Mellon one last time. Alternatively, the windows on the other mSpaces can be dragged out of the bottom right corner.
+### Change Size, Color, Opacity of Grid Indicators
+
+In case you would like to change the size, color and/or opacity of the grid indicators, add the following line to your 'init.lua'. The values, in this order, stand for: width, red, green, blue, opacity. Apart from the width, values between 0 and 1 are possible:
+
+```lua
+  ...
+  -- change grid indicators:
+    gridIndicator = { 20, 1, 0, 0, 0.5 }, -- default: { 20, 1, 0, 0, 0.5 }, 
+
+  ...
+```
+
+### After Restart
+
+- If you restart Mellon, the windows on the mSpace as the were before the restart will remain unchanged, while the windows that were placed on other mSpaces before the restart will also be present on the current mSpace. In other words, if you plan to stop using Mellon, either move all windows to one mSpace first, or restart Mellon one last time.
 
 - A backup feature restoring windows too their original mSpaces are on the todo list.
 
@@ -232,7 +246,6 @@ In order to enable manual resizing, add the following option to your 'init.lua':
   -- enable resizing:
   resize = true, -- default: false
   ...
-})
 ```
 
 To manually resize a window, hold your 'modifier1' or 'modifier2' key(s) down, then click the right mouse button in any part of the window and drag the window.

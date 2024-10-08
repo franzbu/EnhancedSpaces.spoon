@@ -4,7 +4,7 @@ Mellon has been developed because the window managers I have tried out left me w
 
 As has been hinted at, Mellon helps you manage windows and spaces. Due to limitations of Apple's Spaces, Mellon has implemented an improved version of Spaces; they will be referred to as mSpaces.
 
-mSpaces are ready and flexible: switching between mSpaces is instantaneous, and moving windows between mSpaces is a matter of pressing a keyboard shortcut or flicking your pointing device. Additional features such as 'sticky windows' allow for individual customization. 'Sticky windows' means that windows can be present on more than one mSpace at the same time; they are full-featured references, meaning they can have different sizes and positions on different mSpaces. More about this feature later.
+mSpaces are fast and flexible: switching between mSpaces is instantaneous, and moving windows between mSpaces is a matter of pressing a keyboard shortcut or flicking your pointing device. Additional features such as 'sticky windows' allow for individual customization. 'Sticky windows' means that windows can be present on more than one mSpace at the same time; each is a full-featured reference, meaning references can have different sizes and positions on different mSpaces. More about this feature later.
 
 Windows and mSpaces can be handled using your keyboard only; however, like with some other workflows, at times it is simpler and faster if you use keyboard and pointer device together. Mellon is easiest learned by doing, so simply get started with its installation.
 

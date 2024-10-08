@@ -255,7 +255,7 @@ You can change the size of the area of the window where the vertical-only and ho
 ```lua
   ...
   -- adjust the size of the area with vertical-only and horizontal-only resizing:
-  margin = 0.2,
+  margin = 0.2, -- default: 0.3
   ...
 })
 ```

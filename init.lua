@@ -1354,7 +1354,6 @@ function snap3_2(pos)
   local wSnap
   local hSnap
   if pos == modifierSnap3_2Keys[1] then
-    print("___________________________")
     xSnap = 0
     ySnap = heightMB
     wSnap = max.w / 3 * 2

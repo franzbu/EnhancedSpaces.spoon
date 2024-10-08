@@ -1,14 +1,14 @@
 # Mellon
 
-Mellon has been developed because every window manager I have tried on macOS left me wanting. Mellon has been inspired by Aerospace, Moom, BetterTouchTool, and others. Mellon has helped me to simplify my workflow and save time along the way; may it do the same for you.
+Mellon has been developed because every window manager I have tried on macOS left me wanting. Mellon has been inspired by Aerospace, Moom, BetterTouchTool, and others. Mellon has helped me to simplify my life in front of my Mac; may it do the same for you.
 
-As has been hinted at, Mellon helps you managing your windows and spaces. Due to limitations of Apple's Spaces, Mellon has its own implementation of Spaces; they will be referred to as mSpaces.
+As has been hinted at, Mellon's purpose is to help you manage your windows and spaces. Due to limitations of Apple's Spaces, Mellon has its own implementation of them; they will be referred to as mSpaces.
 
-mSpaces are fast and flexible: moving a window to and switching between mSpaces is instantaneous, as it is a matter of pressing a keyboard shortcut or flicking your pointing device. Additional features such as 'sticky windows' provide additional options. 'Sticky windows' means that windows can be present on more than one mSpace at the same time; each one is a full-featured reference, i.e., references can have different sizes and positions on different mSpaces. More about this feature later.
+mSpaces are intuitive and flexible: moving a window to and switching between mSpaces is instantaneous, as it is a simple matter of pressing a keyboard shortcut or flicking your pointing device. Features such as 'sticky windows' provide additional options for improving your workflow. 'Sticky windows' means that windows can be present on more than one mSpace at a time, and each one is a full-featured reference, which means that references can have different sizes and positions on different mSpaces. More about this feature later.
 
-Windows and mSpaces can be handled using your keyboard only; however, similar to other workflows, at times it is simpler and faster to use keyboard and pointing device together, and Mellon allows that whereever it has proved beneficial. 
+Windows and mSpaces can be handled using your keyboard only; however, similar to other operations, at times it is simpler and faster to use keyboard and pointing device together, and Mellon provides this additional option wherever it is beneficial. 
 
-Mellon is easiest understood on the go, so let us get started with its installation.
+Mellon is easiest explained on the go, so let us get started with its installation.
 
 
 ## Installation
@@ -19,7 +19,7 @@ To install Mellon, after downloading and unzipping it, move the folder to ~/.ham
 
 Alternatively, run the following command in a terminal window:
 
-```terminal
+```ruby
 
 mkdir -p ~/.hammerspoon/Spoons && git clone https://github.com/franzbu/Mellon.spoon.git ~/.hammerspoon/Spoons/Mellon.spoon
 

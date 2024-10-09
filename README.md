@@ -238,7 +238,9 @@ All of the above are the preset modifiers and keys; they are fully customizable.
 
 
 (1) right half of screen -> 'a2'
+
 (2) right middle ninth of screen -> 'b11'
+
 (3) middle third, upper two cells -> 'c5'
 
 

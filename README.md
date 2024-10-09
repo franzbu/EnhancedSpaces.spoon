@@ -4,15 +4,15 @@ Mellon has been inspired by Aerospace, Moom, BetterTouchTool, and others. Mellon
 
 To simplify one's life is not too bad, but what does this tool actually do to justify my spending time with it, you might say. 
 
-Well, first, spending your time with Mellon will actually save you time. As far as the abilities of this tool are concerned, the answer is simple: it helps you organize your workspace, which comes down to two main tasks: managing your spaces and managing your applications and windows on them. 
+Well, first, spending your time with Mellon will actually save you time. As far as the abilities of this tool are concerned, the answer is simple: it helps you organize your workspace, which comes down to two main tasks: managing your spaces and your applications and windows on them. 
 
 When it comes to spaces, Mellon provides a new implementation of what Apple has straightforwardly termed 'Spaces'; in Mellon they are called mSpaces, and what the 'm' stands for is a story I am not going to bore you with. 
 
-Suffice to say that mSpaces follow the approach of representing windows rather than sporting them, which, for instance, makes it possible to have the same window on more than one mSpace. When it comes to managing windows, they are positioned and resized according to your demands with keyboard shortcuts or a flick of your pointing device.
+Suffice to say that mSpaces follow the approach of representing windows rather than containing them, which, for instance, makes it possible to have the same window on more than one mSpace. When it comes to managing windows, they are positioned and resized according to your demands with keyboard shortcuts or a flick of your pointing device.
 
-Still, this is nothing really new, I hear you say, and you are right. The way your windows and spaces are managed, is, though, and you will be surprised at what a difference sometimes even a slightly altered approach can make. But read on and judge for yourself.
+Still, this is nothing really new, I hear you say, and you are right. The way your windows and spaces are managed, is, though, and you might be surprised at what a difference sometimes even a slightly altered approach can make. But read on and judge for yourself.
 
-One last thing before we dip our toes into the water: windows and mSpaces can be handled using your keyboard only; however, similar to other operations, at times it is simpler and faster to use keyboard and pointing device together, and Mellon provides this additional option wherever it is beneficial. 
+One last thing before we get our toes wet: windows and mSpaces can be handled using your keyboard only; however, similar to other operations, at times it is simpler and faster to use keyboard and pointing device together. Thus Mellon provides this additional option wherever it is beneficial. 
 
 
 ## Installation
@@ -51,7 +51,7 @@ Mellon:new({
 
 Restart Hammerspoon and you are ready to go. You might additionally be interested in adjusting the amount and names of your mSpaces and your default mSpace; to do so see above. 
 
-All you will see for now is a new icon in your menu bar indicating your current mSpace. Let us find out now how to populate your mSpaces.
+After having Mellon runngin, all you will see for now is a new icon in your menu bar indicating your current mSpace. Let us find out now how to populate your mSpaces.
 
 ## mSpaces
 
@@ -59,7 +59,7 @@ The default setup uses 'modifier1' and the keys 'a', 's', 'd', 'f', 'q', and 'w'
 
 Now, by pressing 'modifier1' and 'q', for instance, you move the active window from your current mSpace to the adjacent mSpace on the left and switch there. For moving the window without switching or switching to another mSpace without moving any windows use the appropriate keyboard shortcuts.
 
-In case you would like to change the modifier for dealing with mSpaces while keeping the original 'modifier1' (which is used for other operations as well, as you will see below) and/or change additional keys, add the following lines with the desired adjustments to your 'init.lua'; the example below shows my setup with CapsLock set up as hyper key, for example using [Karabiner Elements]([https://www.hammerspoon.org/](https://karabiner-elements.pqrs.org/)):
+In case you would like to change the modifier for dealing with mSpaces while keeping the original 'modifier1' (which is used for other operations as well, as you will see in a minute) and/or change additional keys, add the following lines with the desired adjustments to your 'init.lua'; the example below shows my setup with CapsLock set up as hyper key, for example, using [Karabiner Elements]([https://www.hammerspoon.org/](https://karabiner-elements.pqrs.org/)):
 
 
 ```lua
@@ -74,7 +74,7 @@ In case you would like to change the modifier for dealing with mSpaces while kee
 
 ### Move Windows Directly to Any mSpace 
 
-So far you have been shown how to move windows to the adjacent mSpace. In case you would like to have keyboard shortcuts for directly moving windows to any mSpace, add the following line to your 'init.lua' and make the appropriate changes for your desired modifier:
+So far we have discussed how to move windows to the adjacent mSpace. In case you would like to have a keyboard shortcut for moving windows to any mSpace directly, add the following line to your 'init.lua', making the appropriate changes for your desired modifier(s):
 
 ```lua
   ...
@@ -82,9 +82,11 @@ So far you have been shown how to move windows to the adjacent mSpace. In case y
   ...
 ```
 
-## mSpaces' Further Potential
+## mSpaces Carry Further Potential
 
-However, this has just been the beginning. See each mSpace as a representation of your windows rather than just some area where your windows are placed. For instance, you can have two mSpaces with the same windows in different sizes and positions. Or you can have the same Notes, Calendar, Finder or Safari window on two, three, or all of your mSpaces.
+However, we have not walked over the finish line yet. That being said, this section is for advanced users and can be skipped.
+
+If you want to unlock the full potential of mSpaces, it is helpful to understand the underlying philosophy: see each mSpace as a representation of your windows rather than just some area where your windows can be placed, or, in other words: an mSpace is a set of 'symbolic links' to your windows. Due to this approach, you could, for instance, have two mSpaces with the same windows in different sizes and positions, which might even be sensible for specific workflows where it makes sense to be switching instantly between a bigger window of one and a smaller window of another application and vice versa. Or you can have the same Notes, Calendar, Finder or Safari window on two, three, or all of your mSpaces.
   
 To create representations of windows, press the 'ctrl' and 'shift' modifiers simultaneously and additionally press the key corresponding to the mSpace you would like to create a reference of the currently active window on, for instance, '3'. In case you would like to adjust the modifiers, add the following line to your 'init.lua':
 
@@ -98,13 +100,13 @@ To delete a reference, press 'modifierReference' and '0'. In case you are 'de-re
 
 ## Switching Between Windows
 
-You can use macOS's integrated window switcher (cmd-tab) or any third party switcher such as [AltTab]([[https://www.hammerspoon.org/](https://karabiner-elements.pqrs.org/](https://alt-tab-macos.netlify.app/))) for switching between all of your windows. Also for switching between the different windows of one application you can use Apple's integrated switcher or any third party alternatives.
+You can use macOS's integrated window switcher (cmd-tab) or any third party switcher such as [AltTab]([[https://www.hammerspoon.org/](https://karabiner-elements.pqrs.org/](https://alt-tab-macos.netlify.app/))) for switching between all your windows. Also for switching between the different windows of one application you can use Apple's integrated switcher or any third party alternative.
 
-However, since mSpaces provide additional features, Mellon provides further possibilities for switching between windows, namely switching between the windows on the current mSpace and switching between references of windows ('sticky windows').
+However, since mSpaces provide additional features, these need harvesting, and Mellon provides further possibilities for switching between windows, namely (1) switching between all the windows on the current mSpace and (2) switching between references of windows ('sticky windows').
 
 ### Switching between Windows of the Current mSpace
 
-For switching between all windows of your current mSpace, press 'modifier1' and 'tab', and for switching in reverse order additionally press 'shift'. Add the following lines to 'init.lua' in case you prefer different keyboard shortcuts:
+For switching between the windows of your current mSpace, press 'modifier1' and 'tab', and for switching in reverse order additionally press 'shift'. Add the following lines to 'init.lua' in case you prefer different keyboard shortcuts:
 
 
 ```lua
@@ -118,7 +120,7 @@ For switching between all windows of your current mSpace, press 'modifier1' and 
 
 ### Switching between References of Windows
 
-For switching between the references of a window ('sticky windows'), press 'modifier1' and 'escape'. In case you would like to change that, change the second element in the table 'modifierSwitchWinKeys' (see above).
+For switching between the references of a window ('sticky windows'), press 'modifier1' and 'escape'. In case you prefer a different key, change the second element in the table 'modifierSwitchWinKeys' (see above).
 
 
 ## Moving and Resizing Windows:
@@ -128,7 +130,7 @@ With Mellon you can automatically resize and position the windows on your mSpace
 
 ### Manual Moving and Positioning
 
-To make moving windows easier than having to grab the title bar (which you are still free to do), hold your 'modifier1' or 'modifier2' key(s) down, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
+To make moving windows easier than having to hold on to the title bar (which you are still free to do), hold 'modifier1' or 'modifier2' down, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
 
 ### Automatic Resizing and Positioning - Mouse and/or Trackpad
 
@@ -137,16 +139,15 @@ For automatic resizing and positioning of a window, you simply move between 10 a
 As long as windows are resized - or moved within the borders of the screen -, it makes no difference whether you use your 'modifier1' or 'modifier2'. However, once a window is moved beyond the screen borders, different positioning and resizing scenarios are called into action; they are as follows:
 
 * modifier1: 
-  * If windows are moved beyond the left (right) borders of the screen: imagine your screen border divided into three equally long sections: if the cursor crosses the screen border in the middle third of the border, the window snaps into the left (right) half of the screen. Crossing the screen border in the upper and lower thirds, the window snaps into the respective quarters of the screen.
-  * If windows are moved beyond the bottom border of the screen: imagine your bottom screen border divided into three equally long sections: if the cursor crosses the screen border in the middle third of the bottom border, the window snaps into full screen. Crossing the screen border in the left or right thirds, the window snaps into the respective halfs of the screen.
+  * If windows are moved beyond the left (right) borders of the screen: imagine your screen border divided into three sections: if the cursor crosses the screen border in the middle section, the window snaps into the left (right) half of the screen. Crossing the screen border in the upper and lower sections, the window snaps into the respective quarters of the screen.
+  * If windows are moved beyond the bottom border of the screen: imagine your bottom screen border divided into three sections: if the cursor crosses the screen border in the middle section, the window snaps into full screen. Crossing the screen border in the left or right sections, the window snaps into the respective halfs of the screen.
 
 * modifier2: 
-  * The difference to 'modifier1' is that your screen has a 3x3 grid. This means that windows snap into the left third of the 3x3 grid when dragged beyond the left screen border and into the right third when dragged beyond the right screen border. If 'modifier2' is released before the left mouse button, the window will snap into the middle.
+  * The difference to 'modifier1' is that your screen has a 3x3 grid. This means that windows snap into the left third of the 3x3 grid when dragged beyond the left screen border and into the right third when dragged beyond the right screen border. If 'modifier2' is released before the left mouse button, the window will snap into the middle column.
  
-* The moment dragging of a window starts, indicators will guide you.
+* The moment dragging of a window starts, indicators will guide you. For changing their appearance see below.
 
 All this is been implemented with the goal of being as intuitive as possible; therefore, you will be able to train your muscle memory in no time. Promise.
-
 
 ### Automatic Resizing and Positioning - Keyboard
 

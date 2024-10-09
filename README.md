@@ -234,17 +234,9 @@ Windows are positioned as follows -> (descriptions might be difficult to underst
 - o: top middle and right thirds: 4 cells -> 'c11'
 - p: bottom middle and right thirds: 4 cells -> 'c12'
 
-All of the above are the preset modifiers and keys; they are fully customizable. Here is an example: If you just need windows to snap into three positions, 
+As has been pointed out, these keyboard shortcuts are fully customizable. 
 
-
-(1) right half of screen -> 'a2'
-
-(2) right middle ninth of screen -> 'b11'
-
-(3) middle third, upper two cells -> 'c5'
-
-
-and you would like to use modifierSnap2 with the keys 'j', 'k', and 'l', then your 'init.lua' would look like this:
+Here is an example: let us assume you just need windows to snap into three different grid positions, (1) right half of screen -> 'a2', (2) right middle ninth of screen -> 'b11', and (3) middle third, upper two cells -> 'c5', and you would like to use modifierSnap2 with the keys 'j', 'k', and 'l', then your 'init.lua' would look like this:
 
 ```lua
   ...

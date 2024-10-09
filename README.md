@@ -134,7 +134,7 @@ To make moving windows easier than having to hold on to the title bar (which you
 
 ### Automatic Resizing and Positioning - Mouse and/or Trackpad
 
-For automatic resizing and positioning of a window, you simply move between 10 and 80 percent of the window beyond the left, right, or bottom borders of your screen using your left mouse button. 
+For automatic resizing and positioning of a window, you simply move between 10 and 80 percent of the window beyond the left, right, or bottom borders of your screen using while pressing 'modifier1' or 'modifier2'. 
 
 As long as windows are resized - or moved within the borders of the screen -, it makes no difference whether you use your 'modifier1' or 'modifier2'. However, once a window is moved beyond the screen borders, different positioning and resizing scenarios are called into action; they are as follows:
 
@@ -170,7 +170,7 @@ Adjust the keys to your liking; in the order of the entries in 'modifierSnap2Key
 - 4: bottom left quarter of screen (7)
 - 5: top right quarter of screen (8)
 - 6: bottom right quarter of screen (9)
-- 0: whole screen (0)
+- 7: whole screen (0)
 
 #### 3x3 Grid
 

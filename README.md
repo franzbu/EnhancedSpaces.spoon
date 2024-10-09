@@ -1,14 +1,18 @@
 # Mellon
 
-Mellon has been developed because every window manager I have tried on macOS left me wanting. Mellon has been inspired by Aerospace, Moom, BetterTouchTool, and others. Mellon has helped me to simplify my life in front of my Mac; may it do the same for you.
+Mellon has been inspired by Aerospace, Moom, BetterTouchTool, and others. Mellon has simplified my life with my Mac; may it do the same for you.
 
-As has been hinted at, Mellon's purpose is to help you manage your windows and spaces. Due to limitations of Apple's Spaces, Mellon has its own implementation of them; they will be referred to as mSpaces.
+To simplify one's life is not too bad, but what does this tool actually do to justify my spending time getting to know it, you might say. 
 
-mSpaces are intuitive and flexible: moving a window to and switching between mSpaces is instantaneous, as it is a simple matter of pressing a keyboard shortcut or flicking your pointing device. Features such as 'sticky windows' provide additional options for improving your workflow. 'Sticky windows' means that windows can be present on more than one mSpace at a time, and each one is a full-featured reference, which means that references can have different sizes and positions on different mSpaces. More about this feature later.
+Well, first, spending your time with Mellon will actually save you time. As far as the abilities of this tool are concerned, the answer is simple: it helps you organize your workspace, which comes down to two main tasks, managing your spaces and managing your applications and windows on them. 
 
-Windows and mSpaces can be handled using your keyboard only; however, similar to other operations, at times it is simpler and faster to use keyboard and pointing device together, and Mellon provides this additional option wherever it is beneficial. 
+When it comes to spaces, Mellon provides a new implementation of what Apple has straightforwardly termed 'Spaces'; in Mellon they are called mSpaces, and what the 'm' stands for is a story I am not going to bore you with. 
 
-Mellon is easiest explained on the go, so let us get started with its installation.
+Suffices to say that mSpaces follow the approach of representing windows rather than sporting them, which, for instance, makes it possible to have the same window on more than one mSpace. When it comes to managing windows, they are positioned and resized according to your demands with keyboard shortcuts or a flick of your pointing device.
+
+Still, this is nothing really new, I hear you say, and you are right. The way your windows and spaces are managed, is, though, and you will be surprised at what a difference sometimes even a slightly altered approach can make. But read on and judge for yourself.
+
+One last thing before we dip our toes in the water: windows and mSpaces can be handled using your keyboard only; however, similar to other operations, at times it is simpler and faster to use keyboard and pointing device together, and Mellon provides this additional option wherever it is beneficial. 
 
 
 ## Installation

@@ -270,7 +270,7 @@ function Mellon:new(options)
   end)
 
   --fb
-  -- goto mspaces directly with 'modifierMS-<name of mspace>'
+  -- goto mspaces directly with 'modifierMoveWinMSpace-<name of mspace>'
   if modifierMoveWinMSpace ~= nil then
     for i = 1, #mspaces do
       hs.hotkey.bind(modifierSwitchMS, mspaces[i], function()

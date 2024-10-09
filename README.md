@@ -12,7 +12,7 @@ Suffice to say that mSpaces follow the approach of representing windows rather t
 
 Still, this is nothing really new, I hear you say, and you are right. The way your windows and spaces are managed, is, though, and you will be surprised at what a difference sometimes even a slightly altered approach can make. But read on and judge for yourself.
 
-One last thing before we dip our toes in the water: windows and mSpaces can be handled using your keyboard only; however, similar to other operations, at times it is simpler and faster to use keyboard and pointing device together, and Mellon provides this additional option wherever it is beneficial. 
+One last thing before we dip our toes into the water: windows and mSpaces can be handled using your keyboard only; however, similar to other operations, at times it is simpler and faster to use keyboard and pointing device together, and Mellon provides this additional option wherever it is beneficial. 
 
 
 ## Installation

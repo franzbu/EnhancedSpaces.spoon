@@ -59,20 +59,15 @@ function Mellon:new(options)
   modifierSwitchWin = options.modifierSwitchWin or modifier1
   modifierSwitchWinKeys = options.modifierSwitchWinKeys or { 'tab', 'escape' }
 
-  modifierSnap1 = options.modifierSnap1 or { 'cmd', 'alt' }
-  modifierSnap2 = options.modifierSnap2 or { 'cmd', 'ctrl' } 
-  modifierSnap3 = options.modifierSnap3 or { 'cmd', 'alt', 'ctrl' }
+  modifierSnap1 = options.modifierSnap1 or nil
+  modifierSnap2 = options.modifierSnap2 or nil
+  modifierSnap3 = options.modifierSnap3 or nil
 
   modifierSnapKeys = options.modifierSnapKeys or {
     {{'a1','1'},{'a2','2'},{'a3','3'},{'a4','4'},{'a5','5'},{'a6','6'},{'a7','7'}}, -- modifierSnapKey1
     {{'b1','1'}}, -- modifierSnapKey2
     {{'c1','1'}}, -- modifierSnapKey3
   }
-
-  -- modifierSnap1Keys = options.modifierSnap1Keys or { '1', '2', '3', '4', '5', '6', '0' }
-  -- modifierSnap2Keys = options.modifierSnap2Keys or { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'o', 'p' }
-  -- modifierSnap3Keys = options.modifierSnap3Keys or { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'o', 'p' }
-
 
   modifierMoveWinMSpace = options.modifierMoveWinMSpace or nil
 
@@ -303,20 +298,26 @@ function Mellon:new(options)
 
   
   -- ___________ keyboard shortcuts - snapping windows into grid postions ___________
-  for i = 1, #modifierSnapKeys[1] do
-    hs.hotkey.bind(modifierSnap1, modifierSnapKeys[1][i][2], function()
-      snap(modifierSnapKeys[1][i][1])
-    end)
+  if modifierSnap1 ~= nil then
+    for i = 1, #modifierSnapKeys[1] do
+      hs.hotkey.bind(modifierSnap1, modifierSnapKeys[1][i][2], function()
+        snap(modifierSnapKeys[1][i][1])
+      end)
+    end
   end
-  for i = 1, #modifierSnapKeys[2] do
-    hs.hotkey.bind(modifierSnap2, modifierSnapKeys[2][i][2], function()
-      snap(modifierSnapKeys[2][i][1])
-    end)
+  if modifierSnap2 ~= nil then
+    for i = 1, #modifierSnapKeys[2] do
+      hs.hotkey.bind(modifierSnap2, modifierSnapKeys[2][i][2], function()
+        snap(modifierSnapKeys[2][i][1])
+      end)
+    end
   end
-  for i = 1, #modifierSnapKeys[3] do
-    hs.hotkey.bind(modifierSnap3, modifierSnapKeys[3][i][2], function()
-      snap(modifierSnapKeys[3][i][1])
-    end)
+  if modifierSnap3 ~= nil then
+    for i = 1, #modifierSnapKeys[3] do
+      hs.hotkey.bind(modifierSnap3, modifierSnapKeys[3][i][2], function()
+        snap(modifierSnapKeys[3][i][1])
+      end)
+    end
   end
 
   goToSpace(currentMSpace) -- refresh

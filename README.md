@@ -143,6 +143,7 @@ With Mellon you can automatically resize and position the windows on your mSpace
 
 To make moving windows easier than having to hold on to the title bar (which you are still free to do), hold 'modifier1' or 'modifier2' down, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
 
+
 ### Automatic Resizing and Positioning - Mouse and/or Trackpad
 
 For automatic resizing and positioning of a window, you simply move between 10 and 80 percent of the window beyond the left, right, or bottom borders of your screen using while pressing 'modifier1' or 'modifier2'. 
@@ -160,78 +161,103 @@ As long as windows are resized - or moved within the borders of the screen -, it
 
 All this is been implemented with the goal of being as intuitive as possible; therefore, you will be able to train your muscle memory in no time. Promise.
 
+
 ### Automatic Resizing and Positioning - Keyboard
+
+To resize and move the active window into a 2x2 grid position, use 'modifierSnap1' and numbers 1-7. 
+
+To resize and move the active window into a 3x3 grid position, use 'modifierSnap2' and numbers 1-9, additionally '0', 'o', and 'p'. 
+
+'modifierSnap3' with the same keys as with 'modifierSnap2' also uses a 3x3 grid, but the windows snap into different sizes, see '3x3 Grid - Double (and Quadruple) Sizes' below.
+
 
 #### 2x2 Grid
 
-To resize and move the active window into a 2x2 grid position, use your 'modifier1' and number keys 4-9. In case you would like to use a different keys, add the following line to your 'init.lua':
-
-
-```lua
-  ...
-  modifierSnap2 = { 'ctrl' }, -- default: modifier2
-  modifierSnap2Keys = {'4', '5', '6', '7', '8', '9', '0'},
-  ...
-```
-
-Adjust the keys to your liking; in the order of the entries in 'modifierSnap2Keys', windows are positioned as follows:
-- 1: left half of screen (4)
-- 2: right half of screen (5)
-- 3: top left quarter of screen (6)
-- 4: bottom left quarter of screen (7)
-- 5: top right quarter of screen (8)
-- 6: bottom right quarter of screen (9)
-- 7: whole screen (0)
+- 1: left half of screen -> 'a1'
+- 2: right half of screen -> 'a2'
+- 3: top left quarter of screen -> 'a3'
+- 4: bottom left quarter of screen -> 'a4'
+- 5: top right quarter of screen -> 'a5'
+- 6: bottom right quarter of screen -> 'a6'
+- 7: whole screen -> 'a7'
 
 #### 3x3 Grid
 
-Add the following lines to your 'init.lua' (in case this has not become clear yet: if you do not add these lines to your 'init.lua', the default options automatically take over):
-
-```lua
-  ...
-  modifierSnap3 = { 'alt' }, -- default: modifier2
-  modifierSnap3Keys = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'o', 'p'},
-  ...
-```
-
 Windows are positioned as follows:
-- 1: left third of screen (1)
-- 2: middle third of screen (2)
-- 3: right third of screen (3)
-- 4: left top ninth of screen (4)
-- 5: left middle ninth of screen (5)
-- 6: left bottom ninth of screen (6)
-- 7: middle top ninth of screen (7)
-- 8: middle middle ninth of screen (8)
-- 9: middle bottom ninth of screen (9)
-- 10: right top ninth of screen (0)
-- 11: right middle ninth of screen (o)
-- 12: right bottom ninth of screen (p)
+- 1: left third of screen -> 'b1'
+- 2: middle third of screen -> 'b2'
+- 3: right third of screen -> 'b3'
+- 4: left top ninth of screen -> 'b4'
+- 5: left middle ninth of screen -> 'b5'
+- 6: left bottom ninth of screen -> 'b6'
+- 7: middle top ninth of screen -> 'b7'
+- 8: middle middle ninth of screen -> 'b8'
+- 9: middle bottom ninth of screen -> 'b9'
+- 0: right top ninth of screen -> 'b10'
+- o: right middle ninth of screen -> 'b11'
+- p: right bottom ninth of screen -> 'b12'
 
 ##### 3x3 Grid - Double (and Quadruple) Sizes
 
 With the following keyboard shortcuts, you can create windows that take up more cells on the 3x3 grid, which contains 9 cells altogether:
 
+
+Windows are positioned as follows -> (descriptions might be difficult to understand; so just try it out):
+- 1: left two thirds of screen: 3 cells -> 'c1'
+- 2: right two thirds of screen: 3 cells -> 'c2'
+- 3: left third, upper two cells -> 'c3'
+- 4: left third, lower two cells -> 'c4'
+- 5: middle third, upper two cells -> 'c5'
+- 6: middle third, lower two cells -> 'c6'
+- 7: right third, upper two cells -> 'c7'
+- 8: right third, lower two cells -> 'c8'
+- 9: top left and middle thirds: 4 cells -> 'c9'
+- 0: bottom left and middle thirds: 4 cells -> 'c10'
+- o: top middle and right thirds: 4 cells -> 'c11'
+- p: bottom middle and right thirds: 4 cells -> 'c12'
+
+
+Here is the full list of modifiers and keys:
+
 ```lua
   ...
-  modifierSnap3_2 = { 'ctrl', 'alt', 'shift' }, -- default: modifier1 + modifier2
-  modifierSnap3_2Keys = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'o', 'p'},
+  modifierSnap1 = { 'cmd', 'alt' }, -- default: { 'cmd', 'alt' }
+  modifierSnap2 = { 'cmd', 'ctrl' }, -- default: { 'cmd', 'ctrl' }
+  modifierSnap3 = { 'cmd', 'alt', 'ctrl' }, -- default: { 'cmd', 'alt', 'ctrl' }
+
+  modifierSnapKeys = {
+    -- modifierSnapKey1
+    {{'a1','1'},{'a2','2'},{'a3','3'},{'a4','4'},{'a5','5'},{'a6','6'},{'a7','7'}},
+    -- modifierSnapKey2
+    {{'b1','1'},{'b2','2'},{'b3','3'},{'b4','4'},{'b5','5'},{'b6','6'},{'b7','7'},{'b8','8'},{'b9','9'},{'b10','0'},{'b11','o'},{'b12','p'}},
+    -- modifierSnapKey3
+    {{'c1','1'},{'c2','2'},{'c3','3'},{'c4','4'},{'c5','5'},{'c6','6'},{'c7','7'},{'c8','8'},{'c9','9'},{'c10','0'},{'c11','o'},{'c12','p'}},
+  },
   ...
 ```
 
-Windows are positioned as follows (descriptions might be difficult to understand; so just try it out):
-- 1: left two thirds of screen: 3 cells (1)
-- 2: right two thirds of screen: 3 cells (2)
-- 3: left third, upper two cells (3)
-- 4: left third, lower two cells (4)
-- 5: middle third, upper two cells (5)
-- 6: middle third, lower two cells (6)
-- 7: right third, upper two cells (7)
-- 8: right third, lower two cells (8)
-- 9: top left and middle thirds: 4 cells (9)
-- 10: bottom left and middle thirds: 4 cells (0)
-- 11: top middle and right thirds: 4 cells (o)
-- 12: bottom middle and right thirds: 4 cells (p)
+These are just the preset modifiers and keys. You can adjust them to your liking. If you, for example, just need windows to snap into three positions, 
+
+(1) right half of screen -> 'a2'
+(2) right middle ninth of screen -> 'b11'
+(3) middle third, upper two cells -> 'c5'
+
+and you would like to use only modifierSnap2 and the keys 'j', 'k', and 'l', then your 'init.lua' would look like this:
+
+```lua
+  ...
+  modifierSnap2 = { 'cmd', 'ctrl' }, -- default: { 'cmd', 'ctrl' }
+
+  modifierSnapKeys = {
+    -- modifierSnapKey1
+    {},
+    -- modifierSnapKey2
+    {{'a2','j'},{'b11','k'},{'c5','l'}},
+    -- modifierSnapKey3
+    {},
+  },
+  ...
+```
 
 
 ## Additional Information
@@ -288,7 +314,6 @@ You can change the size of the area of the window where the vertical-only and ho
   -- adjust the size of the area with vertical-only and horizontal-only resizing:
   margin = 0.2, -- default: 0.3
   ...
-})
 ```
 
 

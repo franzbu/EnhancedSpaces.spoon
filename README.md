@@ -236,9 +236,11 @@ Windows are positioned as follows -> (descriptions might be difficult to underst
 
 All of the above are the preset modifiers and keys; they are fully customizable. Here is an example: If you just need windows to snap into three positions, 
 
+
 (1) right half of screen -> 'a2'
 (2) right middle ninth of screen -> 'b11'
 (3) middle third, upper two cells -> 'c5'
+
 
 and you would like to use modifierSnap2 with the keys 'j', 'k', and 'l', then your 'init.lua' would look like this:
 

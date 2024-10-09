@@ -2,7 +2,7 @@
 
 Mellon has been inspired by Aerospace, Moom, BetterTouchTool, and others. Mellon has simplified my life with my Mac; may it do the same for you.
 
-To simplify one's life is not too bad, but what does this tool actually do to justify my spending time with it, you might say. 
+To simplify one's life is not too bad, but what does this tool actually do to justify my spending time with it, you might ask yourself. 
 
 Well, first, spending your time with Mellon will actually save you time. As far as the abilities of this tool are concerned, the answer is simple: it helps you organize your workspace, which comes down to two main tasks: managing your spaces and your applications and windows on them. 
 

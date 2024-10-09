@@ -218,9 +218,8 @@ Windows are positioned as follows:
 
 #### 3x3 Grid - Double (and Quadruple) Sizes
 
-With the following keyboard shortcuts, you can create windows that take up more cells on the 3x3 grid, which contains 9 cells altogether:
+With the following keyboard shortcuts, you can create windows that take up more cells on the 3x3 grid, which contains 9 cells altogether. Windows are positioned as follows (descriptions might be difficult to understand; so just try it out):
 
-Windows are positioned as follows -> (descriptions might be difficult to understand; so just try it out):
 - 1: left two thirds of screen: 3 cells -> 'c1'
 - 2: right two thirds of screen: 3 cells -> 'c2'
 - 3: left third, upper two cells -> 'c3'
@@ -236,7 +235,7 @@ Windows are positioned as follows -> (descriptions might be difficult to underst
 
 As has been pointed out, these keyboard shortcuts are fully customizable. 
 
-Here is an example: let us assume you just need windows to snap into three different grid positions, (1) right half of screen -> 'a2', (2) right middle ninth of screen -> 'b11', and (3) middle third, upper two cells -> 'c5', and you would like to use modifierSnap2 with the keys 'j', 'k', and 'l', then your 'init.lua' would look like this:
+Here is an example: let us assume you just need windows to snap into three different grid positions, (1) right half of screen -> 'a2', (2) right middle ninth of screen -> 'b11', and (3) middle third, upper two cells -> 'c5', and you would like to use modifierSnap2 with the keys 'j', 'k', and 'l'; then your 'init.lua' would look like this:
 
 ```lua
   ...

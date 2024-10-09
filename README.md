@@ -236,13 +236,15 @@ Here is the full list of modifiers and keys:
   ...
 ```
 
-These are just the preset modifiers and keys. You can adjust them to your liking. If you, for example, just need windows to snap into three positions, 
+These are the preset modifiers and keys; you can adjust them to your liking. 
+
+Here is an example: If you just need windows to snap into three positions, 
 
 (1) right half of screen -> 'a2'
 (2) right middle ninth of screen -> 'b11'
 (3) middle third, upper two cells -> 'c5'
 
-and you would like to use only modifierSnap2 and the keys 'j', 'k', and 'l', then your 'init.lua' would look like this:
+and you would like to use modifierSnap2 and the keys 'j', 'k', and 'l', then your 'init.lua' would look like this:
 
 ```lua
   ...

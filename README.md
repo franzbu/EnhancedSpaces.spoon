@@ -78,17 +78,17 @@ For switching directly to any mSpace, press 'alt' . In case you would like to ch
 
 ```lua
   ...
-  modifierMoveWinMSpace = { 'alt', 'shift' }, -- default: { 'alt' }
+  modifierMoveWinMSpace = { 'alt' }, -- default: { 'alt' }
   ...
 ```
 
-### Move Windows Directly to Any mSpace (on todo list, not yet implemented)
+### Move Windows Directly to Any mSpace
 
 So far we have discussed how to move windows to the adjacent mSpace. In case you would like to have a keyboard shortcut for moving windows to any mSpace directly, add the following line to your 'init.lua', making the appropriate changes regarding your desired modifier(s):
 
 ```lua
   ...
-  modifierSwitchMS = { 'alt' }, -- default: nil
+  modifierSwitchMS = { 'alt', 'shift' }, -- default: nil
   ...
 ```
 

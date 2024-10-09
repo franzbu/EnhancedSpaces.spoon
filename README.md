@@ -78,7 +78,7 @@ For switching directly to any mSpace, press 'alt' . In case you would like to ch
 
 ```lua
   ...
-  modifierMoveWinMSpace = { 'alt' }, -- default: { 'alt' }
+  modifierMoveWinMSpace = { 'alt', 'shift' }, -- default: { 'alt' }
   ...
 ```
 
@@ -88,7 +88,7 @@ So far we have discussed how to move windows to the adjacent mSpace. In case you
 
 ```lua
   ...
-  modifierSwitchMS = { 'alt', 'shift' }, -- default: nil
+  modifierSwitchMS = { 'alt' }, -- default: nil
   ...
 ```
 

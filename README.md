@@ -8,7 +8,7 @@ Well, first, spending your time with Mellon will actually save you time. As far 
 
 When it comes to spaces, Mellon provides a new implementation of what Apple has straightforwardly termed 'Spaces'; in Mellon they are called mSpaces, and what the 'm' stands for is a story I am not going to bore you with. 
 
-Suffices to say that mSpaces follow the approach of representing windows rather than sporting them, which, for instance, makes it possible to have the same window on more than one mSpace. When it comes to managing windows, they are positioned and resized according to your demands with keyboard shortcuts or a flick of your pointing device.
+Suffice to say that mSpaces follow the approach of representing windows rather than sporting them, which, for instance, makes it possible to have the same window on more than one mSpace. When it comes to managing windows, they are positioned and resized according to your demands with keyboard shortcuts or a flick of your pointing device.
 
 Still, this is nothing really new, I hear you say, and you are right. The way your windows and spaces are managed, is, though, and you will be surprised at what a difference sometimes even a slightly altered approach can make. But read on and judge for yourself.
 

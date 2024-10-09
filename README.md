@@ -4,7 +4,7 @@ Mellon has been inspired by Aerospace, Moom, BetterTouchTool, and others. Mellon
 
 To simplify one's life is not too bad, but what does this tool actually do to justify my spending time with it, you might say. 
 
-Well, first, spending your time with Mellon will actually save you time. As far as the abilities of this tool are concerned, the answer is simple: it helps you organize your workspace, which comes down to two main tasks, managing your spaces and managing your applications and windows on them. 
+Well, first, spending your time with Mellon will actually save you time. As far as the abilities of this tool are concerned, the answer is simple: it helps you organize your workspace, which comes down to two main tasks: managing your spaces and managing your applications and windows on them. 
 
 When it comes to spaces, Mellon provides a new implementation of what Apple has straightforwardly termed 'Spaces'; in Mellon they are called mSpaces, and what the 'm' stands for is a story I am not going to bore you with. 
 

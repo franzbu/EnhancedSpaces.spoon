@@ -69,6 +69,7 @@ function Mellon:new(options)
     {{'c1','1'}}, -- modifierSnapKey3
   }
 
+  modifierSwitchMS = options.modifierSwitchMS or nil
   modifierMoveWinMSpace = options.modifierMoveWinMSpace or nil
 
   margin = options.margin or 0.3
@@ -238,13 +239,6 @@ function Mellon:new(options)
     derefWinMSpace()
   end)
 
-  -- goto mspaces directly with 'modifierMS-<name of mspace>'
-  for i = 1, #mspaces do
-    hs.hotkey.bind(modifierMS, mspaces[i], function()
-      goToSpace(i)
-    end)
-  end
-
   --_________ switching spaces / moving windows _________
   hs.hotkey.bind(modifierMS, modifierMSKeys[1], function() -- previous space (incl. cycle)
     currentMSpace = getprevMSpaceNumber(currentMSpace)
@@ -275,7 +269,17 @@ function Mellon:new(options)
       goToSpace(currentMSpace)
   end)
 
-  -- moving windows to mSpaces
+  --fb
+  -- goto mspaces directly with 'modifierMS-<name of mspace>'
+  if modifierMoveWinMSpace ~= nil then
+    for i = 1, #mspaces do
+      hs.hotkey.bind(modifierSwitchMS, mspaces[i], function()
+        goToSpace(i)
+      end)
+    end
+  end
+
+  -- moving window to specific mSpace
   if modifierMoveWinMSpace ~= nil then
     for i = 1, #mspaces do
       hs.hotkey.bind(modifierMoveWinMSpace, mspaces[i], function() -- move active window to next space and switch there (incl. cycle)
@@ -319,6 +323,31 @@ function Mellon:new(options)
       end)
     end
   end
+
+  -- debug
+  -- list all windows
+  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "m", function()
+    --print("_______winAll_________")
+    for i, v in pairs(winAll) do
+      --print(i, v)
+    end
+    for i, v in pairs(winMSpaces) do
+      --print("_______winMSpaces_________")
+      --print(i .. ": " .. "mspace " .. tostring(winMSpaces[i].mspace))
+      --print("id: " .. tostring(winMSpaces[i].win:application()))
+      spaces = ""
+      for j = 1, #mspaces do
+        spaces = spaces .. tostring(winMSpaces[i].mspace[j]) .. ", "
+      end
+      --print("space: " .. spaces)
+    end
+    --print("=====")
+    --print(hs.application.find("WhatsApp"))
+  end)
+
+  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "n", function()
+    refreshWinMSpaces()
+  end)
 
   goToSpace(currentMSpace) -- refresh
   resizer.clickHandler:start()

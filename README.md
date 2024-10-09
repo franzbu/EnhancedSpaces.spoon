@@ -175,13 +175,13 @@ To resize and move the active window into a 2x2 grid position, use your 'modifie
 ```
 
 Adjust the keys to your liking; in the order of the entries in 'modifierSnap2Keys', windows are positioned as follows:
-- a1: left half of screen (1)
-- a2: right half of screen (2)
-- a3: top left quarter of screen (3)
-- a4: bottom left quarter of screen (4)
-- a5: top right quarter of screen (5)
-- a6: bottom right quarter of screen (6)
-- a7: whole screen (7)
+- 1: left half of screen (4)
+- 2: right half of screen (5)
+- 3: top left quarter of screen (6)
+- 4: bottom left quarter of screen (7)
+- 5: top right quarter of screen (8)
+- 6: bottom right quarter of screen (9)
+- 7: whole screen (0)
 
 #### 3x3 Grid
 
@@ -195,18 +195,18 @@ Add the following lines to your 'init.lua' (in case this has not become clear ye
 ```
 
 Windows are positioned as follows:
-- b1: left third of screen (1)
-- b2: middle third of screen (2)
-- b3: right third of screen (3)
-- b4: left top ninth of screen (4)
-- b5: left middle ninth of screen (5)
-- b6: left bottom ninth of screen (6)
-- b7: middle top ninth of screen (7)
-- b8: middle middle ninth of screen (8)
-- b9: middle bottom ninth of screen (9)
-- b10: right top ninth of screen (0)
-- b11: right middle ninth of screen (o)
-- b12: right bottom ninth of screen (p)
+- 1: left third of screen (1)
+- 2: middle third of screen (2)
+- 3: right third of screen (3)
+- 4: left top ninth of screen (4)
+- 5: left middle ninth of screen (5)
+- 6: left bottom ninth of screen (6)
+- 7: middle top ninth of screen (7)
+- 8: middle middle ninth of screen (8)
+- 9: middle bottom ninth of screen (9)
+- 10: right top ninth of screen (0)
+- 11: right middle ninth of screen (o)
+- 12: right bottom ninth of screen (p)
 
 ##### 3x3 Grid - Double (and Quadruple) Sizes
 
@@ -220,18 +220,18 @@ With the following keyboard shortcuts, you can create windows that take up more 
 ```
 
 Windows are positioned as follows (descriptions might be difficult to understand; so just try it out):
-- c1: left two thirds of screen: 3 cells (1)
-- c2: right two thirds of screen: 3 cells (2)
-- c3: left third, upper two cells (3)
-- c4: left third, lower two cells (4)
-- c5: middle third, upper two cells (5)
-- c6: middle third, lower two cells (6)
-- c7: right third, upper two cells (7)
-- c8: right third, lower two cells (8)
-- c9: top left and middle thirds: 4 cells (9)
-- c10: bottom left and middle thirds: 4 cells (0)
-- c11: top middle and right thirds: 4 cells (o)
-- c12: bottom middle and right thirds: 4 cells (p)
+- 1: left two thirds of screen: 3 cells (1)
+- 2: right two thirds of screen: 3 cells (2)
+- 3: left third, upper two cells (3)
+- 4: left third, lower two cells (4)
+- 5: middle third, upper two cells (5)
+- 6: middle third, lower two cells (6)
+- 7: right third, upper two cells (7)
+- 8: right third, lower two cells (8)
+- 9: top left and middle thirds: 4 cells (9)
+- 10: bottom left and middle thirds: 4 cells (0)
+- 11: top middle and right thirds: 4 cells (o)
+- 12: bottom middle and right thirds: 4 cells (p)
 
 
 ## Additional Information

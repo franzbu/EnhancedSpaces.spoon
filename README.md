@@ -216,7 +216,7 @@ Windows are positioned as follows:
 - o: right middle ninth of screen -> 'b11'
 - p: right bottom ninth of screen -> 'b12'
 
-##### 3x3 Grid - Double (and Quadruple) Sizes
+#### 3x3 Grid - Double (and Quadruple) Sizes
 
 With the following keyboard shortcuts, you can create windows that take up more cells on the 3x3 grid, which contains 9 cells altogether:
 

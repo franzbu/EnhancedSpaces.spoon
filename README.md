@@ -55,32 +55,43 @@ After having Mellon runngin, all you will see for now is a new icon in your menu
 
 ## mSpaces
 
-The default setup uses 'modifier1' and the keys 'a', 's', 'd', 'f', 'q', and 'w' to switch to the mSpace on the left/right ('a', 's'), move a window to the mSpace on the left/right ('d', 'f'), move a window to the mSpace on the left/right and switch there ('q', 'w'). 
+The default setup uses modifier1 and modifier2 pressed at the same time and the keys 'a', 's', 'd', 'f', 'q', and 'w' to switch to the mSpace on the left/right ('a', 's'), move a window to the mSpace on the left/right ('d', 'f'), move a window to the mSpace on the left/right and switch there ('q', 'w'). 
 
-Now, by pressing 'modifier1' and 'q', for instance, you move the active window from your current mSpace to the adjacent mSpace on the left and switch there. For moving the window without switching or switching to another mSpace without moving any windows use the appropriate keyboard shortcuts.
+Now, by pressing 'modifier1', 'modifier2', and 'q', for instance, you move the active window from your current mSpace to the adjacent mSpace on the left and switch there. For moving the window without switching or switching to another mSpace without moving any windows use the appropriate keyboard shortcuts.
 
 In case you would like to change the modifier for dealing with mSpaces while keeping the original 'modifier1' (which is used for other operations as well, as you will see in a minute) and/or change additional keys, add the following lines with the desired adjustments to your 'init.lua'; the example below shows my setup with CapsLock set up as hyper key, for example, using [Karabiner Elements]([https://www.hammerspoon.org/](https://karabiner-elements.pqrs.org/)):
 
 
 ```lua
   ...
-  modifierSwitchMS = { 'shift', 'ctrl', 'alt', 'cmd' }, -- hyper key
+  modifierMS = { 'alt', 'ctrl' }, -- default: modifier1 + modifier2
   -- 1, 2: switch to mSpace left/right ('a', 's')
   -- 3, 4: move window to mSpace left/right ('d', 'f')
   -- 5, 6: move window to mSpace left/right and switch there ('q', 'w')
-  modifierSwitchMSKeys = {'a', 's', 'd', 'f', 'q', 'w'}, -- default: {'a', 's', 'd', 'f', 'q', 'w'}
+  modifierMSKeys = {'a', 's', 'd', 'f', 'q', 'w'}, -- default: {'a', 's', 'd', 'f', 'q', 'w'}
+  ...
+```
+
+### Switch Directly to Any mSpace 
+
+For switching directly to any mSpace, press 'alt' . In case you would like to change this modifier, add the following line to your 'init.lua', making the appropriate changes ragarding your desired modifier(s):
+
+```lua
+  ...
+  modifierMoveWinMSpace = { 'alt' }, -- default: { 'alt' }
   ...
 ```
 
 ### Move Windows Directly to Any mSpace 
 
-So far we have discussed how to move windows to the adjacent mSpace. In case you would like to have a keyboard shortcut for moving windows to any mSpace directly, add the following line to your 'init.lua', making the appropriate changes for your desired modifier(s):
+So far we have discussed how to move windows to the adjacent mSpace. In case you would like to have a keyboard shortcut for moving windows to any mSpace directly, add the following line to your 'init.lua', making the appropriate changes regarding your desired modifier(s):
 
 ```lua
   ...
-  modifierMoveWinMSpace = { 'alt', 'shift' }, -- default: nil
+  modifierSwitchMS = { 'alt', 'shift' }, -- default: nil
   ...
 ```
+
 
 ## mSpaces Carry Further Potential
 
@@ -164,13 +175,13 @@ To resize and move the active window into a 2x2 grid position, use your 'modifie
 ```
 
 Adjust the keys to your liking; in the order of the entries in 'modifierSnap2Keys', windows are positioned as follows:
-- 1: left half of screen (4)
-- 2: right half of screen (5)
-- 3: top left quarter of screen (6)
-- 4: bottom left quarter of screen (7)
-- 5: top right quarter of screen (8)
-- 6: bottom right quarter of screen (9)
-- 7: whole screen (0)
+- a1: left half of screen (1)
+- a2: right half of screen (2)
+- a3: top left quarter of screen (3)
+- a4: bottom left quarter of screen (4)
+- a5: top right quarter of screen (5)
+- a6: bottom right quarter of screen (6)
+- a7: whole screen (7)
 
 #### 3x3 Grid
 
@@ -184,13 +195,18 @@ Add the following lines to your 'init.lua' (in case this has not become clear ye
 ```
 
 Windows are positioned as follows:
-- 1: left third of screen (1)
-- 2: middle third of screen (2)
-- 3: right third of screen (3)
-- 4: top left ninth of screen (4)
-- 5: middle left night of screen (5)
-- 6: bottom left ninth of screen (6)
-- ...
+- b1: left third of screen (1)
+- b2: middle third of screen (2)
+- b3: right third of screen (3)
+- b4: left top ninth of screen (4)
+- b5: left middle ninth of screen (5)
+- b6: left bottom ninth of screen (6)
+- b7: middle top ninth of screen (7)
+- b8: middle middle ninth of screen (8)
+- b9: middle bottom ninth of screen (9)
+- b10: right top ninth of screen (0)
+- b11: right middle ninth of screen (o)
+- b12: right bottom ninth of screen (p)
 
 ##### 3x3 Grid - Double (and Quadruple) Sizes
 
@@ -204,18 +220,18 @@ With the following keyboard shortcuts, you can create windows that take up more 
 ```
 
 Windows are positioned as follows (descriptions might be difficult to understand; so just try it out):
-- 1: left two thirds of screen: 3 cells (1)
-- 2: right two thirds of screen: 3 cells (2)
-- 3: left third, upper two cells (3)
-- 4: left third, lower two cells (4)
-- 5: middle third, upper two cells (5)
-- 6: middle third, lower two cells (6)
-- 7: right third, upper two cells (7)
-- 8: right third, lower two cells (8)
-- 9: top left and middle thirds: 4 cells (9)
-- 10: bottom left and middle thirds: 4 cells (0)
-- 11: top middle and right thirds: 4 cells (o)
-- 12: bottom middle and right thirds: 4 cells (p)
+- c1: left two thirds of screen: 3 cells (1)
+- c2: right two thirds of screen: 3 cells (2)
+- c3: left third, upper two cells (3)
+- c4: left third, lower two cells (4)
+- c5: middle third, upper two cells (5)
+- c6: middle third, lower two cells (6)
+- c7: right third, upper two cells (7)
+- c8: right third, lower two cells (8)
+- c9: top left and middle thirds: 4 cells (9)
+- c10: bottom left and middle thirds: 4 cells (0)
+- c11: top middle and right thirds: 4 cells (o)
+- c12: bottom middle and right thirds: 4 cells (p)
 
 
 ## Additional Information

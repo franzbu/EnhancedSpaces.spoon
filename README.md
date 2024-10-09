@@ -72,7 +72,7 @@ In case you would like to change the modifier for dealing with mSpaces while kee
   ...
 ```
 
-### Switch Directly to Any mSpace 
+### Switch Directly to Any mSpace (on todo list, not yet implemented)
 
 For switching directly to any mSpace, press 'alt' . In case you would like to change this modifier, add the following line to your 'init.lua', making the appropriate changes ragarding your desired modifier(s):
 

@@ -164,6 +164,25 @@ All this is been implemented with the goal of being as intuitive as possible; th
 
 ### Automatic Resizing and Positioning - Keyboard
 
+Add the following lines to your 'init.lua', these entries will be explained in a minute, and it will also be shown how to adjust the keyboard shortcuts:
+
+```lua
+  ...
+  modifierSnap1 = { 'cmd', 'alt' }, -- default: nil
+  modifierSnap2 = { 'cmd', 'ctrl' }, -- default: nil
+  modifierSnap3 = { 'cmd', 'alt', 'ctrl' }, -- default: nil
+
+  modifierSnapKeys = {
+    -- modifierSnapKey1
+    {{'a1','1'},{'a2','2'},{'a3','3'},{'a4','4'},{'a5','5'},{'a6','6'},{'a7','7'}},
+    -- modifierSnapKey2
+    {{'b1','1'},{'b2','2'},{'b3','3'},{'b4','4'},{'b5','5'},{'b6','6'},{'b7','7'},{'b8','8'},{'b9','9'},{'b10','0'},{'b11','o'},{'b12','p'}},
+    -- modifierSnapKey3
+    {{'c1','1'},{'c2','2'},{'c3','3'},{'c4','4'},{'c5','5'},{'c6','6'},{'c7','7'},{'c8','8'},{'c9','9'},{'c10','0'},{'c11','o'},{'c12','p'}},
+  },
+  ...
+```
+
 To resize and move the active window into a 2x2 grid position, use 'modifierSnap1' and numbers 1-7. 
 
 To resize and move the active window into a 3x3 grid position, use 'modifierSnap2' and numbers 1-9, additionally '0', 'o', and 'p'. 
@@ -201,7 +220,6 @@ Windows are positioned as follows:
 
 With the following keyboard shortcuts, you can create windows that take up more cells on the 3x3 grid, which contains 9 cells altogether:
 
-
 Windows are positioned as follows -> (descriptions might be difficult to understand; so just try it out):
 - 1: left two thirds of screen: 3 cells -> 'c1'
 - 2: right two thirds of screen: 3 cells -> 'c2'
@@ -216,39 +234,17 @@ Windows are positioned as follows -> (descriptions might be difficult to underst
 - o: top middle and right thirds: 4 cells -> 'c11'
 - p: bottom middle and right thirds: 4 cells -> 'c12'
 
-
-Here is the full list of modifiers and keys:
-
-```lua
-  ...
-  modifierSnap1 = { 'cmd', 'alt' }, -- default: { 'cmd', 'alt' }
-  modifierSnap2 = { 'cmd', 'ctrl' }, -- default: { 'cmd', 'ctrl' }
-  modifierSnap3 = { 'cmd', 'alt', 'ctrl' }, -- default: { 'cmd', 'alt', 'ctrl' }
-
-  modifierSnapKeys = {
-    -- modifierSnapKey1
-    {{'a1','1'},{'a2','2'},{'a3','3'},{'a4','4'},{'a5','5'},{'a6','6'},{'a7','7'}},
-    -- modifierSnapKey2
-    {{'b1','1'},{'b2','2'},{'b3','3'},{'b4','4'},{'b5','5'},{'b6','6'},{'b7','7'},{'b8','8'},{'b9','9'},{'b10','0'},{'b11','o'},{'b12','p'}},
-    -- modifierSnapKey3
-    {{'c1','1'},{'c2','2'},{'c3','3'},{'c4','4'},{'c5','5'},{'c6','6'},{'c7','7'},{'c8','8'},{'c9','9'},{'c10','0'},{'c11','o'},{'c12','p'}},
-  },
-  ...
-```
-
-These are the preset modifiers and keys; you can adjust them to your liking. 
-
-Here is an example: If you just need windows to snap into three positions, 
+All of the above are the preset modifiers and keys; they are fully customizable. Here is an example: If you just need windows to snap into three positions, 
 
 (1) right half of screen -> 'a2'
 (2) right middle ninth of screen -> 'b11'
 (3) middle third, upper two cells -> 'c5'
 
-and you would like to use modifierSnap2 and the keys 'j', 'k', and 'l', then your 'init.lua' would look like this:
+and you would like to use modifierSnap2 with the keys 'j', 'k', and 'l', then your 'init.lua' would look like this:
 
 ```lua
   ...
-  modifierSnap2 = { 'cmd', 'ctrl' }, -- default: { 'cmd', 'ctrl' }
+  modifierSnap2 = { 'cmd', 'ctrl' }, -- default: nil
 
   modifierSnapKeys = {
     -- modifierSnapKey1

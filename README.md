@@ -123,7 +123,7 @@ For switching between the references of a window ('sticky windows'), press 'modi
 
 ## Moving and Resizing Windows:
 
-With Mellon you can automatically resize and position the windows on your mSpaces on a dynamically changing grid size. Let us get started with manual moving and resizing, though:
+With Mellon you can automatically resize and position the windows on your mSpaces according to a dynamically changing grid size. Let us get started with manual moving and resizing, though:
 
 
 ### Manual Moving and Positioning

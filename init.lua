@@ -304,7 +304,6 @@ function Mellon:new(options)
     if winAll[i]:topLeft().x > max.w - 30 then -- window in 'hiding spot'
       winMSpaces[getWinMSpacesPos(winAll[i])].frame[currentMSpace] = hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2, winAll[i]:frame().w, winAll[i]:frame().h) -- put window in middle of screen
       winMSpaces[getWinMSpacesPos(winAll[i])].mspace[currentMSpace] = true
-      refreshWinMSpaces()
     end
   end
   --]]

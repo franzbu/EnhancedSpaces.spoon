@@ -129,7 +129,7 @@ function Mellon:new(options)
     -- menubar
   -- https://github.com/Hammerspoon/hammerspoon/issues/2878
   menubar = hs.menubar.new(true, "A"):setTitle(mspaces[currentMSpace])
-  menubar:setTooltip("Mellon")
+  menubar:setTooltip("mSpace")
 
   filter_all = hs.window.filter.new()
   winAll = filter_all:getWindows(hs.window.sortByFocused)
@@ -141,9 +141,9 @@ function Mellon:new(options)
   
   -- watchdogs
   filter = hs.window.filter --subscribe: when a new window (dis)appears, run refreshWindowsWS
-  filter.default:subscribe(filter.windowNotOnScreen, function() refreshWinMSpaces() end)
-  filter.default:subscribe(filter.windowOnScreen, function() refreshWinMSpaces() end)
-  filter.default:subscribe(filter.windowFocused, function() refreshWinMSpaces() end)
+  filter.default:subscribe(filter.windowNotOnScreen, function(w) refreshWinMSpaces(w) focusLastWindow() end)
+  filter.default:subscribe(filter.windowOnScreen, function(w) refreshWinMSpaces(w) w:focus() end)
+  filter.default:subscribe(filter.windowFocused, function(w) refreshWinMSpaces(w) end)
   filter.default:subscribe(filter.windowMoved, function(w) correctXY(w) end)
 
   ---[[ -- flagsKeyboardTracker
@@ -299,9 +299,10 @@ function Mellon:new(options)
 
   -- recover stranded windows
   for i = 1, #winAll do
-    if winAll[i]:topLeft().x > max.w - 30 then -- window in 'hiding spot'
+    if winAll[i]:topLeft().x >= max.w - 1 then -- window in 'hiding spot'
+      -- move window to the middle of the current mSpace
       winMSpaces[getWinMSpacesPos(winAll[i])].frame[currentMSpace] = hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2, winAll[i]:frame().w, winAll[i]:frame().h) -- put window in middle of screen
-      winMSpaces[getWinMSpacesPos(winAll[i])].mspace[currentMSpace] = true
+      --winMSpaces[getWinMSpacesPos(winAll[i])].mspace[currentMSpace] = true -- does not seem necessary
     end
   end
 
@@ -1054,6 +1055,18 @@ function goToSpace(target)
   end
   menubar:setTitle(tostring(mspaces[target])) -- menubar
   currentMSpace = target
+
+  focusLastWindow()
+  --[[
+  -- focus window (last used)
+  for i = 1, #winAll do -- winAll seems sorted last focused first
+    if winMSpaces[getWinMSpacesPos(winAll[i])].mspace[currentMSpace] then
+      winMSpaces[getWinMSpacesPos(winAll[i])].win:focus()
+      break
+    end
+  end
+  --]]
+
 end
 
 
@@ -1068,13 +1081,26 @@ function moveToSpace(target, origin)
 
   -- always keep frame of MSpase of origin
   winMSpaces[getWinMSpacesPos(fwin)].frame[target] = winMSpaces[getWinMSpacesPos(fwin)].frame[origin]
-  
 
+  focusLastWindow()
 end
 
 
-function refreshWinMSpaces()
-  --print("_____refreshWinMSpaces_____")
+-- focus previous focused window when moving windows/switching spaces/closing windows??
+function focusLastWindow()
+  -- focus window (last used)
+  for i = 1, #winAll do   -- winAll seems sorted last focused first
+    if winMSpaces[getWinMSpacesPos(winAll[i])].mspace[currentMSpace] then
+      winMSpaces[getWinMSpacesPos(winAll[i])].win:focus()
+      break
+    end
+  end
+end
+
+
+function refreshWinMSpaces(w)
+  print("_____refreshWinMSpaces_____")
+  -- print(hs.inspect(w))
   filter_all = hs.window.filter.new()
   winAll = filter_all:getWindows(hs.window.sortByFocused)
 

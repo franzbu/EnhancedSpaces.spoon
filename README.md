@@ -8,11 +8,11 @@ Well, first, spending your time with Mellon will actually save you time. As far 
 
 When it comes to spaces, Mellon provides a new implementation of what Apple has straightforwardly termed 'Spaces'; in Mellon they are called mSpaces, and what the 'm' stands for is a story I am not going to bore you with. 
 
-Suffice to say that mSpaces follow the approach of representing windows rather than containing them, which, for instance, makes it possible to have the same window on more than one mSpace. When it comes to managing windows, they are positioned and resized according to your demands with keyboard shortcuts or a flick of your pointing device.
+mSpaces follow the approach of representing windows rather than containing them, which, for instance, makes it possible to have the same window on more than one mSpace. When it comes to managing windows, they are positioned and resized according to your demands with keyboard shortcuts or a flick of your pointing device.
 
 Still, this is nothing really new, I hear you say, and you are right. The way your windows and spaces are managed, is, though, and you might be surprised at what a difference sometimes even a slightly altered approach can make. But read on and judge for yourself.
 
-One last thing before we get our toes wet: windows and mSpaces can be handled using your keyboard only; however, similar to other operations, at times it is simpler and faster to use keyboard and pointing device together. Thus Mellon provides this additional option wherever it is beneficial. 
+One last thing before we dive in: windows and mSpaces can be handled using your keyboard only; however, similar to other operations, at times it is simpler and faster to use keyboard and pointing device together. Thus Mellon provides this additional option wherever it is beneficial. 
 
 
 ## Installation
@@ -37,36 +37,34 @@ Once you have installed Mellon, add the following lines to your `~/.hammerspoon/
 local Mellon = hs.loadSpoon('Mellon')
 
 Mellon:new({
-
   -- mSpaces:
   mSpaces = { '1', '2', '3', 'E', 'T' }, -- default { '1', '2', '3' }
   startmSpace = 'E', -- default 2
 
   modifier1 = { 'alt' }, -- default: { 'alt' }
   modifier2 = { 'ctrl' }, -- default: { 'ctrl' }
-
 })
 
 ```
 
-Restart Hammerspoon and you are ready to go. You might additionally be interested in adjusting the amount and names of your mSpaces and your default mSpace; to do so see above. 
+Restart Hammerspoon and you are ready to go. You might be interested in adjusting the amount and names of your mSpaces and your default mSpace; to do so change the above entries. 
 
-After having Mellon runngin, all you will see for now is a new icon in your menu bar indicating your current mSpace. Let us find out now how to populate your mSpaces.
+After starting Mellon, all you will see for now is a new icon in your menu bar indicating your current mSpace. Let us find out now how to populate your mSpaces.
 
 ## mSpaces
 
-The default setup uses modifier2 pressed at the same time and the keys 'a', 's', 'd', 'f', 'q', and 'w' to switch to the mSpace on the left/right ('a', 's'), move a window to the mSpace on the left/right ('d', 'f'), move a window to the mSpace on the left/right and switch there ('q', 'w'). 
+The default setup uses 'ctrl' pressed at the same time and the keys 'a', 's', 'd', 'f', 'q', and 'w' to switch to the mSpace to the left/right ('a', 's'), move a window to the mSpace to the left/right ('d', 'f'), move a window to the mSpace to the left/right while at the same time switching there ('q', 'w'). 
 
-Now, by pressing 'ctrl' and 'q', for instance, you move the active window from your current mSpace to the adjacent mSpace on the left and switch there. For moving the window without switching or switching to another mSpace without moving any windows use the appropriate keyboard shortcuts.
+Now, by pressing 'ctrl' and 'q', for instance, you move the active window from your current mSpace to the adjacent mSpace on the left and at the same time switch there. 
 
 The below lines represent the default setup, and you do not need to add them to your 'init.lua' if the shortcuts are to your liking. 
 
-However, in case you would like to change the modifier for dealing with mSpaces, add the following lines with the desired adjustments to your 'init.lua':
+However, in case you would like to change the modifier or other keys, add the following lines with the desired adjustments to your 'init.lua':
 
 
 ```lua
   ...
-  modifierMS = { 'ctrl' }, -- default: modifier2
+  modifierMS = { 'ctrl' }, -- default: { 'ctrl' }
   -- 1, 2: switch to mSpace left/right ('a', 's')
   -- 3, 4: move window to mSpace left/right ('d', 'f')
   -- 5, 6: move window to mSpace left/right and switch there ('q', 'w')
@@ -78,9 +76,9 @@ However, in case you would like to change the modifier for dealing with mSpaces,
 
 For switching directly to any mSpace, press 'alt' and the key for your mSpace.
 
-As before, the below lines represent the default setup, and you do not need to add them to your 'init.lua' if the shortcuts are to your liking. 
+As before, the below line represents the default setup, and you do not need to add it to your 'init.lua' if the shortcuts are to your liking. 
 
-However, in case you would like to change this modifier, add the following line to your 'init.lua', making the appropriate changes ragarding your desired modifier(s):
+However, in case you would like to change this modifier, add the following line to your 'init.lua', making the appropriate changes:
 
 ```lua
   ...
@@ -92,9 +90,9 @@ However, in case you would like to change this modifier, add the following line 
 
 For moving windows to any mSpace, press 'alt-ctrl' and the key for the mSpace to which you want the active window to move.
 
-As before, the below lines represent the default setup, and you do not need to add them to your 'init.lua' if the shortcuts are to your liking. 
+As before, the below line represents the default setup, and you do not need to add it to your 'init.lua' if the shortcuts are to your liking. 
 
-However, in case you would like to change this modifier, add the following line to your 'init.lua', making the appropriate changes ragarding your desired modifier(s):
+However, in case you would like to change this modifier, add the following line to your 'init.lua', making the appropriate changes:
 
 ```lua
   ...
@@ -105,13 +103,15 @@ However, in case you would like to change this modifier, add the following line 
 
 ## mSpaces Carry Further Potential
 
-However, we have not walked over the finish line yet. That being said, this section is for advanced users and can be skipped.
+By now we have covered the basics. However, we have not walked over the finish line yet. That being said, this section is for advanced users and can be skipped.
+
+This section is about having 'copies' of windows on more than one mSpace. 
 
 If you want to unlock the full potential of mSpaces, it is helpful to understand the underlying philosophy: see each mSpace as a representation of your windows rather than just some area where your windows can be placed, or, in other words: an mSpace is a set of 'symbolic links' to your windows. Due to this approach, you could, for instance, have two mSpaces with the same windows in different sizes and positions, which might even be sensible for specific workflows where it makes sense to be switching instantly between a bigger window of one and a smaller window of another application and vice versa. Or you can have the same Notes, Calendar, Finder or Safari window on two, three, or all of your mSpaces.
   
 To create representations of windows, press the 'ctrl' and 'shift' modifiers simultaneously and additionally press the key corresponding to the mSpace you would like to create a reference of the currently active window on, for instance, '3'. 
 
-As before, the below lines represent the default setup, and you do not need to add them to your 'init.lua' if the shortcuts are to your liking. 
+As before, the below line represents the default setup, and you do not need to add it to your 'init.lua' if the shortcuts are to your liking. 
 
 However, in case you would like to change this modifier, add the following line to your 'init.lua', making the appropriate changes ragarding your desired modifier(s):
 
@@ -120,6 +120,7 @@ However, in case you would like to change this modifier, add the following line 
   modifierReference = { 'ctrl', 'shift' }, -- default: { 'ctrl', 'shift' }
   ...
 ```
+
 To delete a reference, press 'modifierReference' and '0'. In case you are 'de-referencing' the last representation of a window on your mSpaces, the window gets minimized.
 
 
@@ -127,11 +128,15 @@ To delete a reference, press 'modifierReference' and '0'. In case you are 'de-re
 
 You can use macOS's integrated window switcher (cmd-tab) or any third party switcher such as [AltTab]([[https://www.hammerspoon.org/](https://karabiner-elements.pqrs.org/](https://alt-tab-macos.netlify.app/))) for switching between all your windows. Also for switching between the different windows of one application you can use Apple's integrated switcher or any third party alternative.
 
-However, since mSpaces provide additional features, these need harvesting, and Mellon provides further possibilities for switching between windows, namely (1) switching between all the windows on the current mSpace and (2) switching between references of windows ('sticky windows').
+However, to make use of the additional features of mSpaces, Mellon provides further possibilities for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').
 
 ### Switching between Windows of the Current mSpace
 
-For switching between the windows of your current mSpace, press 'alt' and 'tab', and for switching in reverse order additionally press 'shift'. Add the following lines to 'init.lua' in case you prefer different keyboard shortcuts:
+For switching between the windows of your current mSpace, press 'alt' and 'tab', and for switching in reverse order additionally press 'shift'. 
+
+As before, the below lines represent the default setup, and you do not need to add them to your 'init.lua' if the shortcuts are to your liking. 
+
+However, in case you would like to change anything, add the following lines to your 'init.lua', making the appropriate changes:
 
 
 ```lua
@@ -178,7 +183,7 @@ All this is been implemented with the goal of being as intuitive as possible; th
 
 ### Automatic Resizing and Positioning - Keyboard
 
-The automatic resizing and positioning with keyboard is not enabled by default, so if you want to use this feature, add the following lines to your 'init.lua' (these entries will be explained in a minute, and it will also be shown how to adjust the keyboard shortcuts):
+The automatic resizing and positioning using keyboard shortcuts is not enabled by default, so if you want to use this feature, add the following lines to your 'init.lua' (these lines will be explained in a minute, and it will also be explained how you can adjust the keyboard shortcuts to your liking):
 
 ```lua
   ...
@@ -206,7 +211,6 @@ To resize and move the active window into a 3x3 grid position, use 'modifierSnap
 Below you find the pre-assigned keyboard shortcuts. As has been mentioned, you can change and freely combine them; more about that in a minute.
 
 #### 2x2 Grid
-
 - 'modifierSnap1' and '1': left half of screen -> 'a1'
 - 'modifierSnap1' and '2': right half of screen -> 'a2'
 - 'modifierSnap1' and '3': top left quarter of screen -> 'a3'
@@ -216,7 +220,6 @@ Below you find the pre-assigned keyboard shortcuts. As has been mentioned, you c
 - 'modifierSnap1' and '7': whole screen -> 'a7'
 
 #### 3x3 Grid
-
 Windows are positioned as follows:
 'modifierSnap2' and '1': left third of screen -> 'b1'
 'modifierSnap2' and '2': middle third of screen -> 'b2'
@@ -234,7 +237,6 @@ Windows are positioned as follows:
 
 
 #### 3x3 Grid - Double (and Quadruple) Sizes
-
 You can have windows take up more cells on the 3x3 grid (the 3x3 grid consists of 9 cells). The pre-defined positions and sizes are as follows (descriptions might be difficult to follow; so simply try the keyboard shortcuts out):
 
 'modifierSnap3' and '1': left two thirds of screen': 3 cells -> 'c1'
@@ -250,7 +252,7 @@ You can have windows take up more cells on the 3x3 grid (the 3x3 grid consists o
 'modifierSnap3' and 'o': top middle and right thirds': 4 cells -> 'c11'
 'modifierSnap3' and 'p': bottom middle and right thirds': 4 cells -> 'c12'
 
-As has been pointed out, these keyboard shortcuts are fully customizable, which is best shown with an example: let us assume you just need windows to snap into three different grid positions, (1) right half of screen -> 'a2', (2) right middle ninth of screen -> 'b11', and (3) middle third, upper two cells -> 'c5', and you would like to use modifierSnap2 with the keys 'j', 'k', and 'l'; then your 'init.lua' would look like this:
+As has been mentioned, these keyboard shortcuts are fully customizable, which is best shown with an example: let us assume for a moment that you just need windows to snap into three different grid positions, (1) right half of screen -> 'a2', (2) right middle ninth of screen -> 'b11', and (3) middle third, upper two cells -> 'c5', and you would like to use modifierSnap2 with the keys 'j', 'k', and 'l' to achieve that; then your 'init.lua' would look like this:
 
 ```lua
   ...
@@ -266,7 +268,9 @@ As has been pointed out, these keyboard shortcuts are fully customizable, which 
   },
   ...
 ```
-As you can see in the example above, 'modifierSnapKey1' and 'modifierSnapKey3' are not used and are therefore empty. 'modifierSnapKey2' contains the three desired shortcuts, and by pressing 'modifierSnapKey1' and 'j', for example, scenario 'a2' is activated, which means that the active window snaps into the right half of the screen.
+As you can see in the example above, 'modifierSnapKey1' and 'modifierSnapKey3' are not used and are therefore empty. 'modifierSnapKey2' contains the three desired shortcuts. 
+
+Now, by pressing 'modifierSnapKey1' and 'j', for example, scenario 'a2' is activated, which means that the active window snaps into the right half of the screen.
 
 ## Additional Information
 
@@ -284,7 +288,9 @@ In case you would like to change the size, color and/or opacity of the grid indi
 
 ### Restart
 
-- If you restart Mellon, the windows on the current mSpace remain the way they were before the restart, while the windows that were placed on other mSpaces will also be moved to the current mSpace. In other words, if you want to stop using Mellon, either move all windows to one mSpace first, or restart Mellon one last time. A backup feature restoring windows to their original mSpaces is on the todo list.
+- If you restart Mellon, the windows on the current mSpace remain the way they were before the restart, while the windows that were placed on other mSpaces will also be moved to the current mSpace. 
+
+In other words, if you want to stop using Mellon, either move all windows to the current mSpace first, or simply restart Mellon one last time. A backup feature restoring windows to their original mSpaces is on the todo list.
 
 
 ## Experimental
@@ -293,7 +299,7 @@ In case you would like to change the size, color and/or opacity of the grid indi
 
 Similar to manual moving, manual resizing of windows can be initiated by positioning the cursor in virtually any area of the window. Be aware, though, that windows of certain applications, such as LosslessCut or Kdenlive, can behave in a stuttering and sluggish way when being resized. That being said, resizing works well with the usual suspects such as Safari, Google Chrome, or Finder.
 
-In order to enable manual resizing, add the following option to your 'init.lua':
+In order to enable manual resizing, add the following lines to your 'init.lua':
 
 ```lua
   ...

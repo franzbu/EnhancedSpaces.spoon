@@ -53,7 +53,7 @@ function Mellon:new(options)
   modifier1_2 = mergeModifiers(modifier1, modifier2) 
   modifierReference = options.modifierReference or { 'ctrl', 'shift' } 
     
-  modifierMS = options.modifierMS or modifier1_2
+  modifierMS = options.modifierMS or modifier2
   modifierMSKeys = {'a', 's', 'd', 'f', 'q', 'w'}
 
   modifierSwitchWin = options.modifierSwitchWin or modifier1
@@ -62,15 +62,19 @@ function Mellon:new(options)
   modifierSnap1 = options.modifierSnap1 or nil
   modifierSnap2 = options.modifierSnap2 or nil
   modifierSnap3 = options.modifierSnap3 or nil
-
   modifierSnapKeys = options.modifierSnapKeys or {
-    {{'a1','1'},{'a2','2'},{'a3','3'},{'a4','4'},{'a5','5'},{'a6','6'},{'a7','7'}}, -- modifierSnapKey1
-    {{'b1','1'}}, -- modifierSnapKey2
-    {{'c1','1'}}, -- modifierSnapKey3
+    -- modifierSnapKey1
+    {{'a1','1'},{'a2','2'},{'a3','3'},{'a4','4'},{'a5','5'},{'a6','6'},{'a7','7'}}, 
+    -- modifierSnapKey2
+    {{'b1','1'}},
+    -- modifierSnapKey3
+    {{'c1','1'}},
   }
 
-  modifierSwitchMS = options.modifierSwitchMS or nil
-  modifierMoveWinMSpace = options.modifierMoveWinMSpace or nil
+  -- switch to mSpace
+  modifierSwitchMS = options.modifierSwitchMS or modifier1
+  -- move window to mSpace
+  modifierMoveWinMSpace = options.modifierMoveWinMSpace or modifier1_2
 
   margin = options.margin or 0.3
   m = margin * 100 / 2

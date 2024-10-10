@@ -55,16 +55,18 @@ After having Mellon runngin, all you will see for now is a new icon in your menu
 
 ## mSpaces
 
-The default setup uses modifier1 and modifier2 pressed at the same time and the keys 'a', 's', 'd', 'f', 'q', and 'w' to switch to the mSpace on the left/right ('a', 's'), move a window to the mSpace on the left/right ('d', 'f'), move a window to the mSpace on the left/right and switch there ('q', 'w'). 
+The default setup uses modifier2 pressed at the same time and the keys 'a', 's', 'd', 'f', 'q', and 'w' to switch to the mSpace on the left/right ('a', 's'), move a window to the mSpace on the left/right ('d', 'f'), move a window to the mSpace on the left/right and switch there ('q', 'w'). 
 
-Now, by pressing 'modifier1', 'modifier2', and 'q', for instance, you move the active window from your current mSpace to the adjacent mSpace on the left and switch there. For moving the window without switching or switching to another mSpace without moving any windows use the appropriate keyboard shortcuts.
+Now, by pressing 'ctrl' and 'q', for instance, you move the active window from your current mSpace to the adjacent mSpace on the left and switch there. For moving the window without switching or switching to another mSpace without moving any windows use the appropriate keyboard shortcuts.
 
-In case you would like to change the modifier for dealing with mSpaces while keeping the original 'modifier1' (which is used for other operations as well, as you will see in a minute) and/or change additional keys, add the following lines with the desired adjustments to your 'init.lua'; the example below shows my setup with CapsLock set up as hyper key, for example, using [Karabiner Elements]([https://www.hammerspoon.org/](https://karabiner-elements.pqrs.org/)):
+The below lines represent the default setup, and you do not need to add them to your 'init.lua' if the shortcuts are to your liking. 
+
+However, in case you would like to change the modifier for dealing with mSpaces, add the following lines with the desired adjustments to your 'init.lua':
 
 
 ```lua
   ...
-  modifierMS = { 'alt', 'ctrl' }, -- default: modifier1 + modifier2
+  modifierMS = { 'ctrl' }, -- default: modifier2
   -- 1, 2: switch to mSpace left/right ('a', 's')
   -- 3, 4: move window to mSpace left/right ('d', 'f')
   -- 5, 6: move window to mSpace left/right and switch there ('q', 'w')
@@ -74,7 +76,11 @@ In case you would like to change the modifier for dealing with mSpaces while kee
 
 ### Switch Directly to Any mSpace
 
-For switching directly to any mSpace, press 'alt' . In case you would like to change this modifier, add the following line to your 'init.lua', making the appropriate changes ragarding your desired modifier(s):
+For switching directly to any mSpace, press 'alt' and the key for your mSpace.
+
+As before, the below lines represent the default setup, and you do not need to add them to your 'init.lua' if the shortcuts are to your liking. 
+
+However, in case you would like to change this modifier, add the following line to your 'init.lua', making the appropriate changes ragarding your desired modifier(s):
 
 ```lua
   ...
@@ -84,11 +90,15 @@ For switching directly to any mSpace, press 'alt' . In case you would like to ch
 
 ### Move Windows Directly to Any mSpace
 
-So far we have discussed how to move windows to the adjacent mSpace. In case you would like to have a keyboard shortcut for moving windows to any mSpace directly, add the following line to your 'init.lua', making the appropriate changes regarding your desired modifier(s):
+For moving windows to any mSpace, press 'alt-ctrl' and the key for the mSpace to which you want the active window to move.
+
+As before, the below lines represent the default setup, and you do not need to add them to your 'init.lua' if the shortcuts are to your liking. 
+
+However, in case you would like to change this modifier, add the following line to your 'init.lua', making the appropriate changes ragarding your desired modifier(s):
 
 ```lua
   ...
-  modifierSwitchMS = { 'alt', 'shift' }, -- default: nil
+  modifierSwitchMS = { 'alt', 'ctrl' }, -- default: { 'alt', 'ctrl' }
   ...
 ```
 
@@ -99,7 +109,11 @@ However, we have not walked over the finish line yet. That being said, this sect
 
 If you want to unlock the full potential of mSpaces, it is helpful to understand the underlying philosophy: see each mSpace as a representation of your windows rather than just some area where your windows can be placed, or, in other words: an mSpace is a set of 'symbolic links' to your windows. Due to this approach, you could, for instance, have two mSpaces with the same windows in different sizes and positions, which might even be sensible for specific workflows where it makes sense to be switching instantly between a bigger window of one and a smaller window of another application and vice versa. Or you can have the same Notes, Calendar, Finder or Safari window on two, three, or all of your mSpaces.
   
-To create representations of windows, press the 'ctrl' and 'shift' modifiers simultaneously and additionally press the key corresponding to the mSpace you would like to create a reference of the currently active window on, for instance, '3'. In case you would like to adjust the modifiers, add the following line to your 'init.lua':
+To create representations of windows, press the 'ctrl' and 'shift' modifiers simultaneously and additionally press the key corresponding to the mSpace you would like to create a reference of the currently active window on, for instance, '3'. 
+
+As before, the below lines represent the default setup, and you do not need to add them to your 'init.lua' if the shortcuts are to your liking. 
+
+However, in case you would like to change this modifier, add the following line to your 'init.lua', making the appropriate changes ragarding your desired modifier(s):
 
 ```lua
   ...
@@ -117,7 +131,7 @@ However, since mSpaces provide additional features, these need harvesting, and M
 
 ### Switching between Windows of the Current mSpace
 
-For switching between the windows of your current mSpace, press 'modifier1' and 'tab', and for switching in reverse order additionally press 'shift'. Add the following lines to 'init.lua' in case you prefer different keyboard shortcuts:
+For switching between the windows of your current mSpace, press 'alt' and 'tab', and for switching in reverse order additionally press 'shift'. Add the following lines to 'init.lua' in case you prefer different keyboard shortcuts:
 
 
 ```lua
@@ -131,7 +145,7 @@ For switching between the windows of your current mSpace, press 'modifier1' and 
 
 ### Switching between References of Windows
 
-For switching between the references of a window ('sticky windows'), press 'modifier1' and 'escape'. In case you prefer a different key, change the second element in the table 'modifierSwitchWinKeys' (see above).
+For switching between the references of a window ('sticky windows'), press 'alt' and 'escape'. In case you prefer a different key, change the second element in the table 'modifierSwitchWinKeys' (see above).
 
 
 ## Moving and Resizing Windows:
@@ -141,21 +155,21 @@ With Mellon you can automatically resize and position the windows on your mSpace
 
 ### Manual Moving and Positioning
 
-To make moving windows easier than having to hold on to the title bar (which you are still free to do), hold 'modifier1' or 'modifier2' down, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
+To make moving windows easier than having to hold on to the title bar (which you are still free to do), hold 'alt' or 'ctrl' down, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
 
 
 ### Automatic Resizing and Positioning - Mouse and/or Trackpad
 
-For automatic resizing and positioning of a window, you simply move between 10 and 80 percent of the window beyond the left, right, or bottom borders of your screen using while pressing 'modifier1' or 'modifier2'. 
+For automatic resizing and positioning of a window, you simply move between 10 and 80 percent of the window beyond the left, right, or bottom borders of your screen using while pressing 'alt' or 'ctrl'. 
 
-As long as windows are resized - or moved within the borders of the screen -, it makes no difference whether you use your 'modifier1' or 'modifier2'. However, once a window is moved beyond the screen borders, different positioning and resizing scenarios are called into action; they are as follows:
+As long as windows are resized - or moved within the borders of the screen -, it makes no difference whether you use your 'alt' or 'ctrl'. However, once a window is moved beyond the screen borders, different positioning and resizing scenarios are called into action; they are as follows:
 
 * modifier1: 
   * If windows are moved beyond the left (right) borders of the screen: imagine your screen border divided into three sections: if the cursor crosses the screen border in the middle section, the window snaps into the left (right) half of the screen. Crossing the screen border in the upper and lower sections, the window snaps into the respective quarters of the screen.
   * If windows are moved beyond the bottom border of the screen: imagine your bottom screen border divided into three sections: if the cursor crosses the screen border in the middle section, the window snaps into full screen. Crossing the screen border in the left or right sections, the window snaps into the respective halfs of the screen.
 
 * modifier2: 
-  * The difference to 'modifier1' is that your screen has a 3x3 grid. This means that windows snap into the left third of the 3x3 grid when dragged beyond the left screen border and into the right third when dragged beyond the right screen border. If 'modifier2' is released before the left mouse button, the window will snap into the middle column.
+  * The difference to 'alt' is that your screen has a 3x3 grid. This means that windows snap into the left third of the 3x3 grid when dragged beyond the left screen border and into the right third when dragged beyond the right screen border. If 'ctrl' is released before the left mouse button, the window will snap into the middle column.
  
 * The moment dragging of a window starts, indicators will guide you. For changing their appearance see below.
 
@@ -164,7 +178,7 @@ All this is been implemented with the goal of being as intuitive as possible; th
 
 ### Automatic Resizing and Positioning - Keyboard
 
-Add the following lines to your 'init.lua', these entries will be explained in a minute, and it will also be shown how to adjust the keyboard shortcuts:
+The automatic resizing and positioning with keyboard is not enabled by default, so if you want to use this feature, add the following lines to your 'init.lua' (these entries will be explained in a minute, and it will also be shown how to adjust the keyboard shortcuts):
 
 ```lua
   ...
@@ -187,55 +201,56 @@ To resize and move the active window into a 2x2 grid position, use 'modifierSnap
 
 To resize and move the active window into a 3x3 grid position, use 'modifierSnap2' and numbers 1-9, additionally '0', 'o', and 'p'. 
 
-'modifierSnap3' with the same keys as with 'modifierSnap2' also uses a 3x3 grid, but the windows snap into different sizes, see '3x3 Grid - Double (and Quadruple) Sizes' below.
+'modifierSnap3' also uses a 3x3 grid and is combined with the same keys as 'modifierSnap2'. However, the windows snap into different sizes, see '3x3 Grid - Double (and Quadruple) Sizes' below.
 
+Below you find the pre-assigned keyboard shortcuts. As has been mentioned, you can change and freely combine them; more about that in a minute.
 
 #### 2x2 Grid
 
-- 1: left half of screen -> 'a1'
-- 2: right half of screen -> 'a2'
-- 3: top left quarter of screen -> 'a3'
-- 4: bottom left quarter of screen -> 'a4'
-- 5: top right quarter of screen -> 'a5'
-- 6: bottom right quarter of screen -> 'a6'
-- 7: whole screen -> 'a7'
+- 'modifierSnap1' and '1': left half of screen -> 'a1'
+- 'modifierSnap1' and '2': right half of screen -> 'a2'
+- 'modifierSnap1' and '3': top left quarter of screen -> 'a3'
+- 'modifierSnap1' and '4': bottom left quarter of screen -> 'a4'
+- 'modifierSnap1' and '5': top right quarter of screen -> 'a5'
+- 'modifierSnap1' and '6': bottom right quarter of screen -> 'a6'
+- 'modifierSnap1' and '7': whole screen -> 'a7'
 
 #### 3x3 Grid
 
 Windows are positioned as follows:
-- 1: left third of screen -> 'b1'
-- 2: middle third of screen -> 'b2'
-- 3: right third of screen -> 'b3'
-- 4: left top ninth of screen -> 'b4'
-- 5: left middle ninth of screen -> 'b5'
-- 6: left bottom ninth of screen -> 'b6'
-- 7: middle top ninth of screen -> 'b7'
-- 8: middle middle ninth of screen -> 'b8'
-- 9: middle bottom ninth of screen -> 'b9'
-- 0: right top ninth of screen -> 'b10'
-- o: right middle ninth of screen -> 'b11'
-- p: right bottom ninth of screen -> 'b12'
+'modifierSnap2' and '1': left third of screen -> 'b1'
+'modifierSnap2' and '2': middle third of screen -> 'b2'
+'modifierSnap2' and '3': right third of screen -> 'b3'
+'modifierSnap2' and '4': left top ninth of screen -> 'b4'
+'modifierSnap2' and '5': left middle ninth of screen -> 'b5'
+'modifierSnap2' and '6': left bottom ninth of screen -> 'b6'
+'modifierSnap2' and '7': middle top ninth of screen -> 'b7'
+'modifierSnap2' and '8': middle middle ninth of screen -> 'b8'
+'modifierSnap2' and '9': middle bottom ninth of screen -> 'b9'
+'modifierSnap2' and '0': right top ninth of screen -> 'b10'
+'modifierSnap2' and 'o': right middle ninth of screen -> 'b11'
+'modifierSnap2' and 'p': right bottom ninth of screen -> 'b12'
+
+
 
 #### 3x3 Grid - Double (and Quadruple) Sizes
 
-With the following keyboard shortcuts, you can create windows that take up more cells on the 3x3 grid, which contains 9 cells altogether. Windows are positioned as follows (descriptions might be difficult to understand; so just try it out):
+You can have windows take up more cells on the 3x3 grid (the 3x3 grid consists of 9 cells). The pre-defined positions and sizes are as follows (descriptions might be difficult to follow; so simply try the keyboard shortcuts out):
 
-- 1: left two thirds of screen: 3 cells -> 'c1'
-- 2: right two thirds of screen: 3 cells -> 'c2'
-- 3: left third, upper two cells -> 'c3'
-- 4: left third, lower two cells -> 'c4'
-- 5: middle third, upper two cells -> 'c5'
-- 6: middle third, lower two cells -> 'c6'
-- 7: right third, upper two cells -> 'c7'
-- 8: right third, lower two cells -> 'c8'
-- 9: top left and middle thirds: 4 cells -> 'c9'
-- 0: bottom left and middle thirds: 4 cells -> 'c10'
-- o: top middle and right thirds: 4 cells -> 'c11'
-- p: bottom middle and right thirds: 4 cells -> 'c12'
+'modifierSnap3' and '1': left two thirds of screen': 3 cells -> 'c1'
+'modifierSnap3' and '2': right two thirds of screen': 3 cells -> 'c2'
+'modifierSnap3' and '3': left third, upper two cells -> 'c3'
+'modifierSnap3' and '4': left third, lower two cells -> 'c4'
+'modifierSnap3' and '5': middle third, upper two cells -> 'c5'
+'modifierSnap3' and '6': middle third, lower two cells -> 'c6'
+'modifierSnap3' and '7': right third, upper two cells -> 'c7'
+'modifierSnap3' and '8': right third, lower two cells -> 'c8'
+'modifierSnap3' and '9': top left and middle thirds': 4 cells -> 'c9'
+'modifierSnap3' and '0': bottom left and middle thirds': 4 cells -> 'c10'
+'modifierSnap3' and 'o': top middle and right thirds': 4 cells -> 'c11'
+'modifierSnap3' and 'p': bottom middle and right thirds': 4 cells -> 'c12'
 
-As has been pointed out, these keyboard shortcuts are fully customizable. 
-
-Here is an example: let us assume you just need windows to snap into three different grid positions, (1) right half of screen -> 'a2', (2) right middle ninth of screen -> 'b11', and (3) middle third, upper two cells -> 'c5', and you would like to use modifierSnap2 with the keys 'j', 'k', and 'l'; then your 'init.lua' would look like this:
+As has been pointed out, these keyboard shortcuts are fully customizable, which is best shown with an example: let us assume you just need windows to snap into three different grid positions, (1) right half of screen -> 'a2', (2) right middle ninth of screen -> 'b11', and (3) middle third, upper two cells -> 'c5', and you would like to use modifierSnap2 with the keys 'j', 'k', and 'l'; then your 'init.lua' would look like this:
 
 ```lua
   ...
@@ -251,7 +266,7 @@ Here is an example: let us assume you just need windows to snap into three diffe
   },
   ...
 ```
-
+As you can see in the example above, 'modifierSnapKey1' and 'modifierSnapKey3' are not used and are therefore empty. 'modifierSnapKey2' contains the three desired shortcuts, and by pressing 'modifierSnapKey1' and 'j', for example, scenario 'a2' is activated, which means that the active window snaps into the right half of the screen.
 
 ## Additional Information
 
@@ -287,7 +302,7 @@ In order to enable manual resizing, add the following option to your 'init.lua':
   ...
 ```
 
-To manually resize a window, hold your 'modifier1' or 'modifier2' down, then click the right mouse button in any part of the window and drag the window.
+To manually resize a window, hold your 'alt' or 'ctrl' down, then click the right mouse button in any part of the window and drag the window.
 
 To have the additional possibility of precisely resizing windows horizontally-only or vertically-only, 30 percent of the window (15 precent left and right of the middle of each border) is reserved for horizontal-only and vertical-only resizing. The size of this area can be adjusted; for more information see below.
 

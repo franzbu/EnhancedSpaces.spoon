@@ -290,7 +290,7 @@ In case you would like to change the size, color and/or opacity of the grid indi
 
 - If you restart Mellon, the windows on the current mSpace remain the way they were before the restart, while the windows that were placed on other mSpaces will also be moved to the current mSpace. 
 
-In other words, if you want to stop using Mellon, either move all windows to the current mSpace first, or simply restart Mellon one last time. A backup feature restoring windows to their original mSpaces is on the todo list.
+In other words, if you want to stop using Mellon, either move all windows to the current mSpace first, or simply restart Mellon one more time.
 
 
 ## Experimental

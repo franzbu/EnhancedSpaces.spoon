@@ -136,9 +136,9 @@ function Mellon:new(options)
   -- todo (maybe, problems with WhatsApp): hs.window.allWindows()
   winMSpaces = {}
   --initialize winMSpaces
-  refreshWinMSpaces()
   local max = winAll[1]:screen():frame()
-
+  refreshWinMSpaces()
+  
   -- watchdogs
   filter = hs.window.filter --subscribe: when a new window (dis)appears, run refreshWindowsWS
   filter.default:subscribe(filter.windowNotOnScreen, function() refreshWinMSpaces() end)
@@ -178,10 +178,12 @@ function Mellon:new(options)
   end)
   keyboardTracker:start()
 
-  --[[
+  ---[[
   --cycle through all windows, regardless of which WS they are on (https://applehelpwriter.com/2018/01/14/how-to-add-a-window-switcher/)
-  --switcher = hs.window.switcher.new() -- default windowfilter: only visible windows, all Spaces
-  switcher = hs.window.switcher.new(hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)})) -- only windows on current mSpace
+  --switcher = hs.window.switcher.new() -- default windowfilter: only visible windows, all mSpaces
+
+  -- cycle throuth windows on current mSpace
+  switcher = hs.window.switcher.new(hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)})) 
   switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
   switcher.ui.thumbnailSize = 112
   switcher.ui.selectedThumbnailSize = 284
@@ -200,6 +202,7 @@ function Mellon:new(options)
   --]]
 
   -- cycle through windows of current WS (without UI), todo (maybe): last focus first
+  --[[
   local nextFMS = 1
   hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[1], function()
     if nextFMS > #winMSpaces then nextFMS = 1 end
@@ -273,7 +276,6 @@ function Mellon:new(options)
       goToSpace(currentMSpace)
   end)
 
-  --fb
   -- goto mspaces directly with 'modifierMoveWinMSpace-<name of mspace>'
   if modifierMoveWinMSpace ~= nil then
     for i = 1, #mspaces do
@@ -295,14 +297,17 @@ function Mellon:new(options)
     end
   end
 
+  ---[[
+  --fb
   -- recover stranded windows
   for i = 1, #winAll do
     if winAll[i]:topLeft().x > max.w - 30 then -- window in 'hiding spot'
-      hs.timer.doAfter(0.01, function()
-        winAll[i]:setTopLeft(hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2)) -- put window in middle of screen
-      end)
+      winMSpaces[getWinMSpacesPos(winAll[i])].frame[currentMSpace] = hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2, winAll[i]:frame().w, winAll[i]:frame().h) -- put window in middle of screen
+      winMSpaces[getWinMSpacesPos(winAll[i])].mspace[currentMSpace] = true
+      refreshWinMSpaces()
     end
   end
+  --]]
 
   
   -- ___________ keyboard shortcuts - snapping windows into grid postions ___________
@@ -338,6 +343,7 @@ function Mellon:stop()
   self.dragging = false
   self.dragType = nil
   for i = 1, #cv do -- delete canvases
+    
     cv[i]:delete()
   end
   self.cancelHandler:stop()
@@ -1149,18 +1155,6 @@ function refreshWinMSpaces()
     end
   end
 
-  -- go to mspace with window that has just got fucus (this way the macOS cmd-tab window switcher can be used)
-  if winOnlyMoved == false then
-    local pos = getWinMSpacesPos(hs.window.focusedWindow())
-    if not winMSpaces[pos].mspace[currentMSpace] then -- nothing to do in case window is on current mspace
-      for i = 1, #mspaces do
-        if winMSpaces[pos].mspace[i] then
-          goToSpace(i)        
-          break
-        end
-      end
-    end
-  end
   winOnlyMoved = false
 end
 

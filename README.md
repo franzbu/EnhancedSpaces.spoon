@@ -76,7 +76,7 @@ However, in case you would like to change the modifier or other keys, add the fo
 
 For switching directly to any mSpace, press 'alt' and the key for your mSpace.
 
-As before, the below line represents the default setup, and you do not need to add it to your 'init.lua' if the shortcuts are to your liking. 
+As before, the line below represents the default setup, and you do not need to add it to your 'init.lua' if the shortcuts are to your liking. 
 
 However, in case you would like to change this modifier, add the following line to your 'init.lua', making the appropriate changes:
 
@@ -103,17 +103,15 @@ However, in case you would like to change this modifier, add the following line 
 
 ## mSpaces Carry Further Potential
 
-By now we have covered the basics. However, we have not walked over the finish line yet. That being said, this section is for advanced users and can be skipped.
+By now we have covered the basics, but we have not walked over the finish line yet. That being said, this section is mainly for advanced users and can be skipped.
 
 This section is about having 'copies' of windows on more than one mSpace. 
 
-If you want to unlock the full potential of mSpaces, it is helpful to understand the underlying philosophy: see each mSpace as a representation of your windows rather than just some area where your windows can be placed, or, in other words: an mSpace is a set of 'symbolic links' to your windows. Due to this approach, you could, for instance, have two mSpaces with the same windows in different sizes and positions, which might even be sensible for specific workflows where it makes sense to be switching instantly between a bigger window of one and a smaller window of another application and vice versa. Or you can have the same Notes, Calendar, Finder or Safari window on two, three, or all of your mSpaces.
+If you want to unlock the full potential of mSpaces, it is helpful to understand the underlying philosophy: See each mSpace as a representation of your windows rather than just some area where your windows can be placed, or, in other words, an mSpace can be understood as a set of 'symbolic links' to your actual windows. Due to this approach you could, for instance, have two mSpaces with the same windows in different sizes and positions, which might even be sensible for specific workflows where it makes sense to be switching instantly between a bigger window of one and a smaller window of another application and vice versa. Or you can have the same Notes, Calendar, Finder or Safari window on two, three, or all of your mSpaces.
   
 To create representations of windows, press the 'ctrl' and 'shift' modifiers simultaneously and additionally press the key corresponding to the mSpace you would like to create a reference of the currently active window on, for instance, '3'. 
 
-As before, the below line represents the default setup, and you do not need to add it to your 'init.lua' if the shortcuts are to your liking. 
-
-However, in case you would like to change this modifier, add the following line to your 'init.lua', making the appropriate changes ragarding your desired modifier(s):
+As before, the below line represents the default setup, and you do not need to add it to your 'init.lua' unless you want to change the shortcuts. 
 
 ```lua
   ...
@@ -128,7 +126,7 @@ To delete a reference, press 'modifierReference' and '0'. In case you are 'de-re
 
 You can use macOS's integrated window switcher (cmd-tab) or any third party switcher such as [AltTab]([[https://www.hammerspoon.org/](https://karabiner-elements.pqrs.org/](https://alt-tab-macos.netlify.app/))) for switching between all your windows. Also for switching between the different windows of one application you can use Apple's integrated switcher or any third party alternative.
 
-However, to make use of the additional features of mSpaces, Mellon provides further possibilities for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').
+However, to make use of the advanced features mSpaces provide, Mellon offers additional possibilities for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').
 
 ### Switching between Windows of the Current mSpace
 
@@ -252,7 +250,7 @@ You can have windows take up more cells on the 3x3 grid (the 3x3 grid consists o
 'modifierSnap3' and 'o': top middle and right thirds': 4 cells -> 'c11'
 'modifierSnap3' and 'p': bottom middle and right thirds': 4 cells -> 'c12'
 
-As has been mentioned, these keyboard shortcuts are fully customizable, which is best shown with an example: let us assume for a moment that you just need windows to snap into three different grid positions, (1) right half of screen -> 'a2', (2) right middle ninth of screen -> 'b11', and (3) middle third, upper two cells -> 'c5', and you would like to use modifierSnap2 with the keys 'j', 'k', and 'l' to achieve that; then your 'init.lua' would look like this:
+As has been mentioned, these keyboard shortcuts are fully customizable, which is best shown with using an example: let us assume for a moment that you just need windows to snap into three different grid positions, (1) right half of screen -> 'a2', (2) right middle ninth of screen -> 'b11', and (3) middle third, upper two cells -> 'c5', and you would like to use modifierSnap2 with the keys 'j', 'k', and 'l' to achieve that; then your 'init.lua' would look like this:
 
 ```lua
   ...
@@ -288,7 +286,7 @@ In case you would like to change the size, color and/or opacity of the grid indi
 
 ### Restart
 
-- If you restart Mellon, the windows on the current mSpace remain the way they were before the restart, while the windows that were placed on other mSpaces will also be moved to the current mSpace. 
+- If you restart Mellon, the windows on the current mSpace remain the way they were before the restart, while the windows that were placed on other mSpaces will be moved to the current mSpace. 
 
 In other words, if you want to stop using Mellon, either move all windows to the current mSpace first, or simply restart Mellon one more time.
 

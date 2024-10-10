@@ -297,8 +297,6 @@ function Mellon:new(options)
     end
   end
 
-  ---[[
-  --fb
   -- recover stranded windows
   for i = 1, #winAll do
     if winAll[i]:topLeft().x > max.w - 30 then -- window in 'hiding spot'
@@ -306,9 +304,7 @@ function Mellon:new(options)
       winMSpaces[getWinMSpacesPos(winAll[i])].mspace[currentMSpace] = true
     end
   end
-  --]]
 
-  
   -- ___________ keyboard shortcuts - snapping windows into grid postions ___________
   if modifierSnap1 ~= nil then
     for i = 1, #modifierSnapKeys[1] do

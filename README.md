@@ -1,16 +1,16 @@
 # Mellon
 
-Mellon has been inspired by a variety of tools, most prominent among them are Aerospace, Moom and BetterTouchTool. Mellon has simplified my life with my Mac; may it do the same for you.
+Mellon has been inspired by a variety of tools, mainly Aerospace, Moom and BetterTouchTool. Mellon has simplified my life with my Mac; may it do the same for you.
 
 To simplify one's life is not too bad, but what does this tool actually do to justify my spending time with it, you might ask. 
 
 Well, first, spending your time with Mellon will actually save you time. As far as the capabilities of this tool are concerned, the answer is simple: it helps you organize your workspace, which comes down to two main tasks: managing your spaces and your applications and windows on them. 
 
-When it comes to spaces, Mellon provides a new implementation of what Apple has straightforwardly termed 'Spaces'; in Mellon they are called mSpaces, and what the 'm' stands for is a story I am not going to bore you with. 
+When it comes to spaces, Mellon provides a new implementation of what Apple has straightforwardly termed 'Spaces'; in Mellon they are called mSpaces.
 
-mSpaces follow the approach of representing windows rather than containing them, which, for instance, makes it possible to have the same window on more than one mSpace. When it comes to managing windows, they are positioned and resized according to your demands with keyboard shortcuts or a flick of your pointing device.
+mSpaces follow the approach of representing windows rather than containing them, which, for instance, makes it possible to have the same window on more than one mSpace. When it comes to managing windows, they are positioned and resized with keyboard shortcuts or a flick of your pointing device according to your demands.
 
-Still, this is nothing really new, I hear you say, and you are right. The way your windows and spaces are managed, is, though, and you might be surprised at what a difference sometimes even a slightly altered approach can make. But read on and judge for yourself.
+Still, this is nothing really new, I hear you say, and you are right. You might be surprised, though, what difference sometimes even a slightly altered approach can make. But read on and judge for yourself.
 
 One last thing before we dive in: windows and mSpaces can be handled using your keyboard only; however, similar to other operations, at times it is simpler and faster to use keyboard and pointing device together. Thus Mellon provides this additional option wherever it is beneficial. 
 

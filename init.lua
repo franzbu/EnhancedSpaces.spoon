@@ -217,7 +217,7 @@ function Mellon:new(options)
   end)
   keyboardTracker:start()
 
-  ---[[
+  --[[
   --cycle through all windows, regardless of which WS they are on (https://applehelpwriter.com/2018/01/14/how-to-add-a-window-switcher/)
   --switcher = hs.window.switcher.new() -- default windowfilter: only visible windows, all mSpaces
 
@@ -241,7 +241,7 @@ function Mellon:new(options)
   --]]
 
   -- cycle through windows of current WS (without UI), todo (maybe): last focus first
-  --[[
+  ---[[
   local nextFMS = 1
   hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[1], function()
     if nextFMS > #winMSpaces then nextFMS = 1 end

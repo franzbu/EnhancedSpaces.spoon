@@ -1,6 +1,6 @@
 # Mellon
 
-Mellon has been inspired by a variety of tools, mainly Aerospace, Moom and BetterTouchTool. Mellon has simplified my life with my Mac; may it do the same for you.
+Mellon has been inspired by a variety of tools, among them Aerospace, Moom and BetterTouchTool. Mellon has simplified my life with my Mac; may it do the same for you.
 
 To simplify one's life is not too bad, but what does this tool actually do to justify my spending time with it, you might ask. 
 

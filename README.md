@@ -333,4 +333,15 @@ You can change the size of the area of the window where the vertical-only and ho
 ```
 
 
+## Uninstall Mellon
 
+In case you at some point had the automatic backup and restore function activated, start Mellon once with it deactivated; to do so, delete the following line in your 'init.lua' (or set it to false).
+
+```lua
+  ...
+  -- automatic backup and restore of mSpaces:
+  backup = true, -- default: false
+  ...
+```
+
+Other than that you only have to delete the folder 'Mellon.spoon' in the folder '~/.hammerspoon/Spoons/' and delete the corresponding section in your 'init.lua'.

@@ -9,7 +9,7 @@ Mellon.author = "Franz B. <csaa6335@gmail.com>"
 Mellon.homepage = "https://github.com/franzbu/Mellon.spoon"
 Mellon.winMSpaces = "MIT"
 Mellon.name = "Mellon"
-Mellon.version = "0.4"
+Mellon.version = "0.5"
 Mellon.spoonPath = scriptPath()
 
 local dragTypes = {
@@ -88,6 +88,8 @@ function Mellon:new(options)
 
   gridIndicator = options.gridIndicator or { 20, 1, 0, 0, 0.5 }
 
+  backup = options.backup or false
+
 
   local resizer = {
     disabledApps = tableToMap(options.disabledApps or {}),
@@ -125,9 +127,7 @@ function Mellon:new(options)
     resizer:handleDrag()
   )
 
-  --___________ mspaces ___________
     -- menubar
-  -- https://github.com/Hammerspoon/hammerspoon/issues/2878
   menubar = hs.menubar.new(true, "A"):setTitle(mspaces[currentMSpace])
   menubar:setTooltip("mSpace")
 
@@ -137,14 +137,53 @@ function Mellon:new(options)
   winMSpaces = {}
   --initialize winMSpaces
   local max = winAll[1]:screen():frame()
+
   refreshWinMSpaces()
-  
+
+  -- deserialize
+  ---[[ --fb
+  --winMSpacesSerializedOrg = hs.settings.get("mSpaces") -- original copy, so if windows that have been saved are not available at start, but become available later, are restored as well
+  --local winMSpacesSerialized = {}
+  if backup and hs.settings.get("mSpaces") then
+    winMSpacesSerialized = hs.settings.get("mSpaces")
+    for i = 1, #winAll do
+      for j = 1, #winMSpacesSerialized do
+        if winMSpacesSerialized[j] ~= nil and winMSpaces[getWinMSpacesPos(winAll[i])].win:title() == winMSpacesSerialized[j].title then
+          winMSpaces[getWinMSpacesPos(winAll[i])].mspace = copyTable(winMSpacesSerialized[j].mspace)
+          for k = 1, #mspaces do   -- create new hs.geometry object for each window and mspace
+            if winMSpacesSerialized[j].mspace[k] then
+              winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(winMSpacesSerialized[j].frame[k]._x,
+                winMSpacesSerialized[j].frame[k]._y, winMSpacesSerialized[j].frame[k]._w,
+                winMSpacesSerialized[j].frame[k]._h)
+            else
+              winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(0, 0, 0, 0)
+            end
+          end
+          --winMSpacesSerializedOrg[j] = nil
+        end
+      end
+    end
+    --goToSpace(currentMSpace) -- refresh
+  else
+    -- recover stranded windows; only sensible when serialization is not enabled
+    for i = 1, #winAll do
+      if winAll[i]:topLeft().x >= max.w - 1 then -- window in 'hiding spot'
+        -- move window to the middle of the current mSpace
+        winMSpaces[getWinMSpacesPos(winAll[i])].frame[currentMSpace] = hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2, winAll[i]:frame().w, winAll[i]:frame().h) -- put window in middle of screen
+      end
+    end
+    hs.settings.clear("mSpaces") -- delete settings
+  end
+  --]]
+
   -- watchdogs
+  ---[[
   filter = hs.window.filter --subscribe: when a new window (dis)appears, run refreshWindowsWS
   filter.default:subscribe(filter.windowNotOnScreen, function(w) refreshWinMSpaces(w) focusLastWindow() end)
   filter.default:subscribe(filter.windowOnScreen, function(w) refreshWinMSpaces(w) w:focus() end)
   filter.default:subscribe(filter.windowFocused, function(w) refreshWinMSpaces(w) end)
   filter.default:subscribe(filter.windowMoved, function(w) correctXY(w) end)
+  --]]
 
   ---[[ -- flagsKeyboardTracker
   -- 'subscribe', watchdog for modifier keys
@@ -237,7 +276,7 @@ function Mellon:new(options)
   --_________ reference/dereference windows to/from mspaces, goto mspaces _________
   -- reference
   for i = 1, #mspaces do
-    hs.hotkey.bind(modifierReference, tostring(i), function()
+    hs.hotkey.bind(modifierReference, mspaces[i], function()
       refWinMSpace(i)
     end)
   end
@@ -289,20 +328,8 @@ function Mellon:new(options)
   if modifierMoveWinMSpace ~= nil then
     for i = 1, #mspaces do
       hs.hotkey.bind(modifierMoveWinMSpace, mspaces[i], function() -- move active window to next space and switch there (incl. cycle)
-        -- move window to specific mSpace
-        moveToSpace(i, currentMSpace)
-        --currentMSpace = getnextMSpaceNumber(currentMSpace)
-        --goToSpace(currentMSpace)
+       moveToSpace(i, currentMSpace)
       end)
-    end
-  end
-
-  -- recover stranded windows
-  for i = 1, #winAll do
-    if winAll[i]:topLeft().x >= max.w - 1 then -- window in 'hiding spot'
-      -- move window to the middle of the current mSpace
-      winMSpaces[getWinMSpacesPos(winAll[i])].frame[currentMSpace] = hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2, winAll[i]:frame().w, winAll[i]:frame().h) -- put window in middle of screen
-      --winMSpaces[getWinMSpacesPos(winAll[i])].mspace[currentMSpace] = true -- does not seem necessary
     end
   end
 
@@ -329,10 +356,87 @@ function Mellon:new(options)
     end
   end
 
+  -- debug
+  -- list all windows
+  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "m", function()
+    print("_______winAll_________")
+    for i, v in pairs(winAll) do
+      print(i, v)
+    end
+    print("_______winMSpaces_________")
+    for i, v in pairs(winMSpaces) do
+      print(i .. ": " .. "mspace " .. tostring(winMSpaces[i].mspace))
+      print("id: " .. winMSpaces[i].win:application():name())
+      spaces = ""
+      for j = 1, #mspaces do
+        spaces = spaces .. tostring(winMSpaces[i].mspace[j]) .. ", "
+      end
+      print("space: " .. spaces)
+
+      for j = 1, #mspaces do -- frame
+        print(tostring(winMSpaces[i].frame[j]))
+      end
+
+    end
+    --print("=====")
+    --print(hs.application.find("WhatsApp"))
+  end)
+
+  -- serialize
+  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "k", function()
+    winMSpacesSerialized = {}
+    for i = 1, #winMSpaces do
+      winMSpacesSerialized[i] = {}
+      winMSpacesSerialized[i].appName = winMSpaces[i].win:application():name()
+      winMSpacesSerialized[i].title = winMSpaces[i].win:title()
+      winMSpacesSerialized[i].mspace = {}
+      winMSpacesSerialized[i].frame = {}
+      for k = 1, #mspaces do
+        winMSpacesSerialized[i].mspace[k] = winMSpaces[i].mspace[k]
+        if winMSpaces[i].mspace[k] then
+          winMSpacesSerialized[i].frame[k] = winMSpaces[i].frame[k]
+        else
+          winMSpacesSerialized[i].frame[k] = hs.geometry.new(0,0,0,0) --{0,0,0,0} --hs.geometry.new(0,0,0,0) -- 
+        end
+      end
+    end
+    hs.settings.set("mSpaces", winMSpacesSerialized)
+  end)
+
+  -- deserialize (restore settings)
+
+  winMSpacesSerializedOrg = hs.settings.get("mSpaces") -- original copy, so if windows that have been saved are not available at start, but become available later, are restored as well
+  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "l", function()
+    winMSpacesSerialized = hs.settings.get("mSpaces")
+    for i = 1, #winAll do
+      for j = 1, #winMSpacesSerialized do
+        if winMSpacesSerialized[j] ~= nil and winMSpaces[getWinMSpacesPos(winAll[i])].win:title() == winMSpacesSerialized[j].title then
+          winMSpaces[getWinMSpacesPos(winAll[i])].mspace = copyTable(winMSpacesSerialized[j].mspace)
+          for k = 1, #mspaces do -- create new hs.geometry object for each window and mspace
+            if winMSpacesSerialized[j].mspace[k] then
+              winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(winMSpacesSerialized[j].frame[k]._x, winMSpacesSerialized[j].frame[k]._y, winMSpacesSerialized[j].frame[k]._w, winMSpacesSerialized[j].frame[k]._h)
+            else
+              winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(0,0,0,0)
+            end          
+          end
+          winMSpacesSerializedOrg[j] = nil
+        end
+      end
+    end
+    goToSpace(currentMSpace) -- refresh
+  end)
+
+  -- test
+  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "i", function()
+    
+  end)
+
+
   goToSpace(currentMSpace) -- refresh
   resizer.clickHandler:start()
   return resizer
 end
+
 
 
 function Mellon:stop()
@@ -1126,7 +1230,7 @@ function refreshWinMSpaces(w)
           winMSpaces[i].frame[k] = winAll[i]:frame()
         else
           winMSpaces[i].mspace[k] = false
-          winMSpaces[i].frame[k] = winAll[i]:frame()
+          winMSpaces[i].frame[k] = hs.geometry.new(0,0,0,0) --{0,0,0,0} --fb winAll[i]:frame(); nil; 
         end
       end
     end
@@ -1176,6 +1280,53 @@ function refreshWinMSpaces(w)
     end
   end
 
+  -- serialize (backup)
+  ---[[ 
+  if backup then
+    winMSpacesSerialized = {}
+    for i = 1, #winMSpaces do
+      winMSpacesSerialized[i] = {}
+      winMSpacesSerialized[i].appName = winMSpaces[i].win:application():name()
+      winMSpacesSerialized[i].title = winMSpaces[i].win:title()
+      winMSpacesSerialized[i].mspace = {}
+      winMSpacesSerialized[i].frame = {}
+      for k = 1, #mspaces do
+        winMSpacesSerialized[i].mspace[k] = winMSpaces[i].mspace[k]
+        if winMSpaces[i].mspace[k] then
+          winMSpacesSerialized[i].frame[k] = winMSpaces[i].frame[k]
+        else
+          winMSpacesSerialized[i].frame[k] = hs.geometry.new(0,0,0,0) --{0,0,0,0} --hs.geometry.new(0,0,0,0) -- 
+        end
+      end
+    end
+    hs.timer.doAfter(0.3, function()
+      hs.settings.set("mSpaces", winMSpacesSerialized)
+    end)
+  end
+  --]]
+
+  -- deserialize at later stage; original copy, so if windows that have been saved are not available at start, but become available later, are restored as well
+  --[[ --fb: todo: not yet working
+  if winMSpacesSerializedOrg ~= nil then
+    for i = 1, #winAll do
+      for j = 1, #winMSpacesSerializedOrg do
+        if winMSpacesSerializedOrg[j] ~= nil and winMSpaces[getWinMSpacesPos(winAll[i])].win:title() == winMSpacesSerializedOrg[j].title then
+          winMSpaces[getWinMSpacesPos(winAll[i])].mspace = copyTable(winMSpacesSerializedOrg[j].mspace)
+          for k = 1, #mspaces do -- create new hs.geometry object for each window and mspace
+            if winMSpacesSerializedOrg[j].mspace[k] then
+              winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(winMSpacesSerializedOrg[j].frame[k]._x, winMSpacesSerializedOrg[j].frame[k]._y, winMSpacesSerializedOrg[j].frame[k]._w, winMSpacesSerializedOrg[j].frame[k]._h)
+            else
+              winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(0,0,0,0)
+            end       
+          end
+          winMSpacesSerializedOrg[j] = nil
+        end
+      end
+    end
+    goToSpace(currentMSpace) -- refresh
+  end
+  --]]
+
   winOnlyMoved = false
 end
 
@@ -1205,7 +1356,7 @@ function refWinMSpace(target) -- add 'copy' of window on current mspace to targe
   local fwin = hs.window.focusedWindow()
   max = fwin:screen():frame()
   winMSpaces[getWinMSpacesPos(fwin)].mspace[target] = true
-  -- keep frame of MSpase of origin
+  -- copy frame from original mSpace
   winMSpaces[getWinMSpacesPos(fwin)].frame[target] = winMSpaces[getWinMSpacesPos(fwin)].frame[currentMSpace]
 end
 
@@ -1214,6 +1365,7 @@ function derefWinMSpace()
   local fwin = hs.window.focusedWindow()
   max = fwin:screen():frame()
   winMSpaces[getWinMSpacesPos(fwin)].mspace[currentMSpace] = false
+  winMSpaces[getWinMSpacesPos(fwin)].frame[currentMSpace] = hs.geometry.new(0,0,0,0) --{0,0,0,0} --hs.geometry.new(0,0,0,0)
   -- in case all 'mspace' are 'false', close window
   local all_false = true
   for i = 1, #winMSpaces[getWinMSpacesPos(fwin)].mspace do

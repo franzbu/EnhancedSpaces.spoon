@@ -57,7 +57,7 @@ The default setup uses 'ctrl' and the keys 'a', 's', 'd', 'f', 'q', and 'w' to s
 
 Now, by pressing 'ctrl' and 'q', for instance, you move the active window from your current mSpace to the adjacent mSpace on the left and at the same time switch there. 
 
-The below lines represent the default setup, and you do not need to add them to your 'init.lua' unless you prefer different shortcut:
+The below lines represent the default setup, and you do not need to add them to your 'init.lua' unless you prefer different shortcuts:
 
 ```lua
   ...
@@ -73,7 +73,7 @@ The below lines represent the default setup, and you do not need to add them to 
 
 For switching directly to any mSpace, press 'alt' and the key for your mSpace.
 
-As before, the line below represents the default setup, and you do not need to add it to your 'init.lua' unless you prefer different shortcut:
+As before, the line below represents the default setup, and you do not need to add it to your 'init.lua' unless you prefer a different shortcut:
 
 ```lua
   ...
@@ -85,7 +85,7 @@ As before, the line below represents the default setup, and you do not need to a
 
 For moving windows to any mSpace, press 'alt-ctrl' and the key for the mSpace to which you want the active window to move.
 
-As before, the below line represents the default setup, and you do not need to add it to your 'init.lua' unless you prefer different shortcut:
+As before, the below line represents the default setup, and you do not need to add it to your 'init.lua' unless you prefer a different shortcut:
 
 ```lua
   ...
@@ -100,11 +100,11 @@ By now we have covered the basics, but we have not walked over the finish line y
 
 This section is about having 'copies' of windows on more than one mSpace. 
 
-If you want to unlock the full potential of mSpaces, it is helpful to understand the underlying philosophy: See each mSpace as a representation of your windows rather than just some area where your windows can be placed, or, in other words, an mSpace can be understood as a set of 'symbolic links' to your actual windows. Due to this approach you could, for instance, have two mSpaces with the same windows in different sizes and positions, which might even be sensible for specific workflows where it makes sense to be switching instantly between a bigger window of one and a smaller window of another application and vice versa. Or you can have the same Notes, Calendar, Finder or Safari window on two, three, or all of your mSpaces.
+If you want to unlock the full potential of mSpaces, it is helpful to understand the underlying philosophy: See each mSpace as a representation of your windows rather than just an area where your windows can be placed - or, in other words, an mSpace can be understood as a set of 'symbolic links' to your actual windows. Due to this approach you could, for instance, have two mSpaces with the same windows in different sizes and positions, which could be sensible for specific workflows where it makes sense to be switching instantly between a bigger window of one and a smaller window of another application and vice versa. Or you can have the same Notes, Calendar, Finder or Safari window on two, three, or all of your mSpaces.
   
 To create representations of windows, press the 'ctrl' and 'shift' modifiers simultaneously and additionally press the key corresponding to the mSpace you would like to create a reference of the currently active window on, for instance, '3'. 
 
-As before, the below line represents the default setup, and you do not need to add it to your 'init.lua' unless you prefer different shortcut:
+As before, the below line represents the default setup, and you do not need to add it to your 'init.lua' unless you prefer a different shortcut:
 
 ```lua
   ...
@@ -125,7 +125,7 @@ However, to make use of the advanced features mSpaces provide, Mellon offers add
 
 For switching between the windows of your current mSpace, press 'alt' and 'tab'. 
 
-As before, the below lines represent the default setup, and you do not need to add them to your 'init.lua' unless you prefer different shortcut:
+As before, the below lines represent the default setup, and you do not need to add them to your 'init.lua' unless you prefer different shortcuts:
 
 
 ```lua
@@ -149,10 +149,10 @@ With Mellon you can automatically resize and position the windows on your mSpace
 
 ### Manual Moving and Positioning
 
-To make moving windows easier than having to hold on to the title bar (which you are still free to do), hold 'alt' or 'ctrl' down, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
+To make moving windows easier than the usual clicking on the title bar (which you are still free to do), hold 'alt' or 'ctrl' down, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
 
 
-### Automatic Resizing and Positioning - Mouse and/or Trackpad
+### Automatic Resizing and Positioning - Mouse, Trackpad
 
 For automatic resizing and positioning of a window, you simply move between 10 and 80 percent of the window beyond the left, right, or bottom borders of your screen using while pressing 'alt' or 'ctrl'. 
 
@@ -200,13 +200,13 @@ To resize and move the active window into a 3x3 grid position, use 'modifierSnap
 Below you find the pre-assigned keyboard shortcuts. As has been mentioned, you can change and freely combine them; more about that below.
 
 #### 2x2 Grid
-- 'modifierSnap1' and '1': left half of screen -> 'a1'
-- 'modifierSnap1' and '2': right half of screen -> 'a2'
-- 'modifierSnap1' and '3': top left quarter of screen -> 'a3'
-- 'modifierSnap1' and '4': bottom left quarter of screen -> 'a4'
-- 'modifierSnap1' and '5': top right quarter of screen -> 'a5'
-- 'modifierSnap1' and '6': bottom right quarter of screen -> 'a6'
-- 'modifierSnap1' and '7': whole screen -> 'a7'
+'modifierSnap1' and '1': left half of screen -> 'a1'
+'modifierSnap1' and '2': right half of screen -> 'a2'
+'modifierSnap1' and '3': top left quarter of screen -> 'a3'
+'modifierSnap1' and '4': bottom left quarter of screen -> 'a4'
+'modifierSnap1' and '5': top right quarter of screen -> 'a5'
+'modifierSnap1' and '6': bottom right quarter of screen -> 'a6'
+'modifierSnap1' and '7': whole screen -> 'a7'
 
 #### 3x3 Grid
 Windows are positioned as follows:
@@ -281,14 +281,14 @@ In case you would like to change the size, color and/or opacity of the grid indi
 
 This also means that if at some point you want to stop using Mellon, either move all windows to the current mSpace first, or simply restart Mellon one more time.
 
-Alternatively, Mellon has implemented an experimental feature to automatically backup and restore mSpaces and their windows; more in the section 'Backup and Restore of mSpaces' below.
+As an optical experimental feature, Mellon can automatically backup and restore mSpaces and their windows; more in the section 'Backup and Restore of mSpaces' below.
 
 
 ## Experimental
 
 ### Backup and Restore of mSpaces
 
-mSpaces with their windows can be automatically backed up and restored. Only the windows open at the time Mellon starts can be restored.
+mSpaces with their windows can be automatically backed up and restored. Only the windows open at the time Mellon starts will be restored.
 
 ```lua
   ...

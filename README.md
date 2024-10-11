@@ -53,14 +53,11 @@ After starting Mellon, all you will see for now is a new icon in your menu bar i
 
 ## mSpaces
 
-The default setup uses 'ctrl' pressed at the same time and the keys 'a', 's', 'd', 'f', 'q', and 'w' to switch to the mSpace to the left/right ('a', 's'), move a window to the mSpace to the left/right ('d', 'f'), move a window to the mSpace to the left/right while at the same time switching there ('q', 'w'). 
+The default setup uses 'ctrl' and the keys 'a', 's', 'd', 'f', 'q', and 'w' to switch to the mSpace to the left/right ('a', 's'), move a window to the mSpace to the left/right ('d', 'f'), move a window to the mSpace to the left/right while at the same time switching there ('q', 'w'). 
 
 Now, by pressing 'ctrl' and 'q', for instance, you move the active window from your current mSpace to the adjacent mSpace on the left and at the same time switch there. 
 
-The below lines represent the default setup, and you do not need to add them to your 'init.lua' if the shortcuts are to your liking. 
-
-However, in case you would like to change the modifier or other keys, add the following lines with the desired adjustments to your 'init.lua':
-
+The below lines represent the default setup, and you do not need to add them to your 'init.lua' unless you prefer different shortcut:
 
 ```lua
   ...
@@ -76,9 +73,7 @@ However, in case you would like to change the modifier or other keys, add the fo
 
 For switching directly to any mSpace, press 'alt' and the key for your mSpace.
 
-As before, the line below represents the default setup, and you do not need to add it to your 'init.lua' if the shortcuts are to your liking. 
-
-However, in case you would like to change this modifier, add the following line to your 'init.lua', making the appropriate changes:
+As before, the line below represents the default setup, and you do not need to add it to your 'init.lua' unless you prefer different shortcut:
 
 ```lua
   ...
@@ -90,9 +85,7 @@ However, in case you would like to change this modifier, add the following line 
 
 For moving windows to any mSpace, press 'alt-ctrl' and the key for the mSpace to which you want the active window to move.
 
-As before, the below line represents the default setup, and you do not need to add it to your 'init.lua' if the shortcuts are to your liking. 
-
-However, in case you would like to change this modifier, add the following line to your 'init.lua', making the appropriate changes:
+As before, the below line represents the default setup, and you do not need to add it to your 'init.lua' unless you prefer different shortcut:
 
 ```lua
   ...
@@ -111,7 +104,7 @@ If you want to unlock the full potential of mSpaces, it is helpful to understand
   
 To create representations of windows, press the 'ctrl' and 'shift' modifiers simultaneously and additionally press the key corresponding to the mSpace you would like to create a reference of the currently active window on, for instance, '3'. 
 
-As before, the below line represents the default setup, and you do not need to add it to your 'init.lua' unless you want to change the shortcuts. 
+As before, the below line represents the default setup, and you do not need to add it to your 'init.lua' unless you prefer different shortcut:
 
 ```lua
   ...
@@ -132,9 +125,7 @@ However, to make use of the advanced features mSpaces provide, Mellon offers add
 
 For switching between the windows of your current mSpace, press 'alt' and 'tab', and for switching in reverse order additionally press 'shift'. 
 
-As before, the below lines represent the default setup, and you do not need to add them to your 'init.lua' if the shortcuts are to your liking. 
-
-However, in case you would like to change anything, add the following lines to your 'init.lua', making the appropriate changes:
+As before, the below lines represent the default setup, and you do not need to add them to your 'init.lua' unless you prefer different shortcut:
 
 
 ```lua
@@ -181,7 +172,7 @@ All this is been implemented with the goal of being as intuitive as possible; th
 
 ### Automatic Resizing and Positioning - Keyboard
 
-The automatic resizing and positioning using keyboard shortcuts is not enabled by default, so if you want to use this feature, add the following lines to your 'init.lua' (these lines will be explained in a minute, and it will also be explained how you can adjust the keyboard shortcuts to your liking):
+The automatic resizing and positioning using keyboard shortcuts is not enabled by default, so if you want to use this feature, add the following lines to your 'init.lua' (they will be explained in a minute, and it will also be explained how you can adjust the keyboard shortcuts to your liking):
 
 ```lua
   ...
@@ -206,7 +197,7 @@ To resize and move the active window into a 3x3 grid position, use 'modifierSnap
 
 'modifierSnap3' also uses a 3x3 grid and is combined with the same keys as 'modifierSnap2'. However, the windows snap into different sizes, see '3x3 Grid - Double (and Quadruple) Sizes' below.
 
-Below you find the pre-assigned keyboard shortcuts. As has been mentioned, you can change and freely combine them; more about that in a minute.
+Below you find the pre-assigned keyboard shortcuts. As has been mentioned, you can change and freely combine them; more about that below.
 
 #### 2x2 Grid
 - 'modifierSnap1' and '1': left half of screen -> 'a1'
@@ -250,7 +241,7 @@ You can have windows take up more cells on the 3x3 grid (the 3x3 grid consists o
 'modifierSnap3' and 'o': top middle and right thirds': 4 cells -> 'c11'
 'modifierSnap3' and 'p': bottom middle and right thirds': 4 cells -> 'c12'
 
-As has been mentioned, these keyboard shortcuts are fully customizable, which is best shown with using an example: let us assume for a moment that you just need windows to snap into three different grid positions, (1) right half of screen -> 'a2', (2) right middle ninth of screen -> 'b11', and (3) middle third, upper two cells -> 'c5', and you would like to use modifierSnap2 with the keys 'j', 'k', and 'l' to achieve that; then your 'init.lua' would look like this:
+As has been mentioned, these keyboard shortcuts are fully customizable, which is best shown with an example: let us assume for a moment that you just need windows to snap into three different grid positions, (1) right half of screen -> 'a2', (2) right middle ninth of screen -> 'b11', and (3) middle third, upper two cells -> 'c5', and you would like to use modifierSnap2 with the keys 'j', 'k', and 'l' to achieve that; then your 'init.lua' would look like this:
 
 ```lua
   ...
@@ -270,7 +261,7 @@ As you can see in the example above, 'modifierSnapKey1' and 'modifierSnapKey3' a
 
 Now, by pressing 'modifierSnapKey1' and 'j', for example, scenario 'a2' is activated, which means that the active window snaps into the right half of the screen.
 
-## Additional Information
+## Additional Explanations
 
 ### Change Size, Color, and Opacity of Grid Indicators
 
@@ -288,7 +279,7 @@ In case you would like to change the size, color and/or opacity of the grid indi
 
 - If you restart Mellon, the windows on the current mSpace remain the way they were before the restart, while the windows that were placed on other mSpaces will be moved to the current mSpace. 
 
-In other words, if you want to stop using Mellon, either move all windows to the current mSpace first, or simply restart Mellon one more time.
+This also means that if at some point you want to stop using Mellon, either move all windows to the current mSpace first, or simply restart Mellon one more time.
 
 
 ## Experimental
@@ -306,7 +297,7 @@ In order to enable manual resizing, add the following lines to your 'init.lua':
   ...
 ```
 
-To manually resize a window, hold your 'alt' or 'ctrl' down, then click the right mouse button in any part of the window and drag the window.
+To manually resize a window, hold your 'modifier1' or 'modifier2' down, then click the right mouse button in any part of the window and drag the window.
 
 To have the additional possibility of precisely resizing windows horizontally-only or vertically-only, 30 percent of the window (15 precent left and right of the middle of each border) is reserved for horizontal-only and vertical-only resizing. The size of this area can be adjusted; for more information see below.
 

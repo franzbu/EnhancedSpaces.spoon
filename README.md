@@ -281,8 +281,21 @@ In case you would like to change the size, color and/or opacity of the grid indi
 
 This also means that if at some point you want to stop using Mellon, either move all windows to the current mSpace first, or simply restart Mellon one more time.
 
+Alternatively, Mellon has implemented an experimental feature to automatically backup and restore mSpaces and their windows; more in the section 'Backup and Restore of mSpaces' below.
+
 
 ## Experimental
+
+### Backup and Restore of mSpaces
+
+mSpaces with their windows can be automatically backed up and restored. Only the windows open at the time Mellon starts can be restored.
+
+```lua
+  ...
+  -- automatic backup and restore of mSpaces:
+  backup = true, -- default: false
+  ...
+```
 
 ### Manual Resizing
 

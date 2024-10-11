@@ -1203,8 +1203,8 @@ end
 
 
 function refreshWinMSpaces(w)
-  print("_____refreshWinMSpaces_____")
-  -- print(hs.inspect(w))
+  --print("_____refreshWinMSpaces_____")
+  --print(hs.inspect(w))
   filter_all = hs.window.filter.new()
   winAll = filter_all:getWindows(hs.window.sortByFocused)
 

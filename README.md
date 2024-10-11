@@ -123,7 +123,7 @@ However, to make use of the advanced features mSpaces provide, Mellon offers add
 
 ### Switching between Windows of the Current mSpace
 
-For switching between the windows of your current mSpace, press 'alt' and 'tab', and for switching in reverse order additionally press 'shift'. 
+For switching between the windows of your current mSpace, press 'alt' and 'tab'. 
 
 As before, the below lines represent the default setup, and you do not need to add them to your 'init.lua' unless you prefer different shortcut:
 

@@ -48,6 +48,10 @@ function SpaceHammer:new(options)
   hs.window.animationDuration = 0
   options = options or {}
 
+
+  pM = options.outerPadding or 10
+  pI = options.innerPadding / 2 or 5
+
   modifier1 = options.modifier1 or { 'alt' } 
   modifier2 = options.modifier2 or { 'ctrl' } 
   modifier1_2 = mergeModifiers(modifier1, modifier2) 
@@ -158,13 +162,14 @@ function SpaceHammer:new(options)
           if winMSpacesSerialized[j] ~= nil and winMSpaces[getWinMSpacesPos(winAll[i])].win:title() == winMSpacesSerialized[j].title then
             winMSpaces[getWinMSpacesPos(winAll[i])].mspace = copyTable(winMSpacesSerialized[j].mspace)
             for k = 1, #mspaces do   -- create new hs.geometry object for each window and mspace
-              if winMSpacesSerialized[j].mspace[k] then
+              --fb
+              --if winMSpacesSerialized[j].mspace[k] then
                 winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(winMSpacesSerialized[j].frame[k]._x,
-                  winMSpacesSerialized[j].frame[k]._y, winMSpacesSerialized[j].frame[k]._w,
-                  winMSpacesSerialized[j].frame[k]._h)
-              else
-                winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(0, 0, 0, 0)
-              end
+                winMSpacesSerialized[j].frame[k]._y, winMSpacesSerialized[j].frame[k]._w,
+                winMSpacesSerialized[j].frame[k]._h)
+              --else
+                --winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(0, 0, 1, 1)
+              --end
             end
           end
         end
@@ -194,8 +199,9 @@ function SpaceHammer:new(options)
   -- watchdogs
   ---[[
   filter = hs.window.filter --subscribe: when a new window (dis)appears, run refreshWindowsWS
-  filter.default:subscribe(filter.windowNotOnScreen, function(w) refreshWinMSpaces(w) focusLastWindow() end)
-  filter.default:subscribe(filter.windowOnScreen, function(w) refreshWinMSpaces(w) w:focus() end)
+  --fb: todo: when moving window to mSpace and switching, focus keeps changing between windows
+  filter.default:subscribe(filter.windowNotOnScreen, function(w) refreshWinMSpaces(w) end) --focusLastWindow() end)
+  filter.default:subscribe(filter.windowOnScreen, function(w) refreshWinMSpaces(w) end) --w:focus() end)
   filter.default:subscribe(filter.windowFocused, function(w) refreshWinMSpaces(w) end)
   filter.default:subscribe(filter.windowMoved, function(w) correctXY(w) end)
   --]]
@@ -242,7 +248,7 @@ function SpaceHammer:new(options)
   switcher.ui.thumbnailSize = 112
   switcher.ui.selectedThumbnailSize = 284
   switcher.ui.backgroundColor = { 0.3, 0.3, 0.3, 0.5 }
-  switcher.ui.textSize = 14
+  switcher.ui.textSize = 16
   switcher.ui.showSelectedTitle = false
   hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[1], function()
     cycleAll = false --true when cycling through all apps (if on other mSpaces necessary to switch there)
@@ -409,11 +415,12 @@ function SpaceHammer:new(options)
       winMSpacesSerialized[i].frame = {}
       for k = 1, #mspaces do
         winMSpacesSerialized[i].mspace[k] = winMSpaces[i].mspace[k]
-        if winMSpaces[i].mspace[k] then
+        --fb
+        --if winMSpaces[i].mspace[k] then
           winMSpacesSerialized[i].frame[k] = winMSpaces[i].frame[k]
-        else
-          winMSpacesSerialized[i].frame[k] = hs.geometry.new(0, 0, 0, 0) --{0,0,0,0} --hs.geometry.new(0, 0, 0, 0) -- 
-        end
+        --else
+          --winMSpacesSerialized[i].frame[k] = hs.geometry.new(0, 0, 1, 1) --{0,0,0,0} --hs.geometry.new(0, 0, 1, 1) -- 
+        --end
       end
     end
     hs.settings.set("mSpaces", winMSpacesSerialized)
@@ -428,11 +435,12 @@ function SpaceHammer:new(options)
         if winMSpacesSerialized[j] ~= nil and winMSpaces[getWinMSpacesPos(winAll[i])].win:title() == winMSpacesSerialized[j].title then
           winMSpaces[getWinMSpacesPos(winAll[i])].mspace = copyTable(winMSpacesSerialized[j].mspace)
           for k = 1, #mspaces do -- create new hs.geometry object for each window and mspace
-            if winMSpacesSerialized[j].mspace[k] then
+            --fb
+            --if winMSpacesSerialized[j].mspace[k] then
               winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(winMSpacesSerialized[j].frame[k]._x, winMSpacesSerialized[j].frame[k]._y, winMSpacesSerialized[j].frame[k]._w, winMSpacesSerialized[j].frame[k]._h)
-            else
-              winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(0, 0, 0, 0)
-            end          
+            --else
+              --winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(0, 0, 1, 1)
+            --end          
           end
           winMSpacesSerializedOrg[j] = nil
         end
@@ -609,20 +617,20 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
             for i = 1, gridY, 1 do
               -- middle third of left border
               if hs.mouse.getRelativePosition().y + sumdy > max.h / 3 and hs.mouse.getRelativePosition().y + sumdy < max.h * 2 / 3 then -- getRelativePosition() returns mouse coordinates where moving process starts, not ends, thus sumdx/sumdy make necessary adjustment
-                xNew = 0
-                yNew = heightMB
-                wNew = max.w / 2
-                hNew = max.h
+                xNew = 0 + pM
+                yNew = heightMB + pM
+                wNew = max.w / 2 - pM - pI
+                hNew = max.h - 2 * pM 
               elseif hs.mouse.getRelativePosition().y + sumdy <= max.h / 3 then -- upper third
-                xNew = 0
-                yNew = heightMB
-                wNew = max.w / 2
-                hNew = max.h / 2
+                xNew = 0 + pM
+                yNew = heightMB + pM
+                wNew = max.w / 2 - pM  - pI
+                hNew = max.h / 2 - pM - pI
               else -- bottom third
-                xNew = 0
-                yNew = heightMB + max.h / 2
-                wNew = max.w / 2
-                hNew = max.h / 2
+                xNew = 0 + pM
+                yNew = heightMB + max.h / 2 + pI
+                wNew = max.w / 2 - pM  - pI
+                hNew = max.h / 2 - pM - pI
               end
             end
           end
@@ -635,20 +643,20 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
             for i = 1, gridY, 1 do
               -- middle third of left border
               if hs.mouse.getRelativePosition().y + sumdy > max.h / 3 and hs.mouse.getRelativePosition().y + sumdy < max.h * 2 / 3 then
-                xNew = max.w / 2
-                yNew = heightMB
-                wNew = max.w / 2
-                hNew = max.h
+                xNew = max.w / 2 + pI
+                yNew = heightMB + pM
+                wNew = max.w / 2 - pM - pI
+                hNew = max.h - 2 * pM
               elseif hs.mouse.getRelativePosition().y + sumdy <= max.h / 3 then -- upper third
-                xNew = max.w / 2
-                yNew = heightMB
-                wNew = max.w / 2
-                hNew = max.h / 2
+                xNew = max.w / 2 + pI
+                yNew = heightMB + pM
+                wNew = max.w / 2 - pM  - pI
+                hNew = max.h / 2 - pM - pI
               else -- bottom third
-                xNew = max.w / 2
-                yNew = heightMB + max.h / 2
-                wNew = max.w / 2
-                hNew = max.h / 2
+                xNew = max.w / 2 + pI
+                yNew = heightMB + max.h / 2 + pI
+                wNew = max.w / 2 - pM  - pI
+                hNew = max.h / 2 - pM - pI
               end
             end
           end
@@ -659,22 +667,22 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
             for i = 1, gridX, 1 do
               if hs.mouse.getRelativePosition().x + sumdx > max.w / 3 and hs.mouse.getRelativePosition().x + sumdx < max.w * 2 / 3 then -- middle
-                xNew = 0
-                yNew = heightMB
-                wNew = max.w
-                hNew = max.h
+                xNew = 0 + pM
+                yNew = heightMB + pM
+                wNew = max.w - 2 * pM
+                hNew = max.h - 2 * pM
                 break
               elseif hs.mouse.getRelativePosition().x + sumdx <= max.w / 3 then -- left
-                xNew = 0
-                yNew = heightMB
-                wNew = max.w / gridX
-                hNew = max.h
+                xNew = 0 + pM
+                yNew = heightMB + pM
+                wNew = max.w / 2 - pM - pI
+                hNew = max.h - 2 * pM 
                 break
               else -- right
-                xNew = max.w - max.w / gridX -- for gridX = 2 the same as max.w / 2
-                yNew = heightMB
-                wNew = max.w / gridX
-                hNew = max.h
+                xNew = max.w / 2 + pI
+                yNew = heightMB + pM
+                wNew = max.w / 2 - pM - pI
+                hNew = max.h - 2 * pM
                 break
               end
             end
@@ -1176,7 +1184,7 @@ function goToSpace(target)
   menubar:setTitle(tostring(mspaces[target])) -- menubar
   currentMSpace = target
 
-  focusLastWindow()
+  --focusLastWindow()
   --[[
   -- focus window (last used)
   for i = 1, #winAll do -- winAll seems sorted last focused first
@@ -1202,7 +1210,7 @@ function moveToSpace(target, origin)
   -- always keep frame of MSpase of origin
   winMSpaces[getWinMSpacesPos(fwin)].frame[target] = winMSpaces[getWinMSpacesPos(fwin)].frame[origin]
 
-  focusLastWindow()
+  --focusLastWindow()
 end
 
 
@@ -1246,13 +1254,14 @@ function refreshWinMSpaces(w)
           winMSpaces[i].frame[k] = winAll[i]:frame()
         else
           winMSpaces[i].mspace[k] = false
-          winMSpaces[i].frame[k] = hs.geometry.new(0, 0, 0, 0) --{0,0,0,0} --fb winAll[i]:frame(); nil; 
+          winMSpaces[i].frame[k] = winAll[i]:frame() -- hs.geometry.new(0, 0, 1, 1) --{0,0,0,0}  nil
         end
       end
     end
   end
 
   -- fb
+  --[[
   -- when choosing to switch to window by cycling through all apps, go to mSpace of chosen window
   if w ~= nil then
     if not winMSpaces[getWinMSpacesPos(w)].mspace[currentMSpace] then -- in case focused window is not on current mSpace, switch to the one containing it
@@ -1264,6 +1273,7 @@ function refreshWinMSpaces(w)
       end
     end
   end
+  --]]
 
   -- delete closed or minimized windows
   for i = 1, #winMSpaces do
@@ -1319,11 +1329,11 @@ function refreshWinMSpaces(w)
       winMSpacesSerialized[i].frame = {}
       for k = 1, #mspaces do
         winMSpacesSerialized[i].mspace[k] = winMSpaces[i].mspace[k]
-        if winMSpaces[i].mspace[k] then
+        --if winMSpaces[i].mspace[k] then --fb
           winMSpacesSerialized[i].frame[k] = winMSpaces[i].frame[k]
-        else
-          winMSpacesSerialized[i].frame[k] = hs.geometry.new(0, 0, 0, 0) --{0,0,0,0} --hs.geometry.new(0, 0, 0, 0) -- 
-        end
+        --else
+          --winMSpacesSerialized[i].frame[k] = hs.geometry.new(0, 0, 1, 1) --{0,0,0,0} --hs.geometry.new(0, 0, 1, 1) -- 
+        --end
       end
     end
     hs.timer.doAfter(0.3, function()
@@ -1368,7 +1378,8 @@ function derefWinMSpace()
   local fwin = hs.window.focusedWindow()
   max = fwin:screen():frame()
   winMSpaces[getWinMSpacesPos(fwin)].mspace[currentMSpace] = false
-  winMSpaces[getWinMSpacesPos(fwin)].frame[currentMSpace] = hs.geometry.new(0, 0, 0, 0) --{0,0,0,0} --hs.geometry.new(0, 0, 0, 0)
+  --fb
+  --winMSpaces[getWinMSpacesPos(fwin)].frame[currentMSpace] = hs.geometry.new(0, 0, 1, 1) --{0,0,0,0} --hs.geometry.new(0, 0, 1, 1)
   -- in case all 'mspace' are 'false', close window
   local all_false = true
   for i = 1, #winMSpaces[getWinMSpacesPos(fwin)].mspace do
@@ -1394,42 +1405,44 @@ function snap(origin)
   local wSnap
   local hSnap
   if origin == 'a1' then
-    xSnap = 0
-    ySnap = heightMB
-    wSnap = max.w / 2
-    hSnap = max.h
+    xSnap = 0 + pM
+    ySnap = heightMB + pM
+    wSnap = max.w / 2 - pM - pI
+    hSnap = max.h - 2 * pM 
   elseif origin == 'a2' then
-    xSnap = max.w / 2
-    ySnap = heightMB
-    wSnap = max.w / 2
-    hSnap = max.h
+    xSnap = max.w / 2 + pI
+    ySnap = heightMB + pM
+    wSnap = max.w / 2 - pM - pI
+    hSnap = max.h - 2 * pM
   elseif origin == 'a3' then
-    xSnap = 0
-    ySnap = heightMB
-    wSnap = max.w / 2
-    hSnap = max.h / 2
+    xSnap = 0 + pM
+    ySnap = heightMB + pM
+    wSnap = max.w / 2 - pM  - pI
+    hSnap = max.h / 2 - pM - pI
   elseif origin == 'a4' then
-    xSnap = 0
-    ySnap = heightMB + max.h / 2
-    wSnap = max.w / 2
-    hSnap = max.h / 2
+    xSnap = 0 + pM
+    ySnap = heightMB + max.h / 2 + pI
+    wSnap = max.w / 2 - pM  - pI
+    hSnap = max.h / 2 - pM - pI
   elseif origin == 'a5' then
-    xSnap = max.w / 2
-    ySnap = heightMB
-    wSnap = max.w / 2
-    hSnap = max.h / 2
+    xSnap = max.w / 2 + pI
+    ySnap = heightMB + pM
+    wSnap = max.w / 2 - pM  - pI
+    hSnap = max.h / 2 - pM - pI
   elseif origin == 'a6' then
-    xSnap = max.w / 2
-    ySnap = heightMB + max.h / 2
-    wSnap = max.w / 2
-    hSnap = max.h / 2
+    xSnap = max.w / 2 + pI
+    ySnap = heightMB + max.h / 2 + pI
+    wSnap = max.w / 2 - pM  - pI
+    hSnap = max.h / 2 - pM - pI
   elseif origin == 'a7' then
-    xSnap = 0
-    ySnap = heightMB
-    wSnap = max.w
-    hSnap = max.h
+    xSnap = 0 + pM
+    ySnap = heightMB + pM
+    wSnap = max.w - 2 * pM
+    hSnap = max.h - 2 * pM
+
+    
   elseif origin == 'b1' then
-    xSnap = 0
+    xSnap = 0 + pM
     ySnap = heightMB
     wSnap = max.w / 3
     hSnap = max.h
@@ -1444,17 +1457,17 @@ function snap(origin)
     wSnap = max.w / 3
     hSnap = max.h
   elseif origin == 'b4' then
-    xSnap = 0
+    xSnap = 0 + pM
     ySnap = heightMB
     wSnap = max.w / 3
     hSnap = max.h / 3
   elseif origin == 'b5' then
-    xSnap = 0
+    xSnap = 0 + pM
     ySnap = heightMB + max.h / 3
     wSnap = max.w / 3
     hSnap = max.h / 3
   elseif origin == 'b6' then
-    xSnap = 0
+    xSnap = 0 + pM
     ySnap = heightMB + max.h - max.h / 3
     wSnap = max.w / 3
     hSnap = max.h / 3
@@ -1489,7 +1502,7 @@ function snap(origin)
     wSnap = max.w / 3
     hSnap = max.h / 3
   elseif origin == 'c1' then
-    xSnap = 0
+    xSnap = 0 + pM
     ySnap = heightMB
     wSnap = max.w / 3 * 2
     hSnap = max.h
@@ -1504,7 +1517,7 @@ function snap(origin)
     wSnap = max.w / 3
     hSnap = max.h / 3 * 2
   elseif origin == 'c4' then
-    xSnap = 0
+    xSnap = 0 + pM
     ySnap = heightMB + max.h / 3
     wSnap = max.w / 3
     hSnap = max.h / 3 * 2
@@ -1529,12 +1542,12 @@ function snap(origin)
     wSnap = max.w / 3
     hSnap = max.h / 3 * 2
   elseif origin == 'c9' then
-    xSnap = 0
+    xSnap = 0 + pM
     ySnap = heightMB
     wSnap = max.w / 3 * 2
     hSnap = max.h / 3 * 2
   elseif origin == 'c10' then
-    xSnap = 0
+    xSnap = 0 + pM
     ySnap = heightMB + max.h / 3
     wSnap = max.w / 3 * 2
     hSnap = max.h / 3 * 2

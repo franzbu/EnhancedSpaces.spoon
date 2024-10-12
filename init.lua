@@ -48,9 +48,9 @@ function SpaceHammer:new(options)
   hs.window.animationDuration = 0
   options = options or {}
 
-
-  pM = options.outerPadding or 10
-  pI = options.innerPadding / 2 or 5
+  pM = options.outerPadding or 5
+  local innerPadding = options.innerPadding or 5
+  pI = innerPadding / 2
 
   modifier1 = options.modifier1 or { 'alt' } 
   modifier2 = options.modifier2 or { 'ctrl' } 
@@ -80,7 +80,7 @@ function SpaceHammer:new(options)
   -- move window to mSpace
   modifierMoveWinMSpace = options.modifierMoveWinMSpace or modifier1_2
 
-  margin = options.margin or 0.3
+  local margin = options.margin or 0.3
   m = margin * 100 / 2
 
   useResize = options.resize or false

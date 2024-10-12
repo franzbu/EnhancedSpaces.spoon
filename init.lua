@@ -3,14 +3,14 @@ local function scriptPath()
   return str:match("(.*/)")
 end
 
-local Mellon = {}
+local SpaceHammer = {}
 
-Mellon.author = "Franz B. <csaa6335@gmail.com>"
-Mellon.homepage = "https://github.com/franzbu/Mellon.spoon"
-Mellon.winMSpaces = "MIT"
-Mellon.name = "Mellon"
-Mellon.version = "0.5"
-Mellon.spoonPath = scriptPath()
+SpaceHammer.author = "Franz B. <csaa6335@gmail.com>"
+SpaceHammer.homepage = "https://github.com/franzbu/SpaceHammer.spoon"
+SpaceHammer.winMSpaces = "MIT"
+SpaceHammer.name = "SpaceHammer"
+SpaceHammer.version = "0.5"
+SpaceHammer.spoonPath = scriptPath()
 
 local dragTypes = {
   move = 1,
@@ -44,7 +44,7 @@ local function buttonNameToEventType(name, optionName)
   error(optionName .. ': only "left" and "right" mouse button supported, got ' .. name)
 end
 
-function Mellon:new(options)
+function SpaceHammer:new(options)
   hs.window.animationDuration = 0
   options = options or {}
 
@@ -439,7 +439,7 @@ end
 
 
 
-function Mellon:stop()
+function SpaceHammer:stop()
   self.dragging = false
   self.dragType = nil
   for i = 1, #cv do -- delete canvases
@@ -452,19 +452,19 @@ function Mellon:stop()
 end
 
 
-function Mellon:isResizing()
+function SpaceHammer:isResizing()
   return self.dragType == dragTypes.resize
 end
 
 
-function Mellon:isMoving()
+function SpaceHammer:isMoving()
   return self.dragType == dragTypes.move
 end
 
 
 sumdx = 0
 sumdy = 0
-function Mellon:handleDrag()
+function SpaceHammer:handleDrag()
   return function(event)
     if not self.dragging then return nil end
     local currentSize = win:size() -- win:frame
@@ -554,7 +554,7 @@ function Mellon:handleDrag()
 end
 
 
-function Mellon:handleCancel()
+function SpaceHammer:handleCancel()
   return function()
     if not self.dragging then return end
     self:doMagic()
@@ -563,7 +563,7 @@ function Mellon:handleCancel()
 end
 
 
-function Mellon:doMagic() -- automatic positioning and adjustments, for example, prevent window from moving/resizing beyond screen boundaries
+function SpaceHammer:doMagic() -- automatic positioning and adjustments, for example, prevent window from moving/resizing beyond screen boundaries
   if not self.targetWindow then return end
   modifierDM = eventToArray(hs.eventtap.checkKeyboardModifiers()) -- modifiers (still) pressed after releasing mouse button 
   local frame = win:frame()
@@ -902,7 +902,7 @@ function Mellon:doMagic() -- automatic positioning and adjustments, for example,
 end
 
 
-function Mellon:handleClick()
+function SpaceHammer:handleClick()
   return function(event)
     if self.dragging then return true end
     flags = eventToArray(event:getFlags())
@@ -1551,4 +1551,4 @@ end
 
 
 
-return Mellon
+return SpaceHammer

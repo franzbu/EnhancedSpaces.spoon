@@ -297,7 +297,7 @@ mSpaces with their windows can be automatically backed up and restored. Only the
   ...
 ```
 
-mSpaces with their windows can also only be restored if meanwhile the settings have not been changed in a way that there are fewer mSpaces available than the index of the last mSpace with windows on it when saving.
+Note: you can always restore mSpaces and their windows after increasing the amount of mSpaces in settings, i.e., 'mSpaces = ' in 'init.lua'. However, restoring after decreasing the amount of mSpaces is only possible if there are at least as many mSpaces left as the index of the mSpace with the last window on it before the decrease of mSpaces.
 
 
 ### Manual Resizing
@@ -347,4 +347,7 @@ In case you at some point had the automatic backup and restore function activate
   ...
 ```
 
+
 Other than that you only have to delete the folder 'SpaceHammer.spoon' in the folder '~/.hammerspoon/Spoons/' and delete the corresponding section in your 'init.lua'.
+
+

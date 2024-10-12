@@ -228,8 +228,8 @@ Windows are positioned as follows:
 #### 3x3 Grid - Double (and Quadruple) Sizes
 You can have windows take up more cells on the 3x3 grid (the 3x3 grid consists of 9 cells). The pre-defined positions and sizes are as follows (descriptions might be difficult to follow; so simply try the keyboard shortcuts out):
 
-- 'modifierSnap3' and '1': left two thirds of screen': 3 cells -> 'c1'
-- 'modifierSnap3' and '2': right two thirds of screen': 3 cells -> 'c2'
+- 'modifierSnap3' and '1': left two thirds of screen': 6 cells -> 'c1'
+- 'modifierSnap3' and '2': right two thirds of screen': 6 cells -> 'c2'
 - 'modifierSnap3' and '3': left third, upper two cells -> 'c3'
 - 'modifierSnap3' and '4': left third, lower two cells -> 'c4'
 - 'modifierSnap3' and '5': middle third, upper two cells -> 'c5'

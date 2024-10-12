@@ -9,7 +9,7 @@ SpaceHammer.author = "Franz B. <csaa6335@gmail.com>"
 SpaceHammer.homepage = "https://github.com/franzbu/SpaceHammer.spoon"
 SpaceHammer.winMSpaces = "MIT"
 SpaceHammer.name = "SpaceHammer"
-SpaceHammer.version = "0.5"
+SpaceHammer.version = "0.6"
 SpaceHammer.spoonPath = scriptPath()
 
 local dragTypes = {
@@ -612,7 +612,7 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
         if frame.x < 0 and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- left and not bottom
           if math.abs(frame.x) < wNew / 10 then -- moved past border by 10 or less percent: move window as is back within boundaries of screen
             xNew = 0
-          -- window moved past left screen border
+          -- window moved past left screen border 2x2
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
             for i = 1, gridY, 1 do
               -- middle third of left border
@@ -634,7 +634,7 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
               end
             end
           end
-        -- moved window past right screen border
+        -- moved window past right screen border 2x2
         elseif frame.x + frame.w > max.w and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- right and not bottom
           if max.w - frame.x > math.abs(max.w - frame.x - wNew) * 9 then -- 9 times as much inside screen than outside = 10 percent outside; move window back within boundaries of screen (keep size)
             wNew = frame.w
@@ -660,7 +660,7 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
               end
             end
           end
-        -- moved window below bottom of screen
+        -- moved window below bottom of screen 2x2
         elseif frame.y + hNew > maxWithMB.h and hs.mouse.getRelativePosition().x + sumdx < max.w and hs.mouse.getRelativePosition().x + sumdx > 0 then
           if max.h - frame.y > math.abs(max.h - frame.y - hNew) * 9 then -- and flags:containExactly(modifier1) then -- move window as is back within boundaries
             yNew = maxWithMB.h - hNew
@@ -692,7 +692,7 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
         if frame.x < 0 and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- left and not bottom
           if math.abs(frame.x) < wNew / 10 then -- moved past border by 10 or less percent: move window as is back within boundaries of screen
             xNew = 0
-          -- window moved past left screen border
+          -- window moved past left screen border 3x3
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
             -- 3 standard areas
             if (hs.mouse.getRelativePosition().y + sumdy <= max.h / 5) or (hs.mouse.getRelativePosition().y + sumdy > max.h / 5 * 2 and hs.mouse.getRelativePosition().y + sumdy <= max.h / 5 * 3) or (hs.mouse.getRelativePosition().y + sumdy > max.h / 5 * 4) then
@@ -706,20 +706,20 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
                   break
                 end
               end
-            -- first (upper) double area
+            -- first (upper) double area -> c3
             elseif (hs.mouse.getRelativePosition().y + sumdy > max.h / 5) and (hs.mouse.getRelativePosition().y + sumdy <= max.h / 5 * 2) then
-              xNew = 0
-              yNew = heightMB
-              wNew = max.w / gridX
-              hNew = max.h / gridY * 2
-            else -- second (lower) double area
-              xNew = 0
-              yNew = heightMB + max.h / 5 * 2
-              wNew = max.w / gridX
-              hNew = max.h / gridY * 2
+              xNew = 0 + pM
+              yNew = heightMB + pM
+              wNew = (max.w - 2 * pM - 4 * pI) / 3
+              hNew = (max.h - 2 * pM - pI) / 3 * 2
+            else -- second (lower) double area -> c4
+              xNew = 0 + pM
+              yNew = heightMB + pM + 1 * ((max.h - 2 * pM - 4 * pI) / 3) + 2 * pI
+              wNew = (max.w - 2 * pM - 4 * pI) / 3
+              hNew = (max.h - 2 * pM - pI) / 3 * 2
             end
           end
-        -- moved window past right screen border
+        -- moved window past right screen border 3x3
         elseif frame.x + frame.w > max.w and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- right and not bottom
           if max.w - frame.x > math.abs(max.w - frame.x - wNew) * 9 then  -- 9 times as much inside screen than outside = 10 percent outside; move window back within boundaries of screen (keep size)
             wNew = frame.w
@@ -734,31 +734,29 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
                   yNew = heightMB + pM + (i - 1) * ((max.h - 2 * pM - 4 * pI) / 3) + (i - 1) * 2 * pI
                   wNew = (max.w - 2 * pM - 4 * pI) / 3
                   hNew = (max.h - 2 * pM - 4 * pI) / 3
-
-
                   break
                 end
               end
-            -- first (upper) double area
+            -- first (upper) double area -> c7
             elseif (hs.mouse.getRelativePosition().y + sumdy > max.h / 5) and (hs.mouse.getRelativePosition().y + sumdy <= max.h / 5 * 2) then
-              xNew = max.w - max.w / gridX
-              yNew = heightMB
-              wNew = max.w / gridX
-              hNew = max.h / gridY * 2
-            else -- second (lower) double area
-              xNew = max.w - max.w / gridX
-              yNew = heightMB + max.h / 5 * 2
-              wNew = max.w / gridX
-              hNew = max.h / gridY * 2
+              xNew = pM + 2 * ((max.w - 2 * pM - 4 * pI) / 3) + 4 * pI
+              yNew = heightMB + pM
+              wNew = (max.w - 2 * pM - 4 * pI) / 3
+              hNew = (max.h - 2 * pM - pI) / 3 * 2
+            else -- second (lower) double area -> c8
+              xNew = pM + 2 * ((max.w - 2 * pM - 4 * pI) / 3) + 4 * pI
+              yNew = heightMB + pM + 1 * ((max.h - 2 * pM - 4 * pI) / 3) + 2 * pI
+              wNew = (max.w - 2 * pM - 4 * pI) / 3
+              hNew = (max.h - 2 * pM - pI) / 3 * 2
             end
           end
-        -- moved window below bottom of screen
+        -- moved window below bottom of screen 3x3
         elseif frame.y + hNew > maxWithMB.h and hs.mouse.getRelativePosition().x + sumdx < max.w and hs.mouse.getRelativePosition().x + sumdx > 0 then
           if max.h - frame.y > math.abs(max.h - frame.y - hNew) * 9 then -- and flags:containExactly(modifier1) then -- move window as is back within boundaries
             yNew = maxWithMB.h - hNew
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
             if (hs.mouse.getRelativePosition().x + sumdx <= max.w / 5) or (hs.mouse.getRelativePosition().x + sumdx > max.w / 5 * 2 and hs.mouse.getRelativePosition().x + sumdx <= max.w / 5 * 3) or (hs.mouse.getRelativePosition().x + sumdx > max.w / 5 * 4) then
-              -- realeasing modifier before mouse button; 3 standard areas
+              -- releasing modifier before mouse button; 3 standard areas
               for i = 1, gridX, 1 do
                 if hs.mouse.getRelativePosition().x + sumdx < max.w - (gridX - i) * max.w / gridX then 
                   xNew = pM + (i - 1) * ((max.w - 2 * pM - 4 * pI) / 3) + (i - 1) * 2 * pI
@@ -768,17 +766,17 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
                   break
                 end
               end
-            -- first (left) double width
+            -- first (left) double width -> c1
             elseif (hs.mouse.getRelativePosition().x + sumdx > max.w / 5) and (hs.mouse.getRelativePosition().x + sumdx <= max.w / 5 * 2) then
-              xNew = 0
-              yNew = heightMB
-              wNew = max.w / gridX * 2
-              hNew = max.h
-            else -- second (right) double width
-              xNew = max.w - max.w / gridX * 2
-              yNew = heightMB
-              wNew = max.w / gridX * 2
-              hNew = max.h
+              xNew = 0 + pM
+              yNew = heightMB + pM
+              wNew = (max.w - 2 * pM - pI) / 3 * 2
+              hNew = max.h - 2 * pM
+            else -- second (right) double width -> c2
+              xNew = pM + 1 * ((max.w - 2 * pM - 4 * pI) / 3) + 2 * pI
+              yNew = heightMB + pM
+              wNew = (max.w - 2 * pM - pI) / 3 * 2
+              hNew = max.h - 2 * pM    
             end
           end
         end
@@ -788,9 +786,9 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
         if frame.x < 0 and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- left and not bottom
           if math.abs(frame.x) < wNew / 10 then -- moved past border by 10 or less percent: move window as is back within boundaries of screen
             xNew = 0
-          -- window moved past left screen border
+          -- window moved past left screen border 3x3
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
-            -- realeasing modifier before mouse button; 3 standard areas, snap into middle column
+            -- releasing modifier before mouse button; 3 standard areas, snap into middle column
             if (hs.mouse.getRelativePosition().y + sumdy <= max.h / 5) or (hs.mouse.getRelativePosition().y + sumdy > max.h / 5 * 2 and hs.mouse.getRelativePosition().y + sumdy <= max.h / 5 * 3) or (hs.mouse.getRelativePosition().y + sumdy > max.h / 5 * 4) then
               for i = 1, gridY, 1 do
                 -- getRelativePosition() returns mouse coordinates where moving process starts, not ends, thus sumdx/sumdy make necessary adjustment             
@@ -802,20 +800,20 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
                   break
                 end
               end
-            -- first (upper) double area
+            -- first (upper) double area -> c5
             elseif (hs.mouse.getRelativePosition().y + sumdy > max.h / 5) and (hs.mouse.getRelativePosition().y + sumdy <= max.h / 5 * 2) then
-              xNew = max.w / gridX
-              yNew = heightMB
-              wNew = max.w / gridX
-              hNew = max.h / gridY * 2
-            else -- second (lower) double area
-              xNew = max.w / gridX
-              yNew = heightMB + max.h / 5 * 2
-              wNew = max.w / gridX
-              hNew = max.h / gridY * 2
+              xNew = pM + 1 * ((max.w - 2 * pM - 4 * pI) / 3) + 2 * pI
+              yNew = heightMB + pM
+              wNew = (max.w - 2 * pM - 4 * pI) / 3
+              hNew = (max.h - 2 * pM - pI) / 3 * 2
+            else -- second (lower) double area -> c6
+              xNew = pM + 1 * ((max.w - 2 * pM - 4 * pI) / 3) + 2 * pI
+              yNew = heightMB + pM + 1 * ((max.h - 2 * pM - 4 * pI) / 3) + 2 * pI
+              wNew = (max.w - 2 * pM - 4 * pI) / 3
+              hNew = (max.h - 2 * pM - pI) / 3 * 2
             end
           end
-        -- moved window past right screen border
+        -- moved window past right screen border 3x3
         elseif frame.x + frame.w > max.w and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- right and not bottom
           if max.w - frame.x > math.abs(max.w - frame.x - wNew) * 9 then  -- 9 times as much inside screen than outside = 10 percent outside; move window back within boundaries of screen (keep size)
             wNew = frame.w
@@ -823,7 +821,7 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
             -- getRelativePosition() returns mouse coordinates where moving process starts, not ends, thus sumdx/sumdy make necessary adjustment                     
             if (hs.mouse.getRelativePosition().y + sumdy <= max.h / 5) or (hs.mouse.getRelativePosition().y + sumdy > max.h / 5 * 2 and hs.mouse.getRelativePosition().y + sumdy <= max.h / 5 * 3) or (hs.mouse.getRelativePosition().y + sumdy > max.h / 5 * 4) then
-              -- realeasing modifier before mouse button; 3 standard areas, snap into middle column, same than last section 
+              -- realeasing modifier before mouse button; 3 standard areas, snap into middle column, same than section before with left screen border
               for i = 1, gridY, 1 do
                 if hs.mouse.getRelativePosition().y + sumdy < max.h - (gridY - i) * max.h / gridY then 
                   xNew = pM + 1 * ((max.w - 2 * pM - 4 * pI) / 3) + 2 * pI
@@ -833,20 +831,20 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
                   break
                 end
               end
-            -- first (upper) double area
+            -- first (upper) double area -> c5
             elseif (hs.mouse.getRelativePosition().y + sumdy > max.h / 5) and (hs.mouse.getRelativePosition().y + sumdy <= max.h / 5 * 2) then
-              xNew = max.w / gridX
-              yNew = heightMB
-              wNew = max.w / gridX
-              hNew = max.h / gridY * 2
-            else -- second (lower) double area
-              xNew = max.w / gridX
-              yNew = heightMB + max.h / 5 * 2
-              wNew = max.w / gridX
-              hNew = max.h / gridY * 2
+              xNew = pM + 1 * ((max.w - 2 * pM - 4 * pI) / 3) + 2 * pI
+              yNew = heightMB + pM
+              wNew = (max.w - 2 * pM - 4 * pI) / 3
+              hNew = (max.h - 2 * pM - pI) / 3 * 2
+            else -- second (lower) double area -> c6
+              xNew = pM + 1 * ((max.w - 2 * pM - 4 * pI) / 3) + 2 * pI
+              yNew = heightMB + pM + 1 * ((max.h - 2 * pM - 4 * pI) / 3) + 2 * pI
+              wNew = (max.w - 2 * pM - 4 * pI) / 3
+              hNew = (max.h - 2 * pM - pI) / 3 * 2
             end
           end
-        -- moved window below bottom of screen
+        -- moved window below bottom of screen 3x3
         elseif frame.y + hNew > maxWithMB.h and hs.mouse.getRelativePosition().x + sumdx < max.w and hs.mouse.getRelativePosition().x + sumdx > 0 then
           if max.h - frame.y > math.abs(max.h - frame.y - hNew) * 9 then -- and flags:containExactly(modifier1) then -- move window as is back within boundaries
             yNew = maxWithMB.h - hNew
@@ -855,20 +853,22 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
               -- realeasing modifier before mouse button; 3 standard areas
               for i = 1, gridX, 1 do
                 if hs.mouse.getRelativePosition().x + sumdx < max.w - (gridX - i) * max.w / gridX then 
-                  xNew = pM + (i - 1) * ((max.w - 2 * pM - 4 * pI) / 3) + (i - 1) * 2 * pI
+                  xNew = pM + 1 * ((max.w - 2 * pM - 4 * pI) / 3) + 2 * pI
                   yNew = heightMB + pM
-                  wNew = (max.w - 2 * pM - 4 * pI) / 3
-                  hNew = max.h - 2 * pM 
+                  wNew = (max.w - 2 * pM - pI) / 3 * 2
+                  hNew = max.h - 2 * pM
+                  
                   break
                 end
               end
-            -- first (left) double width
+            -- first (left) double width -> c1
             elseif (hs.mouse.getRelativePosition().x + sumdx > max.w / 5) and (hs.mouse.getRelativePosition().x + sumdx <= max.w / 5 * 2) then
-              xNew = 0
-              yNew = heightMB
-              wNew = max.w / gridX * 2
-              hNew = max.h
-            else -- second (right) double width
+              hs.alert.show("franz")
+              xNew = 0 + pM
+              yNew = heightMB + pM
+              wNew = (max.w - 2 * pM - pI) / 3 * 2
+              hNew = max.h - 2 * pM
+            else -- second (right) double width -> c2
               xNew = max.w - max.w / gridX * 2
               yNew = heightMB
               wNew = max.w / gridX * 2
@@ -1442,7 +1442,6 @@ function snap(origin)
     wSnap = max.w - 2 * pM
     hSnap = max.h - 2 * pM
 
-  --fb  
   elseif origin == 'b1' then
     xSnap = 0 + pM
     ySnap = heightMB + pM
@@ -1511,70 +1510,78 @@ function snap(origin)
     hSnap = (max.h - 2 * pM - 4 * pI) / 3
 
 
-  elseif origin == 'c1' then
+  elseif origin == 'c1' then -- left two thirds of screen': 6 cells
     xSnap = 0 + pM
-    ySnap = heightMB
-    wSnap = max.w / 3 * 2
-    hSnap = max.h
-  elseif origin == 'c2' then
-    xSnap = max.w / 3
-    ySnap = heightMB
-    wSnap = max.w / 3 * 2
-    hSnap = max.h
-  elseif origin == 'c3' then
-    xSnap = 0
-    ySnap = heightMB
-    wSnap = max.w / 3
-    hSnap = max.h / 3 * 2
-  elseif origin == 'c4' then
+    ySnap = heightMB + pM
+    wSnap = (max.w - 2 * pM - pI) / 3 * 2
+    hSnap = max.h - 2 * pM
+  elseif origin == 'c2' then -- right two thirds of screen': 6 cells
+    xSnap = pM + 1 * ((max.w - 2 * pM - 4 * pI) / 3) + 2 * pI
+    ySnap = heightMB + pM
+    wSnap = (max.w - 2 * pM - pI) / 3 * 2
+    hSnap = max.h - 2 * pM
+
+
+  elseif origin == 'c3' then -- left third, upper two cells
     xSnap = 0 + pM
-    ySnap = heightMB + max.h / 3
-    wSnap = max.w / 3
-    hSnap = max.h / 3 * 2
-  elseif origin == 'c5' then
-    xSnap = max.w / 3
-    ySnap = heightMB
-    wSnap = max.w / 3
-    hSnap = max.h / 3 * 2
-  elseif origin == 'c6' then
-    xSnap = max.w / 3
-    ySnap = heightMB + max.h / 3
-    wSnap = max.w / 3
-    hSnap = max.h / 3 * 2
-  elseif origin == 'c7' then
-    xSnap = max.w / 3 * 2
-    ySnap = heightMB
-    wSnap = max.w / 3
-    hSnap = max.h / 3 * 2
-  elseif origin == 'c8' then
-    xSnap = max.w / 3 * 2
-    ySnap = heightMB + max.h / 3
-    wSnap = max.w / 3
-    hSnap = max.h / 3 * 2
-  elseif origin == 'c9' then
+    ySnap = heightMB + pM
+    wSnap = (max.w - 2 * pM - 4 * pI) / 3
+    hSnap = (max.h - 2 * pM - pI) / 3 * 2
+  elseif origin == 'c4' then -- left third, lower two cells
     xSnap = 0 + pM
-    ySnap = heightMB
-    wSnap = max.w / 3 * 2
-    hSnap = max.h / 3 * 2
-  elseif origin == 'c10' then
+    ySnap = heightMB + pM + 1 * ((max.h - 2 * pM - 4 * pI) / 3) + 2 * pI
+    wSnap = (max.w - 2 * pM - 4 * pI) / 3
+    hSnap = (max.h - 2 * pM - pI) / 3 * 2
+
+
+  elseif origin == 'c5' then -- middle third, upper two cells
+    xSnap = pM + 1 * ((max.w - 2 * pM - 4 * pI) / 3) + 2 * pI
+    ySnap = heightMB + pM
+    wSnap = (max.w - 2 * pM - 4 * pI) / 3
+    hSnap = (max.h - 2 * pM - pI) / 3 * 2
+  elseif origin == 'c6' then -- middle third, lower two cells
+    xSnap = pM + 1 * ((max.w - 2 * pM - 4 * pI) / 3) + 2 * pI
+    ySnap = heightMB + pM + 1 * ((max.h - 2 * pM - 4 * pI) / 3) + 2 * pI
+    wSnap = (max.w - 2 * pM - 4 * pI) / 3
+    hSnap = (max.h - 2 * pM - pI) / 3 * 2
+
+
+  elseif origin == 'c7' then -- right third, upper two cells
+    xSnap = pM + 2 * ((max.w - 2 * pM - 4 * pI) / 3) + 4 * pI
+    ySnap = heightMB + pM
+    wSnap = (max.w - 2 * pM - 4 * pI) / 3
+    hSnap = (max.h - 2 * pM - pI) / 3 * 2
+  elseif origin == 'c8' then -- right third, lower two cells
+    xSnap = pM + 2 * ((max.w - 2 * pM - 4 * pI) / 3) + 4 * pI
+    ySnap = heightMB + pM + 1 * ((max.h - 2 * pM - 4 * pI) / 3) + 2 * pI
+    wSnap = (max.w - 2 * pM - 4 * pI) / 3
+    hSnap = (max.h - 2 * pM - pI) / 3 * 2
+
+
+  elseif origin == 'c9' then -- top left and middle thirds': 4 cells
     xSnap = 0 + pM
-    ySnap = heightMB + max.h / 3
-    wSnap = max.w / 3 * 2
-    hSnap = max.h / 3 * 2
-  elseif origin == 'c11' then
-    xSnap = max.w / 3
-    ySnap = heightMB
-    wSnap = max.w / 3 * 2
-    hSnap = max.h / 3 * 2
-  elseif origin == 'c12' then
-    xSnap = max.w / 3
-    ySnap = heightMB + max.h / 3
-    wSnap = max.w / 3 * 2
-    hSnap = max.h / 3 * 2
+    ySnap = heightMB + pM
+    wSnap = (max.w - 2 * pM - pI) / 3 * 2
+    hSnap = (max.h - 2 * pM - pI) / 3 * 2
+  elseif origin == 'c10' then -- bottom left and middle thirds': 4 cells
+    xSnap = 0 + pM
+    ySnap = heightMB + pM + 1 * ((max.h - 2 * pM - 4 * pI) / 3) + 2 * pI
+    wSnap = (max.w - 2 * pM - pI) / 3 * 2
+    hSnap = (max.h - 2 * pM - pI) / 3 * 2
+
+  elseif origin == 'c11' then -- top middle and right thirds': 4 cells
+    xSnap = pM + 1 * ((max.w - 2 * pM - 4 * pI) / 3) + 2 * pI
+    ySnap = heightMB + pM
+    wSnap = (max.w - 2 * pM - pI) / 3 * 2
+    hSnap = (max.h - 2 * pM - pI) / 3 * 2
+  elseif origin == 'c12' then -- bottom middle and right thirds': 4 cells
+    xSnap = pM + 1 * ((max.w - 2 * pM - 4 * pI) / 3) + 2 * pI
+    ySnap = heightMB + pM + 1 * ((max.h - 2 * pM - 4 * pI) / 3) + 2 * pI
+    wSnap = (max.w - 2 * pM - pI) / 3 * 2
+    hSnap = (max.h - 2 * pM - pI) / 3 * 2
   end
   fwin:move(hs.geometry.new(xSnap, ySnap, wSnap, hSnap), nil, false, 0)
 end
-
 
 
 return SpaceHammer

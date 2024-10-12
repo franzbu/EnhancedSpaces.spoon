@@ -141,12 +141,10 @@ function SpaceHammer:new(options)
   refreshWinMSpaces()
 
   -- deserialize
-  --fb  
   if backup and hs.settings.get("mSpaces") then
     winMSpacesSerialized = hs.settings.get("mSpaces")
-
-    -- get index of last mSpace with windows
-    local lW = 1
+    -- get index of last mSpace with window(s) on it
+    local lW = 1 
     for i = 1, #winMSpacesSerialized do
       for j = 1, #winMSpacesSerialized[i].mspace do
         if winMSpacesSerialized[i].mspace[j] then
@@ -154,7 +152,6 @@ function SpaceHammer:new(options)
         end
       end
     end
-
     if lW <= #mspaces then -- only if amount of mSpaces has stayed the same or increased
       for i = 1, #winAll do
         for j = 1, #winMSpacesSerialized do
@@ -235,7 +232,7 @@ function SpaceHammer:new(options)
   end)
   keyboardTracker:start()
 
-  --[[
+  ---[[
   --cycle through all windows, regardless of which WS they are on (https://applehelpwriter.com/2018/01/14/how-to-add-a-window-switcher/)
   --switcher = hs.window.switcher.new() -- default windowfilter: only visible windows, all mSpaces
 
@@ -248,18 +245,18 @@ function SpaceHammer:new(options)
   switcher.ui.textSize = 14
   switcher.ui.showSelectedTitle = false
   hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[1], function()
-    cycleAll = true
+    cycleAll = false --true when cycling through all apps (if on other mSpaces necessary to switch there)
     switcher:next()   --nextWindow()
     --after release of modifierSwitchWin, watchdog initiates whatever needs to be done
   end)
   hs.hotkey.bind({modifierSwitchWin[1], 'shift' }, modifierSwitchWinKeys[1], function()
-    cycleAll = true
+    cycleAll = false --true when cycling through all apps
     switcher:previous()
   end)
   --]]
 
   -- cycle through windows of current WS (without UI), todo (maybe): last focus first
-  ---[[
+  --[[
   local nextFMS = 1
   hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[1], function()
     if nextFMS > #winMSpaces then nextFMS = 1 end
@@ -415,7 +412,7 @@ function SpaceHammer:new(options)
         if winMSpaces[i].mspace[k] then
           winMSpacesSerialized[i].frame[k] = winMSpaces[i].frame[k]
         else
-          winMSpacesSerialized[i].frame[k] = hs.geometry.new(0,0,0,0) --{0,0,0,0} --hs.geometry.new(0,0,0,0) -- 
+          winMSpacesSerialized[i].frame[k] = hs.geometry.new(0, 0, 0, 0) --{0,0,0,0} --hs.geometry.new(0, 0, 0, 0) -- 
         end
       end
     end
@@ -434,7 +431,7 @@ function SpaceHammer:new(options)
             if winMSpacesSerialized[j].mspace[k] then
               winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(winMSpacesSerialized[j].frame[k]._x, winMSpacesSerialized[j].frame[k]._y, winMSpacesSerialized[j].frame[k]._w, winMSpacesSerialized[j].frame[k]._h)
             else
-              winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(0,0,0,0)
+              winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(0, 0, 0, 0)
             end          
           end
           winMSpacesSerializedOrg[j] = nil
@@ -1249,12 +1246,24 @@ function refreshWinMSpaces(w)
           winMSpaces[i].frame[k] = winAll[i]:frame()
         else
           winMSpaces[i].mspace[k] = false
-          winMSpaces[i].frame[k] = hs.geometry.new(0,0,0,0) --{0,0,0,0} --fb winAll[i]:frame(); nil; 
+          winMSpaces[i].frame[k] = hs.geometry.new(0, 0, 0, 0) --{0,0,0,0} --fb winAll[i]:frame(); nil; 
         end
       end
     end
   end
 
+  -- fb
+  -- when choosing to switch to window by cycling through all apps, go to mSpace of chosen window
+  if w ~= nil then
+    if not winMSpaces[getWinMSpacesPos(w)].mspace[currentMSpace] then -- in case focused window is not on current mSpace, switch to the one containing it
+      for i = 1, #mspaces do
+        if winMSpaces[getWinMSpacesPos(w)].mspace[i] then
+          goToSpace(i)
+          break
+        end
+      end
+    end
+  end
 
   -- delete closed or minimized windows
   for i = 1, #winMSpaces do
@@ -1313,7 +1322,7 @@ function refreshWinMSpaces(w)
         if winMSpaces[i].mspace[k] then
           winMSpacesSerialized[i].frame[k] = winMSpaces[i].frame[k]
         else
-          winMSpacesSerialized[i].frame[k] = hs.geometry.new(0,0,0,0) --{0,0,0,0} --hs.geometry.new(0,0,0,0) -- 
+          winMSpacesSerialized[i].frame[k] = hs.geometry.new(0, 0, 0, 0) --{0,0,0,0} --hs.geometry.new(0, 0, 0, 0) -- 
         end
       end
     end
@@ -1359,7 +1368,7 @@ function derefWinMSpace()
   local fwin = hs.window.focusedWindow()
   max = fwin:screen():frame()
   winMSpaces[getWinMSpacesPos(fwin)].mspace[currentMSpace] = false
-  winMSpaces[getWinMSpacesPos(fwin)].frame[currentMSpace] = hs.geometry.new(0,0,0,0) --{0,0,0,0} --hs.geometry.new(0,0,0,0)
+  winMSpaces[getWinMSpacesPos(fwin)].frame[currentMSpace] = hs.geometry.new(0, 0, 0, 0) --{0,0,0,0} --hs.geometry.new(0, 0, 0, 0)
   -- in case all 'mspace' are 'false', close window
   local all_false = true
   for i = 1, #winMSpaces[getWinMSpacesPos(fwin)].mspace do

@@ -261,7 +261,20 @@ As you can see in the example above, 'modifierSnapKey1' and 'modifierSnapKey3' a
 
 Now, by pressing 'modifierSnapKey1' and 'j', for example, scenario 'a2' is activated, which means that the active window snaps into the right half of the screen.
 
-## Additional Explanations
+## Additional Features
+
+### Padding
+
+In case you would like to change the padding in between the windows, add the following lines with values to your liking to your 'init.lua':
+
+```lua
+  ...
+  -- padding between window borders and screen borders
+  outerPadding = 5, -- default: 5
+  -- padding between window borders
+  innerPadding = 5, -- default: 5
+  ...
+```
 
 ### Change Size, Color, and Opacity of Grid Indicators
 

@@ -1,42 +1,42 @@
-# Mellon
+# SpaceHammer
 
-Mellon has been inspired by a variety of tools, among them Aerospace, Moom and BetterTouchTool. Mellon has simplified my life with my Mac; may it do the same for you.
+SpaceHammer has been inspired by a variety of tools, among them Aerospace, Moom and BetterTouchTool. SpaceHammer has simplified my life with my Mac; may it do the same for you.
 
 To simplify one's life is not too bad, but what does this tool actually do to justify my spending time with it, you might ask. 
 
-Well, first, spending your time with Mellon will actually save you time. As far as the capabilities of this tool are concerned, the answer is simple: it helps you organize your workspace, which comes down to two main tasks: managing your spaces and your applications and windows on them. 
+Well, first, spending your time with SpaceHammer will actually save you time. As far as the capabilities of this tool are concerned, the answer is simple: it helps you organize your workspace, which comes down to two main tasks: managing your spaces and your applications and windows on them. 
 
-When it comes to spaces, Mellon provides a new implementation of what Apple has straightforwardly termed 'Spaces'; in Mellon they are called mSpaces.
+When it comes to spaces, SpaceHammer provides a new implementation of what Apple has straightforwardly termed 'Spaces'; in SpaceHammer they are called mSpaces.
 
 mSpaces follow the approach of representing windows rather than containing them, which, for instance, makes it possible to have the same window on more than one mSpace. When it comes to managing windows, they are positioned and resized with keyboard shortcuts or a flick of your pointing device according to your demands.
 
 Still, this is nothing really new, I hear you say, and you are right. You might be surprised, though, what difference sometimes even a slightly altered approach can make. But read on and judge for yourself.
 
-One last thing before we dive in: windows and mSpaces can be handled using your keyboard only; however, similar to other operations, at times it is simpler and faster to use keyboard and pointing device together. Thus Mellon provides this additional option wherever it is beneficial. 
+One last thing before we dive in: windows and mSpaces can be handled using your keyboard only; however, similar to other operations, at times it is simpler and faster to use keyboard and pointing device together. Thus SpaceHammer provides this additional option wherever it is beneficial. 
 
 
 ## Installation
 
-Mellon requires [Hammerspoon](https://www.hammerspoon.org/), so just go ahead with its installation.
+SpaceHammer requires [Hammerspoon](https://www.hammerspoon.org/), so just go ahead with its installation.
 
-To install Mellon, after downloading and unzipping it, move the folder to ~/.hammerspoon/Spoons and make sure the name of the folder is 'Mellon.spoon'. 
+To install SpaceHammer, after downloading and unzipping it, move the folder to ~/.hammerspoon/Spoons and make sure the name of the folder is 'SpaceHammer.spoon'. 
 
 Alternatively, run the following command in a terminal window:
 
 ```bash
 
-mkdir -p ~/.hammerspoon/Spoons && git clone https://github.com/franzbu/Mellon.spoon.git ~/.hammerspoon/Spoons/Mellon.spoon
+mkdir -p ~/.hammerspoon/Spoons && git clone https://github.com/franzbu/SpaceHammer.spoon.git ~/.hammerspoon/Spoons/SpaceHammer.spoon
 
 ```
 
 ## Usage
 
-Once you have installed Mellon, add the following lines to your `~/.hammerspoon/init.lua` file:
+Once you have installed SpaceHammer, add the following lines to your `~/.hammerspoon/init.lua` file:
 
 ```lua
-local Mellon = hs.loadSpoon('Mellon')
+local SpaceHammer = hs.loadSpoon('SpaceHammer')
 
-Mellon:new({
+SpaceHammer:new({
   -- mSpaces:
   mSpaces = { '1', '2', '3', 'E', 'T' }, -- default { '1', '2', '3' }
   startmSpace = 'E', -- default 2
@@ -49,7 +49,7 @@ Mellon:new({
 
 Restart Hammerspoon and you are ready to go. You might be interested in adjusting the amount and names of your mSpaces and your default mSpace; to do so change the above entries. 
 
-After starting Mellon, all you will see for now is a new icon in your menu bar indicating your current mSpace. Let us find out now how to populate your mSpaces.
+After starting SpaceHammer, all you will see for now is a new icon in your menu bar indicating your current mSpace. Let us find out now how to populate your mSpaces.
 
 ## mSpaces
 
@@ -119,7 +119,7 @@ To delete a reference, press 'modifierReference' and '0'. In case you are 'de-re
 
 You can use macOS's integrated window switcher (cmd-tab) or any third party switcher such as [AltTab]([[https://www.hammerspoon.org/](https://karabiner-elements.pqrs.org/](https://alt-tab-macos.netlify.app/))) for switching between all your windows. Also for switching between the different windows of one application you can use Apple's integrated switcher or any third party alternative.
 
-However, to make use of the advanced features mSpaces provide, Mellon offers additional possibilities for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').
+However, to make use of the advanced features mSpaces provide, SpaceHammer offers additional possibilities for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').
 
 ### Switching between Windows of the Current mSpace
 
@@ -144,7 +144,7 @@ For switching between the references of a window ('sticky windows'), press 'alt'
 
 ## Moving and Resizing Windows:
 
-With Mellon you can automatically resize and position the windows on your mSpaces according to a dynamically changing grid size. Let us get started with manual moving and resizing, though:
+With SpaceHammer you can automatically resize and position the windows on your mSpaces according to a dynamically changing grid size. Let us get started with manual moving and resizing, though:
 
 
 ### Manual Moving and Positioning
@@ -277,18 +277,18 @@ In case you would like to change the size, color and/or opacity of the grid indi
 
 ### Restart
 
-- If you restart Mellon, the windows on the current mSpace remain the way they were before the restart, while the windows that were placed on other mSpaces will be moved to the current mSpace. 
+- If you restart SpaceHammer, the windows on the current mSpace remain the way they were before the restart, while the windows that were placed on other mSpaces will be moved to the current mSpace. 
 
-This also means that if at some point you want to stop using Mellon, either move all windows to the current mSpace first, or simply restart Mellon one more time.
+This also means that if at some point you want to stop using SpaceHammer, either move all windows to the current mSpace first, or simply restart SpaceHammer one more time.
 
-As an optical experimental feature, Mellon can automatically backup and restore mSpaces and their windows; more in the section 'Backup and Restore of mSpaces' below.
+As an optical experimental feature, SpaceHammer can automatically backup and restore mSpaces and their windows; more in the section 'Backup and Restore of mSpaces' below.
 
 
 ## Experimental
 
 ### Backup and Restore of mSpaces
 
-mSpaces with their windows can be automatically backed up and restored. Only the windows open at the time Mellon starts will be restored.
+mSpaces with their windows can be automatically backed up and restored. Only the windows open at the time SpaceHammer starts will be restored.
 
 ```lua
   ...
@@ -333,9 +333,9 @@ You can change the size of the area of the window where the vertical-only and ho
 ```
 
 
-## Uninstall Mellon
+## Uninstall SpaceHammer
 
-In case you at some point had the automatic backup and restore function activated, start Mellon once with it deactivated; to do so, delete the following line in your 'init.lua' (or set it to false).
+In case you at some point had the automatic backup and restore function activated, start SpaceHammer once with it deactivated; to do so, delete the following line in your 'init.lua' (or set it to false).
 
 ```lua
   ...
@@ -344,4 +344,4 @@ In case you at some point had the automatic backup and restore function activate
   ...
 ```
 
-Other than that you only have to delete the folder 'Mellon.spoon' in the folder '~/.hammerspoon/Spoons/' and delete the corresponding section in your 'init.lua'.
+Other than that you only have to delete the folder 'SpaceHammer.spoon' in the folder '~/.hammerspoon/Spoons/' and delete the corresponding section in your 'init.lua'.

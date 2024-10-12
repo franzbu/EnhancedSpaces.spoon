@@ -699,10 +699,10 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
               for i = 1, gridY, 1 do
                 -- getRelativePosition() returns mouse coordinates where moving process starts, not ends, thus sumdx/sumdy make necessary adjustment             
                 if hs.mouse.getRelativePosition().y + sumdy < max.h - (gridY - i) * max.h / gridY then 
-                  xNew = 0
-                  yNew = heightMB + (i - 1) * max.h / gridY
-                  wNew = max.w / gridX
-                  hNew = max.h / gridY
+                  xNew = 0 + pM
+                  yNew = heightMB + pM + (i - 1) * ((max.h - 2 * pM - 4 * pI) / 3) + (i - 1) * 2 * pI
+                  wNew = (max.w - 2 * pM - 4 * pI) / 3
+                  hNew = (max.h - 2 * pM - 4 * pI) / 3
                   break
                 end
               end
@@ -730,10 +730,12 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
               -- 3 standard areas
               for i = 1, gridY, 1 do
                 if hs.mouse.getRelativePosition().y + sumdy < max.h - (gridY - i) * max.h / gridY then 
-                  xNew = max.w - max.w / gridX
-                  yNew = heightMB + (i - 1) * max.h / gridY
-                  wNew = max.w / gridX
-                  hNew = max.h / gridY
+                  xNew = pM + 2 * ((max.w - 2 * pM - 4 * pI) / 3) + 4 * pI
+                  yNew = heightMB + pM + (i - 1) * ((max.h - 2 * pM - 4 * pI) / 3) + (i - 1) * 2 * pI
+                  wNew = (max.w - 2 * pM - 4 * pI) / 3
+                  hNew = (max.h - 2 * pM - 4 * pI) / 3
+
+
                   break
                 end
               end
@@ -756,13 +758,13 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
             yNew = maxWithMB.h - hNew
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
             if (hs.mouse.getRelativePosition().x + sumdx <= max.w / 5) or (hs.mouse.getRelativePosition().x + sumdx > max.w / 5 * 2 and hs.mouse.getRelativePosition().x + sumdx <= max.w / 5 * 3) or (hs.mouse.getRelativePosition().x + sumdx > max.w / 5 * 4) then
-              -- 3 standard areas
+              -- realeasing modifier before mouse button; 3 standard areas
               for i = 1, gridX, 1 do
                 if hs.mouse.getRelativePosition().x + sumdx < max.w - (gridX - i) * max.w / gridX then 
-                  xNew = (i - 1) * max.w / gridX 
-                  yNew = heightMB + (i - 1) * gridX
-                  wNew = max.w / gridX
-                  hNew = max.h
+                  xNew = pM + (i - 1) * ((max.w - 2 * pM - 4 * pI) / 3) + (i - 1) * 2 * pI
+                  yNew = heightMB + pM
+                  wNew = (max.w - 2 * pM - 4 * pI) / 3
+                  hNew = max.h - 2 * pM 
                   break
                 end
               end
@@ -788,15 +790,15 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
             xNew = 0
           -- window moved past left screen border
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
-            -- 3 standard areas
+            -- realeasing modifier before mouse button; 3 standard areas, snap into middle column
             if (hs.mouse.getRelativePosition().y + sumdy <= max.h / 5) or (hs.mouse.getRelativePosition().y + sumdy > max.h / 5 * 2 and hs.mouse.getRelativePosition().y + sumdy <= max.h / 5 * 3) or (hs.mouse.getRelativePosition().y + sumdy > max.h / 5 * 4) then
               for i = 1, gridY, 1 do
                 -- getRelativePosition() returns mouse coordinates where moving process starts, not ends, thus sumdx/sumdy make necessary adjustment             
                 if hs.mouse.getRelativePosition().y + sumdy < max.h - (gridY - i) * max.h / gridY then 
-                  xNew = max.w / gridX
-                  yNew = heightMB + (i - 1) * max.h / gridY
-                  wNew = max.w / gridX
-                  hNew = max.h / gridY
+                  xNew = pM + 1 * ((max.w - 2 * pM - 4 * pI) / 3) + 2 * pI
+                  yNew = heightMB + pM + (i - 1) * ((max.h - 2 * pM - 4 * pI) / 3) + (i - 1) * 2 * pI
+                  wNew = (max.w - 2 * pM - 4 * pI) / 3
+                  hNew = (max.h - 2 * pM - 4 * pI) / 3
                   break
                 end
               end
@@ -821,13 +823,13 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
             -- getRelativePosition() returns mouse coordinates where moving process starts, not ends, thus sumdx/sumdy make necessary adjustment                     
             if (hs.mouse.getRelativePosition().y + sumdy <= max.h / 5) or (hs.mouse.getRelativePosition().y + sumdy > max.h / 5 * 2 and hs.mouse.getRelativePosition().y + sumdy <= max.h / 5 * 3) or (hs.mouse.getRelativePosition().y + sumdy > max.h / 5 * 4) then
-              -- 3 standard areas
+              -- realeasing modifier before mouse button; 3 standard areas, snap into middle column, same than last section 
               for i = 1, gridY, 1 do
                 if hs.mouse.getRelativePosition().y + sumdy < max.h - (gridY - i) * max.h / gridY then 
-                  xNew = max.w / gridX
-                  yNew = heightMB + (i - 1) * max.h / gridY
-                  wNew = max.w / gridX
-                  hNew = max.h / gridY
+                  xNew = pM + 1 * ((max.w - 2 * pM - 4 * pI) / 3) + 2 * pI
+                  yNew = heightMB + pM + (i - 1) * ((max.h - 2 * pM - 4 * pI) / 3) + (i - 1) * 2 * pI
+                  wNew = (max.w - 2 * pM - 4 * pI) / 3
+                  hNew = (max.h - 2 * pM - 4 * pI) / 3
                   break
                 end
               end
@@ -850,13 +852,13 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
             yNew = maxWithMB.h - hNew
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
             if (hs.mouse.getRelativePosition().x + sumdx <= max.w / 5) or (hs.mouse.getRelativePosition().x + sumdx > max.w / 5 * 2 and hs.mouse.getRelativePosition().x + sumdx <= max.w / 5 * 3) or (hs.mouse.getRelativePosition().x + sumdx > max.w / 5 * 4) then
-              -- 3 standard areas
+              -- realeasing modifier before mouse button; 3 standard areas
               for i = 1, gridX, 1 do
                 if hs.mouse.getRelativePosition().x + sumdx < max.w - (gridX - i) * max.w / gridX then 
-                  xNew = (i - 1) * max.w / gridX 
-                  yNew = heightMB + (i - 1) * gridX
-                  wNew = max.w / gridX
-                  hNew = max.h
+                  xNew = pM + (i - 1) * ((max.w - 2 * pM - 4 * pI) / 3) + (i - 1) * 2 * pI
+                  yNew = heightMB + pM
+                  wNew = (max.w - 2 * pM - 4 * pI) / 3
+                  hNew = max.h - 2 * pM 
                   break
                 end
               end
@@ -1440,67 +1442,75 @@ function snap(origin)
     wSnap = max.w - 2 * pM
     hSnap = max.h - 2 * pM
 
-    
+  --fb  
   elseif origin == 'b1' then
     xSnap = 0 + pM
-    ySnap = heightMB
-    wSnap = max.w / 3
-    hSnap = max.h
+    ySnap = heightMB + pM
+    wSnap = (max.w - 2 * pM - 4 * pI) / 3
+    hSnap = max.h - 2 * pM
   elseif origin == 'b2' then
-    xSnap = max.w / 3
-    ySnap = heightMB
-    wSnap = max.w / 3
-    hSnap = max.h
+    xSnap = pM + 1 * ((max.w - 2 * pM - 4 * pI) / 3) + 2 * pI
+    ySnap = heightMB + pM
+    wSnap = (max.w - 2 * pM - 4 * pI) / 3
+    hSnap = max.h - 2 * pM 
   elseif origin == 'b3' then
-    xSnap = max.w - max.w / 3
-    ySnap = heightMB
-    wSnap = max.w / 3
-    hSnap = max.h
+    xSnap = pM + 2 * ((max.w - 2 * pM - 4 * pI) / 3) + 4 * pI
+    ySnap = heightMB + pM
+    wSnap = (max.w - 2 * pM - 4 * pI) / 3
+    hSnap = max.h - 2 * pM 
+
+
   elseif origin == 'b4' then
     xSnap = 0 + pM
-    ySnap = heightMB
-    wSnap = max.w / 3
-    hSnap = max.h / 3
+    ySnap = heightMB + pM
+    wSnap = (max.w - 2 * pM - 4 * pI) / 3
+    hSnap = (max.h - 2 * pM - 4 * pI) / 3
   elseif origin == 'b5' then
     xSnap = 0 + pM
-    ySnap = heightMB + max.h / 3
-    wSnap = max.w / 3
-    hSnap = max.h / 3
+    ySnap = heightMB + pM + 1 * ((max.h - 2 * pM - 4 * pI) / 3) + 2 * pI
+    wSnap = (max.w - 2 * pM - 4 * pI) / 3
+    hSnap = (max.h - 2 * pM - 4 * pI) / 3
   elseif origin == 'b6' then
     xSnap = 0 + pM
-    ySnap = heightMB + max.h - max.h / 3
-    wSnap = max.w / 3
-    hSnap = max.h / 3
+    ySnap = heightMB + pM + 2 * ((max.h - 2 * pM - 4 * pI) / 3) + 4 * pI
+    wSnap = (max.w - 2 * pM - 4 * pI) / 3
+    hSnap = (max.h - 2 * pM - 4 * pI) / 3
+
+
   elseif origin == 'b7'then
-    xSnap = max.w / 3
-    ySnap = heightMB
-    wSnap = max.w / 3
-    hSnap = max.h / 3
+    xSnap = pM + 1 * ((max.w - 2 * pM - 4 * pI) / 3) + 2 * pI
+    ySnap = heightMB + pM
+    wSnap = (max.w - 2 * pM - 4 * pI) / 3
+    hSnap = (max.h - 2 * pM - 4 * pI) / 3
   elseif origin == 'b8' then
-    xSnap = max.w / 3
-    ySnap = heightMB + max.h / 3
-    wSnap = max.w / 3
-    hSnap = max.h / 3
+    xSnap = pM + 1 * ((max.w - 2 * pM - 4 * pI) / 3) + 2 * pI
+    ySnap = heightMB + pM + 1 * ((max.h - 2 * pM - 4 * pI) / 3) + 2 * pI
+    wSnap = (max.w - 2 * pM - 4 * pI) / 3
+    hSnap = (max.h - 2 * pM - 4 * pI) / 3
   elseif origin == 'b9' then
-    xSnap = max.w / 3
-    ySnap = heightMB + max.h - max.h / 3
-    wSnap = max.w / 3
-    hSnap = max.h / 3
+    xSnap = pM + 1 * ((max.w - 2 * pM - 4 * pI) / 3) + 2 * pI
+    ySnap = heightMB + pM + 2 * ((max.h - 2 * pM - 4 * pI) / 3) + 4 * pI
+    wSnap = (max.w - 2 * pM - 4 * pI) / 3
+    hSnap = (max.h - 2 * pM - 4 * pI) / 3
+
+
   elseif origin == 'b10' then
-    xSnap = max.w - max.w / 3 
-    ySnap = heightMB
-    wSnap = max.w / 3
-    hSnap = max.h / 3
+    xSnap = pM + 2 * ((max.w - 2 * pM - 4 * pI) / 3) + 4 * pI
+    ySnap = heightMB + pM
+    wSnap = (max.w - 2 * pM - 4 * pI) / 3
+    hSnap = (max.h - 2 * pM - 4 * pI) / 3
   elseif origin == 'b11' then
-    xSnap = max.w - max.w / 3
-    ySnap = heightMB + max.h / 3
-    wSnap = max.w / 3
-    hSnap = max.h / 3
+    xSnap = pM + 2 * ((max.w - 2 * pM - 4 * pI) / 3) + 4 * pI
+    ySnap = heightMB + pM + 1 * ((max.h - 2 * pM - 4 * pI) / 3) + 2 * pI
+    wSnap = (max.w - 2 * pM - 4 * pI) / 3
+    hSnap = (max.h - 2 * pM - 4 * pI) / 3
   elseif origin == 'b12' then
-    xSnap = max.w - max.w / 3
-    ySnap = heightMB + max.h - max.h / 3
-    wSnap = max.w / 3
-    hSnap = max.h / 3
+    xSnap = pM + 2 * ((max.w - 2 * pM - 4 * pI) / 3) + 4 * pI
+    ySnap = heightMB + pM + 2 * ((max.h - 2 * pM - 4 * pI) / 3) + 4 * pI
+    wSnap = (max.w - 2 * pM - 4 * pI) / 3
+    hSnap = (max.h - 2 * pM - 4 * pI) / 3
+
+
   elseif origin == 'c1' then
     xSnap = 0 + pM
     ySnap = heightMB

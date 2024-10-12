@@ -297,6 +297,9 @@ mSpaces with their windows can be automatically backed up and restored. Only the
   ...
 ```
 
+mSpaces with their windows can also only be restored if meanwhile the settings have not been changed in a way that there are fewer mSpaces available than the index of the last mSpace with windows on it when saving.
+
+
 ### Manual Resizing
 
 Similar to manual moving, manual resizing of windows can be initiated by positioning the cursor in virtually any area of the window. Be aware, though, that windows of certain applications, such as LosslessCut or Kdenlive, can behave in a stuttering and sluggish way when being resized. That being said, resizing works well with the usual suspects such as Safari, Google Chrome, or Finder.

@@ -168,7 +168,7 @@ As long as windows are resized - or moved within the borders of the screen -, it
 * modifier2: 
   * The difference to 'alt' is that your screen has a 3x3 grid. This means that windows snap into the left third of the 3x3 grid when dragged beyond the left screen border and into the right third when dragged beyond the right screen border. If 'ctrl' is released before the left mouse button, the window will snap into the middle column.
  
-* The moment dragging of a window starts, indicators will guide you. For changing their appearance see below.
+* The moment dragging of a window starts, indicators will guide you. For changing the appearance of the indicators see section 'Change Size, Color, and Opacity of Grid Indicators' below.
 
 - Additional feature: if you drag a window beyond the bottom border of the screen and 'modifier1' or 'modifier2' is released before the left mouse button, the window will be minimized.
 

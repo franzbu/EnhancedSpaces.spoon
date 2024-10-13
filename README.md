@@ -69,6 +69,9 @@ The below lines represent the default setup, and you do not need to add them to 
   ...
 ```
 
+You can also move windows to adjacent mSpaces by pressing 'modifier1' or 'modifier2' and dragging 80 percent of more of it beyond the left or right screen border. If you release the modifier before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you move along with the window. 
+
+
 ### Switch Directly to Any mSpace
 
 For switching directly to any mSpace, press 'alt' and the key for your mSpace.
@@ -117,7 +120,7 @@ To delete a reference, press 'modifierReference' and '0'. In case you are 'de-re
 
 ## Switching Between Windows
 
-You can use macOS's integrated window switcher (cmd-tab) or any third party switcher such as [AltTab]([[https://www.hammerspoon.org/](https://karabiner-elements.pqrs.org/](https://alt-tab-macos.netlify.app/))) for switching between all your windows. Also for switching between the different windows of one application you can use Apple's integrated switcher or any third party alternative.
+You can use macOS' integrated window switcher (cmd-tab) or third party switchers such as [AltTab](https://alt-tab-macos.netlify.app/) for switching between all your windows. Also for switching between the different windows of one application you can use Apple's integrated switcher or any third party alternative.
 
 However, to make use of the advanced features mSpaces provide, SpaceHammer offers additional possibilities for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').
 
@@ -294,14 +297,14 @@ In case you would like to change the size, color and/or opacity of the grid indi
 
 This also means that if at some point you want to stop using SpaceHammer, either move all windows to the current mSpace first, or simply restart SpaceHammer one more time.
 
-As an optical experimental feature, SpaceHammer can automatically backup and restore mSpaces and their windows; more in the section 'Backup and Restore of mSpaces' below.
+As an optional experimental feature, SpaceHammer can automatically backup and restore mSpaces and their windows; more in the section 'Backup and Restore of mSpaces' below.
 
 
 ## Experimental
 
 ### Backup and Restore of mSpaces
 
-mSpaces with their windows can be automatically backed up and restored. Only the windows open at the time SpaceHammer starts will be restored.
+mSpaces with their windows can be automatically backed up and restored. Only the windows open at the time SpaceHammer starts will be restored. This feature had worked flawlessly so far, but needs to be tested more thoroughly. Any feedback is welcome.
 
 ```lua
   ...

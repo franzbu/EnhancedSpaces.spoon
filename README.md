@@ -19,7 +19,7 @@ One last thing before we dive in: windows and mSpaces can be handled using your 
 
 SpaceHammer requires [Hammerspoon](https://www.hammerspoon.org/), so just go ahead with its installation.
 
-To install SpaceHammer, after downloading and unzipping it, move the folder to ~/.hammerspoon/Spoons and make sure the name of the folder is 'SpaceHammer.spoon'. 
+To install SpaceHammer, after downloading and unzipping, move the folder to ~/.hammerspoon/Spoons and make sure the name of the folder is 'SpaceHammer.spoon'. 
 
 Alternatively, run the following command in a terminal window:
 

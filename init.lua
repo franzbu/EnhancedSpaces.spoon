@@ -68,15 +68,16 @@ function SpaceHammer:new(options)
   modifierSnap3 = options.modifierSnap3 or nil
   modifierSnapKeys = options.modifierSnapKeys or {
     -- modifierSnapKey1
-    {{'a1','1'},{'a2','2'},{'a3','3'},{'a4','4'},{'a5','5'},{'a6','6'},{'a7','7'}}, 
+    {{'a1','1'},{'a2','2'},{'a3','3'},{'a4','4'},{'a5','5'},{'a6','6'},{'a7','7'}},
     -- modifierSnapKey2
-    {{'b1','1'}},
+    {{'b1','1'},{'b2','2'},{'b3','3'},{'b4','4'},{'b5','5'},{'b6','6'},{'b7','7'},{'b8','8'},{'b9','9'},{'b10','0'},{'b11','o'},{'b12','p'}},
     -- modifierSnapKey3
-    {{'c1','1'}},
+    {{'c1','1'},{'c2','2'},{'c3','3'},{'c4','4'},{'c5','5'},{'c6','6'},{'c7','7'},{'c8','8'},{'c9','9'},{'c10','0'},{'c11','o'},{'c12','p'}},
   }
 
   -- switch to mSpace
   modifierSwitchMS = options.modifierSwitchMS or modifier1
+
   -- move window to mSpace
   modifierMoveWinMSpace = options.modifierMoveWinMSpace or modifier1_2
 
@@ -160,18 +161,10 @@ function SpaceHammer:new(options)
     if lW <= #mspaces then -- only if amount of mSpaces has stayed the same or increased
       for i = 1, #winAll do
         for j = 1, #winMSpacesSerialized do
-          -- ?todo: reason unclear, but if more windows with same title are open, 'winMSpaces[getWinMSpacesPos(winAll[i])].win:application():name() == winMSpacesSerialized[j].name' seems to be necessary to avoid those windows end up in the same place -> however, this seems to break de-serealizing
-          --if winMSpacesSerialized[j] ~= nil and winMSpaces[getWinMSpacesPos(winAll[i])].win:title() == winMSpacesSerialized[j].title and winMSpaces[getWinMSpacesPos(winAll[i])].win:application():name() == winMSpacesSerialized[j].name then
           if winMSpacesSerialized[j] ~= nil and winMSpaces[getWinMSpacesPos(winAll[i])].win:title() == winMSpacesSerialized[j].title then
             winMSpaces[getWinMSpacesPos(winAll[i])].mspace = copyTable(winMSpacesSerialized[j].mspace)
             for k = 1, #mspaces do   -- create new hs.geometry object for each window and mspace
-              --fb
-              --if winMSpacesSerialized[j].mspace[k] then
-                winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(winMSpacesSerialized[j].frame[k]._x, winMSpacesSerialized[j].frame[k]._y, winMSpacesSerialized[j].frame[k]._w, winMSpacesSerialized[j].frame[k]._h)
-              --else
-                --winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(0, 0, 1, 1)
-              --end
-    
+              winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(winMSpacesSerialized[j].frame[k]._x, winMSpacesSerialized[j].frame[k]._y, winMSpacesSerialized[j].frame[k]._w, winMSpacesSerialized[j].frame[k]._h)
             end
             winMSpacesSerialized[j].title = "winMSpacesSerialized - already used"
           else
@@ -201,7 +194,6 @@ function SpaceHammer:new(options)
   -- watchdogs
   ---[[
   filter = hs.window.filter --subscribe: when a new window (dis)appears, run refreshWindowsWS
-  --fb: todo: when moving window to mSpace and switching, focus keeps changing between windows
   filter.default:subscribe(filter.windowNotOnScreen, function(w) refreshWinMSpaces(w) end) --focusLastWindow() end)
   filter.default:subscribe(filter.windowOnScreen, function(w) refreshWinMSpaces(w) end) --w:focus() end)
   filter.default:subscribe(filter.windowFocused, function(w) refreshWinMSpaces(w) cmdTabFocus(w) end)
@@ -212,7 +204,7 @@ function SpaceHammer:new(options)
   -- 'subscribe', watchdog for modifier keys
   cycleModCounter = 0 
   local events = hs.eventtap.event.types
-  local prevModifier = nil --{ "xyz" }
+  local prevModifier = nil
   cycleAll = false
   keyboardTracker = hs.eventtap.new({ events.flagsChanged }, function(e)
     local flagsKeyboardTracker = eventToArray(e:getFlags())
@@ -254,7 +246,7 @@ function SpaceHammer:new(options)
   switcher.ui.showSelectedTitle = false
   hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[1], function()
     cycleAll = false --true when cycling through all apps (if on other mSpaces necessary to switch there)
-    switcher:next()   --nextWindow()
+    switcher:next()
     --after release of modifierSwitchWin, watchdog initiates whatever needs to be done
   end)
   hs.hotkey.bind({modifierSwitchWin[1], 'shift' }, modifierSwitchWinKeys[1], function()
@@ -380,7 +372,7 @@ function SpaceHammer:new(options)
   end
 
   -- debug
-  ---[[
+  --[[
   -- list all windows
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "m", function()
     print("_______winAll_________")
@@ -417,7 +409,7 @@ function SpaceHammer:new(options)
       winMSpacesSerialized[i].frame = {}
       for k = 1, #mspaces do
         winMSpacesSerialized[i].mspace[k] = winMSpaces[i].mspace[k]
-        --if winMSpaces[i].mspace[k] then --fb
+        --if winMSpaces[i].mspace[k] then
           winMSpacesSerialized[i].frame[k] = winMSpaces[i].frame[k]
         --else
           --winMSpacesSerialized[i].frame[k] = hs.geometry.new(0, 0, 1, 1) --{0,0,0,0} --hs.geometry.new(0, 0, 1, 1) -- 
@@ -445,12 +437,9 @@ function SpaceHammer:new(options)
       if lW <= #mspaces then -- only if amount of mSpaces has stayed the same or increased
         for i = 1, #winAll do
           for j = 1, #winMSpacesSerialized do
-            -- [issue 1]?todo: reason unclear, but if more windows with same title are open, 'winMSpaces[getWinMSpacesPos(winAll[i])].win:application():name() == winMSpacesSerialized[j].name' seems to be necessary to avoid those windows end up in the same place -> however, this seems to break de-serealizing
-            --if winMSpacesSerialized[j] ~= nil and winMSpaces[getWinMSpacesPos(winAll[i])].win:title() == winMSpacesSerialized[j].title and winMSpaces[getWinMSpacesPos(winAll[i])].win:application():name() == winMSpacesSerialized[j].name then
             if winMSpacesSerialized[j] ~= nil and winMSpaces[getWinMSpacesPos(winAll[i])].win:title() == winMSpacesSerialized[j].title then
               winMSpaces[getWinMSpacesPos(winAll[i])].mspace = copyTable(winMSpacesSerialized[j].mspace)
               for k = 1, #mspaaces do   -- create new hs.geometry object for each window and mspace
-                --fb
                 --if winMSpacesSerialized[j].mspace[k] then
                   winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(winMSpacesSerialized[j].frame[k]._x, winMSpacesSerialized[j].frame[k]._y, winMSpacesSerialized[j].frame[k]._w, winMSpacesSerialized[j].frame[k]._h)
                 --else
@@ -468,13 +457,12 @@ function SpaceHammer:new(options)
   -- test
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "i", function()
   end)
- 
+  --]]
 
   goToSpace(currentMSpace) -- refresh
   resizer.clickHandler:start()
   return resizer
 end
-
 
 
 function SpaceHammer:stop()
@@ -605,8 +593,6 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
   if not self.targetWindow then return end
   modifierDM = eventToArray(hs.eventtap.checkKeyboardModifiers()) -- modifiers (still) pressed after releasing mouse button 
   local frame = win:frame()
-  -- 'max' should not be reintialized here because if there is another adjacent display with different resolution, windows are adjusted according to that resolution (as cursor gets moved there)
-  -- local max = win:screen():frame()
   xNew = frame.x
   yNew = frame.y
   wNew = frame.w
@@ -1147,7 +1133,7 @@ end
 
 
 
---spaces
+--mSpaces
 function getprevMSpaceNumber(cS)
   if cS == 1 then
     return #mspaces
@@ -1313,11 +1299,7 @@ function refreshWinMSpaces(w)
       winMSpacesSerialized[i].frame = {}
       for k = 1, #mspaces do
         winMSpacesSerialized[i].mspace[k] = winMSpaces[i].mspace[k]
-        --if winMSpaces[i].mspace[k] then --fb
-          winMSpacesSerialized[i].frame[k] = winMSpaces[i].frame[k]
-        --else
-          --winMSpacesSerialized[i].frame[k] = hs.geometry.new(0, 0, 1, 1) --{0,0,0,0} --hs.geometry.new(0, 0, 1, 1)
-        --end
+        winMSpacesSerialized[i].frame[k] = winMSpaces[i].frame[k]
       end
     end
     hs.timer.doAfter(0.3, function()
@@ -1383,8 +1365,6 @@ function derefWinMSpace()
   local fwin = hs.window.focusedWindow()
   max = fwin:screen():frame()
   winMSpaces[getWinMSpacesPos(fwin)].mspace[currentMSpace] = false
-  --fb
-  --winMSpaces[getWinMSpacesPos(fwin)].frame[currentMSpace] = hs.geometry.new(0, 0, 1, 1) --{0,0,0,0} --hs.geometry.new(0, 0, 1, 1)
   -- in case all 'mspace' are 'false', close window
   local all_false = true
   for i = 1, #winMSpaces[getWinMSpacesPos(fwin)].mspace do

@@ -383,11 +383,11 @@ function SpaceHammer:new(options)
     for i, v in pairs(winMSpaces) do
       print(i .. ": " .. "mspace " .. tostring(winMSpaces[i].mspace))
       print("id: " .. winMSpaces[i].win:application():name())
-      spaces = ""
+      local ms = ""
       for j = 1, #mspaces do
-        spaces = spaces .. tostring(winMSpaces[i].mspace[j]) .. ", "
+        ms = ms .. tostring(winMSpaces[i].mspace[j]) .. ", "
       end
-      print("space: " .. spaces)
+      print("mSpaces: " .. ms)
 
       for j = 1, #mspaces do -- frame
         print(tostring(winMSpaces[i].frame[j]))

@@ -409,14 +409,10 @@ function SpaceHammer:new(options)
       winMSpacesSerialized[i].frame = {}
       for k = 1, #mspaces do
         winMSpacesSerialized[i].mspace[k] = winMSpaces[i].mspace[k]
-        --if winMSpaces[i].mspace[k] then
-          winMSpacesSerialized[i].frame[k] = winMSpaces[i].frame[k]
-        --else
-          --winMSpacesSerialized[i].frame[k] = hs.geometry.new(0, 0, 1, 1) --{0,0,0,0} --hs.geometry.new(0, 0, 1, 1) -- 
-        --end
+        winMSpacesSerialized[i].frame[k] = winMSpaces[i].frame[k]
       end
     end
-    hs.timer.doAfter(0.3, function()
+    hs.timer.doAfter(0.5, function()
       hs.settings.set("mSpaces", winMSpacesSerialized)
     end)
   end)
@@ -1313,7 +1309,7 @@ function refreshWinMSpaces(w)
         winMSpacesSerialized[i].frame[k] = winMSpaces[i].frame[k]
       end
     end
-    hs.timer.doAfter(0.3, function()
+    hs.timer.doAfter(0.5, function()
       hs.settings.set("mSpaces", winMSpacesSerialized)
     end)  
   end

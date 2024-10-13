@@ -1,6 +1,6 @@
 # SpaceHammer
 
-SpaceHammer has been inspired by a variety of tools, among them Aerospace, Moom and BetterTouchTool. SpaceHammer has simplified my life with my Mac; may it do the same for you.
+SpaceHammer has been inspired by a variety of tools, among them Aerospace, Moom and BetterTouchTool. SpaceHammer has simplified my life with my Mac; maybe it can do the same for you.
 
 To simplify one's life is not too bad, but what does this tool actually do to justify my spending time with it, you might ask. 
 

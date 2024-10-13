@@ -975,7 +975,7 @@ function SpaceHammer:handleClick()
 
       win = getWindowUnderMouse():focus() --todo (?done? ->experimental): error if clicked on screen (and not window)
       local frame = win:frame()
-      -- max = win:screen():frame() 
+      max = win:screen():frame() 
       maxWithMB = win:screen():fullFrame()
       heightMB = maxWithMB.h - max.h   -- height menu bar
       local xNew = frame.x
@@ -1156,7 +1156,7 @@ winOnlyMoved = false -- prevent watchdog from giving focus to window if it has b
 function goToSpace(target)
   winOnlyMoved = false
   local win = winAll[1]
-  --local max = win:screen():frame()
+  local max = win:screen():frame()
 
   for i,v in pairs(winMSpaces) do
     if winMSpaces[i].mspace[target] == true then
@@ -1334,7 +1334,7 @@ end
 function correctXY(w)
   -- subscribed filter for some reason takes a couple of seconds to trigger method
   --print("___correctXY_______")
-  --local max = w:screen():frame() 
+  local max = w:screen():frame() 
   -- todo: find better way of detecting whether window has been moved manually or 'hidden' rather than 'fwin:topLeft().x < max.w - 100'
   if w:topLeft().x < max.w - 2 then   -- prevents subscriber-method to refresh coordinates of window that has just been 'hidden'
       winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = w:frame()
@@ -1354,7 +1354,7 @@ end
 
 function refWinMSpace(target) -- add 'copy' of window on current mspace to target mspace
   local fwin = hs.window.focusedWindow()
-  --max = fwin:screen():frame()
+  local max = fwin:screen():frame()
   winMSpaces[getWinMSpacesPos(fwin)].mspace[target] = true
   -- copy frame from original mSpace
   winMSpaces[getWinMSpacesPos(fwin)].frame[target] = winMSpaces[getWinMSpacesPos(fwin)].frame[currentMSpace]
@@ -1363,7 +1363,7 @@ end
 
 function derefWinMSpace()
   local fwin = hs.window.focusedWindow()
-  --max = fwin:screen():frame()
+  local max = fwin:screen():frame()
   winMSpaces[getWinMSpacesPos(fwin)].mspace[currentMSpace] = false
   -- in case all 'mspace' are 'false', close window
   local all_false = true
@@ -1387,7 +1387,7 @@ hNew = 0
 function snap(scenario)
   local fwin = hs.window.focusedWindow()
   local maxWithMB = fwin:screen():fullFrame()
-  --local max = fwin:screen():frame()
+  local max = fwin:screen():frame()
   local heightMB = maxWithMB.h - max.h   -- height menu bar
   if scenario == 'a1' then -- left half of screen
     xNew = 0 + pM

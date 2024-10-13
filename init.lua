@@ -1273,7 +1273,7 @@ function refreshWinMSpaces(w)
       winMSpaces[#winMSpaces].win = winAll[i]
 
       winMSpaces[#winMSpaces].mspace = {}
-      winMSpaces[#winMSpaces].frame = {}
+      winMSpaces[#winMSpaces].frame = {} 
 
       for k = 1, #mspaces do
         if k == currentMSpace then
@@ -1314,8 +1314,6 @@ end
 
 -- when 'normal' window switchers such as altTab or macOS' cmd-tab are used, cmdTabFocus() switches to correct mSpace
 function cmdTabFocus(w)
-  -- [error 1]: 
-  ---[[
   -- when choosing to switch to window by cycling through all apps, go to mSpace of chosen window
   if w ~= nil then
     if not winMSpaces[getWinMSpacesPos(w)].mspace[currentMSpace] then -- in case focused window is not on current mSpace, switch to the one containing it
@@ -1327,7 +1325,6 @@ function cmdTabFocus(w)
       end
     end
   end
-  --]]
 end
 
 
@@ -1335,7 +1332,7 @@ function correctXY(w)
   -- subscribed filter for some reason takes a couple of seconds to trigger method
   --print("___correctXY_______")
   local max = w:screen():frame() 
-  -- todo: find better way of detecting whether window has been moved manually or 'hidden' rather than 'fwin:topLeft().x < max.w - 100'
+  -- todo: find better way of detecting whether window has been moved manually or 'hidden' rather than 'fwin:topLeft().x < max.w - 2'
   if w:topLeft().x < max.w - 2 then   -- prevents subscriber-method to refresh coordinates of window that has just been 'hidden'
       winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = w:frame()
   end

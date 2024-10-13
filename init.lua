@@ -145,6 +145,7 @@ function SpaceHammer:new(options)
   refreshWinMSpaces()
 
   -- deserialize
+  ---[[
   if backup and hs.settings.get("mSpaces") then
     winMSpacesSerialized = hs.settings.get("mSpaces")
     -- get index of last mSpace with window(s) on it
@@ -159,31 +160,33 @@ function SpaceHammer:new(options)
     if lW <= #mspaces then -- only if amount of mSpaces has stayed the same or increased
       for i = 1, #winAll do
         for j = 1, #winMSpacesSerialized do
+          -- ?todo: reason unclear, but if more windows with same title are open, 'winMSpaces[getWinMSpacesPos(winAll[i])].win:application():name() == winMSpacesSerialized[j].name' seems to be necessary to avoid those windows end up in the same place -> however, this seems to break de-serealizing
+          --if winMSpacesSerialized[j] ~= nil and winMSpaces[getWinMSpacesPos(winAll[i])].win:title() == winMSpacesSerialized[j].title and winMSpaces[getWinMSpacesPos(winAll[i])].win:application():name() == winMSpacesSerialized[j].name then
           if winMSpacesSerialized[j] ~= nil and winMSpaces[getWinMSpacesPos(winAll[i])].win:title() == winMSpacesSerialized[j].title then
             winMSpaces[getWinMSpacesPos(winAll[i])].mspace = copyTable(winMSpacesSerialized[j].mspace)
             for k = 1, #mspaces do   -- create new hs.geometry object for each window and mspace
               --fb
               --if winMSpacesSerialized[j].mspace[k] then
-                winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(winMSpacesSerialized[j].frame[k]._x,
-                winMSpacesSerialized[j].frame[k]._y, winMSpacesSerialized[j].frame[k]._w,
-                winMSpacesSerialized[j].frame[k]._h)
+                winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(winMSpacesSerialized[j].frame[k]._x, winMSpacesSerialized[j].frame[k]._y, winMSpacesSerialized[j].frame[k]._w, winMSpacesSerialized[j].frame[k]._h)
               --else
                 --winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(0, 0, 1, 1)
               --end
+              --hs.alert("de-serializing")
+    
             end
+            winMSpacesSerialized[j].title = "winMSpacesSerialized - already used"
+          else
+            for i = 1, #winAll do
+              if winAll[i]:topLeft().x >= max.w - 1 then -- window in 'hiding spot'
+                -- move window to the middle of the current mSpace
+                winMSpaces[getWinMSpacesPos(winAll[i])].frame[currentMSpace] = hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2, winAll[i]:frame().w, winAll[i]:frame().h) -- put window in middle of screen
+              end
+            end
+            hs.settings.clear("mSpaces") -- delete settings
           end
         end
       end
-    else
-      -- recover stranded windows; only sensible when serialization is not enabled
-      for i = 1, #winAll do
-        if winAll[i]:topLeft().x >= max.w - 1 then -- window in 'hiding spot'
-          -- move window to the middle of the current mSpace
-          winMSpaces[getWinMSpacesPos(winAll[i])].frame[currentMSpace] = hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2, winAll[i]:frame().w, winAll[i]:frame().h) -- put window in middle of screen
-        end
-      end
-      hs.settings.clear("mSpaces") -- delete settings
-      end
+    end
   else
     -- recover stranded windows; only sensible when serialization is not enabled
     for i = 1, #winAll do
@@ -415,20 +418,56 @@ function SpaceHammer:new(options)
       winMSpacesSerialized[i].frame = {}
       for k = 1, #mspaces do
         winMSpacesSerialized[i].mspace[k] = winMSpaces[i].mspace[k]
-        --fb
-        --if winMSpaces[i].mspace[k] then
+        --if winMSpaces[i].mspace[k] then --fb
           winMSpacesSerialized[i].frame[k] = winMSpaces[i].frame[k]
         --else
           --winMSpacesSerialized[i].frame[k] = hs.geometry.new(0, 0, 1, 1) --{0,0,0,0} --hs.geometry.new(0, 0, 1, 1) -- 
         --end
       end
     end
-    hs.settings.set("mSpaces", winMSpacesSerialized)
+    hs.timer.doAfter(0.3, function()
+      hs.settings.set("mSpaces", winMSpacesSerialized)
+    end)
   end)
 
   -- deserialize (restore settings)
-
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "l", function()
+    if backup and hs.settings.get("mSpaces") then
+      winMSpacesSerialized = hs.settings.get("mSpaces")
+      -- get index of last mSpace with window(s) on it
+      local lW = 1 
+      for i = 1, #winMSpacesSerialized do
+        for j = 1, #winMSpacesSerialized[i].mspace do
+          if winMSpacesSerialized[i].mspace[j] then
+            if j > lW then lW = j end
+          end
+        end
+      end
+      if lW <= #mspaces then -- only if amount of mSpaces has stayed the same or increased
+        for i = 1, #winAll do
+          for j = 1, #winMSpacesSerialized do
+            -- ?todo: reason unclear, but if more windows with same title are open, 'winMSpaces[getWinMSpacesPos(winAll[i])].win:application():name() == winMSpacesSerialized[j].name' seems to be necessary to avoid those windows end up in the same place -> however, this seems to break de-serealizing
+            --if winMSpacesSerialized[j] ~= nil and winMSpaces[getWinMSpacesPos(winAll[i])].win:title() == winMSpacesSerialized[j].title and winMSpaces[getWinMSpacesPos(winAll[i])].win:application():name() == winMSpacesSerialized[j].name then
+            if winMSpacesSerialized[j] ~= nil and winMSpaces[getWinMSpacesPos(winAll[i])].win:title() == winMSpacesSerialized[j].title then
+              winMSpaces[getWinMSpacesPos(winAll[i])].mspace = copyTable(winMSpacesSerialized[j].mspace)
+              for k = 1, #mspaces do   -- create new hs.geometry object for each window and mspace
+                --fb
+                --if winMSpacesSerialized[j].mspace[k] then
+                  winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(winMSpacesSerialized[j].frame[k]._x, winMSpacesSerialized[j].frame[k]._y, winMSpacesSerialized[j].frame[k]._w, winMSpacesSerialized[j].frame[k]._h)
+                --else
+                  --winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(0, 0, 1, 1)
+                --end
+                --hs.alert("de-serializing")
+      
+              end
+              winMSpacesSerialized[j].title = "winMSpacesSerialized - already used"
+            end
+          end
+        end
+      end
+    end
+
+    --[[
     winMSpacesSerialized = hs.settings.get("mSpaces")
     for i = 1, #winAll do
       for j = 1, #winMSpacesSerialized do
@@ -447,7 +486,11 @@ function SpaceHammer:new(options)
       end
     end
     goToSpace(currentMSpace) -- refresh
+    --]]
+
   end)
+
+
 
   -- test
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "i", function()
@@ -1321,6 +1364,7 @@ function refreshWinMSpaces(w)
   end
 
   -- serialize (backup)
+  --[[
   if backup then
     winMSpacesSerialized = {}
     for i = 1, #winMSpaces do
@@ -1340,10 +1384,12 @@ function refreshWinMSpaces(w)
     end
     hs.timer.doAfter(0.3, function()
       hs.settings.set("mSpaces", winMSpacesSerialized)
-    end)
+    end)  
   end
+  --]]
   winOnlyMoved = false
 end
+
 
 
 function correctXY(w)
@@ -1406,104 +1452,105 @@ function snap(origin)
   local ySnap
   local wSnap
   local hSnap
-  if origin == 'a1' then
+  if origin == 'a1' then -- left half of screen
     xSnap = 0 + pM
     ySnap = heightMB + pM
     wSnap = max.w / 2 - pM - pI
     hSnap = max.h - 2 * pM 
-  elseif origin == 'a2' then
+  elseif origin == 'a2' then -- right half of screen
     xSnap = max.w / 2 + pI
     ySnap = heightMB + pM
     wSnap = max.w / 2 - pM - pI
     hSnap = max.h - 2 * pM
-  elseif origin == 'a3' then
+  elseif origin == 'a3' then -- top left quarter of screen 
     xSnap = 0 + pM
     ySnap = heightMB + pM
     wSnap = max.w / 2 - pM  - pI
     hSnap = max.h / 2 - pM - pI
-  elseif origin == 'a4' then
+  elseif origin == 'a4' then -- bottom left quarter of screen
     xSnap = 0 + pM
     ySnap = heightMB + max.h / 2 + pI
     wSnap = max.w / 2 - pM  - pI
     hSnap = max.h / 2 - pM - pI
-  elseif origin == 'a5' then
+  elseif origin == 'a5' then -- top right quarter of screen
     xSnap = max.w / 2 + pI
     ySnap = heightMB + pM
     wSnap = max.w / 2 - pM  - pI
     hSnap = max.h / 2 - pM - pI
-  elseif origin == 'a6' then
+  elseif origin == 'a6' then -- bottom right quarter of screen
     xSnap = max.w / 2 + pI
     ySnap = heightMB + max.h / 2 + pI
     wSnap = max.w / 2 - pM  - pI
     hSnap = max.h / 2 - pM - pI
-  elseif origin == 'a7' then
+  elseif origin == 'a7' then -- whole screen
     xSnap = 0 + pM
     ySnap = heightMB + pM
     wSnap = max.w - 2 * pM
     hSnap = max.h - 2 * pM
 
-  elseif origin == 'b1' then
+  
+  elseif origin == 'b1' then -- left third of screen
     xSnap = 0 + pM
     ySnap = heightMB + pM
     wSnap = (max.w - 2 * pM - 4 * pI) / 3
     hSnap = max.h - 2 * pM
-  elseif origin == 'b2' then
+  elseif origin == 'b2' then -- middle third of screen
     xSnap = pM + 1 * ((max.w - 2 * pM - 4 * pI) / 3) + 2 * pI
     ySnap = heightMB + pM
     wSnap = (max.w - 2 * pM - 4 * pI) / 3
     hSnap = max.h - 2 * pM 
-  elseif origin == 'b3' then
+  elseif origin == 'b3' then -- right third of screen
     xSnap = pM + 2 * ((max.w - 2 * pM - 4 * pI) / 3) + 4 * pI
     ySnap = heightMB + pM
     wSnap = (max.w - 2 * pM - 4 * pI) / 3
     hSnap = max.h - 2 * pM 
 
 
-  elseif origin == 'b4' then
+  elseif origin == 'b4' then -- left top ninth of screen
     xSnap = 0 + pM
     ySnap = heightMB + pM
     wSnap = (max.w - 2 * pM - 4 * pI) / 3
     hSnap = (max.h - 2 * pM - 4 * pI) / 3
-  elseif origin == 'b5' then
+  elseif origin == 'b5' then -- left middle ninth of screen
     xSnap = 0 + pM
     ySnap = heightMB + pM + 1 * ((max.h - 2 * pM - 4 * pI) / 3) + 2 * pI
     wSnap = (max.w - 2 * pM - 4 * pI) / 3
     hSnap = (max.h - 2 * pM - 4 * pI) / 3
-  elseif origin == 'b6' then
+  elseif origin == 'b6' then -- left bottom ninth of screen
     xSnap = 0 + pM
     ySnap = heightMB + pM + 2 * ((max.h - 2 * pM - 4 * pI) / 3) + 4 * pI
     wSnap = (max.w - 2 * pM - 4 * pI) / 3
     hSnap = (max.h - 2 * pM - 4 * pI) / 3
 
 
-  elseif origin == 'b7'then
+  elseif origin == 'b7'then -- middle top ninth of screen
     xSnap = pM + 1 * ((max.w - 2 * pM - 4 * pI) / 3) + 2 * pI
     ySnap = heightMB + pM
     wSnap = (max.w - 2 * pM - 4 * pI) / 3
     hSnap = (max.h - 2 * pM - 4 * pI) / 3
-  elseif origin == 'b8' then
+  elseif origin == 'b8' then -- middle middle ninth of screen
     xSnap = pM + 1 * ((max.w - 2 * pM - 4 * pI) / 3) + 2 * pI
     ySnap = heightMB + pM + 1 * ((max.h - 2 * pM - 4 * pI) / 3) + 2 * pI
     wSnap = (max.w - 2 * pM - 4 * pI) / 3
     hSnap = (max.h - 2 * pM - 4 * pI) / 3
-  elseif origin == 'b9' then
+  elseif origin == 'b9' then -- middle bottom ninth of screen
     xSnap = pM + 1 * ((max.w - 2 * pM - 4 * pI) / 3) + 2 * pI
     ySnap = heightMB + pM + 2 * ((max.h - 2 * pM - 4 * pI) / 3) + 4 * pI
     wSnap = (max.w - 2 * pM - 4 * pI) / 3
     hSnap = (max.h - 2 * pM - 4 * pI) / 3
 
 
-  elseif origin == 'b10' then
+  elseif origin == 'b10' then -- right top ninth of screen
     xSnap = pM + 2 * ((max.w - 2 * pM - 4 * pI) / 3) + 4 * pI
     ySnap = heightMB + pM
     wSnap = (max.w - 2 * pM - 4 * pI) / 3
     hSnap = (max.h - 2 * pM - 4 * pI) / 3
-  elseif origin == 'b11' then
+  elseif origin == 'b11' then -- right middle ninth of screen
     xSnap = pM + 2 * ((max.w - 2 * pM - 4 * pI) / 3) + 4 * pI
     ySnap = heightMB + pM + 1 * ((max.h - 2 * pM - 4 * pI) / 3) + 2 * pI
     wSnap = (max.w - 2 * pM - 4 * pI) / 3
     hSnap = (max.h - 2 * pM - 4 * pI) / 3
-  elseif origin == 'b12' then
+  elseif origin == 'b12' then -- right bottom ninth of screen
     xSnap = pM + 2 * ((max.w - 2 * pM - 4 * pI) / 3) + 4 * pI
     ySnap = heightMB + pM + 2 * ((max.h - 2 * pM - 4 * pI) / 3) + 4 * pI
     wSnap = (max.w - 2 * pM - 4 * pI) / 3
@@ -1545,7 +1592,6 @@ function snap(origin)
     wSnap = (max.w - 2 * pM - 4 * pI) / 3
     hSnap = (max.h - 2 * pM - pI) / 3 * 2
 
-
   elseif origin == 'c7' then -- right third, upper two cells
     xSnap = pM + 2 * ((max.w - 2 * pM - 4 * pI) / 3) + 4 * pI
     ySnap = heightMB + pM
@@ -1556,7 +1602,6 @@ function snap(origin)
     ySnap = heightMB + pM + 1 * ((max.h - 2 * pM - 4 * pI) / 3) + 2 * pI
     wSnap = (max.w - 2 * pM - 4 * pI) / 3
     hSnap = (max.h - 2 * pM - pI) / 3 * 2
-
 
   elseif origin == 'c9' then -- top left and middle thirds': 4 cells
     xSnap = 0 + pM
@@ -1582,6 +1627,7 @@ function snap(origin)
   end
   fwin:move(hs.geometry.new(xSnap, ySnap, wSnap, hSnap), nil, false, 0)
 end
+
 
 
 return SpaceHammer

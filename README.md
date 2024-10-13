@@ -304,7 +304,7 @@ As an optional experimental feature, SpaceHammer can automatically backup and re
 
 ### Backup and Restore of mSpaces
 
-mSpaces with their windows can be automatically backed up and restored. Only the windows open at the time SpaceHammer starts will be restored. This feature had worked flawlessly so far, but needs to be tested more thoroughly. Any feedback is welcome.
+mSpaces with their windows can be automatically backed up and restored. Only the windows open at the time SpaceHammer starts will be restored. This feature needs thorough testing. 
 
 ```lua
   ...

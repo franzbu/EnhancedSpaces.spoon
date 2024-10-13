@@ -446,7 +446,7 @@ function SpaceHammer:new(options)
       if lW <= #mspaces then -- only if amount of mSpaces has stayed the same or increased
         for i = 1, #winAll do
           for j = 1, #winMSpacesSerialized do
-            -- ?todo: reason unclear, but if more windows with same title are open, 'winMSpaces[getWinMSpacesPos(winAll[i])].win:application():name() == winMSpacesSerialized[j].name' seems to be necessary to avoid those windows end up in the same place -> however, this seems to break de-serealizing
+            -- [issue 1]?todo: reason unclear, but if more windows with same title are open, 'winMSpaces[getWinMSpacesPos(winAll[i])].win:application():name() == winMSpacesSerialized[j].name' seems to be necessary to avoid those windows end up in the same place -> however, this seems to break de-serealizing
             --if winMSpacesSerialized[j] ~= nil and winMSpaces[getWinMSpacesPos(winAll[i])].win:title() == winMSpacesSerialized[j].title and winMSpaces[getWinMSpacesPos(winAll[i])].win:application():name() == winMSpacesSerialized[j].name then
             if winMSpacesSerialized[j] ~= nil and winMSpaces[getWinMSpacesPos(winAll[i])].win:title() == winMSpacesSerialized[j].title then
               winMSpaces[getWinMSpacesPos(winAll[i])].mspace = copyTable(winMSpacesSerialized[j].mspace)
@@ -1363,8 +1363,8 @@ function refreshWinMSpaces(w)
     end
   end
 
-  -- serialize (backup)
-  --[[
+  -- serialize
+  ---[[
   if backup then
     winMSpacesSerialized = {}
     for i = 1, #winMSpaces do
@@ -1384,6 +1384,7 @@ function refreshWinMSpaces(w)
     end
     hs.timer.doAfter(0.3, function()
       hs.settings.set("mSpaces", winMSpacesSerialized)
+      --hs.alert.show("serialized...")
     end)  
   end
   --]]

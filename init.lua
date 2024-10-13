@@ -171,7 +171,6 @@ function SpaceHammer:new(options)
               --else
                 --winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(0, 0, 1, 1)
               --end
-              --hs.alert("de-serializing")
     
             end
             winMSpacesSerialized[j].title = "winMSpacesSerialized - already used"
@@ -457,8 +456,6 @@ function SpaceHammer:new(options)
                 --else
                   --winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(0, 0, 1, 1)
                 --end
-                --hs.alert("de-serializing")
-      
               end
               winMSpacesSerialized[j].title = "winMSpacesSerialized - already used"
             end
@@ -906,7 +903,6 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
               end
             -- first (left) double width -> c1
             elseif (hs.mouse.getRelativePosition().x + sumdx > max.w / 5) and (hs.mouse.getRelativePosition().x + sumdx <= max.w / 5 * 2) then
-              hs.alert.show("franz")
               xNew = 0 + pM
               yNew = heightMB + pM
               wNew = (max.w - 2 * pM - pI) / 3 * 2
@@ -1384,7 +1380,6 @@ function refreshWinMSpaces(w)
     end
     hs.timer.doAfter(0.3, function()
       hs.settings.set("mSpaces", winMSpacesSerialized)
-      --hs.alert.show("serialized...")
     end)  
   end
   --]]

@@ -313,7 +313,7 @@ mSpaces with their windows can be automatically backed up and restored. Only the
   ...
 ```
 
-Note: you can always restore mSpaces and their windows after increasing the amount of mSpaces in settings, i.e., 'mSpaces = ' in 'init.lua'. However, restoring after decreasing the amount of mSpaces is only possible if there are at least as many mSpaces left as the index of the mSpace with the last window on it before the decrease of mSpaces.
+You can restore mSpaces and their windows after increasing the amount of mSpaces in settings, i.e., 'mSpaces = ' in 'init.lua'. However, restoring after decreasing the amount of mSpaces is only possible if there are at least as many mSpaces left as the index of the last mSpace with one or more windows on it before the amount of mSpaces was recuced.
 
 
 ### Manual Resizing

@@ -366,4 +366,8 @@ In case you at some point had the automatic backup and restore function activate
 
 Other than that you only have to delete the folder 'SpaceHammer.spoon' in the folder '~/.hammerspoon/Spoons/' and delete the corresponding section in your 'init.lua'.
 
+## Note
+
+SpaceHammer has only been tested on a single display, so if you use more than one physical monitor, unexpected behavior is possible.
+
 

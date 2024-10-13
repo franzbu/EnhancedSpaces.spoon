@@ -354,7 +354,7 @@ You can change the size of the area of the window where the vertical-only and ho
 
 ## Uninstall SpaceHammer
 
-In case you at some point had the automatic backup and restore function activated, start SpaceHammer once with it deactivated; to do so, delete the following line in your 'init.lua' (or set it to false).
+In case you at some point had the automatic backup and restore function activated, start SpaceHammer once with it deactivated; to do so, delete the following line in your 'init.lua' (or set 'backup' to false).
 
 ```lua
   ...

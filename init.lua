@@ -698,7 +698,6 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
                   yNew = heightMB + pM + (i - 1) * ((max.h - 2 * pM - 4 * pI) / 3) + (i - 1) * 2 * pI
                   wNew = (max.w - 2 * pM - 4 * pI) / 3
                   hNew = (max.h - 2 * pM - 4 * pI) / 3
-                  hs.alert.show("sadfasdf")
                   --]]
                   break
                 end

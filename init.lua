@@ -608,7 +608,7 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
         gridY = 3
       end
 
-      if modifiersEqual(flags, modifier1) then
+      if modifiersEqual(flags, modifier1) and modifiersEqual(flags, modifierDM) then
         if frame.x < 0 and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- left and not bottom
           if math.abs(frame.x) < wNew / 10 then -- moved past border by 10 or less percent: move window as is back within boundaries of screen
             xNew = 0
@@ -661,6 +661,12 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
             end
           end
         end
+      elseif modifiersEqual(flags, modifier1) and #modifierDM == 0 then -- modifier key released before left mouse button
+        if frame.y + hNew > maxWithMB.h and hs.mouse.getRelativePosition().x + sumdx < max.w and hs.mouse.getRelativePosition().x + sumdx > 0 then -- bottom border
+          hs.window.focusedWindow():minimize()
+                  
+        end
+      -- 3x3
       elseif modifiersEqual(flags, modifier2) and modifiersEqual(flags, modifierDM) then --todo: ?not necessary? -> and eventType == self.moveStartMouseEvent
         if frame.x < 0 and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- left and not bottom
           if math.abs(frame.x) < wNew / 10 then -- moved past border by 10 or less percent: move window as is back within boundaries of screen
@@ -840,21 +846,26 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
               -- realeasing modifier before mouse button; 3 standard areas
               for i = 1, gridX, 1 do
                 if hs.mouse.getRelativePosition().x + sumdx < max.w - (gridX - i) * max.w / gridX then 
+                  hs.window.focusedWindow():minimize()
+                  --[[
                   if i == 1 then
                     snap('c9')
                   elseif i == 2 then
-                    snap('c11')
+                    snap('c10')
                   elseif i == 3 then
                     snap('c11')
                   end
+                  --]]
                   break
                 end
               end
             -- first (left) double width -> c1
             elseif (hs.mouse.getRelativePosition().x + sumdx > max.w / 5) and (hs.mouse.getRelativePosition().x + sumdx <= max.w / 5 * 2) then
-              snap('c1')
+              hs.window.focusedWindow():minimize()
+              --snap('c1')
             else -- second (right) double width -> c2
-              snap('c2')
+              hs.window.focusedWindow():minimize()
+              --snap('c2')
             end
           end
         end

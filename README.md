@@ -170,7 +170,9 @@ As long as windows are resized - or moved within the borders of the screen -, it
  
 * The moment dragging of a window starts, indicators will guide you. For changing their appearance see below.
 
-All this is been implemented with the goal of being as intuitive as possible; therefore, you will be able to train your muscle memory in no time. Promise.
+- Additional feature: if you drag a window beyond the bottom border of the screen and 'modifier1' or 'modifier2' is released before the left mouse button, the window will be minimized.
+
+All this is been implemented with the goal of being as intuitive as possible; therefore, you will be able to train your muscle memory in no time.
 
 
 ### Automatic Resizing and Positioning - Keyboard

@@ -17,7 +17,7 @@ One last thing before we dive in: windows and mSpaces can be handled using your 
 
 ## Installation
 
-SpaceHammer requires [Hammerspoon](https://www.hammerspoon.org/), so just go ahead with its installation.
+SpaceHammer requires [Hammerspoon](https://www.hammerspoon.org/), so if you have not installed it yet, just go ahead with its installation. Besides needing Hammerspoon for SpaceHammer, you might be further interested in Hammerspoon's virtually endless potential for adding taylor-made customizations to your macOS. 
 
 To install SpaceHammer, after downloading and unzipping, move the folder to ~/.hammerspoon/Spoons and make sure the name of the folder is 'SpaceHammer.spoon'. 
 

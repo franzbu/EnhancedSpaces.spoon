@@ -372,7 +372,7 @@ function SpaceHammer:new(options)
   end
 
   -- debug
-  --[[
+  ---[[
   -- list all windows
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "m", function()
     print("_______winAll_________")
@@ -1379,6 +1379,7 @@ function derefWinMSpace()
   if all_false then
     fwin:minimize()
   end
+  menubar:setTitle(tostring(currentMSpace))
   goToSpace(currentMSpace) -- refresh
 end
 

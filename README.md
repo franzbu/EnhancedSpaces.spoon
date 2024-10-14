@@ -193,8 +193,7 @@ To resize and move the active window into a 3x3 grid position, use 'modifierSnap
 
 'modifierSnap3' also uses a 3x3 grid and is combined with the same keys as 'modifierSnap2'; however, the windows snap into different sizes, see '3x3 Grid - Double (and Quadruple) Sizes' below.
 
-Below you find the pre-assigned keyboard shortcuts. As has been mentioned, you can change and freely combine them; more about that below.
-
+Below you find the pre-assigned keyboard shortcuts.
 
 #### 2x2 Grid
 - 'modifierSnap1' and '1': left half of screen -> 'a1'

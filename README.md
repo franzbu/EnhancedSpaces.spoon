@@ -184,15 +184,6 @@ The automatic resizing and positioning using keyboard shortcuts is not enabled b
   modifierSnap1 = { 'cmd', 'alt' }, -- default: nil
   modifierSnap2 = { 'cmd', 'ctrl' }, -- default: nil
   modifierSnap3 = { 'cmd', 'alt', 'ctrl' }, -- default: nil
-
-  modifierSnapKeys = {
-    -- modifierSnapKey1
-    {{'a1','1'},{'a2','2'},{'a3','3'},{'a4','4'},{'a5','5'},{'a6','6'},{'a7','7'}},
-    -- modifierSnapKey2
-    {{'b1','1'},{'b2','2'},{'b3','3'},{'b4','4'},{'b5','5'},{'b6','6'},{'b7','7'},{'b8','8'},{'b9','9'},{'b10','0'},{'b11','o'},{'b12','p'}},
-    -- modifierSnapKey3
-    {{'c1','1'},{'c2','2'},{'c3','3'},{'c4','4'},{'c5','5'},{'c6','6'},{'c7','7'},{'c8','8'},{'c9','9'},{'c10','0'},{'c11','o'},{'c12','p'}},
-  },
   ...
 ```
 
@@ -204,6 +195,7 @@ To resize and move the active window into a 3x3 grid position, use 'modifierSnap
 
 Below you find the pre-assigned keyboard shortcuts. As has been mentioned, you can change and freely combine them; more about that below.
 
+
 #### 2x2 Grid
 - 'modifierSnap1' and '1': left half of screen -> 'a1'
 - 'modifierSnap1' and '2': right half of screen -> 'a2'
@@ -212,6 +204,7 @@ Below you find the pre-assigned keyboard shortcuts. As has been mentioned, you c
 - 'modifierSnap1' and '5': top right quarter of screen -> 'a5'
 - 'modifierSnap1' and '6': bottom right quarter of screen -> 'a6'
 - 'modifierSnap1' and '7': whole screen -> 'a7'
+
 
 #### 3x3 Grid
 Windows are positioned as follows:
@@ -227,7 +220,6 @@ Windows are positioned as follows:
 - 'modifierSnap2' and '0': right top ninth of screen -> 'b10'
 - 'modifierSnap2' and 'o': right middle ninth of screen -> 'b11'
 - 'modifierSnap2' and 'p': right bottom ninth of screen -> 'b12'
-
 
 
 #### 3x3 Grid - Double (and Quadruple) Sizes
@@ -246,7 +238,27 @@ You can have windows take up more cells on the 3x3 grid (the 3x3 grid consists o
 - 'modifierSnap3' and 'o': top middle and right thirds': 4 cells -> 'c11'
 - 'modifierSnap3' and 'p': bottom middle and right thirds': 4 cells -> 'c12'
 
-As has been mentioned, these keyboard shortcuts are fully customizable, which is best shown with an example: let us assume for a moment that you just need windows to snap into three different grid positions, (1) right half of screen -> 'a2', (2) right middle ninth of screen -> 'b11', and (3) middle third, upper two cells -> 'c5', and you would like to use modifierSnap2 with the keys 'j', 'k', and 'l' to achieve that; then your 'init.lua' would look like this:
+As has been mentioned, these keyboard shortcuts are fully customizable. Let us first have a look at the standard setup, i.e., the way it is pre-defined if you do not change anything:
+
+
+```lua
+  ...
+  modifierSnapKeys = {
+    -- modifierSnapKey1
+    {{'a1','1'},{'a2','2'},{'a3','3'},{'a4','4'},{'a5','5'},{'a6','6'},{'a7','7'}},
+    -- modifierSnapKey2
+    {{'b1','1'},{'b2','2'},{'b3','3'},{'b4','4'},{'b5','5'},{'b6','6'},{'b7','7'},{'b8','8'},{'b9','9'},{'b10','0'},{'b11','o'},{'b12','p'}},
+    -- modifierSnapKey3
+    {{'c1','1'},{'c2','2'},{'c3','3'},{'c4','4'},{'c5','5'},{'c6','6'},{'c7','7'},{'c8','8'},{'c9','9'},{'c10','0'},{'c11','o'},{'c12','p'}},
+  },
+  ...
+```
+
+In case you would like to make changes, you are free to combine any of the three modifiers 'modifierSnap1', 'modifierSnap1', and 'modifierSnap1' with any scenarios.
+
+
+
+This is best shown by means of an example: let us assume for a moment that you just need windows to snap into three different grid positions, (1) right half of screen -> 'a2', (2) right middle ninth of screen -> 'b11', and (3) middle third, upper two cells -> 'c5', and you would like to use modifierSnap2 with the keys 'j', 'k', and 'l' to achieve that; then your 'init.lua' would look like this:
 
 ```lua
   ...
@@ -262,7 +274,7 @@ As has been mentioned, these keyboard shortcuts are fully customizable, which is
   },
   ...
 ```
-As you can see in the example above, 'modifierSnapKey1' and 'modifierSnapKey3' are not used and are therefore empty. 'modifierSnapKey2' contains the three desired shortcuts. 
+As you can see in the example above, 'modifierSnapKey1' and 'modifierSnapKey3' are not used and are therefore without any entries. 'modifierSnapKey2' then consequently contains the three desired shortcuts. 
 
 Now, by pressing 'modifierSnapKey1' and 'j', for example, scenario 'a2' is activated, which means that the active window snaps into the right half of the screen.
 

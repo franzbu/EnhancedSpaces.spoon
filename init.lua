@@ -26,7 +26,6 @@ local function tableToMap(table)
 end
 
 local function getWindowUnderMouse()
-  --local _ = hs.application
   local my_pos = hs.geometry.new(hs.mouse.absolutePosition())
   local my_screen = hs.mouse.getCurrentScreen()
   return hs.fnutils.find(hs.window.orderedWindows(), function(w)
@@ -370,90 +369,6 @@ function SpaceHammer:new(options)
       end)
     end
   end
-
-  -- debug
-  ---[[
-  -- list all windows
-  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "m", function()
-    print("_______winAll_________")
-    for i, v in pairs(winAll) do
-      print(i, v)
-    end
-    print("_______winMSpaces_________")
-    for i, v in pairs(winMSpaces) do
-      print(i .. ": " .. "mspace " .. tostring(winMSpaces[i].mspace))
-      print("id: " .. winMSpaces[i].win:application():name())
-      local ms = ""
-      for j = 1, #mspaces do
-        ms = ms .. tostring(winMSpaces[i].mspace[j]) .. ", "
-      end
-      print("mSpaces: " .. ms)
-
-      for j = 1, #mspaces do -- frame
-        print(tostring(winMSpaces[i].frame[j]))
-      end
-
-    end
-    --print("=====")
-    --print(hs.application.find("WhatsApp"))
-  end)
-
-  -- serialize
-  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "k", function()
-    winMSpacesSerialized = {}
-    for i = 1, #winMSpaces do
-      winMSpacesSerialized[i] = {}
-      winMSpacesSerialized[i].appName = winMSpaces[i].win:application():name()
-      winMSpacesSerialized[i].title = winMSpaces[i].win:title()
-      winMSpacesSerialized[i].mspace = {}
-      winMSpacesSerialized[i].frame = {}
-      for k = 1, #mspaces do
-        winMSpacesSerialized[i].mspace[k] = winMSpaces[i].mspace[k]
-        winMSpacesSerialized[i].frame[k] = winMSpaces[i].frame[k]
-      end
-    end
-    hs.timer.doAfter(0.5, function()
-      hs.settings.set("mSpaces", winMSpacesSerialized)
-    end)
-  end)
-
-  -- deserialize (restore settings)
-  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "l", function()
-    if backup and hs.settings.get("mSpaces") then
-      winMSpacesSerialized = hs.settings.get("mSpaces")
-      -- get index of last mSpace with window(s) on it
-      local lW = 1 
-      for i = 1, #winMSpacesSerialized do
-        for j = 1, #winMSpacesSerialized[i].mspace do
-          if winMSpacesSerialized[i].mspace[j] then
-            if j > lW then lW = j end
-          end
-        end
-      end
-      if lW <= #mspaces then -- only if amount of mSpaces has stayed the same or increased
-        for i = 1, #winAll do
-          for j = 1, #winMSpacesSerialized do
-            if winMSpacesSerialized[j] ~= nil and winMSpaces[getWinMSpacesPos(winAll[i])].win:title() == winMSpacesSerialized[j].title then
-              winMSpaces[getWinMSpacesPos(winAll[i])].mspace = copyTable(winMSpacesSerialized[j].mspace)
-              for k = 1, #mspaaces do   -- create new hs.geometry object for each window and mspace
-                --if winMSpacesSerialized[j].mspace[k] then
-                  winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(winMSpacesSerialized[j].frame[k]._x, winMSpacesSerialized[j].frame[k]._y, winMSpacesSerialized[j].frame[k]._w, winMSpacesSerialized[j].frame[k]._h)
-                --else
-                  --winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(0, 0, 1, 1)
-                --end
-              end
-              winMSpacesSerialized[j].title = "winMSpacesSerialized - already used"
-            end
-          end
-        end
-      end
-    end
-  end)
-
-  -- test
-  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "i", function()
-  end)
-  --]]
 
   goToSpace(currentMSpace) -- refresh
   resizer.clickHandler:start()

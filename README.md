@@ -256,7 +256,12 @@ In case you would like to make changes, you are free to combine any of the three
 
 
 
-This is best shown by means of an example: let us assume for a moment that you just need windows to snap into three different grid positions, (1) right half of screen -> 'a2', (2) right middle ninth of screen -> 'b11', and (3) middle third, upper two cells -> 'c5', and you would like to use modifierSnap2 with the keys 'j', 'k', and 'l' to achieve that; then your 'init.lua' would look like this:
+This is best shown by means of an example: let us assume for a moment that you just need windows to snap into three different grid positions:
+- (1) right half of screen -> 'a2'
+- (2) right middle ninth of screen -> 'b11'
+- (3) middle third, upper two cells -> 'c5'
+
+Let us further assume that you would like to use modifierSnap2 with the keys 'j', 'k', and 'l' to achieve that; then your 'init.lua' would look like this:
 
 ```lua
   ...

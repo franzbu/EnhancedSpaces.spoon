@@ -238,7 +238,7 @@ You can have windows take up more cells on the 3x3 grid (the 3x3 grid consists o
 - 'modifierSnap3' and 'o': top middle and right thirds': 4 cells -> 'c11'
 - 'modifierSnap3' and 'p': bottom middle and right thirds': 4 cells -> 'c12'
 
-As has been mentioned, these keyboard shortcuts are fully customizable. Let us first have a look at the standard setup, i.e., the way it is pre-defined if you do not change anything:
+As has been mentioned, these keyboard shortcuts are fully customizable. Let us first have a look at the standard setup, i.e., the way the keyboard shortcuts are pre-defined:
 
 
 ```lua

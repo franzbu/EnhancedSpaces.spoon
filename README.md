@@ -370,6 +370,6 @@ Other than that you only have to delete the folder 'SpaceHammer.spoon' in the fo
 
 ## Note
 
-SpaceHammer has only been tested on a single display, so if you use more than one physical monitor, expect the unexpected.
+SpaceHammer has only been tested on a single display.
 
 

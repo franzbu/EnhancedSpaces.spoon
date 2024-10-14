@@ -206,7 +206,6 @@ Below you find the pre-assigned keyboard shortcuts.
 
 
 #### 3x3 Grid
-Windows are positioned as follows:
 - 'modifierSnap2' and '1': left third of screen -> 'b1'
 - 'modifierSnap2' and '2': middle third of screen -> 'b2'
 - 'modifierSnap2' and '3': right third of screen -> 'b3'

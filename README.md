@@ -314,7 +314,7 @@ In case you would like to change the size, color and/or opacity of the grid indi
 
 This also means that if at some point you want to stop using SpaceHammer, either move all windows to the current mSpace first, or simply restart SpaceHammer one more time.
 
-As an optional experimental feature, SpaceHammer can automatically backup and restore mSpaces and their windows; more in the section 'Backup and Restore of mSpaces' below.
+As an optional experimental feature, SpaceHammer can automatically backup and restore mSpaces with their windows; more in the section 'Backup and Restore of mSpaces' below.
 
 
 ## Experimental

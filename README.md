@@ -261,7 +261,7 @@ This is best shown by means of an example: let us assume for a moment that you j
 - (2) right middle ninth of screen -> 'b11'
 - (3) middle third, upper two cells -> 'c5'
 
-Let us further assume that you would like to use modifierSnap2 with the keys 'j', 'k', and 'l' to achieve that; then your 'init.lua' would look like this:
+Let us further assume that you would like to use modifierSnap2 with the keys 'j', 'k', and 'l' to achieve that; then you would add the following lines to your 'init.lua':
 
 ```lua
   ...

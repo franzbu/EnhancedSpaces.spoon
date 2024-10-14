@@ -177,7 +177,7 @@ All this is been implemented with the goal of being as intuitive as possible; th
 
 ### Automatic Resizing and Positioning - Keyboard
 
-The automatic resizing and positioning using keyboard shortcuts is not enabled by default, so if you want to use this feature, add the following lines to your 'init.lua' (they will be explained in a minute, and it will also be explained how you can adjust the keyboard shortcuts to your liking):
+The automatic resizing and positioning using keyboard shortcuts is not enabled by default, so if you want to use this feature, add the following lines to your 'init.lua' (they will be explained in a minute, and it will also be explained how to further adjust the keyboard shortcuts to your liking):
 
 ```lua
   ...

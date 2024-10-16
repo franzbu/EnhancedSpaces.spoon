@@ -26,6 +26,7 @@ local function tableToMap(table)
 end
 
 local function getWindowUnderMouse()
+  --local _ = hs.application
   local my_pos = hs.geometry.new(hs.mouse.absolutePosition())
   local my_screen = hs.mouse.getCurrentScreen()
   return hs.fnutils.find(hs.window.orderedWindows(), function(w)
@@ -369,6 +370,86 @@ function SpaceHammer:new(options)
       end)
     end
   end
+
+  -- debug
+  --[[
+  -- list all windows
+  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "m", function()
+    print("_______winAll_________")
+    for i, v in pairs(winAll) do
+      print(i, v)
+    end
+    print("_______winMSpaces_________")
+    for i, v in pairs(winMSpaces) do
+      print(i .. ": " .. "mspace " .. tostring(winMSpaces[i].mspace))
+      print("id: " .. winMSpaces[i].win:application():name())
+      local ms = ""
+      for j = 1, #mspaces do
+        ms = ms .. tostring(winMSpaces[i].mspace[j]) .. ", "
+      end
+      print("mSpaces: " .. ms)
+
+      for j = 1, #mspaces do -- frame
+        print(tostring(winMSpaces[i].frame[j]))
+      end
+
+    end
+    --print("=====")
+    --print(hs.application.find("WhatsApp"))
+  end)
+
+  -- serialize
+  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "k", function()
+    winMSpacesSerialized = {}
+    for i = 1, #winMSpaces do
+      winMSpacesSerialized[i] = {}
+      winMSpacesSerialized[i].appName = winMSpaces[i].win:application():name()
+      winMSpacesSerialized[i].title = winMSpaces[i].win:title()
+      winMSpacesSerialized[i].mspace = {}
+      winMSpacesSerialized[i].frame = {}
+      for k = 1, #mspaces do
+        winMSpacesSerialized[i].mspace[k] = winMSpaces[i].mspace[k]
+        winMSpacesSerialized[i].frame[k] = winMSpaces[i].frame[k]
+      end
+    end
+    hs.timer.doAfter(0.5, function()
+      hs.settings.set("mSpaces", winMSpacesSerialized)
+    end)
+  end)
+
+  -- deserialize (restore settings)
+  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "l", function()
+    if backup and hs.settings.get("mSpaces") then
+      winMSpacesSerialized = hs.settings.get("mSpaces")
+      -- get index of last mSpace with window(s) on it
+      local lW = 1 
+      for i = 1, #winMSpacesSerialized do
+        for j = 1, #winMSpacesSerialized[i].mspace do
+          if winMSpacesSerialized[i].mspace[j] then
+            if j > lW then lW = j end
+          end
+        end
+      end
+      if lW <= #mspaces then -- only if amount of mSpaces has stayed the same or increased
+        for i = 1, #winAll do
+          for j = 1, #winMSpacesSerialized do
+            if winMSpacesSerialized[j] ~= nil and winMSpaces[getWinMSpacesPos(winAll[i])].win:title() == winMSpacesSerialized[j].title then
+              winMSpaces[getWinMSpacesPos(winAll[i])].mspace = copyTable(winMSpacesSerialized[j].mspace)
+              for k = 1, #mspaaces do   -- create new hs.geometry object for each window and mspace
+                winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(winMSpacesSerialized[j].frame[k]._x, winMSpacesSerialized[j].frame[k]._y, winMSpacesSerialized[j].frame[k]._w, winMSpacesSerialized[j].frame[k]._h)
+              end
+              winMSpacesSerialized[j].title = "winMSpacesSerialized - already used"
+            end
+          end
+        end
+      end
+    end
+  end)
+
+  -- test
+  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "i", function()
+  end)
+  --]]
 
   goToSpace(currentMSpace) -- refresh
   resizer.clickHandler:start()
@@ -1078,7 +1159,7 @@ winOnlyMoved = false -- prevent watchdog from giving focus to window if it has b
 function goToSpace(target)
   winOnlyMoved = false
   local win = winAll[1]
-  local max = win:screen():frame()
+  max = win:screen():frame()
 
   for i,v in pairs(winMSpaces) do
     if winMSpaces[i].mspace[target] == true then
@@ -1107,7 +1188,7 @@ end
 function moveToSpace(target, origin)
   winOnlyMoved = true
   local fwin = hs.window.focusedWindow()
-  local max = fwin:screen():frame()
+  max = fwin:screen():frame()
   fwin:setTopLeft(hs.geometry.point(max.w - 1, max.h))
 
   winMSpaces[getWinMSpacesPos(fwin)].mspace[target] = true
@@ -1253,7 +1334,7 @@ end
 function correctXY(w)
   -- subscribed filter for some reason takes a couple of seconds to trigger method
   --print("___correctXY_______")
-  local max = w:screen():frame() 
+  max = w:screen():frame() 
   -- todo: find better way of detecting whether window has been moved manually or 'hidden' rather than 'fwin:topLeft().x < max.w - 2'
   if w:topLeft().x < max.w - 2 then   -- prevents subscriber-method to refresh coordinates of window that has just been 'hidden'
       winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = w:frame()
@@ -1273,7 +1354,7 @@ end
 
 function refWinMSpace(target) -- add 'copy' of window on current mspace to target mspace
   local fwin = hs.window.focusedWindow()
-  local max = fwin:screen():frame()
+  max = fwin:screen():frame()
   winMSpaces[getWinMSpacesPos(fwin)].mspace[target] = true
   -- copy frame from original mSpace
   winMSpaces[getWinMSpacesPos(fwin)].frame[target] = winMSpaces[getWinMSpacesPos(fwin)].frame[currentMSpace]
@@ -1282,7 +1363,7 @@ end
 
 function derefWinMSpace()
   local fwin = hs.window.focusedWindow()
-  local max = fwin:screen():frame()
+  max = fwin:screen():frame()
   winMSpaces[getWinMSpacesPos(fwin)].mspace[currentMSpace] = false
   -- in case all 'mspace' are 'false', close window
   local all_false = true
@@ -1306,8 +1387,8 @@ hNew = 0
 -- keyboard shortcuts - snap windows into respective grid positons
 function snap(scenario)
   local fwin = hs.window.focusedWindow()
-  local maxWithMB = fwin:screen():fullFrame()
-  local max = fwin:screen():frame()
+  maxWithMB = fwin:screen():fullFrame()
+  max = fwin:screen():frame()
   local heightMB = maxWithMB.h - max.h   -- height menu bar
   if scenario == 'a1' then -- left half of screen
     xNew = 0 + pM

@@ -335,7 +335,7 @@ You can tell SpaceHammer to open windows on specific mSpaces. To do that, add th
   ...
 ```
 
-This is self-explanatory and won't need further explanations. To get the names of the Applications, among other options, can can add the following lines to your 'init.lua' and open Hammerspoon's Console to see them; make sure to adjust the keyboard shortcuts to your liking:
+This is self-explanatory and won't need further explanations. To get the names of the Applications, among other options, can can add the following lines to your 'init.lua' and open Hammerspoon's Console to see them; make sure to adjust the keyboard shortcuts to your liking (make sure to add these lines outside the section 'SpaceHammer:new' of your 'init.lua'):
 
 ```lua
   ...

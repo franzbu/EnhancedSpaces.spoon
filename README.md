@@ -319,19 +319,50 @@ As an optional experimental feature, SpaceHammer can automatically backup and re
 
 ## Experimental
 
-### Backup and Restore of mSpaces
+### Open Windows on Pre-Arranged mSpaces
 
-mSpaces with their windows can be automatically backed up and restored. Only the windows open at the time SpaceHammer starts will be restored. This feature needs thorough testing. 
+You can tell SpaceHammer to open windows on specific mSpaces. To do that, add the following lines to your 'init.lua': 
 
 ```lua
   ...
-  -- automatic backup and restore of mSpaces:
-  backup = true, -- default: false
+  openAppMSpace = {
+    {'Google Chrome', '2'},
+    {'Code', '2'},
+    {'WhatsApp', '3'},
+    {'Microsoft To Do', '3'},
+    {'Email', '1'},
+  },
   ...
 ```
 
-You can restore mSpaces and their windows after increasing the amount of mSpaces in settings, i.e., 'mSpaces = ' in 'init.lua'. However, restoring after decreasing the amount of mSpaces is only possible if there are at least as many mSpaces left as the index of the last mSpace with one or more windows on it before the amount of mSpaces was recuced.
+This is self-explanatory and won't need further explanations. To get the names of the Applications, among other options, can can add the following lines to your 'init.lua' and open Hammerspoon's Console to see them; make sure to adjust the keyboard shortcuts to your liking:
 
+```lua
+  ...
+  -- list names of apps of (visible) windows
+  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "n", function()
+    for i = 1, #winMSpaces do -- frame
+      print(tostring(winMSpaces[i].win:application():name()))
+    end
+  end)
+  ...
+```
+
+In case you would like to also pre-define the position of the window, you can add a third option:
+
+```lua
+  ...
+  openAppMSpace = {
+    {'Google Chrome', '2', 'a1'},
+    {'Code', '2', 'a2'},
+    {'WhatsApp', '3', 'a1'},
+    {'Microsoft To Do', '3', 'a2'},
+    {'Email', '1'},
+  },
+  ...
+```
+
+'a1' represents the left half of your screen, 'a2' for the right half of your screen. To get the full list of possible positions, see section 'Automatic Resizing and Positioning - Keyboard' above.
 
 ### Manual Resizing
 

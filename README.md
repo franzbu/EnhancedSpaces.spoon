@@ -317,7 +317,7 @@ This also means that if at some point you want to stop using SpaceHammer, either
 As an optional experimental feature, SpaceHammer can automatically backup and restore mSpaces with their windows; more in the section 'Backup and Restore of mSpaces' below.
 
 
-## Experimental
+## Experimental Features
 
 ### Open Windows in Pre-Arranged mSpaces
 

@@ -9,7 +9,7 @@ SpaceHammer.author = "Franz B. <csaa6335@gmail.com>"
 SpaceHammer.homepage = "https://github.com/franzbu/SpaceHammer.spoon"
 SpaceHammer.winMSpaces = "MIT"
 SpaceHammer.name = "SpaceHammer"
-SpaceHammer.version = "0.7.1"
+SpaceHammer.version = "0.7.2"
 SpaceHammer.spoonPath = scriptPath()
 
 local dragTypes = {
@@ -497,14 +497,14 @@ sumdy = 0
 function SpaceHammer:handleDrag()
   return function(event)
     if not self.dragging then return nil end
-    local currentSize = win:size() -- win:frame
-    local current = win:topLeft() 
+    local currentSize =  hs.window.focusedWindow():size() -- win:frame
+    local current =  hs.window.focusedWindow():topLeft() 
     local dx = event:getProperty(hs.eventtap.event.properties.mouseEventDeltaX)
     local dy = event:getProperty(hs.eventtap.event.properties.mouseEventDeltaY)
     if self:isMoving() then
-      local frame = win:size() -- win:frame
+      local frame =  hs.window.focusedWindow():size() -- win:frame
       --win:move(hs.geometry.new(frame.x + dx, frame.y + dy, frame.w, frame.h), nil, false, 0)
-      win:move({ dx, dy }, nil, false, 0)
+      hs.window.focusedWindow():move({ dx, dy }, nil, false, 0)
       sumdy = sumdy + dy
       sumdx = sumdx + dx
       movedNotResized = true
@@ -534,43 +534,43 @@ function SpaceHammer:handleDrag()
     elseif self:isResizing() and useResize then
       movedNotResized = false
       if mH <= -m and mV <= m and mV > -m then -- 9 o'clock
-        win:move(hs.geometry.new(current.x + dx, current.y, currentSize.w - dx, currentSize.h), nil, false, 0)
+        hs.window.focusedWindow():move(hs.geometry.new(current.x + dx, current.y, currentSize.w - dx, currentSize.h), nil, false, 0)
       elseif mH <= -m and mV <= -m then -- 10:30
         if dy < 0 then -- prevent extension of downwards when cursor enters menubar
           if current.y > heightMB then
-            win:move(hs.geometry.new(current.x + dx, current.y + dy, currentSize.w - dx, currentSize.h - dy), nil, false,
+            hs.window.focusedWindow():move(hs.geometry.new(current.x + dx, current.y + dy, currentSize.w - dx, currentSize.h - dy), nil, false,
               0)
           end
         else
-          win:move(hs.geometry.new(current.x + dx, current.y + dy, currentSize.w - dx, currentSize.h - dy), nil, false, 0)
+          hs.window.focusedWindow():move(hs.geometry.new(current.x + dx, current.y + dy, currentSize.w - dx, currentSize.h - dy), nil, false, 0)
         end
       elseif mH > -m and mH <= m and mV <= -m then -- 12 o'clock
         if dy < 0 then -- prevent extension of downwards when cursor enters menubar
           if current.y > heightMB then
-            win:move(hs.geometry.new(current.x, current.y + dy, currentSize.w, currentSize.h - dy), nil, false, 0)
+            hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y + dy, currentSize.w, currentSize.h - dy), nil, false, 0)
           end
         else
-          win:move(hs.geometry.new(current.x, current.y + dy, currentSize.w, currentSize.h - dy), nil, false, 0)
+          hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y + dy, currentSize.w, currentSize.h - dy), nil, false, 0)
         end
       elseif mH > m and mV <= -m then -- 1:30
         if dy < 0 then -- prevent extension of downwards when cursor enters menubar
           if current.y > heightMB then
-            win:move(hs.geometry.new(current.x, current.y + dy, currentSize.w + dx, currentSize.h - dy), nil, false, 0)
+            hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y + dy, currentSize.w + dx, currentSize.h - dy), nil, false, 0)
           end
         else
-          win:move(hs.geometry.new(current.x, current.y + dy, currentSize.w + dx, currentSize.h - dy), nil, false, 0)
+          hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y + dy, currentSize.w + dx, currentSize.h - dy), nil, false, 0)
         end
       elseif mH > m and mV > -m and mV <= m then -- 3 o'clock
-        win:move(hs.geometry.new(current.x, current.y, currentSize.w + dx, currentSize.h), nil, false, 0)
+        hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y, currentSize.w + dx, currentSize.h), nil, false, 0)
       elseif mH > m and mV > m then -- 4:30
-        win:move(hs.geometry.new(current.x, current.y, currentSize.w + dx, currentSize.h + dy), nil, false, 0)
+        hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y, currentSize.w + dx, currentSize.h + dy), nil, false, 0)
       elseif mV > m and mH <= m and mH > -m then -- 6 o'clock
-        win:move(hs.geometry.new(current.x, current.y, currentSize.w, currentSize.h + dy), nil, false, 0)
+        hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y, currentSize.w, currentSize.h + dy), nil, false, 0)
       elseif mH <= -m and mV > m then -- 7:30
-        win:move(hs.geometry.new(current.x + dx, current.y, currentSize.w - dx, currentSize.h + dy), nil, false, 0)
+        hs.window.focusedWindow():move(hs.geometry.new(current.x + dx, current.y, currentSize.w - dx, currentSize.h + dy), nil, false, 0)
       else -- middle -> moving (not resizing) window
         --local frame = win:frame()
-        win:move({ dx, dy }, nil, false, 0)
+        hs.window.focusedWindow():move({ dx, dy }, nil, false, 0)
         movedNotResized = true
       end
       return true
@@ -593,7 +593,7 @@ end
 function SpaceHammer:doMagic() -- automatic positioning and adjustments, for example, prevent window from moving/resizing beyond screen boundaries
   if not self.targetWindow then return end
   local modifierDM = eventToArray(hs.eventtap.checkKeyboardModifiers()) -- modifiers (still) pressed after releasing mouse button 
-  local frame = win:frame()
+  local frame = hs.window.focusedWindow():frame()
   local xNew = frame.x
   local yNew = frame.y
   local wNew = frame.w
@@ -856,7 +856,7 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
     end
     --self.targetWindow:move(hs.geometry.new(xNew, yNew, wNew, hNew), nil, false, 0)
   
-  -- mspaces
+  -- mSpaces
   elseif movedNotResized then
     if moveLeftAS then
      moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace)
@@ -944,7 +944,6 @@ function SpaceHammer:handleClick()
         self.dragType = dragTypes.resize
       end
     
-      ---[[
       -- prevent error when clicking on screen (and not window) with pressed modifier(s)
       if type(getWindowUnderMouse()) == "nil" then
         self.cancelHandler:start()
@@ -953,9 +952,8 @@ function SpaceHammer:handleClick()
         -- Prevent selection
         return true
       end
-      --]]
 
-      win = getWindowUnderMouse():focus() --todo (?done? ->experimental): error if clicked on screen (and not window)
+      local win = getWindowUnderMouse():focus() --todo (?done? ->experimental): error if clicked on screen (and not window)
       local frame = win:frame()
       max = win:screen():frame() 
       maxWithMB = win:screen():fullFrame()
@@ -1072,10 +1070,10 @@ function mergeModifiers(m1, m2)
 end
 
 
-function isIncludedWinAll(id) -- check whether window id is included in table
+function isIncludedWinAll(w) -- check whether window id is included in table
   local a = false
   for i,v in pairs(winAll) do
-    if tostring(id) == tostring(winAll[i]:id()) then
+    if w:id() == winAll[i]:id() then
       a = true
     end
   end
@@ -1114,8 +1112,6 @@ function indexOf(array, value)
 end
 
 
-
---mSpaces
 function getprevMSpaceNumber(cS)
   if cS == 1 then
     return #mspaces
@@ -1137,8 +1133,6 @@ end
 winOnlyMoved = false -- prevent watchdog from giving focus to window if it has been moved to other mspace without switching there
 function goToSpace(target)
   winOnlyMoved = false
-  --local win =  winAll[1]
-  --max = win:screen():frame()
   max = hs.screen.mainScreen():frame()
 
   for i,v in pairs(winMSpaces) do
@@ -1231,7 +1225,7 @@ function refreshWinMSpaces(w)
   for i = 1, #winMSpaces do
     --print("___#winMSpaces_____" .. #winMSpaces)
     --print("________j: " .. winMSpaces[j].win:id())
-    if not isIncludedWinAll(winMSpaces[i].win:id()) then
+    if not isIncludedWinAll(winMSpaces[i].win) then
       --print("___not present______")
       table.remove(winMSpaces, i)  
       break -- ?todo: if more windows are closed at once, loop should restart
@@ -1360,6 +1354,7 @@ function derefWinMSpace()
 end
 
 
+-- move windows to pre-defined mSpaces; at start (not boolgotoSpace) and later (boolgotoSpace)
 function assignMS(w, boolgotoSpace)
   if openAppMSpace ~= nil then
     for i = 1, #openAppMSpace do
@@ -1385,12 +1380,10 @@ function assignMS(w, boolgotoSpace)
 end
 
 
-
--- keyboard shortcuts - snap windows into respective grid positons
+-- determine hs.geometry object for grid positons
 function snap(scenario)
-  local fwin = hs.window.focusedWindow()
-  maxWithMB = fwin:screen():fullFrame()
-  max = fwin:screen():frame()
+  maxWithMB = hs.window.focusedWindow():screen():fullFrame()
+  max = hs.window.focusedWindow():screen():frame()
   local heightMB = maxWithMB.h - max.h   -- height menu bar
   local xNew = 0
   local yNew = 0
@@ -1571,5 +1564,6 @@ function snap(scenario)
   end
   return hs.geometry.new(xNew, yNew, wNew, hNew)
 end
+
 
 return SpaceHammer

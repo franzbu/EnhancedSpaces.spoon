@@ -1,3 +1,7 @@
+# v0.7.3
+
+* snap: keep size of window and put in in center of screen ('a8')
+
 # v0.7.2
 
 * code cleanup

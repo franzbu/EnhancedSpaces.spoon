@@ -348,7 +348,7 @@ This is self-explanatory and won't need further explanations. To get the names o
   ...
 ```
 
-In case you would like to also pre-define the position of the window, you can add a third option:
+In case you would like to also pre-define the position of the window, you can add that information as a third option:
 
 ```lua
   ...

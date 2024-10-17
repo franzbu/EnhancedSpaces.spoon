@@ -1,3 +1,7 @@
+# v0.7.1
+
+* code cleanup
+  
 # v0.7
 
 * open windows on pre-defined mSpaces

@@ -9,7 +9,7 @@ SpaceHammer.author = "Franz B. <csaa6335@gmail.com>"
 SpaceHammer.homepage = "https://github.com/franzbu/SpaceHammer.spoon"
 SpaceHammer.winMSpaces = "MIT"
 SpaceHammer.name = "SpaceHammer"
-SpaceHammer.version = "0.7.2"
+SpaceHammer.version = "0.7.3"
 SpaceHammer.spoonPath = scriptPath()
 
 local dragTypes = {
@@ -26,6 +26,7 @@ local function tableToMap(table)
 end
 
 local function getWindowUnderMouse()
+  --local _ = hs.application
   local my_pos = hs.geometry.new(hs.mouse.absolutePosition())
   local my_screen = hs.mouse.getCurrentScreen()
   return hs.fnutils.find(hs.window.orderedWindows(), function(w)
@@ -69,7 +70,7 @@ function SpaceHammer:new(options)
   modifierSnap3 = options.modifierSnap3 or nil
   modifierSnapKeys = options.modifierSnapKeys or {
     -- modifierSnapKey1
-    {{'a1','1'},{'a2','2'},{'a3','3'},{'a4','4'},{'a5','5'},{'a6','6'},{'a7','7'}},
+    {{'a1','1'},{'a2','2'},{'a3','3'},{'a4','4'},{'a5','5'},{'a6','6'},{'a7','7'},{'a8','8'}},
     -- modifierSnapKey2
     {{'b1','1'},{'b2','2'},{'b3','3'},{'b4','4'},{'b5','5'},{'b6','6'},{'b7','7'},{'b8','8'},{'b9','9'},{'b10','0'},{'b11','o'},{'b12','p'}},
     -- modifierSnapKey3
@@ -1413,6 +1414,11 @@ function snap(scenario)
     yNew = heightMB + pM
     wNew = max.w - 2 * pM
     hNew = max.h - 2 * pM
+  elseif scenario == 'a8' then -- whole screen
+    xNew = max.w / 2 - hs.window.focusedWindow():frame().w / 2
+    yNew = max.h / 2 - hs.window.focusedWindow():frame().h / 2
+    wNew = hs.window.focusedWindow():frame().w
+    hNew = hs.window.focusedWindow():frame().h
 
   
   elseif scenario == 'b1' then -- left third of screen

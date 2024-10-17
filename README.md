@@ -97,7 +97,7 @@ As before, the below line represents the default setup, and you do not need to a
 ```
 
 
-## mSpaces Carry Further Potential
+## mSpaces for Advanced Users
 
 By now we have covered the basics, but we have not walked over the finish line yet. That being said, this section is mainly for advanced users and can be skipped.
 

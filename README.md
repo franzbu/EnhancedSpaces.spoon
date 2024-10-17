@@ -321,7 +321,7 @@ As an optional experimental feature, SpaceHammer can automatically backup and re
 
 ### Open Windows in Pre-Arranged mSpaces
 
-You can tell SpaceHammer to open windows on specific mSpaces. To do that, add the following lines to your 'init.lua': 
+You can tell SpaceHammer to open windows in specific mSpaces; add the following lines to your 'init.lua': 
 
 ```lua
   ...
@@ -331,11 +331,11 @@ You can tell SpaceHammer to open windows on specific mSpaces. To do that, add th
     {'WhatsApp', '3'},
     {'Microsoft To Do', '3'},
     {'Email', '1'},
-  },
+  }, -- default: nil
   ...
 ```
 
-This is self-explanatory and won't need further explanations. To get the names of the Applications, among other options, can can add the following lines to your 'init.lua' and open Hammerspoon's Console to see them; make sure to adjust the keyboard shortcuts to your liking (make sure to add these lines outside the section 'SpaceHammer:new'):
+How to add your apps is self-explanatory. To get the names of the applications you would like to add to the list, you can - among other options - add the following lines to your 'init.lua' and open Hammerspoon's Console to access the output; make sure to adjust the keyboard shortcuts to your liking (also make sure to add these lines outside the section 'SpaceHammer:new'):
 
 ```lua
   ...
@@ -348,7 +348,7 @@ This is self-explanatory and won't need further explanations. To get the names o
   ...
 ```
 
-In case you would like to also pre-define the position of the window, you can add that information as a third option:
+In case you would also like to pre-define the position of the window in the mSpace, you can add that information as a third option:
 
 ```lua
   ...
@@ -357,12 +357,13 @@ In case you would like to also pre-define the position of the window, you can ad
     {'Code', '2', 'a2'},
     {'WhatsApp', '3', 'a1'},
     {'Microsoft To Do', '3', 'a2'},
-    {'Email', '1'},
+    {'Email', '1' 'a7'},
   },
   ...
 ```
 
-'a1' represents the left half of your screen, 'a2' for the right half of your screen. To get the full list of possible positions, see section 'Automatic Resizing and Positioning - Keyboard' above.
+'a1' represents the left half of your screen, 'a2' for the right half of your screen, and 'a7' for the whole screen. To get the full list of possible positions, see section 'Automatic Resizing and Positioning - Keyboard'.
+
 
 ### Manual Resizing
 

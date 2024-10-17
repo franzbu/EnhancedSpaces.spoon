@@ -381,7 +381,7 @@ function SpaceHammer:new(options)
   end
 
   -- debug
-  ---[[
+  --[[
   -- list all windows
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "m", function()
     print("_______winAll_________")

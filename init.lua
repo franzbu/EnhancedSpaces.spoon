@@ -138,59 +138,11 @@ function SpaceHammer:new(options)
   winAll = filter_all:getWindows()--hs.window.sortByFocused)
 
   winMSpaces = {}
-  --initialize winMSpaces
   max = hs.screen.mainScreen():frame()
-
+--initialize winMSpaces
   refreshWinMSpaces()
 
-  -- deserialize
-  --[[
-  if backup and hs.settings.get("mSpaces") then
-    winMSpacesSerialized = hs.settings.get("mSpaces")
-    -- get index of last mSpace with window(s) on it
-    local lW = 1 
-    for i = 1, #winMSpacesSerialized do
-      for j = 1, #winMSpacesSerialized[i].mspace do
-        if winMSpacesSerialized[i].mspace[j] then
-          if j > lW then lW = j end
-        end
-      end
-    end
-    if lW <= #mspaces then -- only if amount of mSpaces has stayed the same or increased
-      for i = 1, #winAll do
-        for j = 1, #winMSpacesSerialized do
-          if winMSpacesSerialized[j] ~= nil and winMSpaces[getWinMSpacesPos(winAll[i])].win:title() == winMSpacesSerialized[j].title then
-            winMSpaces[getWinMSpacesPos(winAll[i])].mspace = copyTable(winMSpacesSerialized[j].mspace)
-            for k = 1, #mspaces do   -- create new hs.geometry object for each window and mspace
-              winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(winMSpacesSerialized[j].frame[k]._x, winMSpacesSerialized[j].frame[k]._y, winMSpacesSerialized[j].frame[k]._w, winMSpacesSerialized[j].frame[k]._h)
-            end
-            winMSpacesSerialized[j].title = "winMSpacesSerialized - already used"
-          else
-            for i = 1, #winAll do
-              if winAll[i]:topLeft().x >= max.w - 1 then -- window in 'hiding spot'
-                -- move window to the middle of the current mSpace
-                winMSpaces[getWinMSpacesPos(winAll[i])].frame[currentMSpace] = hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2, winAll[i]:frame().w, winAll[i]:frame().h) -- put window in middle of screen
-              end
-            end
-            hs.settings.clear("mSpaces") -- delete settings
-          end
-        end
-      end
-    end
-  else
-    -- recover stranded windows; only sensible when serialization is not enabled
-    for i = 1, #winAll do
-      if winAll[i]:topLeft().x >= max.w - 1 then -- window in 'hiding spot'
-        -- move window to the middle of the current mSpace
-        winMSpaces[getWinMSpacesPos(winAll[i])].frame[currentMSpace] = hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2, winAll[i]:frame().w, winAll[i]:frame().h) -- put window in middle of screen      
-        assignMS(winAll[i], false)
-      end
-    end
-    hs.settings.clear("mSpaces") -- delete settings
-  end
-  --]]
-
-  -- recover stranded windows at start; only when serialization is disabled
+  -- recover stranded windows at start
   for i = 1, #winAll do
     if winAll[i]:topLeft().x >= max.w - 1 then                                                                                                                                                                 -- window in 'hiding spot'
       -- move window to the middle of the current mSpace
@@ -246,7 +198,7 @@ function SpaceHammer:new(options)
   --switcher = hs.window.switcher.new() -- default windowfilter: only visible windows, all mSpaces
 
   -- cycle throuth windows on current mSpace
-  switcher = hs.window.switcher.new(hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)})) 
+  switcher = hs.window.switcher.new(hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)}))
   switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
   switcher.ui.thumbnailSize = 112
   switcher.ui.selectedThumbnailSize = 284
@@ -382,77 +334,14 @@ function SpaceHammer:new(options)
 
   -- debug
   --[[
-  -- list all windows
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "m", function()
-    print("_______winAll_________")
-    for i, v in pairs(winAll) do
-      print(i, v)
-    end
-    print("_______winMSpaces_________")
-    for i, v in pairs(winMSpaces) do
-      print(i .. ": " .. "mspace " .. tostring(winMSpaces[i].mspace))
-      print("id: " .. winMSpaces[i].win:application():name())
-      local ms = ""
-      for j = 1, #mspaces do
-        ms = ms .. tostring(winMSpaces[i].mspace[j]) .. ", "
-      end
-      print("mSpaces: " .. ms)
-
-      for j = 1, #mspaces do -- frame
-        print(tostring(winMSpaces[i].frame[j]))
-      end
-
-    end
-    --print("=====")
-    --print(hs.application.find("WhatsApp"))
   end)
 
-  -- serialize
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "k", function()
-    winMSpacesSerialized = {}
-    for i = 1, #winMSpaces do
-      winMSpacesSerialized[i] = {}
-      winMSpacesSerialized[i].appName = winMSpaces[i].win:application():name()
-      winMSpacesSerialized[i].title = winMSpaces[i].win:title()
-      winMSpacesSerialized[i].mspace = {}
-      winMSpacesSerialized[i].frame = {}
-      for k = 1, #mspaces do
-        winMSpacesSerialized[i].mspace[k] = winMSpaces[i].mspace[k]
-        winMSpacesSerialized[i].frame[k] = winMSpaces[i].frame[k]
-      end
-    end
-    hs.timer.doAfter(0.5, function()
-      hs.settings.set("mSpaces", winMSpacesSerialized)
-    end)
+
   end)
 
-  -- deserialize (restore settings)
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "l", function()
-    if backup and hs.settings.get("mSpaces") then
-      winMSpacesSerialized = hs.settings.get("mSpaces")
-      -- get index of last mSpace with window(s) on it
-      local lW = 1 
-      for i = 1, #winMSpacesSerialized do
-        for j = 1, #winMSpacesSerialized[i].mspace do
-          if winMSpacesSerialized[i].mspace[j] then
-            if j > lW then lW = j end
-          end
-        end
-      end
-      if lW <= #mspaces then -- only if amount of mSpaces has stayed the same or increased
-        for i = 1, #winAll do
-          for j = 1, #winMSpacesSerialized do
-            if winMSpacesSerialized[j] ~= nil and winMSpaces[getWinMSpacesPos(winAll[i])].win:title() == winMSpacesSerialized[j].title then
-              winMSpaces[getWinMSpacesPos(winAll[i])].mspace = copyTable(winMSpacesSerialized[j].mspace)
-              for k = 1, #mspaaces do   -- create new hs.geometry object for each window and mspace
-                winMSpaces[getWinMSpacesPos(winAll[i])].frame[k] = hs.geometry.new(winMSpacesSerialized[j].frame[k]._x, winMSpacesSerialized[j].frame[k]._y, winMSpacesSerialized[j].frame[k]._w, winMSpacesSerialized[j].frame[k]._h)
-              end
-              winMSpacesSerialized[j].title = "winMSpacesSerialized - already used"
-            end
-          end
-        end
-      end
-    end
   end)
 
   -- list names of apps of (visible) windows
@@ -502,14 +391,12 @@ function SpaceHammer:handleDrag()
     local dx = event:getProperty(hs.eventtap.event.properties.mouseEventDeltaX)
     local dy = event:getProperty(hs.eventtap.event.properties.mouseEventDeltaY)
     if self:isMoving() then
-      local frame =  hs.window.focusedWindow():size() -- win:frame
-      --win:move(hs.geometry.new(frame.x + dx, frame.y + dy, frame.w, frame.h), nil, false, 0)
       hs.window.focusedWindow():move({ dx, dy }, nil, false, 0)
       sumdy = sumdy + dy
       sumdx = sumdx + dx
       movedNotResized = true
 
-      -- mspaces --
+      -- mSpaces
       moveLeftAS = false -- these two variables are also needed in case AeroSpace is deactivated
       moveRightAS = false
       if current.x + currentSize.w * ratioMSpaces < 0 then   -- left
@@ -569,7 +456,6 @@ function SpaceHammer:handleDrag()
       elseif mH <= -m and mV > m then -- 7:30
         hs.window.focusedWindow():move(hs.geometry.new(current.x + dx, current.y, currentSize.w - dx, currentSize.h + dy), nil, false, 0)
       else -- middle -> moving (not resizing) window
-        --local frame = win:frame()
         hs.window.focusedWindow():move({ dx, dy }, nil, false, 0)
         movedNotResized = true
       end
@@ -908,8 +794,8 @@ function SpaceHammer:handleClick()
         isMoving = true
       elseif modifierMS ~= nil and modifiersEqual(flags, modifierMS) then
         isMoving = true
-      elseif modifier4 ~= nil and modifiersEqual(flags, modifier4) then
-        isMoving = true
+      --elseif modifier4 ~= nil and modifiersEqual(flags, modifier4) then
+      --  isMoving = true
      --elseif modifier1_2 ~= nil and modifiersEqual(flags, modifier1_2) then
       --  isMoving = true
       end
@@ -920,8 +806,8 @@ function SpaceHammer:handleClick()
         isResizing = true
       elseif modifierMS ~= nil and modifiersEqual(flags, modifierMS) then
         isResizing = true
-      elseif modifier4 ~= nil and modifiersEqual(flags, modifier4) then
-        isResizing = true
+      --elseif modifier4 ~= nil and modifiersEqual(flags, modifier4) then
+      --  isResizing = true
       --elseif modifier1_2 ~= nil and modifiersEqual(flags, modifier1_2) then
       --  isResizing = true
       end
@@ -1161,7 +1047,7 @@ function moveToSpace(target, origin)
   -- always keep frame of MSpase of origin
   winMSpaces[getWinMSpacesPos(fwin)].frame[target] = winMSpaces[getWinMSpacesPos(fwin)].frame[origin]
 
-  focusLastWindow()
+  --focusLastWindow()
 end
 
 
@@ -1178,27 +1064,14 @@ end
 
 
 function refreshWinMSpaces(w)
-  --print("_____refreshWinMSpaces_____")
-  --print(hs.inspect(w))
   filter_all = hs.window.filter.new()
-  winAll = filter_all:getWindows()--hs.window.sortByFocused)
-
-  --print("___#winAll_____" .. #winAll)
-  --print("winMSpaces length: " .. #winMSpaces)
-
+  winAll = filter_all:getWindows() --hs.window.sortByFocused)
   if #winMSpaces == 0 then   -- at first start
-  --if #winMSpaces < #winAll then   -- at first start
-    --print("_______winMSpaces populated_________")
-    for i, v in pairs(winAll) do
-      --print(i, v)
-    end
-
     for i = 1, #winAll do
       winMSpaces[i] = {}
       winMSpaces[i].win = winAll[i]
       winMSpaces[i].mspace = {}
       winMSpaces[i].frame = {}
-
       for k = 1, #mspaces do
         if k == currentMSpace then
           winMSpaces[i].mspace[k] = true
@@ -1213,16 +1086,10 @@ function refreshWinMSpaces(w)
 
   -- delete closed or minimized windows
   for i = 1, #winMSpaces do
-    --print("___#winMSpaces_____" .. #winMSpaces)
-    --print("________j: " .. winMSpaces[j].win:id())
     if not isIncludedWinAll(winMSpaces[i].win) then
-      --print("___not present______")
       table.remove(winMSpaces, i)  
       break -- ?todo: if more windows are closed at once, loop should restart
-    else
-      --print("___present______")
     end
-    --print("____winspaces length: " .. #winMSpaces)
   end
 
 
@@ -1235,13 +1102,10 @@ function refreshWinMSpaces(w)
       end
     end
     if not there then
-      --print("______adding window________")
       table.insert(winMSpaces, {})
       winMSpaces[#winMSpaces].win = winAll[i]
-
       winMSpaces[#winMSpaces].mspace = {}
       winMSpaces[#winMSpaces].frame = {}
-
       for k = 1, #mspaces do
         if k == currentMSpace then
           winMSpaces[#winMSpaces].mspace[k] = true
@@ -1253,27 +1117,6 @@ function refreshWinMSpaces(w)
       end
     end
   end
-
-  -- serialize
-  --[[
-  if backup then
-    winMSpacesSerialized = {}
-    for i = 1, #winMSpaces do
-      winMSpacesSerialized[i] = {}
-      winMSpacesSerialized[i].appName = winMSpaces[i].win:application():name()
-      winMSpacesSerialized[i].title = winMSpaces[i].win:title()
-      winMSpacesSerialized[i].mspace = {}
-      winMSpacesSerialized[i].frame = {}
-      for k = 1, #mspaces do
-        winMSpacesSerialized[i].mspace[k] = winMSpaces[i].mspace[k]
-        winMSpacesSerialized[i].frame[k] = winMSpaces[i].frame[k]
-      end
-    end
-    hs.timer.doAfter(0.5, function()
-      hs.settings.set("mSpaces", winMSpacesSerialized)
-    end)  
-  end
-  --]]
 
   winOnlyMoved = false
 end
@@ -1297,7 +1140,6 @@ end
 
 function correctXY(w)
   -- subscribed filter for some reason takes a couple of seconds to trigger method
-  --print("___correctXY_______")
   max = w:screen():frame() 
   -- todo: find better way of detecting whether window has been moved manually or 'hidden' rather than 'fwin:topLeft().x < max.w - 2'
   if w:topLeft().x < max.w - 2 then   -- prevents subscriber-method to refresh coordinates of window that has just been 'hidden'

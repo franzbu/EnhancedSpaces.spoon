@@ -319,7 +319,7 @@ As an optional experimental feature, SpaceHammer can automatically backup and re
 
 ## Experimental
 
-### Open Windows on Pre-Arranged mSpaces
+### Open Windows in Pre-Arranged mSpaces
 
 You can tell SpaceHammer to open windows on specific mSpaces. To do that, add the following lines to your 'init.lua': 
 

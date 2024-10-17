@@ -60,10 +60,8 @@ function SpaceHammer:new(options)
   modifierMS = options.modifierMS or modifier2
   modifierMSKeys = {'a', 's', 'd', 'f', 'q', 'w'}
 
-
   openAppMSpace = options.openAppMSpace or nil
 
-  
   modifierSwitchWin = options.modifierSwitchWin or modifier1
   modifierSwitchWinKeys = options.modifierSwitchWinKeys or { 'tab', 'escape' }
 
@@ -93,7 +91,9 @@ function SpaceHammer:new(options)
   useMSpaces = options.useMSpaces or true
   ratioMSpaces = options.ratioMSpaces or 0.8
   mspaces = options.mSpaces or { '1', '2', '3' }
-  currentMSpace = indexOf(options.MSpaces, options.startMSpace) or 2
+  currentMSpace = indexOf(options.MSpaces, options.startMSpace) or 2 
+  --startMSpace = indexOf(options.MSpaces, options.startMSpace) or 2 
+  --currentMSpace = startMSpace
 
   gridIndicator = options.gridIndicator or { 20, 1, 0, 0, 0.5 }
 
@@ -189,20 +189,20 @@ function SpaceHammer:new(options)
       if winAll[i]:topLeft().x >= max.w - 1 then -- window in 'hiding spot'
         -- move window to the middle of the current mSpace
         winMSpaces[getWinMSpacesPos(winAll[i])].frame[currentMSpace] = hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2, winAll[i]:frame().w, winAll[i]:frame().h) -- put window in middle of screen      
-        assignMS(winAll[i])
+        assignMS(winAll[i], false)
       end
     end
     hs.settings.clear("mSpaces") -- delete settings
   end
   --]]
 
-  -- recover stranded windows; use only when serialization is not enabled
+  -- recover stranded windows at start; only when serialization is disabled
   for i = 1, #winAll do
     if winAll[i]:topLeft().x >= max.w - 1 then                                                                                                                                                                 -- window in 'hiding spot'
       -- move window to the middle of the current mSpace
       winMSpaces[getWinMSpacesPos(winAll[i])].frame[currentMSpace] = hs.geometry.point(
       max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2, winAll[i]:frame().w, winAll[i]:frame().h)                                                                                      -- put window in middle of screen
-      assignMS(winAll[i])
+      assignMS(winAll[i], false)
     end
   end
 
@@ -210,7 +210,7 @@ function SpaceHammer:new(options)
   ---[[
   filter = hs.window.filter --subscribe: when a new window (dis)appears, run refreshWindowsWS
   filter.default:subscribe(filter.windowNotOnScreen, function(w) refreshWinMSpaces(w) end) --focusLastWindow() end)
-  filter.default:subscribe(filter.windowOnScreen, function(w) refreshWinMSpaces(w) assignMS(w) end) --w:focus() end)
+  filter.default:subscribe(filter.windowOnScreen, function(w) refreshWinMSpaces(w) assignMS(w, true) end) --w:focus() end)
   filter.default:subscribe(filter.windowFocused, function(w) refreshWinMSpaces(w) cmdTabFocus(w) end)
   filter.default:subscribe(filter.windowMoved, function(w) correctXY(w) end)
   --]]
@@ -475,29 +475,6 @@ function SpaceHammer:new(options)
 end
 
 
-function assignMS(w)
-  if openAppMSpace ~= nil then
-    for i = 1, #openAppMSpace do
-      if w:application():name():gsub('%W','') == openAppMSpace[i][1]:gsub('%W','') then
-        for j = 1, #mspaces do
-          if openAppMSpace[i][2] == mspaces[j] then
-            winMSpaces[getWinMSpacesPos(w)].mspace[j] = true
-            if openAppMSpace[i][3] ~= nil then
-              winMSpaces[getWinMSpacesPos(w)].frame[j] = snap(openAppMSpace[i][3])
-            else
-              winMSpaces[getWinMSpacesPos(w)].frame[indexOf(mspaces, openAppMSpace[i][2])] = hs.geometry.point(max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h) -- put window in middle of screen            
-            end
-            goToSpace(indexOf(mspaces, openAppMSpace[i][2]))
-          else
-            winMSpaces[getWinMSpacesPos(w)].mspace[j] = false
-          end
-        end
-      end   
-    end
-  end
-end
-
-
 function SpaceHammer:stop()
   self.dragging = false
   self.dragType = nil
@@ -696,8 +673,7 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
         end
       elseif modifiersEqual(flags, modifier1) and #modifierDM == 0 then -- modifier key released before left mouse button
         if frame.y + hNew > maxWithMB.h and hs.mouse.getRelativePosition().x + sumdx < max.w and hs.mouse.getRelativePosition().x + sumdx > 0 then -- bottom border
-          hs.window.focusedWindow():minimize()
-                  
+          hs.window.focusedWindow():minimize()                
         end
       -- 3x3
       elseif modifiersEqual(flags, modifier2) and modifiersEqual(flags, modifierDM) then --todo: ?not necessary? -> and eventType == self.moveStartMouseEvent
@@ -1419,6 +1395,31 @@ function derefWinMSpace()
   end
   menubar:setTitle(tostring(currentMSpace))
   goToSpace(currentMSpace) -- refresh
+end
+
+
+function assignMS(w, boolgotoSpace)
+  if openAppMSpace ~= nil then
+    for i = 1, #openAppMSpace do
+      if w:application():name():gsub('%W','') == openAppMSpace[i][1]:gsub('%W','') then
+        for j = 1, #mspaces do
+          if openAppMSpace[i][2] == mspaces[j] then
+            winMSpaces[getWinMSpacesPos(w)].mspace[j] = true
+            if openAppMSpace[i][3] ~= nil then
+              winMSpaces[getWinMSpacesPos(w)].frame[j] = snap(openAppMSpace[i][3])
+            else
+              winMSpaces[getWinMSpacesPos(w)].frame[indexOf(mspaces, openAppMSpace[i][2])] = hs.geometry.point(max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h) -- put window in middle of screen            
+            end
+            if boolgotoSpace then -- not when SpaceHammer is started
+              goToSpace(indexOf(mspaces, openAppMSpace[i][2]))
+            end
+          else
+            winMSpaces[getWinMSpacesPos(w)].mspace[j] = false
+          end
+        end
+      end   
+    end
+  end
 end
 
 

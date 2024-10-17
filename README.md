@@ -40,9 +40,6 @@ SpaceHammer:new({
   -- mSpaces:
   mSpaces = { '1', '2', '3', 'E', 'T' }, -- default { '1', '2', '3' }
   startmSpace = 'E', -- default 2
-
-  modifier1 = { 'alt' }, -- default: { 'alt' }
-  modifier2 = { 'ctrl' }, -- default: { 'ctrl' }
 })
 
 ```
@@ -69,7 +66,14 @@ The below lines represent the default setup, and you do not need to add them to 
   ...
 ```
 
-You can also move windows to adjacent mSpaces by pressing 'modifier1' or 'modifier2' and dragging 80 percent of more of it beyond the left or right screen border. If you release the modifier before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you move along with the window. 
+You can also move windows to adjacent mSpaces by pressing 'alt' or 'ctrl' and dragging 80 percent of more of it beyond the left or right screen border. If you release the modifier before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you move along with the window. In case you would like to change these modifier keys, you can add the following lines to your 'init.lua' and adjust them to your liking:
+
+```lua
+
+  modifier1 = { 'alt' }, -- default: { 'alt' }
+  modifier2 = { 'ctrl' }, -- default: { 'ctrl' }
+
+```
 
 
 ### Switch Directly to Any mSpace

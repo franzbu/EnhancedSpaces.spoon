@@ -208,6 +208,7 @@ Below you find the pre-assigned keyboard shortcuts.
 - 'modifierSnap1' and '5': top right quarter of screen -> 'a5'
 - 'modifierSnap1' and '6': bottom right quarter of screen -> 'a6'
 - 'modifierSnap1' and '7': whole screen -> 'a7'
+- 'modifierSnap1' and '8': size as is, center of screen -> 'a8'
 
 
 #### 3x3 Grid
@@ -248,7 +249,7 @@ As has been mentioned, these keyboard shortcuts are fully customizable. Let us f
   ...
   modifierSnapKeys = {
     -- modifierSnapKey1
-    {{'a1','1'},{'a2','2'},{'a3','3'},{'a4','4'},{'a5','5'},{'a6','6'},{'a7','7'}},
+    {{'a1','1'},{'a2','2'},{'a3','3'},{'a4','4'},{'a5','5'},{'a6','6'},{'a7','7'},{'a8','8'}},
     -- modifierSnapKey2
     {{'b1','1'},{'b2','2'},{'b3','3'},{'b4','4'},{'b5','5'},{'b6','6'},{'b7','7'},{'b8','8'},{'b9','9'},{'b10','0'},{'b11','o'},{'b12','p'}},
     -- modifierSnapKey3

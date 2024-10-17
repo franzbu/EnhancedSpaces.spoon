@@ -26,7 +26,6 @@ local function tableToMap(table)
 end
 
 local function getWindowUnderMouse()
-  --local _ = hs.application
   local my_pos = hs.geometry.new(hs.mouse.absolutePosition())
   local my_screen = hs.mouse.getCurrentScreen()
   return hs.fnutils.find(hs.window.orderedWindows(), function(w)

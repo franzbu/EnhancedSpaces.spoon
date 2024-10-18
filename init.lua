@@ -9,7 +9,7 @@ SpaceHammer.author = "Franz B. <csaa6335@gmail.com>"
 SpaceHammer.homepage = "https://github.com/franzbu/SpaceHammer.spoon"
 SpaceHammer.winMSpaces = "MIT"
 SpaceHammer.name = "SpaceHammer"
-SpaceHammer.version = "0.7.4"
+SpaceHammer.version = "0.7.3"
 SpaceHammer.spoonPath = scriptPath()
 
 local dragTypes = {
@@ -90,7 +90,9 @@ function SpaceHammer:new(options)
 
   ratioMSpaces = options.ratioMSpaces or 0.8
   mspaces = options.mSpaces or { '1', '2', '3' }
-  currentMSpace = indexOf(options.MSpaces, options.startMSpace) or 2
+  startMSpace = indexOf(options.MSpaces, options.startMSpace) or 2
+  currentMSpace = startMSpace
+  previousMSpace = startMSpace
 
   gridIndicator = options.gridIndicator or { 20, 1, 0, 0, 0.5 }
 
@@ -155,10 +157,21 @@ function SpaceHammer:new(options)
   -- watchdogs
   ---[[
   filter = hs.window.filter --subscribe: when a new window (dis)appears, run refreshWindowsWS
-  filter.default:subscribe(filter.windowNotOnScreen, function(w) refreshWinMSpaces(w) end)
-  filter.default:subscribe(filter.windowOnScreen, function(w) refreshWinMSpaces(w) assignMS(w, true) w:focus() end)
-  filter.default:subscribe(filter.windowFocused, function(w) refreshWinMSpaces(w) cmdTabFocus(w) end)
-  filter.default:subscribe(filter.windowMoved, function(w) correctXY(w) end)
+  filter.default:subscribe(filter.windowNotOnScreen, function(w)
+    refreshWinMSpaces(w)
+  end)
+  filter.default:subscribe(filter.windowOnScreen, function(w)
+    refreshWinMSpaces(w)
+    assignMS(w, true)
+    w:focus()
+  end)
+  filter.default:subscribe(filter.windowFocused, function(w)
+    refreshWinMSpaces(w)
+    cmdTabFocus(w)
+  end)
+  filter.default:subscribe(filter.windowMoved, function(w)
+    correctXY(w)
+  end)
   --]]
 
   ---[[ -- flagsKeyboardTracker
@@ -330,10 +343,9 @@ function SpaceHammer:new(options)
   end
 
   -- debug
-  --[[
+  ---[[
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "m", function()
-    hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "m", function()
-    print("_______winAll_________")
+   print("_______winAll_________")
     for i, v in pairs(winAll) do
       print(i, v)
     end
@@ -1036,10 +1048,10 @@ end
 
 
 winOnlyMoved = false -- prevent watchdog from giving focus to window if it has been moved to other mspace without switching there
+boolGoToSpace = false -- prevent rapid shifting of focus (goToSpace() and cmdTabFocus() loop), i.e., cmdTabFocus() is not called by goToSpace() anymore (needs bo be called by window switcher only in the first place)
 function goToSpace(target)
   winOnlyMoved = false
   max = hs.screen.mainScreen():frame()
-
   for i,v in pairs(winMSpaces) do
     if winMSpaces[i].mspace[target] == true then
       winMSpaces[i].win:setFrame(winMSpaces[i].frame[target]) -- 'unhide' window
@@ -1047,19 +1059,25 @@ function goToSpace(target)
       winMSpaces[i].win:setTopLeft(hs.geometry.point(max.w - 1, max.h))
     end
   end
-  menubar:setTitle(tostring(mspaces[target])) -- menubar
+  previousMSpace = currentMSpace
   currentMSpace = target
-
-  --fb
-  -- put focus on window on the newly-moved-to mSpace
-  winAll = filter_all:getWindows() -- sorts windows by last focused first -> not necessary: hs.window.sortByFocused)
+  menubar:setTitle(tostring(mspaces[target])) -- menubar
+  
+  --[[  
+  -- fb: put focus on window on the newly-moved-to mSpace
+  boolGoToSpace = true
+  winAll = filter_all:getWindows() -- sort windows by last focused first -> not necessary: hs.window.sortByFocused)
   for i = 1, #winAll do
     if winMSpaces[getWinMSpacesPos(winAll[i])].mspace[target] then
       winMSpaces[getWinMSpacesPos(winAll[i])].win:focus()
-      --i = #winMSpaces + 1
+      hs.alert.show("goToSpace")
       break
     end
   end
+  hs.timer.doAfter(0.3, function()
+    boolGoToSpace = false
+  end)
+  --]]
 end
 
 
@@ -1077,12 +1095,10 @@ function moveToSpace(target, origin)
 end
 
 
-
-
 function refreshWinMSpaces(w)
-  filter_all = hs.window.filter.new()
+  --filter_all = hs.window.filter.new()
   winAll = filter_all:getWindows() --hs.window.sortByFocused)
-  if #winMSpaces == 0 then   -- at first start
+  if #winMSpaces == 0 then -- at first start
     for i = 1, #winAll do
       winMSpaces[i] = {}
       winMSpaces[i].win = winAll[i]
@@ -1103,11 +1119,12 @@ function refreshWinMSpaces(w)
   -- delete closed or minimized windows
   for i = 1, #winMSpaces do
     if not isIncludedWinAll(winMSpaces[i].win) then
-      table.remove(winMSpaces, i)  
-      break -- ?todo: if more windows are closed at once, loop should restart
+      -- do not switch mSpace if window has been closed/minimized
+      goToSpace(previousMSpace)
+      table.remove(winMSpaces, i)
+      break
     end
   end
-
 
   -- add missing windows
   for i = 1, #winAll do
@@ -1137,11 +1154,12 @@ function refreshWinMSpaces(w)
   winOnlyMoved = false
 end
 
-
+--fb
 -- when 'normal' window switchers such as altTab or macOS' cmd-tab are used, cmdTabFocus() switches to correct mSpace
 function cmdTabFocus(w)
   -- when choosing to switch to window by cycling through all apps, go to mSpace of chosen window
-  if w ~= nil then
+  if w ~= nil and not boolGoToSpace then
+    hs.alert.show('cmdTabFocus')
     if not winMSpaces[getWinMSpacesPos(w)].mspace[currentMSpace] then -- in case focused window is not on current mSpace, switch to the one containing it
       for i = 1, #mspaces do
         if winMSpaces[getWinMSpacesPos(w)].mspace[i] then

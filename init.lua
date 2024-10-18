@@ -1070,7 +1070,6 @@ function goToSpace(target)
   for i = 1, #winAll do
     if winMSpaces[getWinMSpacesPos(winAll[i])].mspace[target] then
       winMSpaces[getWinMSpacesPos(winAll[i])].win:focus()
-      hs.alert.show("goToSpace")
       break
     end
   end
@@ -1159,7 +1158,6 @@ end
 function cmdTabFocus(w)
   -- when choosing to switch to window by cycling through all apps, go to mSpace of chosen window
   if w ~= nil and not boolGoToSpace then
-    hs.alert.show('cmdTabFocus')
     if not winMSpaces[getWinMSpacesPos(w)].mspace[currentMSpace] then -- in case focused window is not on current mSpace, switch to the one containing it
       for i = 1, #mspaces do
         if winMSpaces[getWinMSpacesPos(w)].mspace[i] then

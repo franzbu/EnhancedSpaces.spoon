@@ -1,6 +1,4 @@
-# v0.7.4
 
-* when switching to another mSpace, focus on last focused window there 
   
 # v0.7.3
 

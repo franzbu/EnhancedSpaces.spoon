@@ -9,7 +9,7 @@ SpaceHammer.author = "Franz B. <csaa6335@gmail.com>"
 SpaceHammer.homepage = "https://github.com/franzbu/SpaceHammer.spoon"
 SpaceHammer.winMSpaces = "MIT"
 SpaceHammer.name = "SpaceHammer"
-SpaceHammer.version = "0.7.3"
+SpaceHammer.version = "0.7.4"
 SpaceHammer.spoonPath = scriptPath()
 
 local dragTypes = {
@@ -155,7 +155,7 @@ function SpaceHammer:new(options)
   -- watchdogs
   ---[[
   filter = hs.window.filter --subscribe: when a new window (dis)appears, run refreshWindowsWS
-  filter.default:subscribe(filter.windowNotOnScreen, function(w) refreshWinMSpaces(w) end) -- focusLastWindow() end)
+  filter.default:subscribe(filter.windowNotOnScreen, function(w) refreshWinMSpaces(w) end)
   filter.default:subscribe(filter.windowOnScreen, function(w) refreshWinMSpaces(w) assignMS(w, true) w:focus() end)
   filter.default:subscribe(filter.windowFocused, function(w) refreshWinMSpaces(w) cmdTabFocus(w) end)
   filter.default:subscribe(filter.windowMoved, function(w) correctXY(w) end)
@@ -194,9 +194,6 @@ function SpaceHammer:new(options)
   keyboardTracker:start()
 
   ---[[
-  --cycle through all windows, regardless of which WS they are on (https://applehelpwriter.com/2018/01/14/how-to-add-a-window-switcher/)
-  --switcher = hs.window.switcher.new() -- default windowfilter: only visible windows, all mSpaces
-
   -- cycle throuth windows on current mSpace
   switcher = hs.window.switcher.new(hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)}))
   switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
@@ -335,6 +332,28 @@ function SpaceHammer:new(options)
   -- debug
   --[[
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "m", function()
+    hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "m", function()
+    print("_______winAll_________")
+    for i, v in pairs(winAll) do
+      print(i, v)
+    end
+    print("_______winMSpaces_________")
+    for i, v in pairs(winMSpaces) do
+      print(i .. ": " .. "mspace " .. tostring(winMSpaces[i].mspace))
+      print("id: " .. winMSpaces[i].win:application():name())
+      local ms = ""
+      for j = 1, #mspaces do
+        ms = ms .. tostring(winMSpaces[i].mspace[j]) .. ", "
+      end
+      print("mSpaces: " .. ms)
+
+      for j = 1, #mspaces do -- frame
+        print(tostring(winMSpaces[i].frame[j]))
+      end
+
+    end
+    --print("=====")
+    --print(hs.application.find("WhatsApp"))
   end)
 
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "k", function()
@@ -1031,7 +1050,16 @@ function goToSpace(target)
   menubar:setTitle(tostring(mspaces[target])) -- menubar
   currentMSpace = target
 
-  --focusLastWindow()
+  --fb
+  -- put focus on window on the newly-moved-to mSpace
+  winAll = filter_all:getWindows() -- sorts windows by last focused first -> not necessary: hs.window.sortByFocused)
+  for i = 1, #winAll do
+    if winMSpaces[getWinMSpacesPos(winAll[i])].mspace[target] then
+      winMSpaces[getWinMSpacesPos(winAll[i])].win:focus()
+      --i = #winMSpaces + 1
+      break
+    end
+  end
 end
 
 
@@ -1046,21 +1074,9 @@ function moveToSpace(target, origin)
 
   -- always keep frame of MSpase of origin
   winMSpaces[getWinMSpacesPos(fwin)].frame[target] = winMSpaces[getWinMSpacesPos(fwin)].frame[origin]
-
-  --focusLastWindow()
 end
 
 
--- focus previous focused window when moving windows/switching spaces/closing windows??
-function focusLastWindow()
-  -- focus window (last used)
-  for i = 1, #winAll do   -- winAll seems sorted last focused first
-    if winMSpaces[getWinMSpacesPos(winAll[i])].mspace[currentMSpace] then
-      winMSpaces[getWinMSpacesPos(winAll[i])].win:focus()
-      break
-    end
-  end
-end
 
 
 function refreshWinMSpaces(w)

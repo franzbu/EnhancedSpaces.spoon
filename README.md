@@ -37,7 +37,6 @@ Once you have installed SpaceHammer, add the following lines to your `~/.hammers
 local SpaceHammer = hs.loadSpoon('SpaceHammer')
 
 SpaceHammer:new({
-  -- mSpaces:
   mSpaces = { '1', '2', '3', 'E', 'T' }, -- default { '1', '2', '3' }
   startmSpace = 'E', -- default 2
 })

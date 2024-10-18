@@ -17,7 +17,7 @@ One last thing before we dive in: windows and mSpaces can be handled using your 
 
 ## Installation
 
-SpaceHammer requires [Hammerspoon](https://www.hammerspoon.org/), so if you have not been using it yet, go ahead with its installation. Besides installing Hammerspoon for SpaceHammer's sake, you might be further interested in Hammerspoon's virtually endless potential for adding taylor-made customizations to your macOS. 
+SpaceHammer requires [Hammerspoon](https://www.hammerspoon.org/), so if you have not been using the latter yet, go ahead with its installation. Besides installing Hammerspoon for SpaceHammer's sake, you might be further interested in Hammerspoon's virtually endless possibilities for taylor-made customizations for your macOS. 
 
 To install SpaceHammer, after downloading and unzipping, move the folder to ~/.hammerspoon/Spoons and make sure the name of the folder is 'SpaceHammer.spoon'. 
 
@@ -66,7 +66,7 @@ The below lines represent the default setup, and you do not need to add them to 
   ...
 ```
 
-You can also move windows to adjacent mSpaces by pressing 'alt' or 'ctrl' and dragging 80 percent of more of it beyond the left or right screen border. If you release the modifier before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you move along with the window. In case you would like to change these mouse modifier keys, you can add the following lines to your 'init.lua' and adjust them to your liking:
+You can also move a window to an adjacent mSpace by pressing 'alt' or 'ctrl' and dragging 80 percent or more of the window beyond the left or right screen border. If you release the modifier before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you switch to the new mSpace. In case you would like to change these mouse modifier keys, you can add the following lines to your 'init.lua' and adjust them to your liking:
 
 ```lua
 
@@ -139,7 +139,7 @@ As before, the below lines represent the default setup, and you do not need to a
   ...
   -- keyboard shortcuts for switching between windows on one mSpace...
   -- ... and between references of one and the same window on different mSpaces
-  modifierSwitchWin = { 'alt' }, -- default: modifier1
+  modifierSwitchWin = { 'alt' }, -- default: { 'alt' }
   modifierSwitchWinKeys = { 'tab', 'escape' }, -- default: { 'tab', 'escape' }
   ...
 ```
@@ -157,14 +157,14 @@ With SpaceHammer you can automatically resize and position the windows on your m
 
 ### Manual Moving and Positioning
 
-To make moving windows easier than the usual clicking on the title bar (which you are still free to do), hold 'alt' or 'ctrl' down, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
+To make moving windows easier than the usual clicking on the title bar (which you are still free to do), hold 'modifier1' or 'modifier2' down, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
 
 
 ### Automatic Resizing and Positioning - Mouse, Trackpad
 
 For automatic resizing and positioning of a window, you simply move between 10 and 80 percent of the window beyond the left, right, or bottom borders of your screen using while pressing 'alt' or 'ctrl'. 
 
-As long as windows are resized - or moved within the borders of the screen -, it makes no difference whether you use your 'alt' or 'ctrl'. However, once a window is moved beyond the screen borders, different positioning and resizing scenarios are called into action; they are as follows:
+As long as windows are resized - or moved within the borders of the screen -, it makes no difference whether you use 'modifier1' or 'modifier2'. However, once a window is moved beyond the screen borders, different positioning and resizing scenarios are called into action; they are as follows:
 
 * modifier1 ('alt', unless changed): 
   * If windows are moved beyond the left (right) borders of the screen: imagine your screen border divided into three sections: if the cursor crosses the screen border in the middle section, the window snaps into the left (right) half of the screen. Crossing the screen border in the upper and lower sections, the window snaps into the respective quarters of the screen.
@@ -260,8 +260,6 @@ As has been mentioned, these keyboard shortcuts are fully customizable. Let us f
 
 In case you would like to make changes, you are free to combine any of the three modifiers 'modifierSnap1', 'modifierSnap1', and 'modifierSnap1' with any scenarios.
 
-
-
 This is best shown by means of an example: let us assume for a moment that you just need windows to snap into three different grid positions:
 - (1) right half of screen -> 'a2'
 - (2) right middle ninth of screen -> 'b11'
@@ -283,15 +281,15 @@ Let us further assume that you would like to use modifierSnap2 with the keys 'j'
   },
   ...
 ```
-As you can see in the example above, 'modifierSnapKey1' and 'modifierSnapKey3' are not used and are therefore without any entries. 'modifierSnapKey2' then consequently contains the three desired shortcuts. 
+As you can see in the example above, 'modifierSnapKey1' and 'modifierSnapKey3' are not used and are therefore without any entries. 'modifierSnapKey2' consequently contains the three desired shortcuts. 
 
-Now, by pressing 'modifierSnapKey1' and 'j', for example, scenario 'a2' is activated, which means that the active window snaps into the right half of the screen.
+Now, by pressing 'modifierSnapKey2' and 'j', for example, scenario 'a2' is activated, which means that the active window snaps into the right half of the screen.
 
 ## Additional Features
 
 ### Padding
 
-In case you would like to change the padding in between the windows, add the following lines with values to your liking to your 'init.lua':
+In case you would like to change the padding in between the windows and/or between the windows and the screen border, add the following lines with values to your liking to your 'init.lua':
 
 ```lua
   ...
@@ -304,7 +302,7 @@ In case you would like to change the padding in between the windows, add the fol
 
 ### Change Size, Color, and Opacity of Grid Indicators
 
-In case you would like to change the size, color and/or opacity of the grid indicators, add the following line to your 'init.lua'. The values, in this order, stand for: width, red, green, blue, opacity. Apart from the width, values between 0 and 1 are possible:
+In case you would like to change the size, color and/or opacity of the grid indicators, add the following line to your 'init.lua' and alter then according to your liking. The values, in the same order, stand for: width, red, green, blue, opacity. Apart from the width, values between 0 and 1 are possible:
 
 ```lua
   ...
@@ -316,18 +314,18 @@ In case you would like to change the size, color and/or opacity of the grid indi
 
 ### Restart
 
-- If you restart SpaceHammer, the windows on the current mSpace remain the way they were before the restart, while the windows that were placed on other mSpaces will be moved to the current mSpace. 
+- If you restart SpaceHammer, the windows on the current mSpace remain the way they were before the restart, while the windows that were placed on other mSpaces before the restart will be moved to the current mSpace. 
 
 This also means that if at some point you want to stop using SpaceHammer, either move all windows to the current mSpace first, or simply restart SpaceHammer one more time.
 
-As an optional experimental feature, SpaceHammer can automatically move windows of pre-set applications to specific mSpaces, be it at the start of SpaceHammer or later; more in the section 'Open Windows in Pre-Arranged mSpaces' below.
+As an optional experimental feature, SpaceHammer can automatically move windows of applications to specific mSpaces, be it at the start of SpaceHammer or later; more in the section 'Open Windows in Pre-Arranged mSpaces' below.
 
 
 ## Experimental Features
 
 ### Open Windows in Pre-Arranged mSpaces
 
-If you want SpaceHammer to open windows in specific mSpaces, add the following lines to your 'init.lua': 
+If you want SpaceHammer to automatically move windows to specific mSpaces when opened, add the following lines to your 'init.lua': 
 
 ```lua
   ...
@@ -353,8 +351,9 @@ The way appications are assigend mSpaces is self-explanatory. To get the names o
   end)
   ...
 ```
+Now press the keyboard shortcut and open the Hammerspoon Console to see the output. 
 
-In case you would also like to pre-define the position of the window in the mSpace, you can add that information as a third option:
+In case you would also like to pre-define the position of the window within the mSpace, you can add that information as a third option:
 
 ```lua
   ...
@@ -362,13 +361,13 @@ In case you would also like to pre-define the position of the window in the mSpa
     {'Google Chrome', '2', 'a1'},
     {'Code', '2', 'a2'},
     {'WhatsApp', '3', 'a1'},
-    {'Microsoft To Do', 'T'}, -- no position assigned here, you can do that for just the apps you want to
+    {'Microsoft To Do', 'T'},
     {'Email', 'E' 'a7'},
   },
   ...
 ```
 
-'a1' represents the left half of your screen, 'a2' for the right half of your screen, and 'a7' for the whole screen. To get the full list of possible positions, see section 'Automatic Resizing and Positioning - Keyboard'.
+'a1' represents the left half of your screen, 'a2' for the right half of your screen, and 'a7' the whole screen. To get the full list of possible positions, see section 'Automatic Resizing and Positioning - Keyboard'.
 
 
 ### Manual Resizing

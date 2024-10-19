@@ -48,7 +48,7 @@ Restart Hammerspoon and you are ready to go. All you will see for now is a new i
 
 ## mSpaces
 
-The default setup uses 'ctrl' and 'tab' to cycle through your mSpaces. To cycle in reverse order, additionally press 'shift'. To move the active window to the mSpace left (right) and switch there alongside the window, press 'ctrl' and 'q' ('w'); to move the window while staying on the current mSpace press 'e' instead of 'q' ('r' instead of 'w').
+The default setup uses 'ctrl' and 'tab' to cycle through your mSpaces. To cycle in reverse order, additionally press 'shift'. To move the active window to the mSpace left (right) and switch there alongside the window, press 'ctrl' and 'q' ('w'); to move the window while staying on the current mSpace press 'a' instead of 'q' ('s' instead of 'w').
 
 
 The below lines represent the default setup, and you do not need to add them to your 'init.lua' unless you want to change the shortcuts:
@@ -56,7 +56,7 @@ The below lines represent the default setup, and you do not need to add them to 
 ```lua
   ...
   modifierMS = { 'ctrl' }, -- default: { 'ctrl' }
-  modifierMSKeys = { 'tab', 'q', 'w', 'e', 'r' }, -- default: { 'tab', 'q', 'w', 'e', 'r' }
+  modifierMSKeys = { 'tab', 'q', 'w', 'a', 's' }, -- default: { 'tab', 'q', 'w', 'a', 's' }
   ...
 ```
 
@@ -415,5 +415,3 @@ In case you have used the option 'openAppMSpace', disable or remove that section
 
 
 Afterwards delete the folder 'SpaceHammer.spoon' in '~/.hammerspoon/Spoons/' and delete the corresponding section in your 'init.lua'.
-
-

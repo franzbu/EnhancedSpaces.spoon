@@ -197,46 +197,46 @@ To resize and move the active window into a 3x3 grid position, use `modifierSnap
 Below you find the pre-assigned keyboard shortcuts.
 
 #### 2x2 Grid
-- 'modifierSnap1' and '1': left half of screen -> 'a1'
-- 'modifierSnap1' and '2': right half of screen -> 'a2'
-- 'modifierSnap1' and '3': top left quarter of screen -> 'a3'
-- 'modifierSnap1' and '4': bottom left quarter of screen -> 'a4'
-- 'modifierSnap1' and '5': top right quarter of screen -> 'a5'
-- 'modifierSnap1' and '6': bottom right quarter of screen -> 'a6'
-- 'modifierSnap1' and '7': whole screen -> 'a7'
-- 'modifierSnap1' and '8': size as is, center of screen -> 'a8'
+- `modifierSnap1` and `1`: left half of screen -> 'a1'
+- `modifierSnap1` and `2`: right half of screen -> 'a2'
+- `modifierSnap1` and `3`: top left quarter of screen -> 'a3'
+- `modifierSnap1` and `4`: bottom left quarter of screen -> 'a4'
+- `modifierSnap1` and `5`: top right quarter of screen -> 'a5'
+- `modifierSnap1` and `6`: bottom right quarter of screen -> 'a6'
+- `modifierSnap1` and `7`: whole screen -> 'a7'
+- `modifierSnap1` and `8`: size as is, center of screen -> 'a8'
 
 
 #### 3x3 Grid
-- 'modifierSnap2' and '1': left third of screen -> 'b1'
-- 'modifierSnap2' and '2': middle third of screen -> 'b2'
-- 'modifierSnap2' and '3': right third of screen -> 'b3'
-- 'modifierSnap2' and '4': left top ninth of screen -> 'b4'
-- 'modifierSnap2' and '5': left middle ninth of screen -> 'b5'
-- 'modifierSnap2' and '6': left bottom ninth of screen -> 'b6'
-- 'modifierSnap2' and '7': middle top ninth of screen -> 'b7'
-- 'modifierSnap2' and '8': middle middle ninth of screen -> 'b8'
-- 'modifierSnap2' and '9': middle bottom ninth of screen -> 'b9'
-- 'modifierSnap2' and '0': right top ninth of screen -> 'b10'
-- 'modifierSnap2' and 'o': right middle ninth of screen -> 'b11'
-- 'modifierSnap2' and 'p': right bottom ninth of screen -> 'b12'
+- `modifierSnap2` and `1`: left third of screen -> 'b1'
+- `modifierSnap2` and `2`: middle third of screen -> 'b2'
+- `modifierSnap2` and `3`: right third of screen -> 'b3'
+- `modifierSnap2` and `4`: left top ninth of screen -> 'b4'
+- `modifierSnap2` and `5`: left middle ninth of screen -> 'b5'
+- `modifierSnap2` and `6`: left bottom ninth of screen -> 'b6'
+- `modifierSnap2` and `7`: middle top ninth of screen -> 'b7'
+- `modifierSnap2` and `8`: middle middle ninth of screen -> 'b8'
+- `modifierSnap2` and `9`: middle bottom ninth of screen -> 'b9'
+- `modifierSnap2` and `0`: right top ninth of screen -> 'b10'
+- `modifierSnap2` and `o`: right middle ninth of screen -> 'b11'
+- `modifierSnap2` and `p`: right bottom ninth of screen -> 'b12'
 
 
 #### 3x3 Grid - Double (and Quadruple) Sizes
 You can have windows take up more cells on the 3x3 grid (the 3x3 grid consists of 9 cells). The pre-defined positions and sizes are as follows (descriptions might be difficult to follow; so simply try the keyboard shortcuts out):
 
-- 'modifierSnap3' and '1': left two thirds of screen': 6 cells -> 'c1'
-- 'modifierSnap3' and '2': right two thirds of screen': 6 cells -> 'c2'
-- 'modifierSnap3' and '3': left third, upper two cells -> 'c3'
-- 'modifierSnap3' and '4': left third, lower two cells -> 'c4'
-- 'modifierSnap3' and '5': middle third, upper two cells -> 'c5'
-- 'modifierSnap3' and '6': middle third, lower two cells -> 'c6'
-- 'modifierSnap3' and '7': right third, upper two cells -> 'c7'
-- 'modifierSnap3' and '8': right third, lower two cells -> 'c8'
-- 'modifierSnap3' and '9': top left and middle thirds': 4 cells -> 'c9'
-- 'modifierSnap3' and '0': bottom left and middle thirds': 4 cells -> 'c10'
-- 'modifierSnap3' and 'o': top middle and right thirds': 4 cells -> 'c11'
-- 'modifierSnap3' and 'p': bottom middle and right thirds': 4 cells -> 'c12'
+- `modifierSnap3` and `1`: left two thirds of screen: 6 cells -> 'c1'
+- `modifierSnap3` and `2`: right two thirds of screen: 6 cells -> 'c2'
+- `modifierSnap3` and `3`: left third, upper two cells -> 'c3'
+- `modifierSnap3` and `4`: left third, lower two cells -> 'c4'
+- `modifierSnap3` and `5`: middle third, upper two cells -> 'c5'
+- `modifierSnap3` and `6`: middle third, lower two cells -> 'c6'
+- `modifierSnap3` and `7`: right third, upper two cells -> 'c7'
+- `modifierSnap3` and `8`: right third, lower two cells -> 'c8'
+- `modifierSnap3` and `9`: top left and middle thirds: 4 cells -> 'c9'
+- `modifierSnap3` and `0`: bottom left and middle thirds: 4 cells -> 'c10'
+- `modifierSnap3` and `o`: top middle and right thirds: 4 cells -> 'c11'
+- `modifierSnap3` and `p`: bottom middle and right thirds: 4 cells -> 'c12'
 
 As has been mentioned, these keyboard shortcuts are fully customizable. Let us first have a look at the standard setup, i.e., the way the keyboard shortcuts are pre-defined:
 

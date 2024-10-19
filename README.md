@@ -17,11 +17,11 @@ One last thing before we dive in: SpaceHammer has been designed to handle your w
 
 ## Installation
 
-SpaceHammer requires [Hammerspoon](https://www.hammerspoon.org/), so if you have not been using the latter yet, go ahead with its installation. Besides installing Hammerspoon for SpaceHammer's sake, at a later stage you might also be interested in Hammerspoon's virtually endless possibilities for taylor-made customizations for your macOS. 
+SpaceHammer requires [Hammerspoon](https://www.hammerspoon.org/), so if you have not been using the latter yet, go ahead with its installation. Besides installing Hammerspoon for SpaceHammer's sake, at a later stage you might also be interested in Hammerspoon's virtually endless possibilities for taylor-made customizations of your macOS. 
 
 To install SpaceHammer, after downloading and unzipping, move the folder to ~/.hammerspoon/Spoons and make sure the name of the folder is 'SpaceHammer.spoon'. 
 
-Alternatively, run the following command in a terminal window:
+Alternatively, run the following terminal command:
 
 ```bash
 
@@ -31,7 +31,7 @@ mkdir -p ~/.hammerspoon/Spoons && git clone https://github.com/franzbu/SpaceHamm
 
 ## Usage
 
-Once you have installed SpaceHammer, add the following lines to your `~/.hammerspoon/init.lua` file:
+Once you have installed SpaceHammer, add the following lines to your `~/.hammerspoon/init.lua` file, you might want to adjust the amount and names of your mSpaces and 'startmSpace', which is the mSpace you will be greeted with:
 
 ```lua
 local SpaceHammer = hs.loadSpoon('SpaceHammer')
@@ -42,16 +42,14 @@ SpaceHammer:new({
 
 ```
 
-You might be interested in adjusting the amount and names of your mSpaces and your default mSpace; to do so change the according lines above. 
-
-Restart Hammerspoon and you are ready to go. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let us find out how to interact with mSpaces.
+Restart Hammerspoon and you are ready to go. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let us find out what you can do with your new mSpaces.
 
 ## mSpaces
 
-The default setup uses 'ctrl' and 'tab' to cycle through your mSpaces. To cycle in reverse order, additionally press 'shift'. To move the active window to the mSpace left (right) and switch there alongside the window, press 'ctrl' and 'q' ('w'); to move the window while staying on the current mSpace press 'a' instead of 'q' ('s' instead of 'w').
+The default setup uses 'ctrl' and 'tab' to cycle through your mSpaces. To cycle in reverse order, additionally press 'shift'. To move the active window to the mSpace left (right) and switch there alongside with the window, press 'ctrl' and 'q' ('w'); to move the window while staying on the current mSpace press 'a' instead of 'q' ('s' instead of 'w').
 
 
-The below lines represent the default setup, and you do not need to add them to your 'init.lua' unless you want to change the shortcuts:
+The below lines represent the default setup, and you do not need to add them to your 'init.lua' unless you want to apply changes:
 
 ```lua
   ...
@@ -60,7 +58,7 @@ The below lines represent the default setup, and you do not need to add them to 
   ...
 ```
 
-Alternatively, you can use your pointing device to move a window to an adjacent mSpace by pressing 'alt' or 'ctrl' and dragging 80 percent or more of the window beyond the left or right screen border. If you release the modifier before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you switch to the mSpace alongside the window. In case you would like to change these mouse modifier keys, you can add the following lines to your 'init.lua' and adjust them to your liking:
+Alternatively, you can use your pointing device to move a window to an adjacent mSpace by pressing 'alt' or 'ctrl' and dragging 80 percent or more of the window beyond the left or right screen border. If you release the modifier before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you switch to the mSpace alongside with the window. In case you would like to change these mouse modifier keys, you can add the following lines to your 'init.lua' and adjust them to your liking:
 
 ```lua
 

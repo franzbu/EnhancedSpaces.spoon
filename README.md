@@ -48,8 +48,7 @@ Restart Hammerspoon and you are ready to go; it is normal that the start of Spac
 
 You can use the Control ('ctrl' ) and the 's' keys to cycle through your mSpaces. To cycle in reverse order, press 'ctrl' and 'a'. To move the active window to the mSpace left (right) and switch there alongside with the window, press 'ctrl' and 'q' ('w'); to move the window while staying on the current mSpace press 'ctrl' and 'd' ('ctrl' and 'w').
 
-
-The below lines represent the default setup, and you do not need to add them to your 'init.lua' unless you want to apply changes:
+The lines below represent the default setup, and you do not need to add them to your 'init.lua' unless you want to apply changes:
 
 ```lua
   ...
@@ -413,3 +412,49 @@ In case you have used the option 'openAppMSpace', disable or remove that section
 
 
 Afterwards delete the folder 'SpaceHammer.spoon' in '~/.hammerspoon/Spoons/' and delete the corresponding section in your 'init.lua'.
+
+## Additional Notes
+
+### Hyper Key
+
+#### Option 1
+
+The Caps Lock key can be set up as so called hyper key, which basically functions as an additional modifier, as - due to impracticability - you would hardly be tempted to use the combination of four modifiers otherwise. You then can use the Caps Lock key to trigger functions in SpaceHammer (and other applications for that matter). 
+
+The application [Karabiner Elements](https://karabiner-elements.pqrs.org/) can, among others, be used for creating the hyper key. In 'Settings - Complex Modifications' you can 'Add predefined rule' and search for 'Caps Lock → Hyper Key (⌃⌥⇧⌘) (Caps Lock if alone)'. As the name suggests, you keep the original function of Caps Lock when pressed and released, while it at the same time functions as hyper key when another key is pressed before Caps Lock is released.
+
+#### Option 2
+
+As a further option, you can extend Caps Lock's functionality by using a single press (without any other keys) of Caps Lock as simulating pressing the hyper key and spacebar keys, which in turn can be used to open an application such as Alfred. 
+
+Caps Lock can still be triggered by pressing the Shift and Caps Lock keys. The original purpose of Caps Lock is still available, as you can trigger this function by pressing the Shift and Caps Lock keys simultaneously.
+
+In case you want to set this up, go to 'Settings - Complex Modifications', click 'Add your own rule' and paste the following lines:
+
+```bash
+{
+    "description": "Hyper key implementation",
+    "manipulators": [
+        {
+            "from": { "key_code": "caps_lock" },
+            "to": [
+                {
+                    "key_code": "left_option",
+                    "modifiers": ["left_command", "left_control", "left_shift"]
+                }
+            ],
+            "to_if_alone": [
+                {
+                    "key_code": "spacebar",
+                    "modifiers": ["left_command", "left_control", "left_option", "left_shift"]
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}
+```
+
+
+
+

@@ -404,11 +404,13 @@ Afterwards delete the folder `SpaceHammer.spoon` in `~/.hammerspoon/Spoons/` and
 
 ### Increased Responsiveness
 
-Hammerspoon's response to subscribed filters is somewhat delayed. In case these subscriptions are used, moving a window on a screen and switch to another mSpace within the fraction of a second can have repercussions; it can be that the coordinates of the window have not been updated yet, which means you will not find the window in the position you have left it when moving back to the original mSpace.
+When repositioning or resizing a window, its coordinates get updated. However, as this depends on Hammerspoon's filter subscription, which happens to have a delay of approximately one second, the new coordinates of such a window are updated with that delay. 
 
-A workaround for this issue has been implemented in the form of an alternative for the filter description. 
+This can have repercussions: If you switch to another mSpace right after moving a window and before the coordinates have been properly updated, you will not find that window on its expected place when returning to that mSpace. This should not be an issue for most use scenarios.
 
-For those who prefer a the standard implementation, add the following lines to your `init.lua`:
+Nevertheless, as a workaround SpaceHammer updates the coordinates of the focused window five times a second and thus ensures that the coordinates are up to date.
+
+No tests have been run, but this workaround could lead to a slightly higher usage of processing power. If you therefore prefer to use the somewhat slower filter subscription method, you can add the following lines to your `init.lua`:
 
 ```lua
   ...

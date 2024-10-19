@@ -9,7 +9,7 @@ SpaceHammer.author = "Franz B. <csaa6335@gmail.com>"
 SpaceHammer.homepage = "https://github.com/franzbu/SpaceHammer.spoon"
 SpaceHammer.winMSpaces = "MIT"
 SpaceHammer.name = "SpaceHammer"
-SpaceHammer.version = "0.7.3"
+SpaceHammer.version = "0.8"
 SpaceHammer.spoonPath = scriptPath()
 
 local dragTypes = {
@@ -58,7 +58,7 @@ function SpaceHammer:new(options)
   modifierReference = options.modifierReference or { 'ctrl', 'shift' } 
     
   modifierMS = options.modifierMS or modifier2
-  modifierMSKeys = {'a', 's', 'd', 'f', 'q', 'w'}
+  modifierMSKeys = options.modifierMSKeys or { 'tab', 'q', 'w', 'e', 'r' }
 
   openAppMSpace = options.openAppMSpace or nil
 
@@ -92,7 +92,6 @@ function SpaceHammer:new(options)
   mspaces = options.mSpaces or { '1', '2', '3' }
   startMSpace = indexOf(options.MSpaces, options.startMSpace) or 2
   currentMSpace = startMSpace
-  previousMSpace = startMSpace
 
   gridIndicator = options.gridIndicator or { 20, 1, 0, 0, 0.5 }
 
@@ -174,7 +173,7 @@ function SpaceHammer:new(options)
   end)
   --]]
 
-  ---[[ -- flagsKeyboardTracker
+  --[[ -- flagsKeyboardTracker
   -- 'subscribe', watchdog for modifier keys
   cycleModCounter = 0 
   local events = hs.eventtap.event.types
@@ -205,6 +204,7 @@ function SpaceHammer:new(options)
     prevModifier = flagsKeyboardTracker
   end)
   keyboardTracker:start()
+  --]]
 
   ---[[
   -- cycle throuth windows on current mSpace
@@ -216,12 +216,12 @@ function SpaceHammer:new(options)
   switcher.ui.textSize = 16
   switcher.ui.showSelectedTitle = false
   hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[1], function()
-    cycleAll = false --true when cycling through all apps (if on other mSpaces necessary to switch there)
+    --cycleAll = false --true when cycling through all apps (if on other mSpaces necessary to switch there)
     switcher:next()
     --after release of modifierSwitchWin, watchdog initiates whatever needs to be done
   end)
   hs.hotkey.bind({modifierSwitchWin[1], 'shift' }, modifierSwitchWinKeys[1], function()
-    cycleAll = false --true when cycling through all apps
+    --cycleAll = false --true when cycling through all apps
     switcher:previous()
   end)
   --]]
@@ -273,32 +273,32 @@ function SpaceHammer:new(options)
 
   --_________ switching spaces / moving windows _________
   hs.hotkey.bind(modifierMS, modifierMSKeys[1], function() -- previous space (incl. cycle)
-    currentMSpace = getprevMSpaceNumber(currentMSpace)
-    goToSpace(currentMSpace)
-  end)
-  hs.hotkey.bind(modifierMS, modifierMSKeys[2], function() -- next space (incl. cycle)
     currentMSpace = getnextMSpaceNumber(currentMSpace)
     goToSpace(currentMSpace)
   end)
-  hs.hotkey.bind(modifierMS, modifierMSKeys[3], function() -- move active window to previous space (incl. cycle)
-    -- move window to prev space
-    moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace)
+  hs.hotkey.bind(mergeModifiers(modifierMS, {'shift'}) , modifierMSKeys[1], function() -- next space (incl. cycle)
+    currentMSpace = getprevMSpaceNumber(currentMSpace)
+    goToSpace(currentMSpace)
   end)
-  hs.hotkey.bind(modifierMS, modifierMSKeys[4], function() -- move active window to next space (incl. cycle)
-    -- move window to next space
-    moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace)
-  end)
-  hs.hotkey.bind(modifierMS, modifierMSKeys[5], function() -- move active window to previous space and switch there (incl. cycle)
+  hs.hotkey.bind(modifierMS, modifierMSKeys[2], function() -- move active window to previous space and switch there (incl. cycle)
     -- move window to prev space and switch there
     moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace)
     currentMSpace = getprevMSpaceNumber(currentMSpace)
     goToSpace(currentMSpace)
   end)
-  hs.hotkey.bind(modifierMS, modifierMSKeys[6], function() -- move active window to next space and switch there (incl. cycle)
+  hs.hotkey.bind(modifierMS, modifierMSKeys[3], function() -- move active window to next space and switch there (incl. cycle)
     -- move window to next space and switch there
       moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace)
       currentMSpace = getnextMSpaceNumber(currentMSpace)
       goToSpace(currentMSpace)
+  end)
+  hs.hotkey.bind(modifierMS, modifierMSKeys[4], function() -- move active window to previous space (incl. cycle)
+    -- move window to prev space
+    moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace)
+  end)
+  hs.hotkey.bind(modifierMS, modifierMSKeys[5], function() -- move active window to next space (incl. cycle)
+    -- move window to next space
+    moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace)
   end)
 
   -- goto mspaces directly with 'modifierMoveWinMSpace-<name of mspace>'
@@ -343,7 +343,7 @@ function SpaceHammer:new(options)
   end
 
   -- debug
-  ---[[
+  --[[
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "m", function()
    print("_______winAll_________")
     for i, v in pairs(winAll) do
@@ -1048,7 +1048,6 @@ end
 
 
 winOnlyMoved = false -- prevent watchdog from giving focus to window if it has been moved to other mspace without switching there
-boolGoToSpace = false -- prevent rapid shifting of focus (goToSpace() and cmdTabFocus() loop), i.e., cmdTabFocus() is not called by goToSpace() anymore (needs bo be called by window switcher only in the first place)
 function goToSpace(target)
   winOnlyMoved = false
   max = hs.screen.mainScreen():frame()
@@ -1059,24 +1058,9 @@ function goToSpace(target)
       winMSpaces[i].win:setTopLeft(hs.geometry.point(max.w - 1, max.h))
     end
   end
-  previousMSpace = currentMSpace
   currentMSpace = target
-  menubar:setTitle(tostring(mspaces[target])) -- menubar
-  
-  --[[  
-  -- fb: put focus on window on the newly-moved-to mSpace
-  boolGoToSpace = true
-  winAll = filter_all:getWindows() -- sort windows by last focused first -> not necessary: hs.window.sortByFocused)
-  for i = 1, #winAll do
-    if winMSpaces[getWinMSpacesPos(winAll[i])].mspace[target] then
-      winMSpaces[getWinMSpacesPos(winAll[i])].win:focus()
-      break
-    end
-  end
-  hs.timer.doAfter(0.3, function()
-    boolGoToSpace = false
-  end)
-  --]]
+  menubar:setTitle(tostring(mspaces[target]))
+
 end
 
 
@@ -1118,8 +1102,6 @@ function refreshWinMSpaces(w)
   -- delete closed or minimized windows
   for i = 1, #winMSpaces do
     if not isIncludedWinAll(winMSpaces[i].win) then
-      -- do not switch mSpace if window has been closed/minimized
-      goToSpace(previousMSpace)
       table.remove(winMSpaces, i)
       break
     end
@@ -1153,11 +1135,11 @@ function refreshWinMSpaces(w)
   winOnlyMoved = false
 end
 
---fb
+
 -- when 'normal' window switchers such as altTab or macOS' cmd-tab are used, cmdTabFocus() switches to correct mSpace
 function cmdTabFocus(w)
   -- when choosing to switch to window by cycling through all apps, go to mSpace of chosen window
-  if w ~= nil and not boolGoToSpace then
+  if w ~= nil then
     if not winMSpaces[getWinMSpacesPos(w)].mspace[currentMSpace] then -- in case focused window is not on current mSpace, switch to the one containing it
       for i = 1, #mspaces do
         if winMSpaces[getWinMSpacesPos(w)].mspace[i] then

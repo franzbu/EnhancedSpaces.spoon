@@ -223,7 +223,7 @@ Below you find the pre-assigned keyboard shortcuts.
 
 
 #### 3x3 Grid - Double (and Quadruple) Sizes
-You can have windows take up more cells on the 3x3 grid (the 3x3 grid consists of 9 cells). The pre-defined positions and sizes are as follows (descriptions might be difficult to follow; so simply try the keyboard shortcuts out):
+You can have windows take up more cells on the 3x3 grid. The pre-defined positions and sizes are as follows (descriptions might be tricky; so simply try the keyboard shortcuts out):
 
 - `modifierSnap3` and `1`: left two thirds of screen: 6 cells -> 'c1'
 - `modifierSnap3` and `2`: right two thirds of screen: 6 cells -> 'c2'
@@ -277,7 +277,7 @@ Let us further assume that you would like to use `modifierSnap2` with the keys `
 ```
 As you can see in the example above, `modifierSnapKey2` and `modifierSnapKey3` are not used and are therefore without any entries.
 
-Now, by pressing `modifierSnapKey1` and `j`, for example, scenario `a2` is activated, which means that the active window snaps into the right half of the screen.
+Now, by pressing `modifierSnapKey1` and `j`, for example, scenario 'a2' is activated, which means that the active window snaps into the right half of the screen.
 
 ## Additional Features
 
@@ -351,7 +351,7 @@ In case you would also like to pre-define the position of the window within the 
   ...
 ```
 
-`a1` represents the left half of your screen, `a2` for the right half of your screen, and `a7` the whole screen. To get the full list of possible positions, see section 'Automatic Resizing and Positioning - Keyboard'.
+'a1' represents the left half of your screen, 'a2' for the right half of your screen, and 'a7' the whole screen. To get the full list of possible positions, see section 'Automatic Resizing and Positioning - Keyboard'.
 
 
 

@@ -170,7 +170,14 @@ function SpaceHammer:new(options)
     refreshWinMSpaces(w)
     cmdTabFocus(w)
   end)
-  if not increasedResponsiveness then
+
+
+  if increasedResponsiveness then
+  -- global variable 'adjustWinFrameTimer' to avoid timer being garbage collected
+    adjustWinFrameTimer = hs.timer.doEvery(0.2, function() 
+      adjustWinFrame()
+    end)
+  else
     filter.default:subscribe(filter.windowMoved, function(w)
       adjustWinFrame()
     end)
@@ -385,12 +392,6 @@ hs.hotkey.bind(modifierReference, "0", function()
   end)
   --]]
 
-  -- global variable 'adjustWinFrameTimer' to avoid timer being garbage collected
-  if increasedResponsiveness then
-    adjustWinFrameTimer = hs.timer.doEvery(0.25, function() 
-      adjustWinFrame()
-    end)
-  end
 
   goToSpace(currentMSpace) -- refresh
   resizer.clickHandler:start()

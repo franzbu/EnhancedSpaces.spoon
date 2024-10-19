@@ -2,13 +2,13 @@
 
 SpaceHammer has been inspired by a variety of tools, among them AeroSpace, Moom and BetterTouchTool. SpaceHammer has simplified my life with macOS; may it do the same for you.
 
-'To simplify one's life is not too bad, but do I need that when it comes to my Mac, and what does this tool actually do to justify spending time with it?', you might ask. 
+'To simplify one's life is not too bad, but do I need that when it comes to my Mac, and what does this tool actually do to justify spending my time with it?', you might ask. 
 
 Well, first, spending your time with SpaceHammer will actually save you time. As far as the features of this tool are concerned, the answer is simple: it helps you organize your workspace, which comes down to two main tasks: managing your spaces and your applications and windows on them. 
 
-When it comes to spaces, SpaceHammer provides a new implementation of what Apple has straightforwardly termed 'Spaces'; in SpaceHammer they are called mSpaces. This means that you can arrange your windows not only on one screen but on as many as you like and then easily switch between these 'screens' or, to use SpaceHammer's terminology, mSpaces. You can actually do more than that with mSpaces, so can you place one window on more than one mSpace at a time; more about that later.
+SpaceHammer provides a new implementation of what Apple has straightforwardly termed 'Spaces'; in SpaceHammer they are called mSpaces. This means that with SpaceHammer you can organize your windows not only on one, but on as many 'screens' as you like and then easily switch between these 'screens' or, to use SpaceHammer's terminology, mSpaces. You can actually do more than that with mSpaces, for example, you can place one window on more than one mSpace at a time; more about that later.
 
-When it comes to organizing windows on mSpaces, they are positioned and resized according to your wishes with keyboard shortcuts or a flick of your pointing device.
+Regarding organizing windows on mSpaces, they are positioned and resized according to your wishes with keyboard shortcuts or a flick of your pointing device.
 
 'Still, this is nothing groundbrakingly new', I hear you say, and you are right. You might be surprised, though, what difference a slightly altered approach can make. But read on and judge for yourself.
 

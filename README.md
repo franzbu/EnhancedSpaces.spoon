@@ -92,7 +92,7 @@ As before, the line below represents the default setup, and you do not need to a
 ```
 
 
-## Same Window on more mSpaces 
+### Same Window on more mSpaces 
 
 By now we have covered the basics, but we have not walked over the finish line yet. That being said, this section is mainly for advanced users, and you can skip it.
 
@@ -114,13 +114,13 @@ To delete a reference, press `modifierReference` and `0`. In case you are 'de-re
 
 
 
-## Switching Between Windows
+### Switching Between Windows
 
 You can use macOS' integrated window switcher (Command-Tab) or third party switchers such as [AltTab](https://alt-tab-macos.netlify.app/) for switching between your windows. Also for switching between the different windows of one application you can use Apple's integrated switcher or any third party alternative.
 
 However, to make use of the advanced features mSpaces provide, SpaceHammer offers additional possibilities for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').
 
-### Switching between Windows of the Current mSpace
+#### Switching between Windows of the Current mSpace
 
 For restricting switching to the windows of your current mSpace only, press `alt` and `tab`. 
 
@@ -138,7 +138,7 @@ As before, the below lines represent the default setup, and you do not need to a
 For cycling through the windows of your current mSpace in reverse order, additionally press `shift`.
 
 
-### Switching between References of Windows
+#### Switching between References of Windows
 
 For switching between the references of a window ('sticky windows'), press `alt` and `escape`. In case you prefer a different key, change the second element in the table `modifierSwitchWinKeys` (see above).
 

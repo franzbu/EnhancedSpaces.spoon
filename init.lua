@@ -95,7 +95,7 @@ function SpaceHammer:new(options)
 
   gridIndicator = options.gridIndicator or { 20, 1, 0.83, 0, 0.4 }
 
-  increasedResponsiveness = options.increasedResponsiveness or false
+  increasedResponsiveness = options.increasedResponsiveness or true
 
   local resizer = {
     disabledApps = tableToMap(options.disabledApps or {}),

@@ -46,7 +46,7 @@ Restart Hammerspoon and you are ready to go; it is normal that the start of Spac
 
 ## mSpaces
 
-You can use the Control (`ctrl`) - in case you are willing to spend some time to set up an elegant alternative in the form of a hyper key, see section 'Notes' - and the 's' keys to cycle through your mSpaces. To cycle in reverse order, press `ctrl` and `a`. To move the active window to the mSpace left (right) and switch there alongside with the window, press `ctrl` and `q` (`w`); to move the window while staying on the current mSpace press `ctrl` and `d` (`ctrl` and `w`).
+You can use the Control (`ctrl`) - in case you are willing to spend some time to set up an elegant alternative in the form of a hyper key, see section 'Notes' - and the `s` keys to cycle through your mSpaces. To cycle in reverse order, press `ctrl` and `a`. To move the active window to the mSpace left (right) and switch there alongside with the window, press `ctrl` and `q` (`w`); to move the window while staying on the current mSpace press `ctrl` and `d` (`ctrl` and `w`).
 
 The lines below represent the default setup, and you do not need to add them to your `init.lua` unless you want to apply changes:
 
@@ -134,7 +134,7 @@ As before, the below lines represent the default setup, and you do not need to a
   ...
 ```
 
-For cycling through the windows of your current mSpace in reverse order, additionally press 'shift'.
+For cycling through the windows of your current mSpace in reverse order, additionally press `shift`.
 
 
 ### Switching between References of Windows
@@ -163,7 +163,7 @@ As long as windows are resized - or moved within the borders of the screen -, it
   * If windows are moved beyond the bottom border of the screen: imagine your bottom screen border divided into three sections: if the cursor crosses the screen border in the middle section, the window snaps into full screen. Crossing the screen border in the left or right sections, the window snaps into the respective halfs of the screen.
 
 * modifier2 (`ctrl`, unless changed): 
-  * The difference to 'modifier1' is that your screen has a 3x3 grid. This means that windows snap into the left third of the 3x3 grid when dragged beyond the left screen border and into the right third when dragged beyond the right screen border. If 'ctrl' is released before the left mouse button, the window will snap into the middle column.
+  * The difference to `modifier1` is that your screen has a 3x3 grid. This means that windows snap into the left third of the 3x3 grid when dragged beyond the left screen border and into the right third when dragged beyond the right screen border. If `ctrl` is released before the left mouse button, the window will snap into the middle column.
  
 * The moment dragging of a window starts, indicators will appear around the borders of the screen to guide you. For changing the appearance of the indicators see section 'Change Size, Color, and Opacity of Grid Indicators' below.
 
@@ -188,9 +188,9 @@ As before, you do not need to add these lines to your `init.lua` unless you want
 
 To resize and move the active window into a 2x2 grid position, use `modifierSnap1` (default the Command and Option keys) and numbers `1-8`. 
 
-To resize and move the active window into a 3x3 grid position, use 'modifierSnap2' and numbers 1-9, additionally `0`, `o`, and `p`. 
+To resize and move the active window into a 3x3 grid position, use `modifierSnap2` and numbers `1-9`, additionally `0`, `o`, and `p`. 
 
-'modifierSnap3' also uses a 3x3 grid; however, the windows snap into different sizes, see '3x3 Grid - Double (and Quadruple) Sizes' below.
+`modifierSnap3` also uses a 3x3 grid; however, the windows snap into different sizes, see '3x3 Grid - Double (and Quadruple) Sizes' below.
 
 Below you find the pre-assigned keyboard shortcuts.
 
@@ -252,7 +252,7 @@ As has been mentioned, these keyboard shortcuts are fully customizable. Let us f
   ...
 ```
 
-In case you would like to make changes, you are free to combine any of the three modifiers `modifierSnap1`, 'modifierSnap1', and `modifierSnap1` with any scenarios.
+In case you would like to make changes, you are free to combine any of the three modifiers `modifierSnap1`, `modifierSnap1`, and `modifierSnap1` with any scenarios.
 
 This is best shown by means of an example: let us assume for a moment that you just need windows to snap into three different grid positions:
 - (1) right half of screen -> 'a2'
@@ -321,7 +321,7 @@ If you want SpaceHammer to automatically move windows to specific mSpaces when o
   ...
 ```
 
-The way appications are assigend mSpaces is self-explanatory. To get the names of the applications you would like to add to the list, you can - among other options - add the following lines to your `init.lua` and open Hammerspoon's Console to access the output; make sure to adjust the keyboard shortcuts to your liking (also make sure to add these lines outside the section 'SpaceHammer:new'):
+The way appications are assigend mSpaces is self-explanatory. To get the names of the applications you would like to add to the list, you can - among other options - add the following lines to your `init.lua` and open Hammerspoon's Console to access the output; make sure to adjust the keyboard shortcuts to your liking (also make sure to add these lines outside the section `SpaceHammer:new`):
 
 ```lua
   ...
@@ -382,7 +382,7 @@ At the center of the window there is an erea (M) where you can also move the win
 
 #### Manual Resizing of Windows - Margin
 
-You can change the size of the area of the window where the vertical-only and horizontal-only resizing applies by adjusting the option 'margin'. The standard value is 0.3, which corresponds to 30 percent. Changing it to 0 results in deactivating this options, changing it to 1 results in deactivating resizing.
+You can change the size of the area of the window where the vertical-only and horizontal-only resizing applies by adjusting the option `margin`. The standard value is 0.3, which corresponds to 30 percent. Changing it to 0 results in deactivating this options, changing it to 1 results in deactivating resizing.
 
 ```lua
   ...
@@ -394,7 +394,7 @@ You can change the size of the area of the window where the vertical-only and ho
 
 ## Uninstall SpaceHammer
 
-In case you have used the option 'openAppMSpace', disable or remove that section from your `init.lua` and restart SpaceHammer afterwards to move all windows on your main mSpace, which after disabling or uninstalling SpaceHammer will become your default space.
+In case you have used the option `openAppMSpace`, disable or remove that section from your `init.lua` and restart SpaceHammer afterwards to move all windows on your main mSpace, which after disabling or uninstalling SpaceHammer will become your default space.
 
 ```lua
   ...

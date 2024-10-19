@@ -113,6 +113,7 @@ As before, the below line represents the default setup, and you do not need to a
 To delete a reference, press `modifierReference` and `0`. In case you are 'de-referencing' the last representation of a window on your mSpaces, the window gets minimized.
 
 
+
 ## Switching Between Windows
 
 You can use macOS' integrated window switcher (Command-Tab) or third party switchers such as [AltTab](https://alt-tab-macos.netlify.app/) for switching between your windows. Also for switching between the different windows of one application you can use Apple's integrated switcher or any third party alternative.
@@ -150,8 +151,6 @@ With SpaceHammer you can automatically resize and position the windows on your m
 ### Manual Moving and Positioning
 
 To make moving windows easier than the usual clicking on the title bar (which you are still free to do), hold `modifier1` or `modifier2` down, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
-
-Note: Due to Hammerspoon's dealing with filter subscriptions, there is a delay of roughly one second after moving a window until the new coordinates of the window have been registered. This is fine as long as you do not switch to a different mSpace within this admittedly small timeframe. However, in case you are bothered by it, there is a workaround in the section 'Increased Responsiveness' below. 
 
 
 ### Automatic Resizing and Positioning - Mouse, Trackpad
@@ -281,31 +280,6 @@ Now, by pressing `modifierSnapKey1` and `j`, for example, scenario 'a2' is activ
 
 ## Additional Features
 
-### Padding
-
-In case you would like to change the padding in between the windows and/or between the windows and the screen border, add the following lines with values to your liking to your `init.lua`:
-
-```lua
-  ...
-  -- padding between window borders and screen borders
-  outerPadding = 5, -- default: 5
-  -- padding between window borders
-  innerPadding = 5, -- default: 5
-  ...
-```
-
-### Change Size, Color, and Opacity of Grid Indicators
-
-In case you would like to change the size, color and/or opacity of the grid indicators, add the following line to your `init.lua` and alter then according to your liking. The values, in the same order, stand for: width, red, green, blue, opacity. Apart from the width, values between 0 and 1 are possible:
-
-```lua
-  ...
-  -- change grid indicators:
-    gridIndicator = { 20, 1, 0.83, 0, 0.4 }, -- default: { 20, 1, 0.83, 0, 0.4 }, 
-
-  ...
-```
-
 
 ### Open Windows in Pre-Arranged mSpaces
 
@@ -314,13 +288,13 @@ If you want SpaceHammer to automatically move windows to specific mSpaces when o
 ```lua
   ...
   openAppMSpace = {
-    {'Google Chrome', '2', 'a1'},
-    {'Code', '2', 'a2'},
-    {'WhatsApp', '3', 'a1'},
-    {'Microsoft To Do', '3', 'a2'},
-    {'Telegram', '2', 'a5'},
-    {'Safari', '2', 'a1'},
-    {'Orion', '2', 'a2'},
+    {'Google Chrome', '2'},
+    {'Code', '2'},
+    {'WhatsApp', '3'},
+    {'Microsoft To Do', '3'},
+    {'Telegram', '2'},
+    {'Safari', '2'},
+    {'Orion', '2'},
     {'Email', '1'},
   }, -- default: nil
   ...
@@ -348,14 +322,42 @@ In case you would also like to pre-define the position of the window within the 
     {'Google Chrome', '2', 'a1'},
     {'Code', '2', 'a2'},
     {'WhatsApp', '3', 'a1'},
-    {'Microsoft To Do', 'T'},
-    {'Email', 'E' 'a7'},
+    {'Microsoft To Do', '3', 'a2'},
+    {'Telegram', '2', 'a5'},
+    {'Safari', '2', 'a1'},
+    {'Orion', '2', 'a2'},
+    {'Email', '1'},
   },
   ...
 ```
 
-'a1' represents the left half of your screen, 'a2' for the right half of your screen, and 'a7' the whole screen. To get the full list of possible positions, see section 'Automatic Resizing and Positioning - Keyboard'.
+'a1', for example, represents the left half of your screen, 'a2' for the right half of your screen. To get the entire list of positions, see section 'Automatic Resizing and Positioning - Keyboard'.
 
+
+### Padding
+
+In case you would like to change the padding in between the windows and/or between the windows and the screen border, add the following lines with values to your liking to your `init.lua`:
+
+```lua
+  ...
+  -- padding between window borders and screen borders
+  outerPadding = 5, -- default: 5
+  -- padding between window borders
+  innerPadding = 5, -- default: 5
+  ...
+```
+
+### Change Size, Color, and Opacity of Grid Indicators
+
+In case you would like to change the size, color and/or opacity of the grid indicators, add the following line to your `init.lua` and alter then according to your liking. The values, in the same order, stand for: width, red, green, blue, opacity. Apart from the width, values between 0 and 1 are possible:
+
+```lua
+  ...
+  -- change grid indicators:
+    gridIndicator = { 20, 1, 0.83, 0, 0.4 }, -- default: { 20, 1, 0.83, 0, 0.4 }, 
+
+  ...
+```
 
 
 ## Experimental Features
@@ -395,44 +397,26 @@ You can change the size of the area of the window where the vertical-only and ho
   ...
 ```
 
-### Increased Responsiveness
-
-Hammerspoon's response to subscribed filters is somewhat delayed. In case you are moving a window on a screen and switch to another mSpace within the fraction of a second, it can happen that the coordinates of the window have not been updated yet in which you will not find the window in the position you have left it when moving back to the original mSpace.
-
-A workaround for this issue has been implemented in  the form of an alternative for the filter description. So, for those of you who prefer a faster response time; to activate it, add the following lines to your `init.lua`:
-
-```lua
-  ...
-  -- increased responsiveness for registering changing the position of windows
-  increasedResponsiveness = true, -- default: false
-  ...
-```
-This workaround has not been implemented yet by default due to its experimental nature; no tests have been done yet, but the increased responsiveness might need more processing power.
-
-
-## Uninstall SpaceHammer
-
-In case you have used the option `openAppMSpace`, disable or remove that section from your `init.lua` and restart SpaceHammer afterwards to move all windows on your main mSpace, which after disabling or uninstalling SpaceHammer will become your default space.
-
-```lua
-  ...
-  --[[
-  openAppMSpace = {
-    {'Google Chrome', '2', 'a1'},
-    {'Code', '2', 'a2'},
-    {'WhatsApp', '3', 'a1'},
-    {'Microsoft To Do', 'T'},
-    {'Email', 'E' 'a7'},
-  },
-  ]]
-  ...
-```
-
-
 Afterwards delete the folder `SpaceHammer.spoon` in `~/.hammerspoon/Spoons/` and delete the corresponding section in your `init.lua`.
 
 
 ## Notes
+
+### Increased Responsiveness
+
+Hammerspoon's response to subscribed filters is somewhat delayed. In case these subscriptions are used, moving a window on a screen and switch to another mSpace within the fraction of a second can have repercussions; it can be that the coordinates of the window have not been updated yet, which means you will not find the window in the position you have left it when moving back to the original mSpace.
+
+A workaround for this issue has been implemented in the form of an alternative for the filter description. 
+
+For those who prefer a the standard implementation, add the following lines to your `init.lua`:
+
+```lua
+  ...
+  -- increased responsiveness for registering changing the position of windows
+  increasedResponsiveness = false, -- default: true
+  ...
+```
+
 
 ### Hyper Key
 
@@ -486,4 +470,21 @@ Now you can assign your newly created hyper key to any of the functions in Space
   ...
 ```
 
-Enjoy!
+
+### Uninstall SpaceHammer
+
+In case you have used the option `openAppMSpace`, disable or remove that section from your `init.lua` and restart SpaceHammer afterwards to move all windows on your main mSpace, which after disabling or uninstalling SpaceHammer will become your default space.
+
+```lua
+  ...
+  --[[
+  openAppMSpace = {
+    {'Google Chrome', '2', 'a1'},
+    {'Code', '2', 'a2'},
+    {'WhatsApp', '3', 'a1'},
+    {'Microsoft To Do', 'T'},
+    {'Email', 'E' 'a7'},
+  },
+  ]]
+  ...
+```

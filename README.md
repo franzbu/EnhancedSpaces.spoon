@@ -12,12 +12,12 @@ Regarding organizing windows on mSpaces, they are positioned and resized accordi
 
 'Still, this is nothing groundbrakingly new', I hear you say, and you are right. You might be surprised, though, what difference a slightly altered approach can make. But read on and judge for yourself.
 
-One last thing before we dive in: SpaceHammer has been designed to handle your windows and mSpaces by using keyboard shortcuts; however, similar to other desktop operations, at times it is simpler and faster to use keyboard and pointing device together. Thus SpaceHammer provides a pointer device alternative whenever it has the potential to be beneficial. 
+One last thing before we dive in: SpaceHammer has been designed to handle your windows and mSpaces by using keyboard shortcuts; however, similar to other operations, at times it is simpler and faster if you have your keyboard and pointing device team up. Thus SpaceHammer provides an alternative using a pointing device whenever it has the potential of being beneficial. 
 
 
 ## Installation
 
-SpaceHammer requires [Hammerspoon](https://www.hammerspoon.org/), so if you have not been using the latter yet, go ahead with its installation. Besides installing Hammerspoon for SpaceHammer's sake, at a later stage you might also be interested in Hammerspoon's virtually endless possibilities for taylor-made customizations of your macOS. 
+SpaceHammer requires [Hammerspoon](https://www.hammerspoon.org/), so if you have not been using the latter yet, go ahead with its installation. Besides installing Hammerspoon for SpaceHammer's sake, you might also be interested in Hammerspoon's virtually endless possibilities for taylor-made customizations of your macOS at a later stage. 
 
 To install SpaceHammer, after downloading and unzipping, move the folder to ~/.hammerspoon/Spoons and make sure the name of the folder is 'SpaceHammer.spoon'. 
 

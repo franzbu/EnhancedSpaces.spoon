@@ -418,7 +418,7 @@ Afterwards delete the folder `SpaceHammer.spoon` in `~/.hammerspoon/Spoons/` and
 
 ### Hyper Key
 
-SpaceHammer (and other applications for that matter) benefits from setting the Caps Lock key up a so called hyper key, which basically means that you get an additional modifier, as - due to impracticability - you would hardly be tempted to use the combination of four modifiers otherwise. 
+SpaceHammer (and other applications for that matter) can benefit from setting the Caps Lock key up a so called hyper key, which basically means that you get an additional modifier, as - due to impracticability - you would hardly be tempted to use the combination of four modifiers otherwise. 
 
 You can use the application [Karabiner Elements](https://karabiner-elements.pqrs.org/) for creating such a hyper key.
 

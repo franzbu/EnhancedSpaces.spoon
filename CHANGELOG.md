@@ -1,5 +1,10 @@
 
   
+# v0.8
+
+* sensible focussing of windows
+
+
 # v0.7.3
 
 * snap: keep size of window and put in in center of screen ('a8')

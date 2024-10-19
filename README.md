@@ -300,17 +300,16 @@ If you want SpaceHammer to automatically move windows to specific mSpaces when o
   ...
 ```
 
-The way appications are assigend mSpaces is self-explanatory. To get the names of the applications you would like to add to the list, you can - among other options - add the following lines to your `init.lua` and open Hammerspoon's Console to access the output; make sure to adjust the keyboard shortcuts to your liking (also make sure to add these lines outside the section `SpaceHammer:new`):
+The way appications are assigend to certain mSpaces is self-explanatory. To get the names of the applications you would like to add to the list, you can - among other possibilities - add the following lines to your `init.lua` and open Hammerspoon's Console to access the output; adjust the keyboard shortcuts to your liking and make sure to add these lines outside the section `SpaceHammer:new`:
 
 ```lua
-  ...
-  -- list names of apps of (visible) windows
-  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "n", function()
-    for i = 1, #winMSpaces do -- frame
-      print(tostring(winMSpaces[i].win:application():name()))
-    end
-  end)
-  ...
+
+-- list names of apps of (visible) windows
+hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "n", function()
+  for i = 1, #winMSpaces do -- frame
+    print(tostring(winMSpaces[i].win:application():name()))
+  end
+end)
 ```
 Now press the keyboard shortcut and open the Hammerspoon Console to see the output. 
 

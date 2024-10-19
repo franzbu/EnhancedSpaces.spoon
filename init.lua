@@ -267,17 +267,17 @@ function SpaceHammer:new(options)
     end)
   end
   -- de-reference
-  hs.hotkey.bind(modifierReference, "0", function()
+hs.hotkey.bind(modifierReference, "0", function()
     derefWinMSpace()
   end)
 
   --_________ switching spaces / moving windows _________
   hs.hotkey.bind(modifierMS, modifierMSKeys[1], function() -- previous space (incl. cycle)
-    currentMSpace = getnextMSpaceNumber(currentMSpace)
+    currentMSpace = getprevMSpaceNumber(currentMSpace)
     goToSpace(currentMSpace)
   end)
   hs.hotkey.bind(modifierMS, modifierMSKeys[2], function() -- next space (incl. cycle)
-    currentMSpace = getprevMSpaceNumber(currentMSpace)
+    currentMSpace = getnextMSpaceNumber(currentMSpace)
     goToSpace(currentMSpace)
   end)
   hs.hotkey.bind(modifierMS, modifierMSKeys[5], function() -- move active window to previous space and switch there (incl. cycle)

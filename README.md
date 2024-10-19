@@ -2,7 +2,7 @@
 
 SpaceHammer has been inspired by a variety of tools, among them AeroSpace, Moom and BetterTouchTool. SpaceHammer has simplified my life with macOS; may it do the same for you.
 
-'To simplify one's life is not too bad, but do I need that when it comes to my Mac, and what does this tool actually do to justify my spending time with it?', you might ask. 
+'To simplify one's life is not too bad, but do I need that when it comes to my Mac, and what does this tool actually do to justify spending time with it?', you might ask. 
 
 Well, first, spending your time with SpaceHammer will actually save you time. As far as the capabilities of this tool are concerned, the answer is simple: it helps you organize your workspace, which comes down to two main tasks: managing your spaces and your applications and windows on them. 
 

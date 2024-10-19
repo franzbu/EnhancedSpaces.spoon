@@ -343,7 +343,7 @@ function SpaceHammer:new(options)
   end
 
   -- debug
-  --[[
+  ---[[
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "m", function()
    print("_______winAll_________")
     for i, v in pairs(winAll) do
@@ -581,7 +581,43 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
           end
         end
       elseif modifiersEqual(flags, modifier1) and #modifierDM == 0 then -- modifier key released before left mouse button
-        if frame.y + hNew > maxWithMB.h and hs.mouse.getRelativePosition().x + sumdx < max.w and hs.mouse.getRelativePosition().x + sumdx > 0 then -- bottom border
+        -- 2x2
+        if frame.x < 0 and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- left and not bottom
+          if math.abs(frame.x) < wNew / 10 then -- moved past border by 10 or less percent: move window as is back within boundaries of screen
+            xNew = 0
+            self.targetWindow:move(hs.geometry.new(xNew, yNew, wNew, hNew), nil, false, 0)
+          -- window moved past left border -> window is snapped to right side
+          elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
+            for i = 1, gridY, 1 do
+              -- middle third of left border
+              if hs.mouse.getRelativePosition().y + sumdy > max.h / 3 and hs.mouse.getRelativePosition().y + sumdy < max.h * 2 / 3 then
+                hs.window.focusedWindow():move(snap('a2'), nil, false, 0)
+              elseif hs.mouse.getRelativePosition().y + sumdy <= max.h / 3 then -- upper third
+                hs.window.focusedWindow():move(snap('a5'), nil, false, 0)
+              else -- bottom third
+                hs.window.focusedWindow():move(snap('a6'), nil, false, 0)
+              end
+            end
+          end
+        elseif frame.x + frame.w > max.w and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- right and not bottom
+          if max.w - frame.x > math.abs(max.w - frame.x - wNew) * 9 then -- 9 times as much inside screen than outside = 10 percent outside; move window back within boundaries of screen (keep size)
+            wNew = frame.w
+            xNew = max.w - wNew
+            self.targetWindow:move(hs.geometry.new(xNew, yNew, wNew, hNew), nil, false, 0)
+          -- window moved past right border -> window is snapped to left side
+          elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
+            for i = 1, gridY, 1 do
+              -- middle third of left border
+              if hs.mouse.getRelativePosition().y + sumdy > max.h / 3 and hs.mouse.getRelativePosition().y + sumdy < max.h * 2 / 3 then -- getRelativePosition() returns mouse coordinates where moving process starts, not ends, thus sumdx/sumdy make necessary adjustment
+                hs.window.focusedWindow():move(snap('a1'), nil, false, 0)
+              elseif hs.mouse.getRelativePosition().y + sumdy <= max.h / 3 then -- upper third
+                hs.window.focusedWindow():move(snap('a3'), nil, false, 0)
+              else -- bottom third
+                hs.window.focusedWindow():move(snap('a4'), nil, false, 0)
+              end
+            end
+          end
+        elseif frame.y + hNew > maxWithMB.h and hs.mouse.getRelativePosition().x + sumdx < max.w and hs.mouse.getRelativePosition().x + sumdx > 0 then -- bottom border
           hs.window.focusedWindow():minimize()                
         end
       -- 3x3
@@ -1057,7 +1093,6 @@ function goToSpace(target)
   end
   currentMSpace = target
   menubar:setTitle(tostring(mspaces[target]))
-
 end
 
 

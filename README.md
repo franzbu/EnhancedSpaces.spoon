@@ -12,7 +12,7 @@ Regarding organizing windows on mSpaces, they are positioned and resized accordi
 
 'Still, this is nothing groundbrakingly new', I hear you say, and you are right. You might be surprised, though, what difference a slightly altered approach can make. But read on and judge for yourself.
 
-One last thing before we dive in: SpaceHammer has been designed to handle your windows and mSpaces by using keyboard shortcuts; however, similar to other operations, at times it is simpler and faster to use keyboard and pointing device together. Thus SpaceHammer provides a pointer device alternative whenever it has the potential to be beneficial. 
+One last thing before we dive in: SpaceHammer has been designed to handle your windows and mSpaces by using keyboard shortcuts; however, similar to other desktop operations, at times it is simpler and faster to use keyboard and pointing device together. Thus SpaceHammer provides a pointer device alternative whenever it has the potential to be beneficial. 
 
 
 ## Installation

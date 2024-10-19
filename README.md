@@ -42,11 +42,11 @@ SpaceHammer:new({
 
 ```
 
-Restart Hammerspoon and you are ready to go; it is normal that the start of SpaceHammer takes a couple of seconds. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let us find out what you can do with your new mSpaces.
+Restart Hammerspoon and you are ready to go; it is normal that the start of SpaceHammer takes a couple of seconds as this is the time the watchdogs need for registering. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let us find out what you can do with your new mSpaces.
 
 ## mSpaces
 
-The default setup uses 'ctrl' and 'tab' to cycle through your mSpaces. To cycle in reverse order, additionally press 'shift'. To move the active window to the mSpace left (right) and switch there alongside with the window, press 'ctrl' and 'q' ('w'); to move the window while staying on the current mSpace press 'a' instead of 'q' ('s' instead of 'w').
+You can use the Control ('ctrl' ) and the Tab ('tab') keys to cycle through your mSpaces. To cycle in reverse order, additionally press the Shift key ('shift'). To move the active window to the mSpace left (right) and switch there alongside with the window, press 'ctrl' and 'q' ('w'); to move the window while staying on the current mSpace press 'a' instead of 'q' ('s' instead of 'w').
 
 
 The below lines represent the default setup, and you do not need to add them to your 'init.lua' unless you want to apply changes:
@@ -58,7 +58,7 @@ The below lines represent the default setup, and you do not need to add them to 
   ...
 ```
 
-Alternatively, you can use your pointing device to move a window to an adjacent mSpace by pressing 'alt' or 'ctrl' and dragging 80 percent or more of the window beyond the left or right screen border. If you release the modifier before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you switch to the mSpace alongside with the window. In case you would like to change these mouse modifier keys, you can add the following lines to your 'init.lua' and adjust them to your liking:
+Alternatively, you can use your pointing device to move a window to an adjacent mSpace by pressing the Option ('alt') or Control ('ctrl') key and dragging 80 percent or more of the window beyond the left or right screen border. If you release the modifier before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you switch to the mSpace alongside with the window. In case you would like to change these mouse modifier keys, you can add the following lines to your 'init.lua' and adjust them to your liking:
 
 ```lua
 
@@ -116,7 +116,7 @@ To delete a reference, press 'modifierReference' and '0'. In case you are 'de-re
 
 ## Switching Between Windows
 
-You can use macOS' integrated window switcher (cmd-tab) or third party switchers such as [AltTab](https://alt-tab-macos.netlify.app/) for switching between your windows. Also for switching between the different windows of one application you can use Apple's integrated switcher or any third party alternative.
+You can use macOS' integrated window switcher (Command-Tab) or third party switchers such as [AltTab](https://alt-tab-macos.netlify.app/) for switching between your windows. Also for switching between the different windows of one application you can use Apple's integrated switcher or any third party alternative.
 
 However, to make use of the advanced features mSpaces provide, SpaceHammer offers additional possibilities for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').
 
@@ -175,7 +175,7 @@ All this is been implemented with the goal of being as intuitive as possible; th
 
 ### Automatic Resizing and Positioning - Keyboard
 
-The following lines show the default keyboard shortcuts for automatic resizing and positioning of windows.ö
+The following lines show the default keyboard shortcuts for automatic resizing and positioning of windows.
 
 As before, you do not need to add these lines to your 'init.lua' unless you want to apply changes. 
 
@@ -187,7 +187,7 @@ As before, you do not need to add these lines to your 'init.lua' unless you want
   ...
 ```
 
-To resize and move the active window into a 2x2 grid position, use 'modifierSnap1' and numbers 1-8. 
+To resize and move the active window into a 2x2 grid position, use 'modifierSnap1' (default the Command and Option keys) and numbers 1-8. 
 
 To resize and move the active window into a 3x3 grid position, use 'modifierSnap2' and numbers 1-9, additionally '0', 'o', and 'p'. 
 

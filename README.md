@@ -314,11 +314,14 @@ If you want SpaceHammer to automatically move windows to specific mSpaces when o
 ```lua
   ...
   openAppMSpace = {
-    {'Google Chrome', '2'},
-    {'Code', '2'},
-    {'WhatsApp', '3'},
-    {'Microsoft To Do', 'T'},
-    {'Email', 'E'},
+    {'Google Chrome', '2', 'a1'},
+    {'Code', '2', 'a2'},
+    {'WhatsApp', '3', 'a1'},
+    {'Microsoft To Do', '3', 'a2'},
+    {'Telegram', '2', 'a5'},
+    {'Safari', '2', 'a1'},
+    {'Orion', '2', 'a2'},
+    {'Email', '1'},
   }, -- default: nil
   ...
 ```

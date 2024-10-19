@@ -7,7 +7,6 @@ local SpaceHammer = {}
 
 SpaceHammer.author = "Franz B. <csaa6335@gmail.com>"
 SpaceHammer.homepage = "https://github.com/franzbu/SpaceHammer.spoon"
-SpaceHammer.winMSpaces = "MIT"
 SpaceHammer.name = "SpaceHammer"
 SpaceHammer.version = "0.8"
 SpaceHammer.spoonPath = scriptPath()

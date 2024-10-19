@@ -358,7 +358,7 @@ In case you would also like to pre-define the position of the window within the 
 
 ### Manual Resizing
 
-Similar to manual moving, manual resizing of windows can be initiated by positioning the cursor in virtually any area of the window. Be aware, though, that windows of certain applications, such as LosslessCut or Kdenlive, can behave in a stuttering and sluggish way when being resized. That being said, resizing works well with the usual suspects such as Safari, Google Chrome, or Finder.
+Similar to manual moving, manual resizing of windows can be initiated by positioning the cursor in virtually any area of the window. Be aware, though, that windows of certain applications can behave in a stuttering and sluggish way when being resized. 
 
 In order to enable manual resizing, add the following lines to your `init.lua`:
 

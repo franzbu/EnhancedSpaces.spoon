@@ -46,7 +46,7 @@ Restart Hammerspoon and you are ready to go; it is normal that the start of Spac
 
 ## mSpaces
 
-You can use the Control ('ctrl' ) and the 's' keys to cycle through your mSpaces. To cycle in reverse order, press 'ctrl' and 'a'. To move the active window to the mSpace left (right) and switch there alongside with the window, press 'ctrl' and 'q' ('w'); to move the window while staying on the current mSpace press 'd' instead of 'q' ('f' instead of 'w').
+You can use the Control ('ctrl' ) and the 's' keys to cycle through your mSpaces. To cycle in reverse order, press 'ctrl' and 'a'. To move the active window to the mSpace left (right) and switch there alongside with the window, press 'ctrl' and 'q' ('w'); to move the window while staying on the current mSpace press 'ctrl' and 'd' ('ctrl' and 'w').
 
 
 The below lines represent the default setup, and you do not need to add them to your 'init.lua' unless you want to apply changes:

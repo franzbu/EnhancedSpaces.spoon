@@ -58,7 +58,7 @@ function SpaceHammer:new(options)
   modifierReference = options.modifierReference or { 'ctrl', 'shift' } 
     
   modifierMS = options.modifierMS or modifier2
-  modifierMSKeys = options.modifierMSKeys or { 'tab', 'q', 'w', 'e', 'r' }
+  modifierMSKeys = options.modifierMSKeys or { 'tab', 'q', 'w', 'a', 's' }
 
   openAppMSpace = options.openAppMSpace or nil
 

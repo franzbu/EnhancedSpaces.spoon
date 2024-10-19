@@ -418,17 +418,19 @@ Afterwards delete the folder 'SpaceHammer.spoon' in '~/.hammerspoon/Spoons/' and
 
 ### Hyper Key
 
+SpaceHammer (and other applications for that matter) benefits from setting the Caps Lock key up a so called hyper key, which basically means that you get an additional modifier, as - due to impracticability - you would hardly be tempted to use the combination of four modifiers otherwise. 
+
+You can use the application [Karabiner Elements](https://karabiner-elements.pqrs.org/) for creating such a hyper key.
+
 #### Option 1
 
-The Caps Lock key can be set up as so called hyper key, which basically functions as an additional modifier, as - due to impracticability - you would hardly be tempted to use the combination of four modifiers otherwise. You then can use the Caps Lock key to trigger functions in SpaceHammer (and other applications for that matter). 
-
-The application [Karabiner Elements](https://karabiner-elements.pqrs.org/) can, among others, be used for creating such a hyper key. In 'Settings - Complex Modifications' you can click 'Add predefined rule' and search for 'Caps Lock → Hyper Key (⌃⌥⇧⌘) (Caps Lock if alone)'. As the name suggests, with this modification you keep the original function of Caps Lock when pressed and released, while at the same time it functions as hyper key when another key is pressed before Caps Lock is released.
+In this scenario, the original function of the Caps Lock key remains untouched. Using the aforementioned Karabiner Elements, in 'Settings - Complex Modifications' you can click 'Add predefined rule' and search for 'Caps Lock → Hyper Key (⌃⌥⇧⌘) (Caps Lock if alone)'. As the name suggests, with this modification you keep the original function of Caps Lock when pressed and released, while at the same time it functions as hyper key when another key is pressed before Caps Lock is released.
 
 #### Option 2
 
-As an alternative option I present my personal setup: You can extend Caps Lock's functionality by using a single press (without any other keys) of Caps Lock for simulating pressing the hyper key and spacebar keys, which in turn can be used to open an application such as Alfred, which is how I have set it up. 
+As an alternative option I present my personal setup: Caps Lock's functionality can be further extended by using a single press (without any other keys) of Caps Lock as pressing the hyper key and spacebar keys, which in turn can be used to open an application such as Alfred, which is what I have done. 
 
-The original purpose of Caps Lock is still available, as you can trigger this function by pressing the Shift and Caps Lock keys simultaneously.
+The original purpose of Caps Lock is still available; you can trigger this function by pressing the Shift (Command, Option, and Control work likewise) and Caps Lock keys simultaneously.
 
 For this modification, go to 'Settings - Complex Modifications', click 'Add your own rule' and paste the following lines:
 
@@ -454,6 +456,16 @@ For this modification, go to 'Settings - Complex Modifications', click 'Add your
         }
     ]
 }
+```
+
+Now you can assign the hyper key to any of the functions in SpaceHammer, for example, 'modifierMS':
+
+
+```lua
+  ...
+  modifierMS = { 'cmd', 'alt', 'ctrl', 'shift' }, -- default: { 'ctrl' }
+  modifierMSKeys = { 'a', 's', 'd', 'f', 'q', 'w' }, -- default: { 'a', 's', 'd', 'f', 'q', 'w' }
+  ...
 ```
 
 Enjoy!

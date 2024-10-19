@@ -355,7 +355,7 @@ hs.hotkey.bind(modifierReference, "0", function()
   -- list names of apps of (visible) windows
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "i", function()
     for i = 1, #winMSpaces do -- frame
-      print(tostring(winMSpaces[i].win:application():name()))
+      print(winMSpaces[i].win:application():name())
     end
   end)
   --]]

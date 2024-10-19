@@ -307,7 +307,7 @@ The way appications are assigend to certain mSpaces is self-explanatory. To get 
 -- list names of apps of (visible) windows
 hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "n", function()
   for i = 1, #winMSpaces do -- frame
-    print(tostring(winMSpaces[i].win:application():name()))
+    print(winMSpaces[i].win:application():name())
   end
 end)
 ...

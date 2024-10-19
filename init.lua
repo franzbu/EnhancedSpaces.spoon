@@ -282,23 +282,23 @@ function SpaceHammer:new(options)
   end)
   hs.hotkey.bind(modifierMS, modifierMSKeys[2], function() -- move active window to previous space and switch there (incl. cycle)
     -- move window to prev space and switch there
-    moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace)
+    moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace, true)
     currentMSpace = getprevMSpaceNumber(currentMSpace)
     goToSpace(currentMSpace)
   end)
   hs.hotkey.bind(modifierMS, modifierMSKeys[3], function() -- move active window to next space and switch there (incl. cycle)
     -- move window to next space and switch there
-      moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace)
+      moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace, true)
       currentMSpace = getnextMSpaceNumber(currentMSpace)
       goToSpace(currentMSpace)
   end)
   hs.hotkey.bind(modifierMS, modifierMSKeys[4], function() -- move active window to previous space (incl. cycle)
     -- move window to prev space
-    moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace)
+    moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace, true)
   end)
   hs.hotkey.bind(modifierMS, modifierMSKeys[5], function() -- move active window to next space (incl. cycle)
     -- move window to next space
-    moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace)
+    moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace, true)
   end)
 
   -- goto mspaces directly with 'modifierMoveWinMSpace-<name of mspace>'
@@ -314,7 +314,7 @@ function SpaceHammer:new(options)
   if modifierMoveWinMSpace ~= nil then
     for i = 1, #mspaces do
       hs.hotkey.bind(modifierMoveWinMSpace, mspaces[i], function() -- move active window to next space and switch there (incl. cycle)
-       moveToSpace(i, currentMSpace)
+       moveToSpace(i, currentMSpace, true)
       end)
     end
   end
@@ -774,19 +774,18 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
   -- mSpaces
   elseif movedNotResized then
     if moveLeftAS then
-     moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace)
+     moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace, false)
       hs.timer.doAfter(0.1, function()
         goToSpace(currentMSpace) -- refresh (otherwise window still visible in former mspace)
       end)
-      if modifiersEqual(modifierDM, flags) then -- if modifier is still pressed, switch to where window has been moved
-      
+      if modifiersEqual(modifierDM, flags) then -- if modifier is still pressed, switch to where window has been moved  
         hs.timer.doAfter(0.02, function()
           currentMSpace = getprevMSpaceNumber(currentMSpace)
           goToSpace(currentMSpace)
         end)
       end
     elseif moveRightAS then
-      moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace)
+      moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace, false)
       hs.timer.doAfter(0.1, function()
         goToSpace(currentMSpace) -- refresh (otherwise window still visible in former mspace)
       end)
@@ -1062,7 +1061,7 @@ function goToSpace(target)
 end
 
 
-function moveToSpace(target, origin)
+function moveToSpace(target, origin, boolKeyboard)
   winOnlyMoved = true
   local fwin = hs.window.focusedWindow()
   max = fwin:screen():frame()
@@ -1071,8 +1070,12 @@ function moveToSpace(target, origin)
   winMSpaces[getWinMSpacesPos(fwin)].mspace[target] = true
   winMSpaces[getWinMSpacesPos(fwin)].mspace[origin] = false
 
-  -- always keep frame of MSpase of origin
-  winMSpaces[getWinMSpacesPos(fwin)].frame[target] = winMSpaces[getWinMSpacesPos(fwin)].frame[origin]
+  -- keep position when moved by keyboard shortcut, otherwise move to middle of screen
+  if boolKeyboard then
+    winMSpaces[getWinMSpacesPos(fwin)].frame[target] = winMSpaces[getWinMSpacesPos(fwin)].frame[origin]
+  else  
+    winMSpaces[getWinMSpacesPos(fwin)].frame[target] = hs.geometry.point(max.w / 2 - fwin:frame().w / 2, max.h / 2 - fwin:frame().h / 2, fwin:frame().w, fwin:frame().h) -- put window in middle of screen            
+  end
 end
 
 

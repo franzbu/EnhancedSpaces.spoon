@@ -151,6 +151,8 @@ With SpaceHammer you can automatically resize and position the windows on your m
 
 To make moving windows easier than the usual clicking on the title bar (which you are still free to do), hold `modifier1` or `modifier2` down, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
 
+Note: Due to Hammerspoon's dealing with filter subscriptions, there is a delay of roughly one second after moving a window until the new coordinates of the window have been registered. This is fine as long as you do not switch to a different mSpace within this admittedly small timeframe. However, in case you are bothered by it, there is a workaround in the section 'Increased Responsiveness' below. 
+
 
 ### Automatic Resizing and Positioning - Mouse, Trackpad
 
@@ -355,7 +357,6 @@ In case you would also like to pre-define the position of the window within the 
 
 ## Experimental Features
 
-
 ### Manual Resizing
 
 Similar to manual moving, manual resizing of windows can be initiated by positioning the cursor in virtually any area of the window. Be aware, though, that windows of certain applications can behave in a stuttering and sluggish way when being resized. 
@@ -390,6 +391,20 @@ You can change the size of the area of the window where the vertical-only and ho
   margin = 0.2, -- default: 0.3
   ...
 ```
+
+### Increased Responsiveness
+
+Hammerspoon's response to subscribed filters is somewhat delayed. In case you are moving a window on a screen and switch to another mSpace within the fraction of a second, it can happen that the coordinates of the window have not been updated yet in which you will not find the window in the position you have left it when moving back to the original mSpace.
+
+A workaround for this issue has been implemented in  the form of an alternative for the filter description. So, for those of you who prefer a faster response time; to activate it, add the following lines to your `init.lua`:
+
+```lua
+  ...
+  -- increase responsiveness for registering changing the position of windows
+  increaseResponsiveness = true, -- default: false
+  ...
+```
+This workaround has not been implemented yet by default due to its experimental nature; no tests have been done yet, but the increased responsiveness might need more processing power.
 
 
 ## Uninstall SpaceHammer
@@ -469,7 +484,3 @@ Now you can assign your newly created hyper key to any of the functions in Space
 ```
 
 Enjoy!
-
-
-
-

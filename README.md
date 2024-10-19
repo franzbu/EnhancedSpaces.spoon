@@ -42,7 +42,7 @@ SpaceHammer:new({
 
 ```
 
-Restart Hammerspoon and you are ready to go. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let us find out what you can do with your new mSpaces.
+Restart Hammerspoon and you are ready to go; it is normal that the start of SpaceHammer takes a couple of seconds. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let us find out what you can do with your new mSpaces.
 
 ## mSpaces
 

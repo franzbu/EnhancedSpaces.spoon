@@ -92,7 +92,7 @@ As before, the line below represents the default setup, and you do not need to a
 ```
 
 
-## mSpaces for Advanced Users
+## Same Window on more mSpaces 
 
 By now we have covered the basics, but we have not walked over the finish line yet. That being said, this section is mainly for advanced users, and you can skip it.
 

@@ -7,6 +7,7 @@ local SpaceHammer = {}
 
 SpaceHammer.author = "Franz B. <csaa6335@gmail.com>"
 SpaceHammer.homepage = "https://github.com/franzbu/SpaceHammer.spoon"
+SpaceHammer.winMSpaces = "MIT"
 SpaceHammer.name = "SpaceHammer"
 SpaceHammer.version = "0.8"
 SpaceHammer.spoonPath = scriptPath()
@@ -57,7 +58,7 @@ function SpaceHammer:new(options)
   modifierReference = options.modifierReference or { 'ctrl', 'shift' } 
     
   modifierMS = options.modifierMS or modifier2
-  modifierMSKeys = options.modifierMSKeys or { 'tab', 'q', 'w', 'a', 's' }
+  modifierMSKeys = options.modifierMSKeys or { 'a', 's', 'd', 'f', 'q', 'w' }
 
   openAppMSpace = options.openAppMSpace or nil
 
@@ -92,7 +93,7 @@ function SpaceHammer:new(options)
   mspaces = options.mSpaces or { '1', '2', '3' }
   currentMSpace = indexOf(options.MSpaces, options.startMSpace) or 2
 
-  gridIndicator = options.gridIndicator or { 20, 1, 0.83, 0, 0.4 }
+  gridIndicator = options.gridIndicator or { 20, 1, 0, 0, 0.5 }
 
   local resizer = {
     disabledApps = tableToMap(options.disabledApps or {}),
@@ -275,27 +276,27 @@ function SpaceHammer:new(options)
     currentMSpace = getnextMSpaceNumber(currentMSpace)
     goToSpace(currentMSpace)
   end)
-  hs.hotkey.bind(mergeModifiers(modifierMS, {'shift'}) , modifierMSKeys[1], function() -- next space (incl. cycle)
+  hs.hotkey.bind(modifierMS, modifierMSKeys[2], function() -- next space (incl. cycle)
     currentMSpace = getprevMSpaceNumber(currentMSpace)
     goToSpace(currentMSpace)
   end)
-  hs.hotkey.bind(modifierMS, modifierMSKeys[2], function() -- move active window to previous space and switch there (incl. cycle)
+  hs.hotkey.bind(modifierMS, modifierMSKeys[5], function() -- move active window to previous space and switch there (incl. cycle)
     -- move window to prev space and switch there
     moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace, true)
     currentMSpace = getprevMSpaceNumber(currentMSpace)
     goToSpace(currentMSpace)
   end)
-  hs.hotkey.bind(modifierMS, modifierMSKeys[3], function() -- move active window to next space and switch there (incl. cycle)
+  hs.hotkey.bind(modifierMS, modifierMSKeys[6], function() -- move active window to next space and switch there (incl. cycle)
     -- move window to next space and switch there
       moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace, true)
       currentMSpace = getnextMSpaceNumber(currentMSpace)
       goToSpace(currentMSpace)
   end)
-  hs.hotkey.bind(modifierMS, modifierMSKeys[4], function() -- move active window to previous space (incl. cycle)
+  hs.hotkey.bind(modifierMS, modifierMSKeys[3], function() -- move active window to previous space (incl. cycle)
     -- move window to prev space
     moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace, true)
   end)
-  hs.hotkey.bind(modifierMS, modifierMSKeys[5], function() -- move active window to next space (incl. cycle)
+  hs.hotkey.bind(modifierMS, modifierMSKeys[4], function() -- move active window to next space (incl. cycle)
     -- move window to next space
     moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace, true)
   end)

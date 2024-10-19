@@ -92,7 +92,7 @@ As before, the line below represents the default setup, and you do not need to a
 ```
 
 
-### Same Window on More Than One mSpaces
+### Same Window on More Than One mSpace
 
 By now we have covered the basics, but we have not walked over the finish line yet. That being said, this section is mainly for advanced users, and you can skip it.
 

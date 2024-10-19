@@ -400,8 +400,8 @@ A workaround for this issue has been implemented in  the form of an alternative 
 
 ```lua
   ...
-  -- increase responsiveness for registering changing the position of windows
-  increaseResponsiveness = true, -- default: false
+  -- increased responsiveness for registering changing the position of windows
+  increasedResponsiveness = true, -- default: false
   ...
 ```
 This workaround has not been implemented yet by default due to its experimental nature; no tests have been done yet, but the increased responsiveness might need more processing power.

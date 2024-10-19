@@ -19,7 +19,7 @@ One last thing before we dive in: SpaceHammer has been designed to handle your w
 
 SpaceHammer requires [Hammerspoon](https://www.hammerspoon.org/), so if you have not been using the latter yet, go ahead with its installation. Besides installing Hammerspoon for SpaceHammer's sake, you might also be interested in Hammerspoon's virtually endless possibilities for taylor-made customizations of your macOS at a later stage. 
 
-To install SpaceHammer, after downloading and unzipping, move the folder to ~/.hammerspoon/Spoons and make sure the name of the folder is 'SpaceHammer.spoon'. 
+To install SpaceHammer, after downloading and unzipping, move the folder to `~/.hammerspoon/Spoons` and make sure the name of the folder is `SpaceHammer.spoon`. 
 
 Alternatively, run the following terminal command:
 
@@ -31,7 +31,7 @@ mkdir -p ~/.hammerspoon/Spoons && git clone https://github.com/franzbu/SpaceHamm
 
 ## Usage
 
-Once you have installed SpaceHammer, add the following lines to your `~/.hammerspoon/init.lua` file, you might want to adjust the amount and names of your mSpaces and 'startmSpace', which is the mSpace you will be greeted with:
+Once you have installed SpaceHammer, add the following lines to your `~/.hammerspoon/init.lua` file, you might want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you will be greeted with:
 
 ```lua
 local SpaceHammer = hs.loadSpoon('SpaceHammer')
@@ -46,9 +46,9 @@ Restart Hammerspoon and you are ready to go; it is normal that the start of Spac
 
 ## mSpaces
 
-You can use the Control ('ctrl' ) - in case you are willing to spend some time to set up an elegant alternative in the form of a hyper key, see section 'Notes' - and the 's' keys to cycle through your mSpaces. To cycle in reverse order, press 'ctrl' and 'a'. To move the active window to the mSpace left (right) and switch there alongside with the window, press 'ctrl' and 'q' ('w'); to move the window while staying on the current mSpace press 'ctrl' and 'd' ('ctrl' and 'w').
+You can use the Control (`ctrl`) - in case you are willing to spend some time to set up an elegant alternative in the form of a hyper key, see section 'Notes' - and the 's' keys to cycle through your mSpaces. To cycle in reverse order, press `ctrl` and `a`. To move the active window to the mSpace left (right) and switch there alongside with the window, press `ctrl` and `q` (`w`); to move the window while staying on the current mSpace press `ctrl` and `d` (`ctrl` and `w`).
 
-The lines below represent the default setup, and you do not need to add them to your 'init.lua' unless you want to apply changes:
+The lines below represent the default setup, and you do not need to add them to your `init.lua` unless you want to apply changes:
 
 ```lua
   ...
@@ -57,7 +57,7 @@ The lines below represent the default setup, and you do not need to add them to 
   ...
 ```
 
-Alternatively, you can use your pointing device to move a window to an adjacent mSpace by pressing the Option ('alt') or Control ('ctrl') key and dragging 80 percent or more of the window beyond the left or right screen border. If you release the modifier before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you switch to the mSpace alongside with the window. In case you would like to change these mouse modifier keys, you can add the following lines to your 'init.lua' and adjust them to your liking:
+Alternatively, you can use your pointing device to move a window to an adjacent mSpace by pressing the Option (`alt`) or Control (`ctrl`) key and dragging 80 percent or more of the window beyond the left or right screen border. If you release the modifier before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you switch to the mSpace alongside with the window. In case you would like to change these mouse modifier keys, you can add the following lines to your `init.lua` and adjust them to your liking:
 
 ```lua
 
@@ -69,9 +69,9 @@ Alternatively, you can use your pointing device to move a window to an adjacent 
 
 ### Switch Directly to Any mSpace
 
-For switching directly to any mSpace, press 'alt' and the key for your mSpace.
+For switching directly to any mSpace, press `alt` and the key for your mSpace.
 
-As before, the line below represents the default setup, and you do not need to add it to your 'init.lua' unless you prefer a different shortcut:
+As before, the line below represents the default setup, and you do not need to add it to your `init.lua` unless you prefer a different shortcut:
 
 ```lua
   ...
@@ -81,9 +81,9 @@ As before, the line below represents the default setup, and you do not need to a
 
 ### Move Windows Directly to Any mSpace
 
-For moving windows to any mSpace, press 'alt-ctrl' and the key for the target mSpace.
+For moving windows to any mSpace, press `alt-ctrl` and the key for the target mSpace.
 
-As before, the line below represents the default setup, and you do not need to add it to your 'init.lua' unless you prefer to change this shortcut:
+As before, the line below represents the default setup, and you do not need to add it to your `init.lua` unless you prefer to change this shortcut:
 
 ```lua
   ...
@@ -100,9 +100,9 @@ This section is about having 'copies' of windows on more than one mSpace.
 
 If you want to unlock the full potential of mSpaces, it is helpful to understand the underlying philosophy: See each mSpace as a representation of your windows rather than just an area where your windows can be positioned - or, in other words, an mSpace can be understood as a set of 'symbolic links' to your actual windows. Due to this approach you could, for instance, have two mSpaces with the same windows in different sizes and positions, which could be sensible for specific workflows where it makes sense to be switching instantly between a bigger window of one and a smaller window of another application and vice versa. Or you can have the same Notes, Calendar, Finder or Safari window on two, three, or all your mSpaces.
   
-To create representations of windows, press the 'ctrl' and 'shift' modifiers simultaneously and additionally press the key corresponding to the mSpace you would like to create a reference of the currently active window on, for instance, '3'. 
+To create representations of windows, press the `ctrl` and `shift` modifiers simultaneously and additionally press the key corresponding to the mSpace you would like to create a reference of the currently active window on, for instance, `3`. 
 
-As before, the below line represents the default setup, and you do not need to add it to your 'init.lua' unless you prefer a different shortcut:
+As before, the below line represents the default setup, and you do not need to add it to your `init.lua` unless you prefer a different shortcut:
 
 ```lua
   ...
@@ -110,7 +110,7 @@ As before, the below line represents the default setup, and you do not need to a
   ...
 ```
 
-To delete a reference, press 'modifierReference' and '0'. In case you are 'de-referencing' the last representation of a window on your mSpaces, the window gets minimized.
+To delete a reference, press `modifierReference` and `0`. In case you are 'de-referencing' the last representation of a window on your mSpaces, the window gets minimized.
 
 
 ## Switching Between Windows
@@ -121,9 +121,9 @@ However, to make use of the advanced features mSpaces provide, SpaceHammer offer
 
 ### Switching between Windows of the Current mSpace
 
-For restricting switching to the windows of your current mSpace only, press 'alt' and 'tab'. 
+For restricting switching to the windows of your current mSpace only, press `alt` and `tab`. 
 
-As before, the below lines represent the default setup, and you do not need to add them to your 'init.lua' unless you prefer different shortcuts:
+As before, the below lines represent the default setup, and you do not need to add them to your `init.lua` unless you prefer different shortcuts:
 
 
 ```lua
@@ -139,7 +139,7 @@ For cycling through the windows of your current mSpace in reverse order, additio
 
 ### Switching between References of Windows
 
-For switching between the references of a window ('sticky windows'), press 'alt' and 'escape'. In case you prefer a different key, change the second element in the table 'modifierSwitchWinKeys' (see above).
+For switching between the references of a window ('sticky windows'), press `alt` and `escape`. In case you prefer a different key, change the second element in the table `modifierSwitchWinKeys` (see above).
 
 
 ## Moving and Resizing Windows:
@@ -149,25 +149,25 @@ With SpaceHammer you can automatically resize and position the windows on your m
 
 ### Manual Moving and Positioning
 
-To make moving windows easier than the usual clicking on the title bar (which you are still free to do), hold 'modifier1' or 'modifier2' down, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
+To make moving windows easier than the usual clicking on the title bar (which you are still free to do), hold `modifier1` or `modifier2` down, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
 
 
 ### Automatic Resizing and Positioning - Mouse, Trackpad
 
-For automatic resizing and positioning of a window, you simply move between 10 and 80 percent of the window beyond the left, right, or bottom borders of your screen using while pressing 'alt' or 'ctrl'. 
+For automatic resizing and positioning of a window, you simply move between 10 and 80 percent of the window beyond the left, right, or bottom borders of your screen using while pressing `alt` or `ctrl`. 
 
-As long as windows are resized - or moved within the borders of the screen -, it makes no difference whether you use 'modifier1' or 'modifier2'. However, once a window is moved beyond the screen borders, different positioning and resizing scenarios are called into action; they are as follows:
+As long as windows are resized - or moved within the borders of the screen -, it makes no difference whether you use `modifier1` or `modifier2`. However, once a window is moved beyond the screen borders, different positioning and resizing scenarios are called into action; they are as follows:
 
-* modifier1 ('alt', unless changed): 
+* modifier1 (`alt`, unless changed): 
   * If windows are moved beyond the left (right) borders of the screen: imagine your screen border divided into three sections: if the cursor crosses the screen border in the middle section, the window snaps into the left (right) half of the screen. Crossing the screen border in the upper and lower sections, the window snaps into the respective quarters of the screen.
   * If windows are moved beyond the bottom border of the screen: imagine your bottom screen border divided into three sections: if the cursor crosses the screen border in the middle section, the window snaps into full screen. Crossing the screen border in the left or right sections, the window snaps into the respective halfs of the screen.
 
-* modifier2 ('ctrl', unless changed): 
+* modifier2 (`ctrl`, unless changed): 
   * The difference to 'modifier1' is that your screen has a 3x3 grid. This means that windows snap into the left third of the 3x3 grid when dragged beyond the left screen border and into the right third when dragged beyond the right screen border. If 'ctrl' is released before the left mouse button, the window will snap into the middle column.
  
 * The moment dragging of a window starts, indicators will appear around the borders of the screen to guide you. For changing the appearance of the indicators see section 'Change Size, Color, and Opacity of Grid Indicators' below.
 
-- Additional feature: if you drag a window beyond the bottom border of the screen and 'modifier1' or 'modifier2' is released before the left mouse button, the window will be minimized.
+- Additional feature: if you drag a window beyond the bottom border of the screen and `modifier1` or `modifier2` is released before the left mouse button, the window will be minimized.
 
 All this is been implemented with the goal of being as intuitive as possible; therefore, you will be able to train your muscle memory quickly.
 
@@ -176,7 +176,7 @@ All this is been implemented with the goal of being as intuitive as possible; th
 
 The following lines show the default keyboard shortcuts for automatic resizing and positioning of windows.
 
-As before, you do not need to add these lines to your 'init.lua' unless you want to apply changes. 
+As before, you do not need to add these lines to your `init.lua` unless you want to apply changes. 
 
 ```lua
   ...
@@ -186,9 +186,9 @@ As before, you do not need to add these lines to your 'init.lua' unless you want
   ...
 ```
 
-To resize and move the active window into a 2x2 grid position, use 'modifierSnap1' (default the Command and Option keys) and numbers 1-8. 
+To resize and move the active window into a 2x2 grid position, use `modifierSnap1` (default the Command and Option keys) and numbers `1-8`. 
 
-To resize and move the active window into a 3x3 grid position, use 'modifierSnap2' and numbers 1-9, additionally '0', 'o', and 'p'. 
+To resize and move the active window into a 3x3 grid position, use 'modifierSnap2' and numbers 1-9, additionally `0`, `o`, and `p`. 
 
 'modifierSnap3' also uses a 3x3 grid; however, the windows snap into different sizes, see '3x3 Grid - Double (and Quadruple) Sizes' below.
 
@@ -252,14 +252,14 @@ As has been mentioned, these keyboard shortcuts are fully customizable. Let us f
   ...
 ```
 
-In case you would like to make changes, you are free to combine any of the three modifiers 'modifierSnap1', 'modifierSnap1', and 'modifierSnap1' with any scenarios.
+In case you would like to make changes, you are free to combine any of the three modifiers `modifierSnap1`, 'modifierSnap1', and `modifierSnap1` with any scenarios.
 
 This is best shown by means of an example: let us assume for a moment that you just need windows to snap into three different grid positions:
 - (1) right half of screen -> 'a2'
 - (2) right middle ninth of screen -> 'b11'
 - (3) middle third, upper two cells -> 'c5'
 
-Let us further assume that you would like to use modifierSnap2 with the keys 'j', 'k', and 'l' to achieve that; then you would add the following lines to your 'init.lua':
+Let us further assume that you would like to use `modifierSnap2` with the keys `j`, `k`, and `l` to achieve that; then you would add the following lines to your `init.lua`:
 
 ```lua
   ...
@@ -273,15 +273,15 @@ Let us further assume that you would like to use modifierSnap2 with the keys 'j'
   },
   ...
 ```
-As you can see in the example above, 'modifierSnapKey2' and 'modifierSnapKey3' are not used and are therefore without any entries.
+As you can see in the example above, `modifierSnapKey2` and `modifierSnapKey3` are not used and are therefore without any entries.
 
-Now, by pressing 'modifierSnapKey1' and 'j', for example, scenario 'a2' is activated, which means that the active window snaps into the right half of the screen.
+Now, by pressing `modifierSnapKey1` and `j`, for example, scenario `a2` is activated, which means that the active window snaps into the right half of the screen.
 
 ## Additional Features
 
 ### Padding
 
-In case you would like to change the padding in between the windows and/or between the windows and the screen border, add the following lines with values to your liking to your 'init.lua':
+In case you would like to change the padding in between the windows and/or between the windows and the screen border, add the following lines with values to your liking to your `init.lua`:
 
 ```lua
   ...
@@ -294,7 +294,7 @@ In case you would like to change the padding in between the windows and/or betwe
 
 ### Change Size, Color, and Opacity of Grid Indicators
 
-In case you would like to change the size, color and/or opacity of the grid indicators, add the following line to your 'init.lua' and alter then according to your liking. The values, in the same order, stand for: width, red, green, blue, opacity. Apart from the width, values between 0 and 1 are possible:
+In case you would like to change the size, color and/or opacity of the grid indicators, add the following line to your `init.lua` and alter then according to your liking. The values, in the same order, stand for: width, red, green, blue, opacity. Apart from the width, values between 0 and 1 are possible:
 
 ```lua
   ...
@@ -307,7 +307,7 @@ In case you would like to change the size, color and/or opacity of the grid indi
 
 ### Open Windows in Pre-Arranged mSpaces
 
-If you want SpaceHammer to automatically move windows to specific mSpaces when opened, add the following lines to your 'init.lua': 
+If you want SpaceHammer to automatically move windows to specific mSpaces when opened, add the following lines to your `init.lua`: 
 
 ```lua
   ...
@@ -321,7 +321,7 @@ If you want SpaceHammer to automatically move windows to specific mSpaces when o
   ...
 ```
 
-The way appications are assigend mSpaces is self-explanatory. To get the names of the applications you would like to add to the list, you can - among other options - add the following lines to your 'init.lua' and open Hammerspoon's Console to access the output; make sure to adjust the keyboard shortcuts to your liking (also make sure to add these lines outside the section 'SpaceHammer:new'):
+The way appications are assigend mSpaces is self-explanatory. To get the names of the applications you would like to add to the list, you can - among other options - add the following lines to your `init.lua` and open Hammerspoon's Console to access the output; make sure to adjust the keyboard shortcuts to your liking (also make sure to add these lines outside the section 'SpaceHammer:new'):
 
 ```lua
   ...
@@ -349,7 +349,7 @@ In case you would also like to pre-define the position of the window within the 
   ...
 ```
 
-'a1' represents the left half of your screen, 'a2' for the right half of your screen, and 'a7' the whole screen. To get the full list of possible positions, see section 'Automatic Resizing and Positioning - Keyboard'.
+`a1` represents the left half of your screen, `a2` for the right half of your screen, and `a7` the whole screen. To get the full list of possible positions, see section 'Automatic Resizing and Positioning - Keyboard'.
 
 
 
@@ -360,7 +360,7 @@ In case you would also like to pre-define the position of the window within the 
 
 Similar to manual moving, manual resizing of windows can be initiated by positioning the cursor in virtually any area of the window. Be aware, though, that windows of certain applications, such as LosslessCut or Kdenlive, can behave in a stuttering and sluggish way when being resized. That being said, resizing works well with the usual suspects such as Safari, Google Chrome, or Finder.
 
-In order to enable manual resizing, add the following lines to your 'init.lua':
+In order to enable manual resizing, add the following lines to your `init.lua`:
 
 ```lua
   ...
@@ -369,7 +369,7 @@ In order to enable manual resizing, add the following lines to your 'init.lua':
   ...
 ```
 
-To manually resize a window, hold your 'modifier1' or 'modifier2' down, then click the right mouse button in any part of the window and drag the window.
+To manually resize a window, hold your `modifier1` or `modifier2` down, then click the right mouse button in any part of the window and drag the window.
 
 To have the additional possibility of precisely resizing windows horizontally-only or vertically-only, 30 percent of the window (15 precent left and right of the middle of each border) is reserved for horizontal-only and vertical-only resizing. The size of this area can be adjusted; for more information see below.
 
@@ -394,7 +394,7 @@ You can change the size of the area of the window where the vertical-only and ho
 
 ## Uninstall SpaceHammer
 
-In case you have used the option 'openAppMSpace', disable or remove that section from your 'init.lua' and restart SpaceHammer afterwards to move all windows on your main mSpace, which after disabling or uninstalling SpaceHammer will become your default space.
+In case you have used the option 'openAppMSpace', disable or remove that section from your `init.lua` and restart SpaceHammer afterwards to move all windows on your main mSpace, which after disabling or uninstalling SpaceHammer will become your default space.
 
 ```lua
   ...
@@ -411,7 +411,7 @@ In case you have used the option 'openAppMSpace', disable or remove that section
 ```
 
 
-Afterwards delete the folder 'SpaceHammer.spoon' in '~/.hammerspoon/Spoons/' and delete the corresponding section in your 'init.lua'.
+Afterwards delete the folder `SpaceHammer.spoon` in `~/.hammerspoon/Spoons/` and delete the corresponding section in your `init.lua`.
 
 
 ## Notes
@@ -458,7 +458,7 @@ For this modification, go to 'Settings - Complex Modifications', click 'Add your
 }
 ```
 
-Now you can assign your newly created hyper key to any of the functions in SpaceHammer, for example, 'modifierMS':
+Now you can assign your newly created hyper key to any of the functions in SpaceHammer, for example, `modifierMS`:
 
 
 ```lua

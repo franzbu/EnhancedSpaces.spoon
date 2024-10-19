@@ -420,7 +420,7 @@ Afterwards delete the folder `SpaceHammer.spoon` in `~/.hammerspoon/Spoons/` and
 
 SpaceHammer (and other applications for that matter) can benefit from setting the Caps Lock key up as a so called hyper key, which basically means that you get an additional modifier, as - due to the impracticality - you would hardly be tempted to use the combination of four modifiers otherwise. 
 
-You can use the application [Karabiner Elements](https://karabiner-elements.pqrs.org/) for creating such a hyper key.
+Among others, you can use the application [Karabiner Elements](https://karabiner-elements.pqrs.org/) for creating such a hyper key.
 
 #### Option 1
 

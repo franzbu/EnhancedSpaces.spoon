@@ -1,5 +1,11 @@
 
   
+# v0.9
+
+* added option to work around time delay caused by filter subscription when moving windows ('init.lua': 'increaseResponsiveness = true, -- default: false')
+
+
+  
 # v0.8
 
 * sensible focussing of windows

@@ -171,7 +171,7 @@ function SpaceHammer:new(options)
     cmdTabFocus(w)
   end)
 
-
+  -- moving of windows either being watched constantly or reacting to filter subscription
   if increasedResponsiveness then
   -- global variable 'adjustWinFrameTimer' to avoid timer being garbage collected
     adjustWinFrameTimer = hs.timer.doEvery(0.2, function() 

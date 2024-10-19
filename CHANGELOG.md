@@ -1,5 +1,10 @@
 
   
+# v0.9.1
+
+* added padding for manual resizing windows and moving up to 10 percent of windows past screen borders
+
+  
 # v0.9
 
 * added option to work around time delay caused by filter subscription when moving windows ('init.lua': 'increaseResponsiveness = true, -- default: false')

@@ -9,7 +9,7 @@ SpaceHammer.author = "Franz B. <csaa6335@gmail.com>"
 SpaceHammer.homepage = "https://github.com/franzbu/SpaceHammer.spoon"
 SpaceHammer.winMSpaces = "MIT"
 SpaceHammer.name = "SpaceHammer"
-SpaceHammer.version = "0.8"
+SpaceHammer.version = "0.9"
 SpaceHammer.spoonPath = scriptPath()
 
 local dragTypes = {
@@ -95,6 +95,8 @@ function SpaceHammer:new(options)
 
   gridIndicator = options.gridIndicator or { 20, 1, 0, 0, 0.5 }
 
+  increasedResponsiveness = options.increasedResponsiveness or false
+
   local resizer = {
     disabledApps = tableToMap(options.disabledApps or {}),
     dragging = false,
@@ -168,9 +170,11 @@ function SpaceHammer:new(options)
     refreshWinMSpaces(w)
     cmdTabFocus(w)
   end)
-  filter.default:subscribe(filter.windowMoved, function(w)
-    correctXY(w)
-  end)
+  if not increasedResponsiveness then
+    filter.default:subscribe(filter.windowMoved, function(w)
+      adjustWinFrame()
+    end)
+  end
   --]]
 
   --[[ -- flagsKeyboardTracker
@@ -207,7 +211,7 @@ function SpaceHammer:new(options)
   --]]
 
   ---[[
-  -- cycle throuth windows on current mSpace
+  -- cycle throuth windows of current mSpace
   switcher = hs.window.switcher.new(hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)}))
   switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
   switcher.ui.thumbnailSize = 112
@@ -380,6 +384,13 @@ hs.hotkey.bind(modifierReference, "0", function()
     end
   end)
   --]]
+
+  -- global variable 'adjustWinFrameTimer' to avoid timer being garbage collected
+  if increasedResponsiveness then
+    adjustWinFrameTimer = hs.timer.doEvery(0.1, function() 
+      adjustWinFrame()
+    end)
+  end
 
   goToSpace(currentMSpace) -- refresh
   resizer.clickHandler:start()
@@ -1188,11 +1199,17 @@ function cmdTabFocus(w)
 end
 
 
-function correctXY(w)
+function adjustWinFrame()
   -- subscribed filter for some reason takes a couple of seconds to trigger method
-  max = w:screen():frame() 
-  if w:topLeft().x < max.w - 2 then   -- prevents subscriber-method to refresh coordinates of window that has just been 'hidden'
-      winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = w:frame()
+  w = hs.window.focusedWindow()
+  if w ~= nil then
+    --print("adjustWinFrame")
+    max = w:screen():frame() 
+    if w:topLeft().x < max.w - 2 then   -- prevents subscriber-method to refresh coordinates of window that has just been 'hidden'
+      if winMSpaces[getWinMSpacesPos(w)] ~= nil then 
+        winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = w:frame()
+      end
+    end
   end
 end
 

@@ -67,7 +67,7 @@ function SpaceHammer:new(options)
 
   modifierSnap1 = options.modifierSnap1 or { 'cmd', 'alt' }
   modifierSnap2 = options.modifierSnap2 or { 'cmd', 'ctrl' }
-  modifierSnap3 = options.modifierSnap3 or nil
+  modifierSnap3 = options.modifierSnap3 or { 'cmd', 'alt', 'ctrl' }
   modifierSnapKeys = options.modifierSnapKeys or {
     -- modifierSnapKey1
     {{'a1','1'},{'a2','2'},{'a3','3'},{'a4','4'},{'a5','5'},{'a6','6'},{'a7','7'},{'a8','8'}},

@@ -458,7 +458,7 @@ For this modification, go to 'Settings - Complex Modifications', click 'Add your
 }
 ```
 
-Now you can assign the hyper key to any of the functions in SpaceHammer, for example, 'modifierMS':
+Now you can assign your newly created hyper key to any of the functions in SpaceHammer, for example, 'modifierMS':
 
 
 ```lua

@@ -422,15 +422,15 @@ Afterwards delete the folder 'SpaceHammer.spoon' in '~/.hammerspoon/Spoons/' and
 
 The Caps Lock key can be set up as so called hyper key, which basically functions as an additional modifier, as - due to impracticability - you would hardly be tempted to use the combination of four modifiers otherwise. You then can use the Caps Lock key to trigger functions in SpaceHammer (and other applications for that matter). 
 
-The application [Karabiner Elements](https://karabiner-elements.pqrs.org/) can, among others, be used for creating the hyper key. In 'Settings - Complex Modifications' you can 'Add predefined rule' and search for 'Caps Lock → Hyper Key (⌃⌥⇧⌘) (Caps Lock if alone)'. As the name suggests, you keep the original function of Caps Lock when pressed and released, while it at the same time functions as hyper key when another key is pressed before Caps Lock is released.
+The application [Karabiner Elements](https://karabiner-elements.pqrs.org/) can, among others, be used for creating such a hyper key. In 'Settings - Complex Modifications' you can click 'Add predefined rule' and search for 'Caps Lock → Hyper Key (⌃⌥⇧⌘) (Caps Lock if alone)'. As the name suggests, with this modification you keep the original function of Caps Lock when pressed and released, while at the same time it functions as hyper key when another key is pressed before Caps Lock is released.
 
 #### Option 2
 
-As a further option, you can extend Caps Lock's functionality by using a single press (without any other keys) of Caps Lock as simulating pressing the hyper key and spacebar keys, which in turn can be used to open an application such as Alfred. 
+As an alternative option I present my personal setup: You can extend Caps Lock's functionality by using a single press (without any other keys) of Caps Lock for simulating pressing the hyper key and spacebar keys, which in turn can be used to open an application such as Alfred, which is how I have set it up. 
 
-Caps Lock can still be triggered by pressing the Shift and Caps Lock keys. The original purpose of Caps Lock is still available, as you can trigger this function by pressing the Shift and Caps Lock keys simultaneously.
+The original purpose of Caps Lock is still available, as you can trigger this function by pressing the Shift and Caps Lock keys simultaneously.
 
-In case you want to set this up, go to 'Settings - Complex Modifications', click 'Add your own rule' and paste the following lines:
+For this modification, go to 'Settings - Complex Modifications', click 'Add your own rule' and paste the following lines:
 
 ```bash
 {
@@ -455,6 +455,8 @@ In case you want to set this up, go to 'Settings - Complex Modifications', click
     ]
 }
 ```
+
+Enjoy!
 
 
 

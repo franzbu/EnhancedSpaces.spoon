@@ -48,23 +48,19 @@ Restart Hammerspoon and you are ready to go. All you will see for now is a new i
 
 ## mSpaces
 
-The default setup uses 'ctrl' and the keys 'a', 's', 'd', 'f', 'q', and 'w' to switch to the mSpace to the left/right ('a', 's'), move a window to the mSpace to the left/right ('d', 'f'), move a window to the mSpace to the left/right while at the same time switching there ('q', 'w'). 
+The default setup uses 'ctrl' and 'tab' to cycle through your mSpaces. To cycle in reverse order, additionally press 'shift'. To move the active window to the mSpace left (right) and switch there alongside the window, press 'ctrl' and 'q' ('w'); to move the window while staying on the current mSpace press 'e' instead of 'q' ('r' instead of 'w').
 
-Now, by pressing 'ctrl' and 'q', for instance, you move the active window from your current mSpace to the adjacent mSpace on the left and at the same time switch there. 
 
 The below lines represent the default setup, and you do not need to add them to your 'init.lua' unless you want to change the shortcuts:
 
 ```lua
   ...
   modifierMS = { 'ctrl' }, -- default: { 'ctrl' }
-  -- 1, 2: switch to mSpace left/right ('a', 's')
-  -- 3, 4: move window to mSpace left/right ('d', 'f')
-  -- 5, 6: move window to mSpace left/right and switch there ('q', 'w')
-  modifierMSKeys = {'a', 's', 'd', 'f', 'q', 'w'}, -- default: {'a', 's', 'd', 'f', 'q', 'w'}
+  modifierMSKeys = { 'tab', 'q', 'w', 'e', 'r' }, -- default: { 'tab', 'q', 'w', 'e', 'r' }
   ...
 ```
 
-You can also move a window to an adjacent mSpace by pressing 'alt' or 'ctrl' and dragging 80 percent or more of the window beyond the left or right screen border. If you release the modifier before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you switch to the mSpace alongside the window. In case you would like to change these mouse modifier keys, you can add the following lines to your 'init.lua' and adjust them to your liking:
+Alternatively, you can use your pointing device to move a window to an adjacent mSpace by pressing 'alt' or 'ctrl' and dragging 80 percent or more of the window beyond the left or right screen border. If you release the modifier before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you switch to the mSpace alongside the window. In case you would like to change these mouse modifier keys, you can add the following lines to your 'init.lua' and adjust them to your liking:
 
 ```lua
 
@@ -140,6 +136,8 @@ As before, the below lines represent the default setup, and you do not need to a
   modifierSwitchWinKeys = { 'tab', 'escape' }, -- default: { 'tab', 'escape' }
   ...
 ```
+
+For cycling through the windows of your current mSpace in reverse order, additionally press 'shift'.
 
 
 ### Switching between References of Windows
@@ -309,16 +307,6 @@ In case you would like to change the size, color and/or opacity of the grid indi
   ...
 ```
 
-### Restart
-
-- If you restart SpaceHammer, the windows on the current mSpace remain the way they were before the restart, while the windows that were placed on other mSpaces before the restart will be moved to the current mSpace. 
-
-This also means that if at some point you want to stop using SpaceHammer, either move all windows to the current mSpace first, or simply restart SpaceHammer one more time.
-
-As an optional experimental feature, SpaceHammer can automatically move windows of applications to specific mSpaces, be it at the start of SpaceHammer or later; more in the section 'Open Windows in Pre-Arranged mSpaces' below.
-
-
-## Experimental Features
 
 ### Open Windows in Pre-Arranged mSpaces
 
@@ -367,6 +355,10 @@ In case you would also like to pre-define the position of the window within the 
 'a1' represents the left half of your screen, 'a2' for the right half of your screen, and 'a7' the whole screen. To get the full list of possible positions, see section 'Automatic Resizing and Positioning - Keyboard'.
 
 
+
+## Experimental Features
+
+
 ### Manual Resizing
 
 Similar to manual moving, manual resizing of windows can be initiated by positioning the cursor in virtually any area of the window. Be aware, though, that windows of certain applications, such as LosslessCut or Kdenlive, can behave in a stuttering and sluggish way when being resized. That being said, resizing works well with the usual suspects such as Safari, Google Chrome, or Finder.
@@ -405,16 +397,23 @@ You can change the size of the area of the window where the vertical-only and ho
 
 ## Uninstall SpaceHammer
 
-In case you at some point had the automatic backup and restore function activated, start SpaceHammer once with it deactivated; to do so, delete the following line in your 'init.lua' (or set 'backup' to 'false').
+In case you have used the option 'openAppMSpace', disable or remove that section from your 'init.lua' and restart SpaceHammer afterwards to move all windows on your main mSpace, which after disabling or uninstalling SpaceHammer will become your default space.
 
 ```lua
   ...
-  -- automatic backup and restore of mSpaces:
-  backup = true, -- default: false
+  --[[
+  openAppMSpace = {
+    {'Google Chrome', '2', 'a1'},
+    {'Code', '2', 'a2'},
+    {'WhatsApp', '3', 'a1'},
+    {'Microsoft To Do', 'T'},
+    {'Email', 'E' 'a7'},
+  },
+  ]]
   ...
 ```
 
 
-Other than that you only have to delete the folder 'SpaceHammer.spoon' in '~/.hammerspoon/Spoons/' and delete the corresponding section in your 'init.
+Afterwards delete the folder 'SpaceHammer.spoon' in '~/.hammerspoon/Spoons/' and delete the corresponding section in your 'init.lua'.
 
 

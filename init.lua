@@ -364,8 +364,6 @@ function SpaceHammer:new(options)
       end
 
     end
-    --print("=====")
-    --print(hs.application.find("WhatsApp"))
   end)
 
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "k", function()

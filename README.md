@@ -60,10 +60,10 @@ The lines below represent the default setup, and you do not need to add them to 
 Alternatively, you can use your pointing device to move a window to an adjacent mSpace by pressing the Option (`alt`) or Control (`ctrl`) key and dragging 80 percent or more of the window beyond the left or right screen border. If you release the modifier before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you switch to the mSpace alongside with the window. In case you would like to change these mouse modifier keys, you can add the following lines to your `init.lua` and adjust them to your liking:
 
 ```lua
-
+   ...
   modifier1 = { 'alt' }, -- default: { 'alt' }
   modifier2 = { 'ctrl' }, -- default: { 'ctrl' }
-
+  ...
 ```
 
 

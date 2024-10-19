@@ -65,8 +65,8 @@ function SpaceHammer:new(options)
   modifierSwitchWin = options.modifierSwitchWin or modifier1
   modifierSwitchWinKeys = options.modifierSwitchWinKeys or { 'tab', 'escape' }
 
-  modifierSnap1 = options.modifierSnap1 or nil
-  modifierSnap2 = options.modifierSnap2 or nil
+  modifierSnap1 = options.modifierSnap1 or { 'cmd', 'alt' }
+  modifierSnap2 = options.modifierSnap2 or { 'cmd', 'ctrl' }
   modifierSnap3 = options.modifierSnap3 or nil
   modifierSnapKeys = options.modifierSnapKeys or {
     -- modifierSnapKey1
@@ -1155,7 +1155,6 @@ end
 function correctXY(w)
   -- subscribed filter for some reason takes a couple of seconds to trigger method
   max = w:screen():frame() 
-  -- todo: find better way of detecting whether window has been moved manually or 'hidden' rather than 'fwin:topLeft().x < max.w - 2'
   if w:topLeft().x < max.w - 2 then   -- prevents subscriber-method to refresh coordinates of window that has just been 'hidden'
       winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = w:frame()
   end

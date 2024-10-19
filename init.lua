@@ -9,7 +9,7 @@ SpaceHammer.author = "Franz B. <csaa6335@gmail.com>"
 SpaceHammer.homepage = "https://github.com/franzbu/SpaceHammer.spoon"
 SpaceHammer.winMSpaces = "MIT"
 SpaceHammer.name = "SpaceHammer"
-SpaceHammer.version = "0.9.1"
+SpaceHammer.version = "0.9"
 SpaceHammer.spoonPath = scriptPath()
 
 local dragTypes = {
@@ -347,7 +347,7 @@ hs.hotkey.bind(modifierReference, "0", function()
   end
 
   -- debug
-  ---[[
+  --[[
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "m", function()
    print("_______winAll_________")
     for i, v in pairs(winAll) do
@@ -387,7 +387,7 @@ hs.hotkey.bind(modifierReference, "0", function()
 
   -- global variable 'adjustWinFrameTimer' to avoid timer being garbage collected
   if increasedResponsiveness then
-    adjustWinFrameTimer = hs.timer.doEvery(0.1, function() 
+    adjustWinFrameTimer = hs.timer.doEvery(0.25, function() 
       adjustWinFrame()
     end)
   end

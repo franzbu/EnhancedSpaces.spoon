@@ -8,11 +8,11 @@ Well, first, spending your time with SpaceHammer will actually save you time. As
 
 When it comes to spaces, SpaceHammer provides a new implementation of what Apple has straightforwardly termed 'Spaces'; in SpaceHammer they are called mSpaces. This means that you can arrange your windows not only on one screen but on as many as you like and then easily switch between these 'screens' or, to use SpaceHammer's terminology, mSpaces. You can actually do more than that with mSpaces, so can you place one window on more than one mSpace at a time; more about that later.
 
-When it comes to managing windows on these mSpaces, they are positioned and resized according to your wishes with keyboard shortcuts or a flick of your pointing device.
+When it comes to organizing windows on mSpaces, they are positioned and resized according to your wishes with keyboard shortcuts or a flick of your pointing device.
 
-'Still, this is nothing really new', I hear you say, and you are right. You might be surprised, though, what difference a slightly altered approach can make. But read on and judge for yourself.
+'Still, this is nothing groundbrakingly new', I hear you say, and you are right. You might be surprised, though, what difference a slightly altered approach can make. But read on and judge for yourself.
 
-One last thing before we dive in: windows and mSpaces can be handled using your keyboard only; however, similar to other operations, at times it is simpler and faster to use keyboard and pointing device together. Thus SpaceHammer provides both options whenever it is beneficial. 
+One last thing before we dive in: SpaceHammer has been designed to handle your windows and mSpaces by using keyboard shortcuts; however, similar to other operations, at times it is simpler and faster to use keyboard and pointing device together. Thus SpaceHammer provides a pointer device alternative whenever it has the potential to be beneficial. 
 
 
 ## Installation

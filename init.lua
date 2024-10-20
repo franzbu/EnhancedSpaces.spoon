@@ -157,28 +157,27 @@ function SpaceHammer:new(options)
 
   -- watchdogs
   ---[[
-  filter = hs.window.filter --subscribe: when a new window (dis)appears, run refreshWindowsWS
-  filter.default:subscribe(filter.windowNotOnScreen, function(w)
+  hs.window.filter.default:subscribe(hs.window.filter.windowNotOnScreen, function(w)
     refreshWinMSpaces(w)
   end)
-  filter.default:subscribe(filter.windowOnScreen, function(w)
+  hs.window.filter.default:subscribe(hs.window.filter.windowOnScreen, function(w)
     refreshWinMSpaces(w)
     assignMS(w, true)
     w:focus()
   end)
-  filter.default:subscribe(filter.windowFocused, function(w)
+  hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(w)
     refreshWinMSpaces(w)
     cmdTabFocus(w)
   end)
 
   -- moving of windows reacted to constantly or through filter subscription
   if increasedResponsiveness then
-  -- global variable 'adjustWinFrameTimer' to avoid timer being garbage collected
+  -- global variable 'adjustWinFrameTimer' to avoid timer getting garbage collected
     adjustWinFrameTimer = hs.timer.doEvery(0.2, function() 
       adjustWinFrame()
     end)
   else
-    filter.default:subscribe(filter.windowMoved, function(w)
+    hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)}):subscribe(hs.window.filter.windowMoved, function(w)
       adjustWinFrame()
     end)
   end
@@ -373,8 +372,10 @@ hs.hotkey.bind(modifierReference, "0", function()
       for j = 1, #mspaces do -- frame
         print(tostring(winMSpaces[i].frame[j]))
       end
+
     end
   end)
+
   -- list names of apps of (visible) windows
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "i", function()
     for i = 1, #winMSpaces do -- frame
@@ -382,6 +383,7 @@ hs.hotkey.bind(modifierReference, "0", function()
     end
   end)
   --]]
+
 
   goToSpace(currentMSpace) -- refresh
   resizer.clickHandler:start()

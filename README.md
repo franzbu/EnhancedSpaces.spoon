@@ -287,9 +287,7 @@ If you want SpaceHammer to automatically move windows to specific mSpaces when o
   ...
   openAppMSpace = {
     {'Google Chrome', '2'},
-    {'WhatsApp', '3'},
     {'Microsoft To Do', '3'},
-    {'Telegram', '2'},
     {'Safari', '2'},
     {'Email', '1'},
   }, -- default: nil
@@ -312,7 +310,6 @@ You will then get an output like this:
 2024-10-20 07:38:13: Microsoft To Do
 2024-10-20 07:38:13: Email
 2024-10-20 07:38:13: Finder
-2024-10-20 07:38:13: ‎WhatsApp
 ```
 
 In case you would also like to pre-define the position of the window within the mSpace, you can add that information as a third option:
@@ -321,9 +318,7 @@ In case you would also like to pre-define the position of the window within the 
   ...
   openAppMSpace = {
     {'Google Chrome', '2', 'a1'},
-    {'WhatsApp', '3', 'a1'},
     {'Microsoft To Do', '3', 'a2'},
-    {'Telegram', '2', 'a5'},
     {'Safari', '2', 'a2'},
     {'Email', '1'},
   },

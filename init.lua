@@ -130,13 +130,13 @@ function SpaceHammer:new(options)
     resizer:handleDrag()
   )
 
-    -- menubar
+  -- menubar
   menubar = hs.menubar.new(true, "A"):setTitle(mspaces[currentMSpace])
   menubar:setTooltip("mSpace")
 
+  max = hs.screen.mainScreen():frame()
   local filter_all = hs.window.filter.new()
   winAll = filter_all:getWindows()--hs.window.sortByFocused)
-
   winMSpaces = {}
   for i = 1, #winAll do
     winMSpaces[i] = {}
@@ -153,10 +153,6 @@ function SpaceHammer:new(options)
       end
     end
   end
-
-  max = hs.screen.mainScreen():frame()
-  --initialize winMSpaces
-  refreshWinMSpaces()
 
   -- recover stranded windows at start
   for i = 1, #winAll do
@@ -1241,7 +1237,7 @@ function derefWinMSpace()
   if all_false then
     fwin:minimize()
   end
-  menubar:setTitle(tostring(currentMSpace))
+  --menubar:setTitle(mspaces[currentMSpace])
   goToSpace(currentMSpace) -- refresh
 end
 

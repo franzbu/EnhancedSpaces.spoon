@@ -373,17 +373,8 @@ hs.hotkey.bind(modifierReference, "0", function()
       for j = 1, #mspaces do -- frame
         print(tostring(winMSpaces[i].frame[j]))
       end
-
     end
   end)
-
-  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "k", function()
-
-  end)
-
-  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "l", function()
-  end)
-
   -- list names of apps of (visible) windows
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "i", function()
     for i = 1, #winMSpaces do -- frame
@@ -391,7 +382,6 @@ hs.hotkey.bind(modifierReference, "0", function()
     end
   end)
   --]]
-
 
   goToSpace(currentMSpace) -- refresh
   resizer.clickHandler:start()

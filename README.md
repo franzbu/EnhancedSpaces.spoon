@@ -312,7 +312,7 @@ You will then get an output like this:
 2024-10-20 07:38:13: Finder
 ```
 
-In case you would also like to pre-define the position of the window within the mSpace, you can add that information as a third option:
+In case you would also like to pre-define the position of the window within the mSpace, you can add that information as third option:
 
 ```lua
   ...

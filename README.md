@@ -181,7 +181,7 @@ As before, you do not need to add these lines to your `init.lua` unless you want
   ...
   modifierSnap1 = { 'cmd', 'alt' }, -- default: { 'cmd', 'alt' }
   modifierSnap2 = { 'cmd', 'ctrl' }, -- default: { 'cmd', 'ctrl' }
-  modifierSnap3 = { 'cmd', 'alt', 'ctrl' }, -- default: { 'cmd', 'alt', 'ctrl' }
+  modifierSnap3 = { 'cmd', 'shift' }, -- default: { 'shift' }
   ...
 ```
 

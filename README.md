@@ -116,9 +116,7 @@ To delete a reference, press `modifierReference` and `0`. In case you are 'de-re
 
 ### Switching Between Windows
 
-You can use macOS' integrated window switcher (Command-Tab) or third party switchers such as [AltTab](https://alt-tab-macos.netlify.app/) for switching between your windows. Also for switching between the different windows of one application you can use Apple's integrated switcher or any third party alternative.
-
-However, to make use of the advanced features mSpaces provide, SpaceHammer offers additional possibilities for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').
+Apart from switching between all windows, for which you obviously can keep using macOS' integrated window switcher (Command-Tab) or any third party switchers such as [AltTab](https://alt-tab-macos.netlify.app/), additional possibilities have been implemented in SpaceHammer for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').
 
 #### Switching between Windows of the Current mSpace
 
@@ -145,7 +143,7 @@ For switching between the references of a window ('sticky windows'), press `alt`
 
 ## Moving and Resizing Windows:
 
-With SpaceHammer you can automatically resize and position the windows on your mSpaces according to a dynamically changing grid size. Let us first talk about manual moving and resizing, though:
+With SpaceHammer you can automatically resize and position the windows on your mSpaces according to a dynamically changing grid size. Let us first discuss manual moving and resizing, though:
 
 
 ### Manual Moving and Positioning
@@ -237,7 +235,7 @@ You can have windows take up more cells on the 3x3 grid. The pre-defined positio
 - `modifierSnap3` and `o`: top middle and right thirds: 4 cells -> 'c11'
 - `modifierSnap3` and `p`: bottom middle and right thirds: 4 cells -> 'c12'
 
-As has been mentioned, these keyboard shortcuts are fully customizable. Let us first have a look at the standard setup, i.e., the way the keyboard shortcuts are pre-defined:
+As has been mentioned, these keyboard shortcuts are fully customizable. Let us first have a look at the standard setup, i.e., the way the keyboard shortcuts have been pre-defined:
 
 
 ```lua
@@ -260,7 +258,7 @@ This is best shown by means of an example: let us assume for a moment that you j
 - (2) right middle ninth of screen -> 'b11'
 - (3) middle third, upper two cells -> 'c5'
 
-Let us further assume that you would like to use `modifierSnap2` with the keys `j`, `k`, and `l` to achieve that; then you would add the following lines to your `init.lua`:
+Let us further assume that you would like to use `modifierSnap1` with the keys `j`, `k`, and `l` to achieve that; then you would add the following lines to your `init.lua`:
 
 ```lua
   ...
@@ -278,8 +276,8 @@ As you can see in the example above, `modifierSnapKey2` and `modifierSnapKey3` a
 
 Now, by pressing `modifierSnapKey1` and `j`, for example, scenario 'a2' is activated, which means that the active window snaps into the right half of the screen.
 
-## Additional Features
 
+## Additional Features
 
 ### Open Windows in Pre-Arranged mSpaces
 
@@ -289,12 +287,10 @@ If you want SpaceHammer to automatically move windows to specific mSpaces when o
   ...
   openAppMSpace = {
     {'Google Chrome', '2'},
-    {'Code', '2'},
     {'WhatsApp', '3'},
     {'Microsoft To Do', '3'},
     {'Telegram', '2'},
     {'Safari', '2'},
-    {'Orion', '2'},
     {'Email', '1'},
   }, -- default: nil
   ...
@@ -320,18 +316,16 @@ In case you would also like to pre-define the position of the window within the 
   ...
   openAppMSpace = {
     {'Google Chrome', '2', 'a1'},
-    {'Code', '2', 'a2'},
     {'WhatsApp', '3', 'a1'},
     {'Microsoft To Do', '3', 'a2'},
     {'Telegram', '2', 'a5'},
-    {'Safari', '2', 'a1'},
-    {'Orion', '2', 'a2'},
+    {'Safari', '2', 'a2'},
     {'Email', '1'},
   },
   ...
 ```
 
-'a1', for example, represents the left half of your screen, 'a2' for the right half of your screen. To get the entire list of positions, see section 'Automatic Resizing and Positioning - Keyboard'.
+'a1', for example, represents the left half of your screen, 'a2' for the right half of your screen. To get the entire list of possible scenarios, see section 'Automatic Resizing and Positioning - Keyboard'.
 
 
 ### Padding
@@ -404,13 +398,13 @@ Afterwards delete the folder `SpaceHammer.spoon` in `~/.hammerspoon/Spoons/` and
 
 ### Increased Responsiveness
 
-When repositioning or resizing a window, its coordinates get updated. However, as this depends on Hammerspoon's filter subscription, which happens to have a delay of approximately one second, the new coordinates of such a window are updated with that delay. 
+Whenever you reposition or resize a window, its coordinates get updated. However, as the triggering of the updating process depends on Hammerspoon's filter subscription, which happens to have a delay of approximately one second, the new coordinates of such a window are updated with some delay. 
 
-This can have repercussions: If you switch to another mSpace right after moving a window and before the coordinates have been properly updated, you will not find that window on its expected place when returning to that mSpace. This should not be an issue for most use scenarios.
+This can have repercussions: If you switch to another mSpace after moving a window and before before this approximately one second had passed, you will not find that window on its expected place when returning to that mSpace. 
 
-Nevertheless, as a workaround SpaceHammer updates the coordinates of the focused window five times a second and thus ensures that the coordinates are up to date.
+This should not be an issue for most use scenarios. Nevertheless, as a workaround SpaceHammer updates the coordinates of the focused window virtually instantly and thus ensures that the coordinates are up to date even if you switch to another mSpace happens right after moving a window.
 
-No tests have been run, but this workaround could lead to a slightly higher usage of processing power. If you therefore prefer to use the somewhat slower filter subscription method, you can add the following lines to your `init.lua`:
+This workaround could potentially lead to a slightly higher usage of processing power. If you therefore prefer to use the somewhat slower filter subscription method, you can add the following lines to your `init.lua`:
 
 ```lua
   ...
@@ -422,7 +416,7 @@ No tests have been run, but this workaround could lead to a slightly higher usag
 
 ### Hyper Key
 
-SpaceHammer (and other applications for that matter) can benefit from setting the Caps Lock key up as a so called hyper key, which basically means that you get an additional modifier, as - due to the impracticality - you would hardly be tempted to use the combination of four modifiers otherwise. 
+SpaceHammer (and other applications for that matter) can benefit from setting the Caps Lock key up as a so called hyper key, which basically means that you get an additional modifier key, as - due to the impracticality of pressing four keys at once - you would hardly be tempted to use the combination of four modifiers otherwise. 
 
 Among others, you can use the application [Karabiner Elements](https://karabiner-elements.pqrs.org/) for creating such a hyper key.
 
@@ -432,7 +426,7 @@ In this scenario, the original function of the Caps Lock key remains untouched. 
 
 #### Option 2
 
-As an alternative option I present my personal setup: Caps Lock's functionality can be further extended by using a single press (without any other keys) of Caps Lock as pressing the hyper key and spacebar keys, which in turn can be used to open an application such as Alfred, which is what I have done. 
+As an alternative to option 1 I present my personal setup: Caps Lock's functionality is further extended by using a single press (without any other keys) of Caps Lock as stimulating pressing the hyper key and spacebar keys, which in turn can be used to open an application such as Alfred, which is what I use it for. 
 
 The original purpose of Caps Lock is still available; you can trigger this function by pressing the Shift (Command, Option, and Control work likewise) and Caps Lock keys simultaneously.
 
@@ -462,7 +456,7 @@ For this modification, go to 'Settings - Complex Modifications', click 'Add your
 }
 ```
 
-Now you can assign your newly created hyper key to any of the functions in SpaceHammer, for example, `modifierMS`:
+Now you can assign your newly created hyper key to trigger for any modifiers in SpaceHammer, for example, `modifierMS`:
 
 
 ```lua
@@ -471,7 +465,7 @@ Now you can assign your newly created hyper key to any of the functions in Space
   modifierMSKeys = { 'a', 's', 'd', 'f', 'q', 'w' }, -- default: { 'a', 's', 'd', 'f', 'q', 'w' }
   ...
 ```
-
+Now, pressing `Caps Lock` and `a`, for instance, switches to the mSpace on the left.
 
 ### Uninstall SpaceHammer
 

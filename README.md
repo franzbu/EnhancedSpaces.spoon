@@ -299,7 +299,7 @@ If you want SpaceHammer to automatically move windows to specific mSpaces when o
 The way appications are assigend to certain mSpaces is self-explanatory. To get the names of the applications, you can simply run the following command in Hammerspoon's Console:
 
 ```lua
-for _, v in pairs(hs.window.filter.default:getWindows())do print(v:application():name()) end
+for _, v in pairs(hs.window.filter.default:getWindows()) do print(v:application():name()) end
 ```
 
 You will then get an output like this:

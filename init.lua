@@ -9,7 +9,7 @@ SpaceHammer.author = "Franz B. <csaa6335@gmail.com>"
 SpaceHammer.homepage = "https://github.com/franzbu/SpaceHammer.spoon"
 SpaceHammer.winMSpaces = "MIT"
 SpaceHammer.name = "SpaceHammer"
-SpaceHammer.version = "0.9.1"
+SpaceHammer.version = "0.9.2"
 SpaceHammer.spoonPath = scriptPath()
 
 local dragTypes = {
@@ -183,7 +183,39 @@ function SpaceHammer:new(options)
     end)
   end
   --]]
-  
+
+  --[[ -- flagsKeyboardTracker
+  -- 'subscribe', watchdog for modifier keys
+  cycleModCounter = 0 
+  local events = hs.eventtap.event.types
+  local prevModifier = nil
+  cycleAll = false
+  keyboardTracker = hs.eventtap.new({ events.flagsChanged }, function(e)
+    local flagsKeyboardTracker = eventToArray(e:getFlags())
+    -- on modifier release flag is assigned 'nil' -> prevModifier remedies that
+    if modifiersEqual(flagsKeyboardTracker, modifierSwitchWin) or modifiersEqual(prevModifier, modifierSwitchWin) then
+      cycleModCounter = cycleModCounter + 1
+      if cycleModCounter % 2 == 0 then -- only when released (and not when pressed)
+        prevModifier = nil
+        if cycleAll then
+          hs.timer.doAfter(0.02, function()
+            cycleModCounter = 0
+            pos = getWinMSpacesPos(hs.window.focusedWindow())
+            for i = 1, #mspaces do
+              if winMSpaces[pos].mspace[i] then
+                goToSpace(i)
+                break 
+              end
+            end
+          end)
+          cycleAll = false
+        end
+      end
+    end
+    prevModifier = flagsKeyboardTracker
+  end)
+  keyboardTracker:start()
+  --]]
 
   ---[[
   -- cycle throuth windows of current mSpace
@@ -205,7 +237,7 @@ function SpaceHammer:new(options)
   end)
   --]]
 
-  -- cycle through windows of current WS (without UI)
+  -- cycle through windows of current WS (without UI), todo (maybe): last focus first
   --[[
   local nextFMS = 1
   hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[1], function()
@@ -370,7 +402,7 @@ end
 function SpaceHammer:stop()
   self.dragging = false
   self.dragType = nil
-  for i = 1, #cv do -- delete canvases 
+  for i = 1, #cv do -- delete canvases
     cv[i]:delete()
   end
   self.cancelHandler:stop()
@@ -936,7 +968,7 @@ function createCanvas(n, x, y, w, h)
     {
       action = 'fill',
       type = 'rectangle',
-      fillColor = { red = gridIndicator[2], green = gridIndicator[4], blue = gridIndicator[4], alpha = gridIndicator[5] },
+      fillColor = { red = gridIndicator[2], green = gridIndicator[3], blue = gridIndicator[4], alpha = gridIndicator[5] },
       roundedRectRadii = { xRadius = 5.0, yRadius = 5.0 },
     },
     1
@@ -1147,6 +1179,7 @@ function refreshWinMSpaces(w)
       end
     end
   end
+
   winOnlyMoved = false
 end
 

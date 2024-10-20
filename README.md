@@ -289,7 +289,7 @@ If you want SpaceHammer to automatically move windows to specific mSpaces when o
     {'Google Chrome', '2'},
     {'Microsoft To Do', '3'},
     {'Safari', '2'},
-    {'Email', '1'},
+    {'Email', 'E'},
   }, -- default: nil
   ...
 ```
@@ -320,7 +320,7 @@ In case you would also like to pre-define the position of the window within the 
     {'Google Chrome', '2', 'a1'},
     {'Microsoft To Do', '3', 'a2'},
     {'Safari', '2', 'a2'},
-    {'Email', '1'},
+    {'Email', 'E'},
   },
   ...
 ```
@@ -478,7 +478,7 @@ In case you have used the option `openAppMSpace`, disable or remove that section
     {'Google Chrome', '2', 'a1'},
     {'Code', '2', 'a2'},
     {'Microsoft To Do', 'T'},
-    {'Email', 'E' 'a7'},
+    {'Email', 'E'},
   },
   ]]
   ...

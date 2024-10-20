@@ -169,7 +169,7 @@ function SpaceHammer:new(options)
     --refreshWinMSpaces()
   --end)
   hs.window.filter.default:subscribe(hs.window.filter.windowOnScreen, function(w)
-    --refreshWinMSpaces()
+    refreshWinMSpaces() -- even though it is called by hs.timer.every(), it needs to be called right before assignMS(), otherwise the latter throws errors
     assignMS(w, true)
     w:focus()
   end)
@@ -1246,16 +1246,17 @@ end
 function assignMS(w, boolgotoSpace)
   if openAppMSpace ~= nil then
     for i = 1, #openAppMSpace do
-      if w:application():name():gsub('%W','') == openAppMSpace[i][1]:gsub('%W','') then
+      if w:application():name():gsub('%W', '') == openAppMSpace[i][1]:gsub('%W', '') then
         for j = 1, #mspaces do
           if openAppMSpace[i][2] == mspaces[j] then
             winMSpaces[getWinMSpacesPos(w)].mspace[j] = true
             if openAppMSpace[i][3] ~= nil then
               winMSpaces[getWinMSpacesPos(w)].frame[j] = snap(openAppMSpace[i][3])
             else
-              winMSpaces[getWinMSpacesPos(w)].frame[indexOf(mspaces, openAppMSpace[i][2])] = hs.geometry.point(max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h) -- put window in middle of screen            
+              winMSpaces[getWinMSpacesPos(w)].frame[indexOf(mspaces, openAppMSpace[i][2])] = hs.geometry.point(
+              max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h)                                                                                                    -- put window in middle of screen
             end
-            if boolgotoSpace then -- not when SpaceHammer is started
+            if boolgotoSpace then                                                                                                                                                                    -- not when SpaceHammer is started
               goToSpace(indexOf(mspaces, openAppMSpace[i][2]))
             end
           else

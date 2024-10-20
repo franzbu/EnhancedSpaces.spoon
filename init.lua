@@ -137,7 +137,7 @@ function SpaceHammer:new(options)
   menubar = hs.menubar.new(true, "A"):setTitle(mspaces[currentMSpace])
   menubar:setTooltip("mSpace")
 
-  filter_all = hs.window.filter.new()
+  local filter_all = hs.window.filter.new()
   winAll = filter_all:getWindows()--hs.window.sortByFocused)
 
   winMSpaces = {}
@@ -1119,7 +1119,7 @@ end
 
 
 function refreshWinMSpaces(w)
-  --filter_all = hs.window.filter.new()
+  local filter_all = hs.window.filter.new()
   winAll = filter_all:getWindows() --hs.window.sortByFocused)
   if #winMSpaces == 0 then -- at first start
     for i = 1, #winAll do

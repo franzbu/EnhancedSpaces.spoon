@@ -1,5 +1,9 @@
 
   
+# v0.9.2
+
+* big fixes
+  
 # v0.9.1
 
 * added padding for manual resizing windows and moving up to 10 percent of windows past screen borders

@@ -9,7 +9,7 @@ SpaceHammer.author = "Franz B. <csaa6335@gmail.com>"
 SpaceHammer.homepage = "https://github.com/franzbu/SpaceHammer.spoon"
 SpaceHammer.winMSpaces = "MIT"
 SpaceHammer.name = "SpaceHammer"
-SpaceHammer.version = "0.9.2"
+SpaceHammer.version = "0.9.3"
 SpaceHammer.spoonPath = scriptPath()
 
 local dragTypes = {
@@ -26,7 +26,6 @@ local function tableToMap(table)
 end
 
 local function getWindowUnderMouse()
-  --local _ = hs.application
   local my_pos = hs.geometry.new(hs.mouse.absolutePosition())
   local my_screen = hs.mouse.getCurrentScreen()
   return hs.fnutils.find(hs.window.orderedWindows(), function(w)
@@ -95,8 +94,6 @@ function SpaceHammer:new(options)
 
   gridIndicator = options.gridIndicator or { 20, 1, 0.83, 0, 0.4 }
 
-  increasedResponsiveness = options.increasedResponsiveness or true
-
   local resizer = {
     disabledApps = tableToMap(options.disabledApps or {}),
     dragging = false,
@@ -141,6 +138,22 @@ function SpaceHammer:new(options)
   winAll = filter_all:getWindows()--hs.window.sortByFocused)
 
   winMSpaces = {}
+  for i = 1, #winAll do
+    winMSpaces[i] = {}
+    winMSpaces[i].win = winAll[i]
+    winMSpaces[i].mspace = {}
+    winMSpaces[i].frame = {}
+    for k = 1, #mspaces do
+      if k == currentMSpace then
+        winMSpaces[i].mspace[k] = true
+        winMSpaces[i].frame[k] = winAll[i]:frame()
+      else
+        winMSpaces[i].mspace[k] = false
+        winMSpaces[i].frame[k] = winAll[i]:frame()
+      end
+    end
+  end
+
   max = hs.screen.mainScreen():frame()
   --initialize winMSpaces
   refreshWinMSpaces()
@@ -148,7 +161,7 @@ function SpaceHammer:new(options)
   -- recover stranded windows at start
   for i = 1, #winAll do
     if winAll[i]:topLeft().x >= max.w - 1 then                                                                                                                                                                 -- window in 'hiding spot'
-      -- move window to the middle of the current mSpace
+      -- move window to middle of the current mSpace
       winMSpaces[getWinMSpacesPos(winAll[i])].frame[currentMSpace] = hs.geometry.point(
       max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2, winAll[i]:frame().w, winAll[i]:frame().h)                                                                                      -- put window in middle of screen
       assignMS(winAll[i], false)
@@ -156,32 +169,24 @@ function SpaceHammer:new(options)
   end
 
   -- watchdogs
-  ---[[
-  hs.window.filter.default:subscribe(hs.window.filter.windowNotOnScreen, function(w)
-    refreshWinMSpaces(w)
-  end)
+  --hs.window.filter.default:subscribe(hs.window.filter.windowNotOnScreen, function(w)
+    --refreshWinMSpaces()
+  --end)
   hs.window.filter.default:subscribe(hs.window.filter.windowOnScreen, function(w)
-    refreshWinMSpaces(w)
+    --refreshWinMSpaces()
     assignMS(w, true)
     w:focus()
   end)
   hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(w)
-    refreshWinMSpaces(w)
-    cmdTabFocus(w)
+    --refreshWinMSpaces()
+    cmdTabFocus()
   end)
 
-  -- moving of windows reacted to constantly or through filter subscription
-  if increasedResponsiveness then
-  -- 'adjustWinFrameTimer' global to avoid timer getting garbage collected
-    adjustWinFrameTimer = hs.timer.doEvery(0.2, function() 
-      adjustWinFrame()
-    end)
-  else
-    hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)}):subscribe(hs.window.filter.windowMoved, function(w)
-      adjustWinFrame()
-    end)
-  end
-  --]]
+  --hs.window.filter.default:subscribe(hs.window.filter.windowMoved, function(w) adjustWinFrame() end)
+  adjustWinFrameTimer = hs.timer.doEvery(0.2, function() -- 'adjustWinFrameTimer' global to avoid timer getting garbage collected
+    adjustWinFrame()
+    refreshWinMSpaces()
+  end)
 
   --[[ -- flagsKeyboardTracker
   -- 'subscribe', watchdog for modifier keys
@@ -1133,26 +1138,9 @@ function moveToSpace(target, origin, boolKeyboard)
 end
 
 
-function refreshWinMSpaces(w)
+function refreshWinMSpaces()
   local filter_all = hs.window.filter.new()
   winAll = filter_all:getWindows() --hs.window.sortByFocused)
-  if #winMSpaces == 0 then -- at first start
-    for i = 1, #winAll do
-      winMSpaces[i] = {}
-      winMSpaces[i].win = winAll[i]
-      winMSpaces[i].mspace = {}
-      winMSpaces[i].frame = {}
-      for k = 1, #mspaces do
-        if k == currentMSpace then
-          winMSpaces[i].mspace[k] = true
-          winMSpaces[i].frame[k] = winAll[i]:frame()
-        else
-          winMSpaces[i].mspace[k] = false
-          winMSpaces[i].frame[k] = winAll[i]:frame() -- hs.geometry.new(0, 0, 1, 1) --{0,0,0,0}  nil
-        end
-      end
-    end
-  end
 
   -- delete closed or minimized windows
   for i = 1, #winMSpaces do
@@ -1186,18 +1174,17 @@ function refreshWinMSpaces(w)
       end
     end
   end
-
   winOnlyMoved = false
 end
 
 
 -- when 'normal' window switchers such as altTab or macOS' cmd-tab are used, cmdTabFocus() switches to correct mSpace
-function cmdTabFocus(w)
+function cmdTabFocus()
   -- when choosing to switch to window by cycling through all apps, go to mSpace of chosen window
-  if w ~= nil then
-    if not winMSpaces[getWinMSpacesPos(w)].mspace[currentMSpace] then -- in case focused window is not on current mSpace, switch to the one containing it
+  if hs.window.focusedWindow() ~= nil and winMSpaces[getWinMSpacesPos(hs.window.focusedWindow())] ~= nil then
+    if not winMSpaces[getWinMSpacesPos(hs.window.focusedWindow())].mspace[currentMSpace] then -- in case focused window is not on current mSpace, switch to the one containing it
       for i = 1, #mspaces do
-        if winMSpaces[getWinMSpacesPos(w)].mspace[i] then
+        if winMSpaces[getWinMSpacesPos(hs.window.focusedWindow())].mspace[i] then
           goToSpace(i)
           break
         end
@@ -1207,15 +1194,14 @@ function cmdTabFocus(w)
 end
 
 
+-- triggered by hs.window.filter.windowFocused -> adjusts coordinates of moved window
 function adjustWinFrame()
-  -- subscribed filter for some reason takes a couple of seconds to trigger method
-  w = hs.window.focusedWindow()
-  if w ~= nil then
-    --print("adjustWinFrame")
-    max = w:screen():frame() 
-    if w:topLeft().x < max.w - 2 then   -- prevents subscriber-method to refresh coordinates of window that has just been 'hidden'
-      if winMSpaces[getWinMSpacesPos(w)] ~= nil then 
-        winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = w:frame()
+  -- subscribed filter for some reason takes a couple of seconds to trigger method -> alternative: hs.timer.doEvery()
+  if hs.window.focusedWindow() ~= nil then
+    max = hs.window.focusedWindow():screen():frame() 
+    if hs.window.focusedWindow():topLeft().x < max.w - 2 then -- prevents subscriber-method to refresh coordinates of window that has just been 'hidden'
+      if winMSpaces[getWinMSpacesPos(hs.window.focusedWindow())] ~= nil then 
+        winMSpaces[getWinMSpacesPos(hs.window.focusedWindow())].frame[currentMSpace] = hs.window.focusedWindow():frame()
       end
     end
   end

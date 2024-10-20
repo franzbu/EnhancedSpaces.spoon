@@ -469,7 +469,7 @@ Now, pressing `Caps Lock` and `a`, for instance, switches to the mSpace on the l
 
 ### Uninstall SpaceHammer
 
-In case you have used the option `openAppMSpace`, disable or remove that section from your `init.lua` and restart SpaceHammer afterwards to move all windows to your main mSpace, which after disabling or uninstalling SpaceHammer will become your default space.
+In case you have used the option `openAppMSpace`, disable or remove that section from your `init.lua` and restart SpaceHammer afterwards to move all windows to your main mSpace, which after disabling or uninstalling SpaceHammer will automatically become your default space.
 
 ```lua
   ...

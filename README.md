@@ -348,7 +348,7 @@ In case you would like to change the size, color and/or opacity of the grid indi
 ```lua
   ...
   -- change grid indicators:
-    gridIndicator = { 20, 1, 0.83, 0, 0.4 }, -- default: { 20, 1, 0.83, 0, 0.4 }, 
+    gridIndicator = { 20, 1, 0, 0, 0.33 }, -- default: { 20, 1, 0, 0, 0.33 }, 
 
   ...
 ```

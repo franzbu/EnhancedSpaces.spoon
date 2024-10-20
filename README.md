@@ -31,7 +31,7 @@ mkdir -p ~/.hammerspoon/Spoons && git clone https://github.com/franzbu/SpaceHamm
 
 ## Usage
 
-Once you have installed SpaceHammer, add the following lines to your `~/.hammerspoon/init.lua` file, you might want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you will be greeted with:
+Once you have installed SpaceHammer, add the following lines to the file `~/.hammerspoon/init.lua`, you might want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you will be greeted with:
 
 ```lua
 local SpaceHammer = hs.loadSpoon('SpaceHammer')

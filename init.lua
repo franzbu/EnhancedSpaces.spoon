@@ -169,7 +169,7 @@ function SpaceHammer:new(options)
     --refreshWinMSpaces()
   --end)
   hs.window.filter.default:subscribe(hs.window.filter.windowOnScreen, function(w)
-    refreshWinMSpaces() -- even though it is called by hs.timer.every(), it needs to be called right before assignMS(), otherwise the latter throws errors
+    refreshWinMSpaces() -- even though it is being called by hs.timer.every(), it needs to be called right before assignMS(), otherwise the latter throws errors
     assignMS(w, true)
     w:focus()
   end)
@@ -1112,7 +1112,7 @@ function goToSpace(target)
     end
   end
   currentMSpace = target
-  menubar:setTitle(tostring(mspaces[target]))
+  menubar:setTitle(mspaces[target])
 end
 
 

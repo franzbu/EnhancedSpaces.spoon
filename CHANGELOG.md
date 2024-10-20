@@ -2,7 +2,7 @@
   
 # v0.9.2
 
-* big fixes
+* bug fixes
   
 # v0.9.1
 

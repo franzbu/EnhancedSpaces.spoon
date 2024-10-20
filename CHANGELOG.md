@@ -1,5 +1,9 @@
 
   
+# v0.9.3
+
+* extended use of 'hs.timer.doEvery()' instead of filter subscription
+
 # v0.9.2
 
 * bug fixes

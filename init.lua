@@ -92,7 +92,7 @@ function SpaceHammer:new(options)
   mspaces = options.mSpaces or { '1', '2', '3' }
   currentMSpace = indexOf(options.MSpaces, options.startMSpace) or 2
 
-  gridIndicator = options.gridIndicator or { 20, 1, 0.83, 0, 0.4 }
+  gridIndicator = options.gridIndicator or { 20, 1, 0, 0, 0.33 }
 
   local resizer = {
     disabledApps = tableToMap(options.disabledApps or {}),

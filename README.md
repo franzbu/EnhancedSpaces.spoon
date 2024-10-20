@@ -396,24 +396,6 @@ Afterwards delete the folder `SpaceHammer.spoon` in `~/.hammerspoon/Spoons/` and
 
 ## Notes
 
-### Increased Responsiveness
-
-Whenever you reposition or resize a window, its coordinates get updated. However, as the triggering of the updating process depends on Hammerspoon's filter subscription, which happens to have a delay of approximately one second, the new coordinates of such a window are updated with some delay. 
-
-This can have repercussions: If you switch to another mSpace after moving a window and before before this approximately one second had passed, you will not find that window on its expected place when returning to that mSpace. 
-
-This should not be an issue for most use scenarios. Nevertheless, as a workaround SpaceHammer updates the coordinates of the focused window virtually instantly and thus ensures that the coordinates are up to date even if you switch to another mSpace happens right after moving a window.
-
-This workaround could potentially lead to a slightly higher usage of processing power. If you therefore prefer to use the somewhat slower filter subscription method, you can add the following lines to your `init.lua`:
-
-```lua
-  ...
-  -- increased responsiveness for registering changing the position of windows
-  increasedResponsiveness = false, -- default: true
-  ...
-```
-
-
 ### Hyper Key
 
 SpaceHammer (and other applications for that matter) can benefit from setting the Caps Lock key up as a so called hyper key, which basically means that you get an additional modifier key, as - due to the impracticality of pressing four keys at once - you would hardly be tempted to use the combination of four modifiers otherwise. 

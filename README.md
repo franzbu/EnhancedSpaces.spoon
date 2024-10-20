@@ -477,7 +477,6 @@ In case you have used the option `openAppMSpace`, disable or remove that section
   openAppMSpace = {
     {'Google Chrome', '2', 'a1'},
     {'Code', '2', 'a2'},
-    {'WhatsApp', '3', 'a1'},
     {'Microsoft To Do', 'T'},
     {'Email', 'E' 'a7'},
   },

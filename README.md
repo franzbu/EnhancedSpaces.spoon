@@ -302,6 +302,18 @@ The way appications are assigend to certain mSpaces is self-explanatory. To get 
 for _, v in pairs(hs.window.filter.default:getWindows())do print(v:application():name()) end
 ```
 
+You will then get an output like this:
+
+```bash
+2024-10-20 07:38:13: Hammerspoon
+2024-10-20 07:38:13: Terminal
+2024-10-20 07:38:13: Google Chrome
+2024-10-20 07:38:13: Code
+2024-10-20 07:38:13: Microsoft To Do
+2024-10-20 07:38:13: Email
+2024-10-20 07:38:13: Finder
+2024-10-20 07:38:13: ‎WhatsApp
+```
 
 In case you would also like to pre-define the position of the window within the mSpace, you can add that information as a third option:
 

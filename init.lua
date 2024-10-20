@@ -172,7 +172,7 @@ function SpaceHammer:new(options)
 
   -- moving of windows reacted to constantly or through filter subscription
   if increasedResponsiveness then
-  -- global variable 'adjustWinFrameTimer' to avoid timer getting garbage collected
+  -- 'adjustWinFrameTimer' global to avoid timer getting garbage collected
     adjustWinFrameTimer = hs.timer.doEvery(0.2, function() 
       adjustWinFrame()
     end)
@@ -384,7 +384,6 @@ hs.hotkey.bind(modifierReference, "0", function()
   end)
   --]]
 
-
   goToSpace(currentMSpace) -- refresh
   resizer.clickHandler:start()
   return resizer
@@ -531,6 +530,10 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
         if frame.x < 0 and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- left and not bottom
           if math.abs(frame.x) < wNew / 10 then -- moved past border by 10 or less percent: move window as is back within boundaries of screen
           xNew = 0 + pM
+          if yNew < heightMB + pM then -- top padding
+            hs.alert.show(heightMB)
+            yNew = 0 + heightMB + pM
+          end
           self.targetWindow:move(hs.geometry.new(xNew, yNew, wNew, hNew), nil, false, 0)
           -- window moved past left screen border 2x2
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
@@ -550,6 +553,10 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
           if max.w - frame.x > math.abs(max.w - frame.x - wNew) * 9 then -- 9 times as much inside screen than outside = 10 percent outside; move window back within boundaries of screen (keep size)
             wNew = frame.w
             xNew = max.w - wNew - pM
+            if yNew < heightMB + pM then -- top padding
+              hs.alert.show(heightMB)
+              yNew = 0 + heightMB + pM
+            end
             self.targetWindow:move(hs.geometry.new(xNew, yNew, wNew, hNew), nil, false, 0)
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
             for i = 1, gridY, 1 do
@@ -588,6 +595,10 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
         if frame.x < 0 and hs.mouse.getRelativePosition().y + sumdy < max.h + heightMB then -- left and not bottom
           if math.abs(frame.x) < wNew / 10 then -- moved past border by 10 or less percent: move window as is back within boundaries of screen
             xNew = 0 + pM
+            if yNew < heightMB + pM then -- top padding
+              hs.alert.show(heightMB)
+              yNew = 0 + heightMB + pM
+            end
             self.targetWindow:move(hs.geometry.new(xNew, yNew, wNew, hNew), nil, false, 0)
           -- window moved past left border -> window is snapped to right side
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button
@@ -606,6 +617,10 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
           if max.w - frame.x > math.abs(max.w - frame.x - wNew) * 9 then -- 9 times as much inside screen than outside = 10 percent outside; move window back within boundaries of screen (keep size)
             wNew = frame.w
             xNew = max.w - wNew - pM
+            if yNew < heightMB + pM then -- top padding
+              hs.alert.show(heightMB)
+              yNew = 0 + heightMB + pM
+            end
             self.targetWindow:move(hs.geometry.new(xNew, yNew, wNew, hNew), nil, false, 0)
           -- window moved past right border -> window is snapped to left side
           elseif eventType == self.moveStartMouseEvent then -- automatically resize and position window within grid, but only with left mouse button

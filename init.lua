@@ -130,7 +130,6 @@ function SpaceHammer:new(options)
     resizer:handleDrag()
   )
 
-  -- menubar
   menubar = hs.menubar.new(true, "A"):setTitle(mspaces[currentMSpace])
   menubar:setTooltip("mSpace")
 
@@ -170,6 +169,7 @@ function SpaceHammer:new(options)
   --end)
   hs.window.filter.default:subscribe(hs.window.filter.windowOnScreen, function(w)
     refreshWinMSpaces() -- even though it is being called by hs.timer.every(), it needs to be called right before assignMS(), otherwise the latter throws errors
+    moveMiddleAfterMouseMinimize(w)
     assignMS(w, true)
     w:focus()
   end)
@@ -1267,11 +1267,15 @@ function assignMS(w, boolgotoSpace)
         end
       end
     end
-    -- in case window has previously been minimized by dragging beyond bottom screen border (or for another reason extends beyond bottom screen border), it will be moved to middle of screen
-    if boolgotoSpace and w:frame().y + w:frame().h > max.h + heightMB then
-      w:setFrame(hs.geometry.point(max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h))
-      winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = hs.geometry.point(max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h)
-    end
+  end
+end
+
+
+-- in case a window has previously been minimized by dragging beyond bottom screen border (or for another reason extends beyond bottom screen border), it will be moved to middle of screen
+function moveMiddleAfterMouseMinimize(w)
+  if w:frame().y + w:frame().h > max.h + heightMB then
+    w:setFrame(hs.geometry.point(max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h))
+    winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = hs.geometry.point(max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h)
   end
 end
 

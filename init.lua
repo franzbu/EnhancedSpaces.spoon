@@ -1104,6 +1104,9 @@ winOnlyMoved = false -- prevent watchdog from giving focus to window if it has b
 function goToSpace(target)
   winOnlyMoved = false
   max = hs.screen.mainScreen():frame()
+  maxWithMB = hs.screen.mainScreen():fullFrame()
+  heightMB = maxWithMB.h - max.h   -- height menu bar
+
   for i,v in pairs(winMSpaces) do
     if winMSpaces[i].mspace[target] == true then
       winMSpaces[i].win:setFrame(winMSpaces[i].frame[target]) -- 'unhide' window
@@ -1277,7 +1280,7 @@ end
 function snap(scenario)
   maxWithMB = hs.window.focusedWindow():screen():fullFrame()
   max = hs.window.focusedWindow():screen():frame()
-  local heightMB = maxWithMB.h - max.h   -- height menu bar
+  heightMB = maxWithMB.h - max.h   -- height menu bar
   local xNew = 0
   local yNew = 0
   local wNew = 0

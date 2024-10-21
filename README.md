@@ -4,7 +4,7 @@ SpaceHammer has been inspired by a variety of tools, among them AeroSpace, Moom 
 
 'To simplify one's life is not too bad, but do I need that when it comes to my Mac, and what does this tool actually do to justify spending my time with it?', you might ask. 
 
-Well, first, spending your time with SpaceHammer might actually save you time. As far as the features of this tool are concerned, the answer is simple: it helps you organize your workspace, which comes down to two main tasks: managing your spaces and your applications and windows on them. 
+Well, first, spending your time with SpaceHammer might actually save you time. As far as the features of this tool are concerned, the answer is simple: It helps you organize your workspace, which comes down to two main tasks: managing your spaces and your applications and windows on them. 
 
 SpaceHammer provides a new implementation of what Apple has straightforwardly termed 'Spaces'; in SpaceHammer they are called mSpaces. This means that with SpaceHammer you can organize your windows not only on one (virtual) screen, but on as many screens as you like and then easily switch between these screens or, to use SpaceHammer's terminology, mSpaces. You can actually do more than that with mSpaces, for example, you can place one window on more than one mSpace at a time; more about that later.
 
@@ -12,7 +12,7 @@ Regarding organizing windows on mSpaces, they are positioned and resized accordi
 
 'Still, this is nothing groundbrakingly new', I hear you say, and you are right. You might be surprised, though, what difference a slightly altered approach can make. But read on and judge for yourself.
 
-One last thing before we dive in: SpaceHammer has been designed to handle your windows and mSpaces by using keyboard shortcuts; however, similar to other operations, at times it is simpler and faster if you let your keyboard and pointing device cooperate. Thus SpaceHammer provides an alternative by using a pointing device whenever it has the potential of being beneficial. 
+One last thing before we dive in: SpaceHammer has been designed to handle your windows and mSpaces by using keyboard shortcuts; however, similar to other operations, at times it is simpler and faster if you let your keyboard and pointing device cooperate. Thus SpaceHammer provides an alternative by using a pointing device whenever this has the potential of being beneficial. 
 
 
 ## Installation
@@ -46,9 +46,9 @@ Restart Hammerspoon and you are ready to go; it is normal that the start of Spac
 
 ## mSpaces
 
-You can use the Control (`ctrl`) - in case you are willing to spend some time to set up an elegant alternative in the form of a hyper key, see section 'Notes' - and the `s` keys to cycle through your mSpaces. To cycle in reverse order, press `ctrl` and `a`. To move the active window to the mSpace left (right) and switch there alongside with the window, press `ctrl` and `q` (`w`); to move the window while staying on the current mSpace press `ctrl` and `d` (`ctrl` and `w`).
+You can use the Control (`ctrl`) - in case you are willing to spend some time to set up an elegant alternative in the form of a hyper key, see section 'Notes' - and the `s` keys to cycle through your mSpaces. To cycle in reverse order, press `ctrl` and `a`. To move the active window to the mSpace on the left (right) and switch there alongside with the window, press `ctrl` and `q` (`w`); to move the window while staying on the current mSpace press `ctrl` and `d` (`ctrl` and `w`).
 
-The lines below represent the default setup, and you do not need to add them to your `init.lua` unless you want to apply changes:
+The lines below represent the default setup, and you do not need to add them to your `init.lua` unless you want to make changes:
 
 ```lua
   ...
@@ -94,13 +94,11 @@ As before, the line below represents the default setup, and you do not need to a
 
 ### Same Window on More Than One mSpace
 
-By now we have covered the basics, but we have not walked over the finish line yet. That being said, this section is mainly for advanced users.
+By now we have covered the basics, but we have not walked over the finish line yet. That being said, this section is mainly for advanced users; it is about having 'the same window on more than one mSpace. 
 
-This section is about having 'copies' of windows on more than one mSpace. 
-
-If you want to unlock the full potential of mSpaces, it is helpful to understand the underlying philosophy: Each mSpace is a representation of your windows rather than just a space containing your windows - or, in other words, an mSpace can be understood as a set of 'symbolic links' to your actual windows. Due to this approach you could, for instance, have two mSpaces with the same windows in different sizes and positions, which could be sensible for specific workflows where it makes sense to be switching instantly between a bigger window of one and a smaller window of another application and vice versa. Or you can have the same Notes, Calendar, Finder or Safari window on two, three, or all your mSpaces.
+If you want to unlock the full potential of mSpaces, it is helpful to understand the underlying philosophy. Each mSpace is a representation of your windows rather than just a space containing them - or, in other words, an mSpace can be understood as a set of 'symbolic links' to a subset of your open windows. Due to this approach you could, for instance, have two mSpaces with the same windows in different sizes and positions, or - a scenario that is more likely - you can have the same Notes, Calendar, Finder or Safari window on two, three, or all your mSpaces.
   
-To create representations of windows, press the `ctrl` and `shift` modifiers simultaneously and additionally press the key corresponding to the mSpace you would like to create a reference of the currently active window on, for instance, `3`. 
+To make a window visible on another mSpace as well, press the `ctrl` and `shift` modifiers and additionally press the key corresponding to the target mSpace, for instance, `3`. 
 
 As before, the below line represents the default setup, and you do not need to add it to your `init.lua` unless you prefer a different shortcut:
 
@@ -116,7 +114,7 @@ To delete a reference, press `modifierReference` and `0`. In case you are 'de-re
 
 ### Switching Between Windows
 
-Apart from switching between all windows, for which you obviously can use macOS' integrated window switcher (Command-Tab) or any third party switchers such as [AltTab](https://alt-tab-macos.netlify.app/), additional possibilities have been implemented in SpaceHammer for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').
+Apart from switching between all windows, for which you will obviously use macOS' integrated window switcher (Command-Tab) or the third party switcher of your choice, such as [AltTab](https://alt-tab-macos.netlify.app/), additional possibilities have been implemented in SpaceHammer for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').
 
 #### Switching between Windows of the Current mSpace
 
@@ -219,7 +217,7 @@ Below you find the pre-assigned keyboard shortcuts.
 - `modifierSnap2` and `p`: right bottom ninth of screen -> 'b12'
 
 
-#### 3x3 Grid - Double (and Quadruple) Sizes
+#### 3x3 Grid - Additional Window Sizes
 You can have windows take up more cells on the 3x3 grid. The pre-defined positions and sizes are as follows (descriptions might be tricky; so simply try the keyboard shortcuts out):
 
 - `modifierSnap3` and `1`: left two thirds of screen: 6 cells -> 'c1'
@@ -251,9 +249,9 @@ As has been mentioned, these keyboard shortcuts are fully customizable. Let us f
   ...
 ```
 
-In case you would like to make changes, you are free to combine any of the three modifiers `modifierSnap1`, `modifierSnap1`, and `modifierSnap1` with any scenarios.
+In case you would like to make changes, you can combine any of the three modifiers `modifierSnap1`, `modifierSnap1`, and `modifierSnap1` with any of the scenarios.
 
-This is best shown by means of an example: let us assume for a moment that you just need windows to snap into three different grid positions:
+This is best shown by means of an example: let us assume that you just need windows to snap into three different grid positions:
 - (1) right half of screen -> 'a2'
 - (2) right middle ninth of screen -> 'b11'
 - (3) middle third, upper two cells -> 'c5'
@@ -294,13 +292,13 @@ If you want SpaceHammer to automatically move windows to specific mSpaces when t
   ...
 ```
 
-The way appications are assigend to certain mSpaces is self-explanatory. To get the names of the applications, you can simply run the following command in Hammerspoon's Console:
+The way appications are assigend to certain mSpaces is self-explanatory. To get the names of the applications of open windows, you can simply run the following command in Hammerspoon's Console:
 
 ```lua
 for _, v in pairs(hs.window.filter.default:getWindows()) do print(v:application():name()) end
 ```
 
-You will then get an output similar to this:
+You will get an output like this:
 
 ```bash
 2024-10-20 07:38:13: Hammerspoon
@@ -312,7 +310,7 @@ You will then get an output similar to this:
 2024-10-20 07:38:13: Finder
 ```
 
-In case you would also like to pre-define the position of the window on the mSpace, you can add that information as third option:
+In case you would also like to pre-define the position of the window on the mSpace, you can add that information as a third entry:
 
 ```lua
   ...
@@ -360,7 +358,7 @@ In case you would like to change the size, color and/or opacity of the grid indi
 
 Similar to manual moving, manual resizing of windows can be initiated by positioning the cursor in virtually any area of the window. Be aware, though, that windows of certain applications can behave in a stuttering and sluggish way when being resized. 
 
-In order to enable manual resizing, add the following lines to your `init.lua`:
+In order to enable manual resizing, add the following to your `init.lua`:
 
 ```lua
   ...
@@ -398,7 +396,7 @@ Afterwards delete the folder `SpaceHammer.spoon` in `~/.hammerspoon/Spoons/` and
 
 ### Hyper Key
 
-SpaceHammer (and other applications for that matter) can benefit from setting the Caps Lock key up as a so called hyper key, which basically means that you get an additional modifier key, as - due to the impracticality of pressing four keys at once - you would hardly be tempted to use the combination of four modifiers otherwise. 
+SpaceHammer (and other applications for that matter) can benefit from setting the Caps Lock key up as so called hyper key, which basically means that you get an additional modifier key, as - due to the impracticality of pressing four keys at once - you would hardly be tempted to use the combination of four modifiers otherwise. 
 
 Among others, you can use the application [Karabiner Elements](https://karabiner-elements.pqrs.org/) for creating such a hyper key.
 
@@ -451,7 +449,7 @@ Now, pressing `Caps Lock` and `a`, for instance, switches to the mSpace on the l
 
 ### Uninstall SpaceHammer
 
-In case you have used the option `openAppMSpace`, disable or remove that section from your `init.lua` and restart SpaceHammer afterwards to move all windows to your main mSpace, which after disabling or uninstalling SpaceHammer will automatically become your default space.
+In case you have used the option `openAppMSpace`, disable or remove that section from your `init.lua` and (re)start SpaceHammer afterwards to move all open windows to your main mSpace, which after disabling or uninstalling SpaceHammer will automatically become your default space.
 
 ```lua
   ...

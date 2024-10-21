@@ -1208,12 +1208,14 @@ end
 
 
 function getWinMSpacesPos(w)
-  for i = 1, #winMSpaces do
-    if w:id() == winMSpaces[i].win:id() then
-      return i
+  if w ~= nil and winMSpaces ~= nil then
+    for i = 1, #winMSpaces do
+      if w:id() == winMSpaces[i].win:id() then
+        return i
+      end
     end
+    return nil
   end
-  return nil
 end
 
 

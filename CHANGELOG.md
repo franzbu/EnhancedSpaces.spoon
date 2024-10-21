@@ -1,5 +1,9 @@
 
   
+# v0.9.4
+
+* changed window position to middle of screen when unminimized after having been minimized my dragging beyond bottom screen border
+  
 # v0.9.3
 
 * extended use of 'hs.timer.doEvery()' instead of filter subscription

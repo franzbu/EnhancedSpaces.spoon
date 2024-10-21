@@ -6,9 +6,9 @@ SpaceHammer has been inspired by a variety of tools, among them AeroSpace, Moom 
 
 Well, first, spending your time with SpaceHammer might actually save you time. As far as the features of this tool are concerned, the answer is simple: It helps you organize your workspace, which comes down to two main tasks: managing your spaces and your applications and windows on them. 
 
-SpaceHammer provides a new implementation of what Apple has straightforwardly termed 'Spaces'; in SpaceHammer they are called mSpaces. This means that with SpaceHammer you can organize your windows not only on one (virtual) screen, but on as many screens as you like and then easily switch between these screens or, to use SpaceHammer's terminology, mSpaces. You can actually do more than that with mSpaces, for example, you can place one window on more than one mSpace at a time; more about that later.
+SpaceHammer provides a new implementation of what Apple has straightforwardly termed 'Spaces'; in SpaceHammer they are called mSpaces. This means that with SpaceHammer you can organize your windows not only on one (virtual) screen, but on as many screens as you like and then easily switch between these screens or, using SpaceHammer's terminology, mSpaces. You can actually do more than that with mSpaces, for example, you can place one window on more than one mSpace at a time; more about that later.
 
-Regarding organizing windows on mSpaces, they are positioned and resized according to your wishes with keyboard shortcuts or a flick of your pointing device.
+Regarding organizing windows on mSpaces, they are positioned and resized with keyboard shortcuts or a flick of your pointing device.
 
 'Still, this is nothing groundbrakingly new', I hear you say, and you are right. You might be surprised, though, what difference a slightly altered approach can make. But read on and judge for yourself.
 

@@ -9,7 +9,7 @@ SpaceHammer.author = "Franz B. <csaa6335@gmail.com>"
 SpaceHammer.homepage = "https://github.com/franzbu/SpaceHammer.spoon"
 SpaceHammer.winMSpaces = "MIT"
 SpaceHammer.name = "SpaceHammer"
-SpaceHammer.version = "0.9.3"
+SpaceHammer.version = "0.9.4"
 SpaceHammer.spoonPath = scriptPath()
 
 local dragTypes = {
@@ -1253,8 +1253,7 @@ function assignMS(w, boolgotoSpace)
             if openAppMSpace[i][3] ~= nil then
               winMSpaces[getWinMSpacesPos(w)].frame[j] = snap(openAppMSpace[i][3])
             else
-              winMSpaces[getWinMSpacesPos(w)].frame[indexOf(mspaces, openAppMSpace[i][2])] = hs.geometry.point(
-              max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h)                                                                                                    -- put window in middle of screen
+              winMSpaces[getWinMSpacesPos(w)].frame[indexOf(mspaces, openAppMSpace[i][2])] = hs.geometry.point(max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h)                                                                                                    -- put window in middle of screen
             end
             if boolgotoSpace then                                                                                                                                                                    -- not when SpaceHammer is started
               goToSpace(indexOf(mspaces, openAppMSpace[i][2]))
@@ -1264,6 +1263,11 @@ function assignMS(w, boolgotoSpace)
           end
         end
       end
+    end
+    -- in case window has previously been minimized by dragging beyond bottom screen border (or for another reason extends beyond bottom screen border), it will be moved to middle of screen
+    if boolgotoSpace and w:frame().y + w:frame().h > max.h + heightMB then
+      w:setFrame(hs.geometry.point(max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h))
+      winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = hs.geometry.point(max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h)
     end
   end
 end

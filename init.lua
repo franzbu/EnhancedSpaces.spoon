@@ -181,6 +181,7 @@ function SpaceHammer:new(options)
     adjustWinFrame() 
   end)
 
+  -- compensation (where possible) for slow reaction of filter subscriptions
   adjustWinFrameTimer = hs.timer.doEvery(0.2, function() -- 'adjustWinFrameTimer' global to avoid timer getting garbage collected
     adjustWinFrame()
     refreshWinMSpaces()

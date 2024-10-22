@@ -177,8 +177,10 @@ function SpaceHammer:new(options)
     refreshWinMSpaces()
     cmdTabFocus()
   end)
+  hs.window.filter.default:subscribe(hs.window.filter.windowMoved, function(w) 
+    adjustWinFrame() 
+  end)
 
-  --hs.window.filter.default:subscribe(hs.window.filter.windowMoved, function(w) adjustWinFrame() end)
   adjustWinFrameTimer = hs.timer.doEvery(0.2, function() -- 'adjustWinFrameTimer' global to avoid timer getting garbage collected
     adjustWinFrame()
     refreshWinMSpaces()

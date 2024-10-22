@@ -164,17 +164,17 @@ function SpaceHammer:new(options)
   end
 
   -- watchdogs
-  --hs.window.filter.default:subscribe(hs.window.filter.windowNotOnScreen, function(w)
-    --refreshWinMSpaces()
-  --end)
+  hs.window.filter.default:subscribe(hs.window.filter.windowNotOnScreen, function(w)
+    refreshWinMSpaces()
+   end)
   hs.window.filter.default:subscribe(hs.window.filter.windowOnScreen, function(w)
-    refreshWinMSpaces() -- even though it is being called by hs.timer.every(), it needs to be called right before assignMS(), otherwise the latter throws errors
+    refreshWinMSpaces() -- even though this function is being called by hs.timer.every(), it needs to be called right before assignMS(), otherwise the latter throws errors
     moveMiddleAfterMouseMinimize(w)
     assignMS(w, true)
     w:focus()
   end)
   hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(w)
-    --refreshWinMSpaces()
+    refreshWinMSpaces()
     cmdTabFocus()
   end)
 
@@ -354,7 +354,7 @@ hs.hotkey.bind(modifierReference, "0", function()
   end
 
   -- debug
-  --[[
+  ---[[
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "m", function()
    print("_______winAll_________")
     for i, v in pairs(winAll) do

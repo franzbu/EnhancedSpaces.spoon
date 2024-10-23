@@ -9,8 +9,55 @@ SpaceHammer.author = "Franz B. <csaa6335@gmail.com>"
 SpaceHammer.homepage = "https://github.com/franzbu/SpaceHammer.spoon"
 SpaceHammer.winMSpaces = "MIT"
 SpaceHammer.name = "SpaceHammer"
-SpaceHammer.version = "0.9.4"
+SpaceHammer.version = "0.9.5"
 SpaceHammer.spoonPath = scriptPath()
+
+
+-- in MySpoon.spoon/init.lua, at top level:
+-- https://github.com/Hammerspoon/hammerspoon/issues/3362
+local spoonName, spoonInitPath = ... -- arguments passed by the `require` that loaded this Spoon
+local spoonNameEscaped = spoonName:gsub('(%W)', '%%%1')
+local spoonModulePattern = '^' .. spoonNameEscaped .. '%.(.+)$'
+local spoonPath = spoonInitPath:match('^(.*)/[^/]*$')
+local match = string.match
+local searchpath = package.searchpath
+local yield = coroutine.yield
+local function requireMy(moduleSubName)
+	return require(spoonName .. '.' .. moduleSubName)
+end
+local function spoonModuleWrappedLines(filePath)
+	return coroutine.wrap(function()
+		yield("local _ENV, requireMy = realEnv, requireMy; ")
+		for line in io.lines(filePath, 'L') do
+			yield(line)
+		end
+	end)
+end
+local function thisSpoonModuleSearcher(moduleName)
+	local moduleSubName = match(moduleName, spoonModulePattern)
+	if not moduleSubName then
+		return
+	end
+	local pathPatterns = spoonPath .. '/?.lua'
+	local filePath, err = searchpath(moduleSubName, pathPatterns)
+	if err then
+		return err
+	else
+		local fn, err = load(spoonModuleWrappedLines(filePath), '@' .. filePath, 't', {realEnv = _G, requireMy = requireMy})
+		if err then
+			error(err)
+		else
+			return fn, filePath
+		end
+	end
+end
+package.searchers[#package.searchers+1] = thisSpoonModuleSearcher
+
+
+
+
+
+
 
 local dragTypes = {
   move = 1,
@@ -134,6 +181,8 @@ function SpaceHammer:new(options)
   menubar:setTooltip("mSpace")
 
   max = hs.screen.mainScreen():frame()
+
+  filter = requireMy('lib.window_filter')
   local filter_all = hs.window.filter.new()
   winAll = filter_all:getWindows()--hs.window.sortByFocused)
   winMSpaces = {}
@@ -166,7 +215,7 @@ function SpaceHammer:new(options)
   -- watchdogs
   hs.window.filter.default:subscribe(hs.window.filter.windowNotOnScreen, function(w)
     refreshWinMSpaces()
-   end)
+  end)
   hs.window.filter.default:subscribe(hs.window.filter.windowOnScreen, function(w)
     refreshWinMSpaces() -- even though this function is being called by hs.timer.every(), it needs to be called right before assignMS(), otherwise the latter throws errors
     moveMiddleAfterMouseMinimize(w)
@@ -177,15 +226,12 @@ function SpaceHammer:new(options)
     refreshWinMSpaces()
     cmdTabFocus()
   end)
-  hs.window.filter.default:subscribe(hs.window.filter.windowMoved, function(w) 
+
+  -- 'window_filter.lua' has been adjusted: 'local WINDOWMOVED_DELAY=0.01' instead of '0.5' to get rid of delay
+  filter.default:subscribe(filter.windowMoved, function(w)
     adjustWinFrame() 
   end)
 
-  -- compensation (where possible) for slow reaction of filter subscriptions
-  adjustWinFrameTimer = hs.timer.doEvery(0.2, function() -- 'adjustWinFrameTimer' global to avoid timer getting garbage collected
-    adjustWinFrame()
-    refreshWinMSpaces()
-  end)
 
   --[[ -- flagsKeyboardTracker
   -- 'subscribe', watchdog for modifier keys
@@ -222,8 +268,7 @@ function SpaceHammer:new(options)
 
   ---[[
   -- cycle throuth windows of current mSpace
-  switcher = hs.window.switcher.new(hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)}))
-  switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
+  switcher = hs.window.switcher.new(hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)}))switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
   switcher.ui.thumbnailSize = 112
   switcher.ui.selectedThumbnailSize = 284
   switcher.ui.backgroundColor = { 0.3, 0.3, 0.3, 0.5 }
@@ -357,7 +402,7 @@ hs.hotkey.bind(modifierReference, "0", function()
   end
 
   -- debug
-  ---[[
+  --[[
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "m", function()
    print("_______winAll_________")
     for i, v in pairs(winAll) do
@@ -384,6 +429,13 @@ hs.hotkey.bind(modifierReference, "0", function()
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "i", function()
     for i = 1, #winMSpaces do -- frame
       print(winMSpaces[i].win:application():name())
+    end
+  end)
+
+  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "o", function()
+    a = filter.new() --:setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)})
+    for i,v in pairs(a) do
+      print(i .. '------ ' .. hs.inspect(v))
     end
   end)
   --]]
@@ -1141,7 +1193,7 @@ end
 
 
 function refreshWinMSpaces()
-  local filter_all = hs.window.filter.new()
+  local filter_all = filter.new()
   winAll = filter_all:getWindows() --hs.window.sortByFocused)
 
   -- delete closed or minimized windows

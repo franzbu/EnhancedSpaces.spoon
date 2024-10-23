@@ -9,7 +9,7 @@ SpaceHammer.author = "Franz B. <csaa6335@gmail.com>"
 SpaceHammer.homepage = "https://github.com/franzbu/SpaceHammer.spoon"
 SpaceHammer.winMSpaces = "MIT"
 SpaceHammer.name = "SpaceHammer"
-SpaceHammer.version = "0.9.5"
+SpaceHammer.version = "0.9.6"
 SpaceHammer.spoonPath = scriptPath()
 
 
@@ -201,7 +201,8 @@ function SpaceHammer:new(options)
       end
     end
   end
-
+  windowsOnCurrentMS = {}
+  
   -- recover stranded windows at start
   for i = 1, #winAll do
     if winAll[i]:topLeft().x >= max.w - 1 then                                                                                                                                                                 -- window in 'hiding spot'
@@ -232,56 +233,21 @@ function SpaceHammer:new(options)
     adjustWinFrame() 
   end)
 
-
-  --[[ -- flagsKeyboardTracker
-  -- 'subscribe', watchdog for modifier keys
-  cycleModCounter = 0 
-  local events = hs.eventtap.event.types
-  local prevModifier = nil
-  cycleAll = false
-  keyboardTracker = hs.eventtap.new({ events.flagsChanged }, function(e)
-    local flagsKeyboardTracker = eventToArray(e:getFlags())
-    -- on modifier release flag is assigned 'nil' -> prevModifier remedies that
-    if modifiersEqual(flagsKeyboardTracker, modifierSwitchWin) or modifiersEqual(prevModifier, modifierSwitchWin) then
-      cycleModCounter = cycleModCounter + 1
-      if cycleModCounter % 2 == 0 then -- only when released (and not when pressed)
-        prevModifier = nil
-        if cycleAll then
-          hs.timer.doAfter(0.02, function()
-            cycleModCounter = 0
-            pos = getWinMSpacesPos(hs.window.focusedWindow())
-            for i = 1, #mspaces do
-              if winMSpaces[pos].mspace[i] then
-                goToSpace(i)
-                break 
-              end
-            end
-          end)
-          cycleAll = false
-        end
-      end
-    end
-    prevModifier = flagsKeyboardTracker
-  end)
-  keyboardTracker:start()
-  --]]
-
   ---[[
   -- cycle throuth windows of current mSpace
-  switcher = hs.window.switcher.new(hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)}))switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
+  switcher = requireMy('lib.window_switcher')
+  switcher = switcher.new()--hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)}))switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
   switcher.ui.thumbnailSize = 112
   switcher.ui.selectedThumbnailSize = 284
   switcher.ui.backgroundColor = { 0.3, 0.3, 0.3, 0.5 }
   switcher.ui.textSize = 16
   switcher.ui.showSelectedTitle = false
   hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[1], function()
-    --cycleAll = false --true when cycling through all apps (if on other mSpaces necessary to switch there)
-    switcher:next()
+    switcher:next(windowsOnCurrentMS)
     --after release of modifierSwitchWin, watchdog initiates whatever needs to be done
   end)
   hs.hotkey.bind({modifierSwitchWin[1], 'shift' }, modifierSwitchWinKeys[1], function()
-    --cycleAll = false --true when cycling through all apps
-    switcher:previous()
+    switcher:previous(windowsOnCurrentMS)
   end)
   --]]
 
@@ -433,9 +399,19 @@ hs.hotkey.bind(modifierReference, "0", function()
   end)
 
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "o", function()
-    a = filter.new() --:setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)})
-    for i,v in pairs(a) do
-      print(i .. '------ ' .. hs.inspect(v))
+    windowsOnCurrentMS = {}
+    for i = 1, #winAll do
+      for j = 1, #mspaces do
+        if winMSpaces[getWinMSpacesPos(winAll[i])].mspace[currentMSpace] then
+          print("sadf")
+          table.insert(windowsOnCurrentMS, winAll[i])
+          break
+        end
+      end
+    end
+    print("------------")
+    for i,v in pairs(windowsOnCurrentMS) do
+      print(i,v)
     end
   end)
   --]]
@@ -1171,10 +1147,21 @@ function goToSpace(target)
   end
   currentMSpace = target
   menubar:setTitle(mspaces[target])
+
+    -- adjust table with windows on current mSpace for lib.window_switcher
+    windowsOnCurrentMS = {}
+    for i = 1, #winAll do
+      for j = 1, #mspaces do
+        if winMSpaces[getWinMSpacesPos(winAll[i])].mspace[currentMSpace] then
+          table.insert(windowsOnCurrentMS, winAll[i])
+          break
+        end
+      end
+    end
 end
 
 
-function moveToSpace(target, origin, boolKeyboard)
+  function moveToSpace(target, origin, boolKeyboard)
   winOnlyMoved = true
   local fwin = hs.window.focusedWindow()
   max = fwin:screen():frame()
@@ -1225,6 +1212,16 @@ function refreshWinMSpaces()
           winMSpaces[#winMSpaces].mspace[k] = false
           winMSpaces[#winMSpaces].frame[k] = winAll[i]:frame()
         end
+      end
+    end
+  end
+  -- adjust table with windows on current mSpace for lib.window_switcher
+  windowsOnCurrentMS = {}
+  for i = 1, #winAll do
+    for j = 1, #mspaces do
+      if winMSpaces[getWinMSpacesPos(winAll[i])].mspace[currentMSpace] then
+        table.insert(windowsOnCurrentMS, winAll[i])
+        break
       end
     end
   end

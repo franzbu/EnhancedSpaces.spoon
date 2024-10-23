@@ -235,7 +235,7 @@ local function modsPressed()
   return mods>0 and mods ~= 65536 -- caps lock
 end
 
-local function show(self,dir,windowsOnCurrentMSpace)
+local function show(self,dir,windowsOnCurrentMSpace) -- original: without 'windowsOnCurrentMSpace'
   --local windows,drawings,ui=self.windows,self.drawings,self.ui
   local windows,drawings,ui=self.windows,self.drawings,self.ui
   if not windows then

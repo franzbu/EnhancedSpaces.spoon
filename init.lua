@@ -9,7 +9,7 @@ SpaceHammer.author = "Franz B. <csaa6335@gmail.com>"
 SpaceHammer.homepage = "https://github.com/franzbu/SpaceHammer.spoon"
 SpaceHammer.winMSpaces = "MIT"
 SpaceHammer.name = "SpaceHammer"
-SpaceHammer.version = "0.9.6"
+SpaceHammer.version = "0.9.7"
 SpaceHammer.spoonPath = scriptPath()
 
 
@@ -183,7 +183,7 @@ function SpaceHammer:new(options)
   max = hs.screen.mainScreen():frame()
 
   filter = requireMy('lib.window_filter')
-  local filter_all = hs.window.filter.new()
+  filter_all = hs.window.filter.new()
   winAll = filter_all:getWindows()--hs.window.sortByFocused)
   winMSpaces = {}
   for i = 1, #winAll do
@@ -236,14 +236,17 @@ function SpaceHammer:new(options)
   ---[[
   -- cycle throuth windows of current mSpace
   switcher = requireMy('lib.window_switcher')
-  switcher = switcher.new()--hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)}))switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
+  switcher = switcher.new() --hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)}))switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
   switcher.ui.thumbnailSize = 112
   switcher.ui.selectedThumbnailSize = 284
   switcher.ui.backgroundColor = { 0.3, 0.3, 0.3, 0.5 }
   switcher.ui.textSize = 16
   switcher.ui.showSelectedTitle = false
   hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[1], function()
-    switcher:next(windowsOnCurrentMS)
+    AdjustWindowsOnCurrentMS()
+    hs.timer.doAfter(0.05, function()
+      switcher:next(windowsOnCurrentMS)
+    end)
     --after release of modifierSwitchWin, watchdog initiates whatever needs to be done
   end)
   hs.hotkey.bind({modifierSwitchWin[1], 'shift' }, modifierSwitchWinKeys[1], function()
@@ -399,15 +402,9 @@ hs.hotkey.bind(modifierReference, "0", function()
   end)
 
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "o", function()
-    windowsOnCurrentMS = {}
-    for i = 1, #winAll do
-      for j = 1, #mspaces do
-        if winMSpaces[getWinMSpacesPos(winAll[i])].mspace[currentMSpace] then
-          print("sadf")
-          table.insert(windowsOnCurrentMS, winAll[i])
-          break
-        end
-      end
+    print("------------")
+    for i,v in pairs(winAll) do
+      print(i,v)
     end
     print("------------")
     for i,v in pairs(windowsOnCurrentMS) do
@@ -1148,20 +1145,25 @@ function goToSpace(target)
   currentMSpace = target
   menubar:setTitle(mspaces[target])
 
-    -- adjust table with windows on current mSpace for lib.window_switcher
-    windowsOnCurrentMS = {}
-    for i = 1, #winAll do
-      for j = 1, #mspaces do
-        if winMSpaces[getWinMSpacesPos(winAll[i])].mspace[currentMSpace] then
-          table.insert(windowsOnCurrentMS, winAll[i])
-          break
-        end
-      end
-    end
+  AdjustWindowsOnCurrentMS()
 end
 
 
-  function moveToSpace(target, origin, boolKeyboard)
+-- adjust table with windows on current mSpace for lib.window_switcher
+function AdjustWindowsOnCurrentMS()
+  windowsOnCurrentMS = {}
+  for i = 1, #winAll do
+    for j = 1, #mspaces do
+      if winMSpaces[getWinMSpacesPos(winAll[i])].mspace[currentMSpace] then
+        table.insert(windowsOnCurrentMS, winAll[i])
+        break
+      end
+    end
+  end
+end
+
+
+function moveToSpace(target, origin, boolKeyboard)
   winOnlyMoved = true
   local fwin = hs.window.focusedWindow()
   max = fwin:screen():frame()
@@ -1180,8 +1182,7 @@ end
 
 
 function refreshWinMSpaces()
-  local filter_all = filter.new()
-  winAll = filter_all:getWindows() --hs.window.sortByFocused)
+    winAll = filter_all:getWindows() --hs.window.sortByFocused)
 
   -- delete closed or minimized windows
   for i = 1, #winMSpaces do
@@ -1216,15 +1217,7 @@ function refreshWinMSpaces()
     end
   end
   -- adjust table with windows on current mSpace for lib.window_switcher
-  windowsOnCurrentMS = {}
-  for i = 1, #winAll do
-    for j = 1, #mspaces do
-      if winMSpaces[getWinMSpacesPos(winAll[i])].mspace[currentMSpace] then
-        table.insert(windowsOnCurrentMS, winAll[i])
-        break
-      end
-    end
-  end
+  AdjustWindowsOnCurrentMS()
   winOnlyMoved = false
 end
 

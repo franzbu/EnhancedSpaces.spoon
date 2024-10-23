@@ -238,13 +238,8 @@ end
 local function show(self,dir,windowsOnCurrentMSpace)
   local windows,drawings,ui=self.windows,self.drawings,self.ui
   if not windows then
-    windows=windowsOnCurrentMSpace--self.wf:getWindows(windowfilter.sortByFocusedLast)
-    --self.windows=windows
+    windows=windowsOnCurrentMSpace
     self.windows=windowsOnCurrentMSpace
-    print("========new")
-    for i,v in pairs(windows) do
-      print(i,v)
-    end
   end
   local nwindows=#windows or 0
   if nwindows==0 then exit(self) self.log.i('no windows') return end

@@ -1,3 +1,7 @@
+# v0.9.8
+
+* 'dofile' instead of 'require'
+
 # v0.9.7
 
 * cycling: windows are sorted last window focused first

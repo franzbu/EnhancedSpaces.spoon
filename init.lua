@@ -12,9 +12,7 @@ SpaceHammer.name = "SpaceHammer"
 SpaceHammer.version = "0.9.7"
 SpaceHammer.spoonPath = scriptPath()
 
-
--- in MySpoon.spoon/init.lua, at top level:
--- https://github.com/Hammerspoon/hammerspoon/issues/3362
+-- in MySpoon.spoon/init.lua, at top level: https://github.com/Hammerspoon/hammerspoon/issues/3362
 local spoonName, spoonInitPath = ... -- arguments passed by the `require` that loaded this Spoon
 local spoonNameEscaped = spoonName:gsub('(%W)', '%%%1')
 local spoonModulePattern = '^' .. spoonNameEscaped .. '%.(.+)$'
@@ -52,12 +50,6 @@ local function thisSpoonModuleSearcher(moduleName)
 	end
 end
 package.searchers[#package.searchers+1] = thisSpoonModuleSearcher
-
-
-
-
-
-
 
 local dragTypes = {
   move = 1,

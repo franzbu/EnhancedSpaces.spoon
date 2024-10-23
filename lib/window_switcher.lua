@@ -236,6 +236,7 @@ local function modsPressed()
 end
 
 local function show(self,dir,windowsOnCurrentMSpace)
+  --local windows,drawings,ui=self.windows,self.drawings,self.ui
   local windows,drawings,ui=self.windows,self.drawings,self.ui
   if not windows then
     windows=windowsOnCurrentMSpace
@@ -308,7 +309,7 @@ function switcher:next(windowsOnCurrentMSpace) return show(self,1,windowsOnCurre
 ---
 --- Notes:
 ---  * the switcher will be dismissed (and the selected window focused) when all modifier keys are released
-function switcher:previous() return show(self,-1,windowsOnCurrentMSpace) end
+function switcher:previous(windowsOnCurrentMSpace) return show(self,-1,windowsOnCurrentMSpace) end
 
 local defaultSwitcher
 local function makeDefault()

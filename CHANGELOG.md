@@ -1,7 +1,7 @@
   
 # v0.9.5
 
-* 'window_filter.lua' has been adjusted: 'local WINDOWMOVED_DELAY=0.01' instead of '0.5' to get rid of delay
+* 'window_filter.lua' has been adjusted: 'local WINDOWMOVED_DELAY=0.01' instead of '0.5' to get rid of delay (instead of 'hs.timer.doEvery()')
   
 # v0.9.4
 

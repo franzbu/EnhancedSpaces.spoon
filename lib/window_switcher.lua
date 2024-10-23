@@ -235,12 +235,12 @@ local function modsPressed()
   return mods>0 and mods ~= 65536 -- caps lock
 end
 
-local function show(self,dir,wMS)
+local function show(self,dir,windowsOnCurrentMSpace)
   local windows,drawings,ui=self.windows,self.drawings,self.ui
   if not windows then
-    windows=wMS--self.wf:getWindows(windowfilter.sortByFocusedLast)
+    windows=windowsOnCurrentMSpace--self.wf:getWindows(windowfilter.sortByFocusedLast)
     --self.windows=windows
-    self.windows=wMS
+    self.windows=windowsOnCurrentMSpace
     print("========new")
     for i,v in pairs(windows) do
       print(i,v)
@@ -300,7 +300,7 @@ end
 ---
 --- Notes:
 ---  * the switcher will be dismissed (and the selected window focused) when all modifier keys are released
-function switcher:next(wMS) return show(self,1,wMS) end
+function switcher:next(windowsOnCurrentMSpace) return show(self,1,windowsOnCurrentMSpace) end
 --- hs.window.switcher:previous()
 --- Method
 --- Shows the switcher instance (if not yet visible) and selects the previous window
@@ -313,7 +313,7 @@ function switcher:next(wMS) return show(self,1,wMS) end
 ---
 --- Notes:
 ---  * the switcher will be dismissed (and the selected window focused) when all modifier keys are released
-function switcher:previous() return show(self,-1,wMS) end
+function switcher:previous() return show(self,-1,windowsOnCurrentMSpace) end
 
 local defaultSwitcher
 local function makeDefault()

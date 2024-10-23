@@ -1,3 +1,7 @@
+# v0.9.7
+
+* cycling: windows are sorted last window focused first
+
 # v0.9.6
 
 * using slighty adjusted version of 'window_switcher.lua': own table with windows for cycling through is used (windowsOnCurrentMSpace)

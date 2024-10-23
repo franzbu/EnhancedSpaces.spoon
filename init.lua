@@ -9,47 +9,8 @@ SpaceHammer.author = "Franz B. <csaa6335@gmail.com>"
 SpaceHammer.homepage = "https://github.com/franzbu/SpaceHammer.spoon"
 SpaceHammer.winMSpaces = "MIT"
 SpaceHammer.name = "SpaceHammer"
-SpaceHammer.version = "0.9.7"
+SpaceHammer.version = "0.9.8"
 SpaceHammer.spoonPath = scriptPath()
-
--- in MySpoon.spoon/init.lua, at top level: https://github.com/Hammerspoon/hammerspoon/issues/3362
-local spoonName, spoonInitPath = ... -- arguments passed by the `require` that loaded this Spoon
-local spoonNameEscaped = spoonName:gsub('(%W)', '%%%1')
-local spoonModulePattern = '^' .. spoonNameEscaped .. '%.(.+)$'
-local spoonPath = spoonInitPath:match('^(.*)/[^/]*$')
-local match = string.match
-local searchpath = package.searchpath
-local yield = coroutine.yield
-local function requireMy(moduleSubName)
-	return require(spoonName .. '.' .. moduleSubName)
-end
-local function spoonModuleWrappedLines(filePath)
-	return coroutine.wrap(function()
-		yield("local _ENV, requireMy = realEnv, requireMy; ")
-		for line in io.lines(filePath, 'L') do
-			yield(line)
-		end
-	end)
-end
-local function thisSpoonModuleSearcher(moduleName)
-	local moduleSubName = match(moduleName, spoonModulePattern)
-	if not moduleSubName then
-		return
-	end
-	local pathPatterns = spoonPath .. '/?.lua'
-	local filePath, err = searchpath(moduleSubName, pathPatterns)
-	if err then
-		return err
-	else
-		local fn, err = load(spoonModuleWrappedLines(filePath), '@' .. filePath, 't', {realEnv = _G, requireMy = requireMy})
-		if err then
-			error(err)
-		else
-			return fn, filePath
-		end
-	end
-end
-package.searchers[#package.searchers+1] = thisSpoonModuleSearcher
 
 local dragTypes = {
   move = 1,
@@ -174,7 +135,8 @@ function SpaceHammer:new(options)
 
   max = hs.screen.mainScreen():frame()
 
-  filter = requireMy('lib.window_filter')
+  filter = dofile(hs.spoons.resourcePath('lib/window_filter.lua'))
+
   filter_all = hs.window.filter.new()
   winAll = filter_all:getWindows()--hs.window.sortByFocused)
   winMSpaces = {}
@@ -227,7 +189,7 @@ function SpaceHammer:new(options)
 
   ---[[
   -- cycle throuth windows of current mSpace
-  switcher = requireMy('lib.window_switcher')
+  switcher = dofile(hs.spoons.resourcePath('lib/window_switcher.lua'))
   switcher = switcher.new() --hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)}))switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
   switcher.ui.thumbnailSize = 112
   switcher.ui.selectedThumbnailSize = 284
@@ -239,27 +201,9 @@ function SpaceHammer:new(options)
     hs.timer.doAfter(0.05, function()
       switcher:next(windowsOnCurrentMS)
     end)
-    --after release of modifierSwitchWin, watchdog initiates whatever needs to be done
   end)
   hs.hotkey.bind({modifierSwitchWin[1], 'shift' }, modifierSwitchWinKeys[1], function()
     switcher:previous(windowsOnCurrentMS)
-  end)
-  --]]
-
-  -- cycle through windows of current WS (without UI), todo (maybe): last focus first
-  --[[
-  local nextFMS = 1
-  hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[1], function()
-    if nextFMS > #winMSpaces then nextFMS = 1 end
-    while not winMSpaces[nextFMS].mspace[currentMSpace] do
-      if nextFMS == #winMSpaces then
-        nextFMS = 1
-      else
-        nextFMS = nextFMS + 1
-      end
-    end
-    winMSpaces[nextFMS].win:focus()
-    nextFMS = nextFMS + 1
   end)
   --]]
 
@@ -403,6 +347,13 @@ hs.hotkey.bind(modifierReference, "0", function()
       print(i,v)
     end
   end)
+
+  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "l", function()
+    print("------------")
+    print(hs.spoons.resourcePath('window_filter.lua'))
+  end)
+
+
   --]]
 
   goToSpace(currentMSpace) -- refresh
@@ -943,7 +894,7 @@ function SpaceHammer:handleClick()
         return true
       end
 
-      local win = getWindowUnderMouse():focus() --todo (?done? ->experimental): error if clicked on screen (and not window)
+      local win = getWindowUnderMouse():focus()
       local frame = win:frame()
       max = win:screen():frame() 
       maxWithMB = win:screen():fullFrame()

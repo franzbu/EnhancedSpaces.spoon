@@ -111,7 +111,6 @@ As before, the below line represents the default setup, and you do not need to a
 To delete a reference, press `modifierReference` and `0`. In case you are 'de-referencing' the last representation of a window on your mSpaces, the window gets minimized.
 
 
-
 ### Switching Between Windows
 
 Apart from switching between all windows, for which you will obviously use macOS' integrated window switcher (Command-Tab) or the third party switcher of your choice, such as [AltTab](https://alt-tab-macos.netlify.app/), additional possibilities have been implemented in SpaceHammer for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').

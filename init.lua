@@ -135,8 +135,6 @@ function SpaceHammer:new(options)
 
   max = hs.screen.mainScreen():frame()
 
-  filter = dofile(hs.spoons.resourcePath('lib/window_filter.lua'))
-
   filter_all = hs.window.filter.new()
   winAll = filter_all:getWindows()--hs.window.sortByFocused)
   winMSpaces = {}
@@ -168,11 +166,12 @@ function SpaceHammer:new(options)
   end
 
   -- watchdogs
+  filter = dofile(hs.spoons.resourcePath('lib/window_filter.lua'))
   hs.window.filter.default:subscribe(hs.window.filter.windowNotOnScreen, function(w)
     refreshWinMSpaces()
   end)
   hs.window.filter.default:subscribe(hs.window.filter.windowOnScreen, function(w)
-    refreshWinMSpaces() -- even though this function is being called by hs.timer.every(), it needs to be called right before assignMS(), otherwise the latter throws errors
+    refreshWinMSpaces()
     moveMiddleAfterMouseMinimize(w)
     assignMS(w, true)
     w:focus()
@@ -181,16 +180,15 @@ function SpaceHammer:new(options)
     refreshWinMSpaces()
     cmdTabFocus()
   end)
-
   -- 'window_filter.lua' has been adjusted: 'local WINDOWMOVED_DELAY=0.01' instead of '0.5' to get rid of delay
   filter.default:subscribe(filter.windowMoved, function(w)
-    adjustWinFrame() 
+    adjustWinFrame()
   end)
 
-  ---[[
   -- cycle throuth windows of current mSpace
+  --switcher = switcher.new(hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)}))switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
   switcher = dofile(hs.spoons.resourcePath('lib/window_switcher.lua'))
-  switcher = switcher.new() --hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)}))switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
+  switcher = switcher.new()
   switcher.ui.thumbnailSize = 112
   switcher.ui.selectedThumbnailSize = 284
   switcher.ui.backgroundColor = { 0.3, 0.3, 0.3, 0.5 }
@@ -205,7 +203,6 @@ function SpaceHammer:new(options)
   hs.hotkey.bind({modifierSwitchWin[1], 'shift' }, modifierSwitchWinKeys[1], function()
     switcher:previous(windowsOnCurrentMS)
   end)
-  --]]
 
   -- cycle through references of one window
   local nextFR = 1
@@ -231,7 +228,7 @@ function SpaceHammer:new(options)
     end)
   end
   -- de-reference
-  hs.hotkey.bind(modifierReference, "0", function()
+hs.hotkey.bind(modifierReference, "0", function()
     derefWinMSpace()
   end)
 
@@ -306,8 +303,7 @@ function SpaceHammer:new(options)
     end
   end
 
-  -- debug
-  --[[
+  --[[ -- debug
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "m", function()
    print("_______winAll_________")
     for i, v in pairs(winAll) do
@@ -338,22 +334,10 @@ function SpaceHammer:new(options)
   end)
 
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "o", function()
-    print("------------")
-    for i,v in pairs(winAll) do
-      print(i,v)
-    end
-    print("------------")
-    for i,v in pairs(windowsOnCurrentMS) do
-      print(i,v)
-    end
   end)
 
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "l", function()
-    print("------------")
-    print(hs.spoons.resourcePath('window_filter.lua'))
   end)
-
-
   --]]
 
   goToSpace(currentMSpace) -- refresh
@@ -399,8 +383,7 @@ function SpaceHammer:handleDrag()
       sumdx = sumdx + dx
       movedNotResized = true
 
-      -- mSpaces
-      moveLeftAS = false -- these two variables are also needed in case AeroSpace is deactivated
+      moveLeftAS = false
       moveRightAS = false
       if current.x + currentSize.w * ratioMSpaces < 0 then   -- left
         for i = 1, #cv do
@@ -795,9 +778,7 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
         yNew = heightMB + pM
       end
       self.targetWindow:move(hs.geometry.new(xNew, yNew, wNew, hNew), nil, false, 0)
-  
     end
-    --
   -- mSpaces
   elseif movedNotResized then
     if moveLeftAS then

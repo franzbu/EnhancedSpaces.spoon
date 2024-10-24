@@ -970,10 +970,8 @@ end
 
 function mergeModifiers(m1, m2)
   m1_2 = {} -- merge modifier1 and modifier2:
-  k = 1
   for i = 1, #m1 do
-    m1_2[k] = m1[i]
-    k = k + 1
+    table.insert(m1_2, m1[i])
   end
   for i = 1, #m2 do
     ap = false -- already present
@@ -984,10 +982,10 @@ function mergeModifiers(m1, m2)
       end
     end
     if not ap then
-      m1_2[k] = m2[i]
-      k = k + 1
+      table.insert(m1_2, m2[i])
     end
   end
+  table.sort(m1_2)
   return m1_2
 end
 

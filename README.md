@@ -167,6 +167,8 @@ As long as windows are resized - or moved within the borders of the screen -, it
 
 All this is been implemented with the goal of being as intuitive as possible; therefore, you will be able to train your muscle memory quickly.
 
+<img src="https://github.com/franzbu/SpaceHammer.spoon/blob/main/doc/demo2.gif" />
+
 
 ### Automatic Resizing and Positioning - Keyboard
 

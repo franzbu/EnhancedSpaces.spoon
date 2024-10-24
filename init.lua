@@ -231,7 +231,7 @@ function SpaceHammer:new(options)
     end)
   end
   -- de-reference
-hs.hotkey.bind(modifierReference, "0", function()
+  hs.hotkey.bind(modifierReference, "0", function()
     derefWinMSpace()
   end)
 

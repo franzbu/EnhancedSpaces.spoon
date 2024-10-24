@@ -370,11 +370,11 @@ To manually resize a window, hold your `modifier1` or `modifier2` down, then cli
 
 To have the additional possibility of precisely resizing windows horizontally-only or vertically-only, 30 percent of the window (15 precent left and right of the middle of each border) is reserved for horizontal-only and vertical-only resizing. The size of this area can be adjusted; for more information see below.
 
-<img src="https://github.com/franzbu/WinHammer.spoon/blob/main/doc/demo1.gif" />
+<img src="https://github.com/franzbu/SpaceHammer.spoon/tree/main/doc/demo1.gif" />
 
 At the center of the window there is an erea (M) where you can also move the window by pressing the right mouse button. 
 
-<img src="https://github.com/franzbu/WinHammer.spoon/blob/main/doc/resizing.png" width="200">
+<img src="https://github.com/franzbu/SpaceHammer.spoon/tree/main/doc/resizing.png" width="200">
 
 
 #### Manual Resizing of Windows - Margin

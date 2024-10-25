@@ -375,7 +375,6 @@ end
 
 sumdx = 0
 sumdy = 0
-
 function SpaceHammer:handleDrag()
   return function(event)
     if not self.dragging then return nil end
@@ -385,8 +384,8 @@ function SpaceHammer:handleDrag()
     local dy = event:getProperty(hs.eventtap.event.properties.mouseEventDeltaY)
     if self:isMoving() then
       hs.window.focusedWindow():move({ dx, dy }, nil, false, 0)
-      sumdy = sumdy + dy
       sumdx = sumdx + dx
+      sumdy = sumdy + dy
       movedNotResized = true
 
       moveLeftAS = false
@@ -411,17 +410,17 @@ function SpaceHammer:handleDrag()
       return true
     elseif self:isResizing() and useResize then
       if mH <= -m and mV <= m and mV > -m then -- 9 o'clock
-        local geomNew = hs.geometry.new(current.x + dx, current.y, currentSize.w - dx, currentSize.h)
+        local geomNew = hs.geometry.new(current.x + dx, current.y)--, currentSize.w - dx, currentSize.h)
         geomNew.x2 = bottomRight.x
         geomNew.y2 = bottomRight.y
         hs.window.focusedWindow():move(geomNew, nil, false, 0)
       elseif mH <= -m and mV <= -m then -- 10:30
-        local geomNew = hs.geometry.new(current.x + dx, current.y + dy, currentSize.w - dx, currentSize.h - dy)
+        local geomNew = hs.geometry.new(current.x + dx, current.y + dy)--, currentSize.w - dx, currentSize.h - dy)
         geomNew.x2 = bottomRight.x
         geomNew.y2 = bottomRight.y
         hs.window.focusedWindow():move(geomNew, nil, false, 0)
       elseif mH > -m and mH <= m and mV <= -m then -- 12 o'clock
-        local geomNew = hs.geometry.new(current.x, current.y + dy, currentSize.w, currentSize.h - dy)
+        local geomNew = hs.geometry.new(current.x, current.y + dy)--, currentSize.w, currentSize.h - dy)
         geomNew.x2 = bottomRight.x
         geomNew.y2 = bottomRight.y
         hs.window.focusedWindow():move(geomNew, nil, false, 0)

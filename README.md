@@ -6,7 +6,9 @@ SpaceHammer has been inspired by various applications, among them AeroSpace, Moo
 
 Well, first, spending your time with SpaceHammer might actually save you time. As far as the features of this tool are concerned, the answer is simple: It helps you organize your workspace, which comes down to two main tasks: managing your spaces and your applications and windows on them. 
 
-SpaceHammer is a replacement for Apple's Spaces - in SpaceHammer they are called mSpaces -, providing features Apple does not, such as sticky windows. Additionally, you can use SpaceHammer's integrated window manager to resize and position your windows with keyboard shortcuts or, optionally, with the help of mouse or trackpad. However, with SpaceHammer you can also use any other window manager of your choice to organize the windows on your mSpaces.
+SpaceHammer is a replacement for Apple's Spaces - in SpaceHammer they are called mSpaces -, providing features Apple does not, such as sticky windows and the possibility to easily and quickly move windows between mSpaces and switch between the latter.
+
+Additionally, you can use SpaceHammer's integrated window manager for resizing and positioning your windows with keyboard shortcuts or, optionally, with the help of your mouse or trackpad. However, you can also use SpaceHammer alongside with your favorite window manager to organize the windows on your mSpaces.
 
 'Still, this is nothing groundbrakingly new', I hear you say, and you are right. You might be surprised, though, what difference a slightly altered approach can make. But read on and judge for yourself.
 

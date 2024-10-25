@@ -9,7 +9,7 @@ SpaceHammer.author = "Franz B. <csaa6335@gmail.com>"
 SpaceHammer.homepage = "https://github.com/franzbu/SpaceHammer.spoon"
 SpaceHammer.license = "MIT"
 SpaceHammer.name = "SpaceHammer"
-SpaceHammer.version = "0.9.8"
+SpaceHammer.version = "0.9.9"
 SpaceHammer.spoonPath = scriptPath()
 
 local dragTypes = {
@@ -185,7 +185,7 @@ function SpaceHammer:new(options)
     adjustWinFrame()
   end)
 
-  -- cycle throuth windows of current mSpace
+  -- cycle through windows of current mSpace
   --switcher = switcher.new(hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)}))switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
   switcher = dofile(hs.spoons.resourcePath('lib/window_switcher.lua'))
   switcher = switcher.new()
@@ -334,6 +334,11 @@ function SpaceHammer:new(options)
   end)
 
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "o", function()
+    local currentSize =  hs.window.focusedWindow():size() -- win:frame
+    local current =  hs.window.focusedWindow():topLeft() 
+    deltax = 100
+    deltay = 100
+    hs.window.focusedWindow():move(hs.geometry.new(current.x + deltax, current.y + deltay, currentSize.w - deltax, currentSize.h - deltay), nil, false,0)
   end)
 
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "l", function()
@@ -370,6 +375,7 @@ end
 
 sumdx = 0
 sumdy = 0
+
 function SpaceHammer:handleDrag()
   return function(event)
     if not self.dragging then return nil end
@@ -402,37 +408,40 @@ function SpaceHammer:handleDrag()
         moveLeftAS = false
         moveRightAS = false
       end
-
       return true
     elseif self:isResizing() and useResize then
       movedNotResized = false
+      if resizing then -- set to 'true' once with mouse click
+        local frame = hs.window.focusedWindow():frame()
+        local xNew = frame.x
+        local yNew = frame.y
+        local wNew = frame.w
+        local hNew = frame.h
+        bottomRight = {}
+        bottomRight['x'] = frame.x + frame.w
+        bottomRight['y'] = frame.y + frame.h
+      end
+      resizing = false -- self:isResizing() is called multiple times -> bottomRight is not to be touched until mouse button is released and pressed again
+
       if mH <= -m and mV <= m and mV > -m then -- 9 o'clock
-        hs.window.focusedWindow():move(hs.geometry.new(current.x + dx, current.y, currentSize.w - dx, currentSize.h), nil, false, 0)
+        local geomNew = hs.geometry.new(current.x + dx, current.y, currentSize.w - dx, currentSize.h)
+        geomNew.x2 = bottomRight.x
+        geomNew.y2 = bottomRight.y
+          hs.window.focusedWindow():move(geomNew, nil, false, 0)
       elseif mH <= -m and mV <= -m then -- 10:30
-        if dy < 0 then -- prevent extension of downwards when cursor enters menubar
-          if current.y > heightMB then
-            hs.window.focusedWindow():move(hs.geometry.new(current.x + dx, current.y + dy, currentSize.w - dx, currentSize.h - dy), nil, false,
-              0)
-          end
-        else
-          hs.window.focusedWindow():move(hs.geometry.new(current.x + dx, current.y + dy, currentSize.w - dx, currentSize.h - dy), nil, false, 0)
-        end
+        local geomNew = hs.geometry.new(current.x + dx, current.y + dy, currentSize.w - dx, currentSize.h - dy)
+        geomNew.x2 = bottomRight.x
+        geomNew.y2 = bottomRight.y
+          hs.window.focusedWindow():move(geomNew, nil, false, 0)
       elseif mH > -m and mH <= m and mV <= -m then -- 12 o'clock
-        if dy < 0 then -- prevent extension of downwards when cursor enters menubar
-          if current.y > heightMB then
-            hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y + dy, currentSize.w, currentSize.h - dy), nil, false, 0)
-          end
-        else
-          hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y + dy, currentSize.w, currentSize.h - dy), nil, false, 0)
-        end
+        local geomNew = hs.geometry.new(current.x, current.y + dy, currentSize.w, currentSize.h - dy)
+        geomNew.x2 = bottomRight.x
+        geomNew.y2 = bottomRight.y
+          hs.window.focusedWindow():move(geomNew, nil, false, 0)
       elseif mH > m and mV <= -m then -- 1:30
-        if dy < 0 then -- prevent extension of downwards when cursor enters menubar
-          if current.y > heightMB then
-            hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y + dy, currentSize.w + dx, currentSize.h - dy), nil, false, 0)
-          end
-        else
-          hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y + dy, currentSize.w + dx, currentSize.h - dy), nil, false, 0)
-        end
+        local geomNew = hs.geometry.new(current.x, current.y + dy, currentSize.w + dx, currentSize.h - dy)
+        geomNew.y2 = bottomRight.y
+          hs.window.focusedWindow():move(geomNew, nil, false, 0)
       elseif mH > m and mV > -m and mV <= m then -- 3 o'clock
         hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y, currentSize.w + dx, currentSize.h), nil, false, 0)
       elseif mH > m and mV > m then -- 4:30
@@ -440,8 +449,10 @@ function SpaceHammer:handleDrag()
       elseif mV > m and mH <= m and mH > -m then -- 6 o'clock
         hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y, currentSize.w, currentSize.h + dy), nil, false, 0)
       elseif mH <= -m and mV > m then -- 7:30
-        hs.window.focusedWindow():move(hs.geometry.new(current.x + dx, current.y, currentSize.w - dx, currentSize.h + dy), nil, false, 0)
-      else -- middle -> moving (not resizing) window
+        local geomNew = hs.geometry.new(current.x + dx, current.y, currentSize.w - dx, currentSize.h + dy)
+        geomNew.x2 = bottomRight.x
+          hs.window.focusedWindow():move(geomNew, nil, false, 0)
+      else -- middle area of window (M) -> moving (not resizing) window
         hs.window.focusedWindow():move({ dx, dy }, nil, false, 0)
         movedNotResized = true
       end
@@ -817,6 +828,8 @@ end
 function SpaceHammer:handleClick()
   return function(event)
     if self.dragging then return true end
+    --fb
+    resizing = true
     flags = eventToArray(event:getFlags())
     eventType = event:getType()
 

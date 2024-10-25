@@ -84,7 +84,7 @@ By now we have covered the basics, but we have not walked over the finish line y
 
 If you want to unlock the full potential of mSpaces, it is helpful to understand the underlying philosophy. Each mSpace is a representation of your windows rather than just a space containing them - or, in other words, an mSpace can be understood as a set of 'symbolic links' to a subset - that can also be all - of your open windows. Due to this approach you could, for instance, have two mSpaces with the same windows in different sizes and positions, or - a scenario that is more likely - you can have the same Notes, Calendar, Finder or Safari window on two, three, or all your mSpaces.
   
-To make a window visible on another mSpace as well, press the `ctrl` and `shift` modifiers and additionally press the key corresponding to the target mSpace, for instance, `3`. 
+To make a window visible on another mSpace as well, press  `ctrl-shift` modifiers and additionally press the key corresponding to the target mSpace, for instance, `3`. 
 
 As before, the below line represents the default setup, and you do not need to add it to your `init.lua` unless you prefer a different shortcut:
 

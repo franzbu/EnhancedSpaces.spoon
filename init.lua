@@ -919,7 +919,7 @@ function SpaceHammer:handleClick()
 end
 
 
--- function for creating canvases at screen border
+-- creating canvases at screen borders
 function createCanvas(n, x, y, w, h)
   cv[n] = hs.canvas.new(hs.geometry.rect(x, y, w, h))
   cv[n]:insertElement(

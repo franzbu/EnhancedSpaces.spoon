@@ -246,11 +246,11 @@ Now, by pressing `modifierSnapKey1` and `j`, for example, scenario 'a2' is activ
 
 
 
-## Use Mouse/Trackpad with mSpaces
+## Using Mouse/Trackpad with mSpaces
 
 ### Move windows to Adjacent mSpaces
 
-You can also use your pointing device to move a window to an adjacent mSpace by pressing the Option (`alt`) or Control (`ctrl`) key and dragging 80 percent or more of the window beyond the left or right screen border. If you release the modifier before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you switch to the mSpace alongside with the window. In case you would like to change these mouse modifiers, you can add the following lines to your `init.lua` and adjust them to your liking:
+You can also use your pointing device to move a window to an adjacent mSpace by pressing the Option (`alt`) or Control (`ctrl`) key and dragging 80 percent or more of the window beyond the left or right screen border. If you release the modifier before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you switch to the mSpace alongside with the window. In case you prefer different mouse modifiers, you can add the following lines to your `init.lua` and adjust them to your liking:
 
 ```lua
    ...
@@ -258,7 +258,6 @@ You can also use your pointing device to move a window to an adjacent mSpace by 
   modifier2 = { 'ctrl' }, -- default: { 'ctrl' }
   ...
 ```
-
 
 ## Using Mouse Trackpad for Moving and Resizing Windows
 

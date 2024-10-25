@@ -6,13 +6,9 @@ SpaceHammer has been inspired by a variety of tools, among them AeroSpace, Moom 
 
 Well, first, spending your time with SpaceHammer might actually save you time. As far as the features of this tool are concerned, the answer is simple: It helps you organize your workspace, which comes down to two main tasks: managing your spaces and your applications and windows on them. 
 
-SpaceHammer provides a new implementation of what Apple has straightforwardly termed 'Spaces'; in SpaceHammer they are called mSpaces. This means that with SpaceHammer you can organize your windows not only on one (virtual) screen, but on as many screens as you like and then easily switch between these screens or, using SpaceHammer's terminology, mSpaces. You can actually do more than that with mSpaces, for example, you can place one window on more than one mSpace at a time; more about that later.
-
-Regarding organizing windows on mSpaces, they are positioned and resized with keyboard shortcuts or a flick of your pointing device.
+SpaceHammer is a replacement for Apple's Spaces - in SpaceHammer they are called mSpaces -, providing features Apple does not, such as sticky windows. Additionally, you can use SpaceHammer's integrated window manager to resize and position your windows with keyboard shortcuts or, optionally, with the help of mouse or trackpad. However, with SpaceHammer you can also use any other window manager of your choice to organize the windows on your mSpaces.
 
 'Still, this is nothing groundbrakingly new', I hear you say, and you are right. You might be surprised, though, what difference a slightly altered approach can make. But read on and judge for yourself.
-
-One last thing before we dive in: SpaceHammer has been designed to handle your windows and mSpaces by using keyboard shortcuts; however, similar to other operations, at times it is simpler and faster if you let your keyboard and pointing device cooperate. Thus SpaceHammer provides an alternative by using a pointing device whenever this has the potential of being beneficial. 
 
 
 ## Installation
@@ -46,23 +42,14 @@ Restart Hammerspoon and you are ready to go; it is normal that the start of Spac
 
 ## mSpaces
 
-You can use the Control (`ctrl`) - in case you are willing to spend some time to set up an elegant alternative in the form of a hyper key, see section 'Notes' - and the `s` keys to cycle through your mSpaces. To cycle in reverse order, press `ctrl` and `a`. To move the active window to the mSpace on the left (right) and switch there alongside with the window, press `ctrl` and `q` (`w`); to move the window while staying on the current mSpace press `ctrl` and `d` (`ctrl` and `w`).
+You can use the Control (`ctrl`) - in case you are in an elegant alternative in the form of a hyper key, see section 'Notes' below - and the `s` keys to cycle through your mSpaces. To cycle in reverse order, press `ctrl` and `a`. To move the active window to the mSpace on the left (right) and switch there alongside with the window, press `ctrl` and `q` (`w`); to move the window while staying on the current mSpace press `ctrl` and `d` (`ctrl` and `w`).
 
-The lines below represent the default setup, and you do not need to add them to your `init.lua` unless you want to make changes:
+The lines below represent the default setup, and you do not need to add them to your `init.lua` unless you want to apply changes:
 
 ```lua
   ...
   modifierMS = { 'ctrl' }, -- default: { 'ctrl' }
   modifierMSKeys = { 'a', 's', 'd', 'f', 'q', 'w' }, -- default: { 'a', 's', 'd', 'f', 'q', 'w' }
-  ...
-```
-
-Alternatively, you can use your pointing device to move a window to an adjacent mSpace by pressing the Option (`alt`) or Control (`ctrl`) key and dragging 80 percent or more of the window beyond the left or right screen border. If you release the modifier before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you switch to the mSpace alongside with the window. In case you would like to change these mouse modifiers, you can add the following lines to your `init.lua` and adjust them to your liking:
-
-```lua
-   ...
-  modifier1 = { 'alt' }, -- default: { 'alt' }
-  modifier2 = { 'ctrl' }, -- default: { 'ctrl' }
   ...
 ```
 
@@ -91,12 +78,11 @@ As before, the line below represents the default setup, and you do not need to a
   ...
 ```
 
-
 ### Same Window on More Than One mSpace
 
-By now we have covered the basics, but we have not walked over the finish line yet. That being said, this section is mainly for advanced users; it is about having 'the same window on more than one mSpace. 
+By now we have covered the basics, but we have not walked over the finish line yet. That being said, this section is mainly for advanced users; it is about having 'the same window on more than one mSpace, also known als 'sticky windows'. 
 
-If you want to unlock the full potential of mSpaces, it is helpful to understand the underlying philosophy. Each mSpace is a representation of your windows rather than just a space containing them - or, in other words, an mSpace can be understood as a set of 'symbolic links' to a subset of your open windows. Due to this approach you could, for instance, have two mSpaces with the same windows in different sizes and positions, or - a scenario that is more likely - you can have the same Notes, Calendar, Finder or Safari window on two, three, or all your mSpaces.
+If you want to unlock the full potential of mSpaces, it is helpful to understand the underlying philosophy. Each mSpace is a representation of your windows rather than just a space containing them - or, in other words, an mSpace can be understood as a set of 'symbolic links' to a subset - that can also be all - of your open windows. Due to this approach you could, for instance, have two mSpaces with the same windows in different sizes and positions, or - a scenario that is more likely - you can have the same Notes, Calendar, Finder or Safari window on two, three, or all your mSpaces.
   
 To make a window visible on another mSpace as well, press the `ctrl` and `shift` modifiers and additionally press the key corresponding to the target mSpace, for instance, `3`. 
 
@@ -140,34 +126,7 @@ For switching between the references of a window ('sticky windows'), press `alt`
 
 ## Moving and Resizing Windows:
 
-With SpaceHammer you can automatically resize and position the windows on your mSpaces according to a dynamically changing grid size. Let us first discuss manual moving and resizing, though:
-
-
-### Manual Moving and Positioning
-
-To make moving windows easier than the usual clicking on the title bar (which you are still free to do), hold `modifier1` or `modifier2` down, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
-
-
-### Automatic Resizing and Positioning - Mouse, Trackpad
-
-For automatic resizing and positioning of a window, you simply move between 10 and 80 percent of the window beyond the left, right, or bottom borders of your screen using while pressing `alt` or `ctrl`. 
-
-As long as windows are resized - or moved within the borders of the screen -, it makes no difference whether you use `modifier1` or `modifier2`. However, once a window is moved beyond the screen borders, different positioning and resizing scenarios are called into action; they are as follows:
-
-* modifier1 (`alt`, unless changed): 
-  * If windows are moved beyond the left (right) borders of the screen: imagine your screen border divided into three sections: if the cursor crosses the screen border in the middle section, the window snaps into the left (right) half of the screen. Crossing the screen border in the upper and lower sections, the window snaps into the respective quarters of the screen.
-  * If windows are moved beyond the bottom border of the screen: imagine your bottom screen border divided into three sections: if the cursor crosses the screen border in the middle section, the window snaps into full screen. Crossing the screen border in the left or right sections, the window snaps into the respective halfs of the screen.
-
-* modifier2 (`ctrl`, unless changed): 
-  * The difference to `modifier1` is that your screen has a 3x3 grid. This means that windows snap into the left third of the 3x3 grid when dragged beyond the left screen border and into the right third when dragged beyond the right screen border. If `ctrl` is released before the left mouse button, the window will snap into the middle column.
- 
-* The moment dragging of a window starts, indicators will appear around the borders of the screen to guide you. For changing the appearance of the indicators see section 'Change Size, Color, and Opacity of Grid Indicators' below.
-
-- Additional feature: if you drag a window beyond the bottom border of the screen and `modifier1` or `modifier2` is released before the left mouse button, the window will be minimized.
-
-All this is been implemented with the goal of being as intuitive as possible; therefore, you will be able to train your muscle memory quickly.
-
-<img src="https://github.com/franzbu/SpaceHammer.spoon/blob/main/doc/demo2.gif" />
+With SpaceHammer you can automatically resize and position the windows on your mSpaces according to a dynamically changing grid size. 
 
 
 ### Automatic Resizing and Positioning - Keyboard
@@ -274,6 +233,53 @@ Let us further assume that you would like to use `modifierSnap1` with the keys `
 As you can see in the example above, `modifierSnapKey2` and `modifierSnapKey3` are not used and are therefore without any entries.
 
 Now, by pressing `modifierSnapKey1` and `j`, for example, scenario 'a2' is activated, which means that the active window snaps into the right half of the screen.
+
+
+
+## Use Mouse/Trackpad with mSpaces
+
+### Move windows to Adjacent mSpaces
+
+You can also use your pointing device to move a window to an adjacent mSpace by pressing the Option (`alt`) or Control (`ctrl`) key and dragging 80 percent or more of the window beyond the left or right screen border. If you release the modifier before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you switch to the mSpace alongside with the window. In case you would like to change these mouse modifiers, you can add the following lines to your `init.lua` and adjust them to your liking:
+
+```lua
+   ...
+  modifier1 = { 'alt' }, -- default: { 'alt' }
+  modifier2 = { 'ctrl' }, -- default: { 'ctrl' }
+  ...
+```
+
+
+## Using Mouse Trackpad for Moving and Resizing Windows
+
+Similar to other operations, at times it can be simpler and faster if you let your keyboard and pointing device cooperate. Thus SpaceHammer provides an alternative by enabling the use of a pointing device whenever it has the potential of being beneficial. 
+
+
+### Manual Moving and Positioning
+
+To make moving windows easier than the usual clicking on the title bar (which you are still free to do), hold `modifier1` or `modifier2` down, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
+
+
+### Automatic Resizing and Positioning - Mouse, Trackpad
+
+For automatic resizing and positioning of a window, you simply move between 10 and 80 percent of the window beyond the left, right, or bottom borders of your screen using while pressing `alt` or `ctrl`. 
+
+As long as windows are resized - or moved within the borders of the screen -, it makes no difference whether you use `modifier1` or `modifier2`. However, once a window is moved beyond the screen borders, different positioning and resizing scenarios are called into action; they are as follows:
+
+* modifier1 (`alt`, unless changed): 
+  * If windows are moved beyond the left (right) borders of the screen: imagine your screen border divided into three sections: if the cursor crosses the screen border in the middle section, the window snaps into the left (right) half of the screen. Crossing the screen border in the upper and lower sections, the window snaps into the respective quarters of the screen.
+  * If windows are moved beyond the bottom border of the screen: imagine your bottom screen border divided into three sections: if the cursor crosses the screen border in the middle section, the window snaps into full screen. Crossing the screen border in the left or right sections, the window snaps into the respective halfs of the screen.
+
+* modifier2 (`ctrl`, unless changed): 
+  * The difference to `modifier1` is that your screen has a 3x3 grid. This means that windows snap into the left third of the 3x3 grid when dragged beyond the left screen border and into the right third when dragged beyond the right screen border. If `ctrl` is released before the left mouse button, the window will snap into the middle column.
+ 
+* The moment dragging of a window starts, indicators will appear around the borders of the screen to guide you. For changing the appearance of the indicators see section 'Change Size, Color, and Opacity of Grid Indicators' below.
+
+- Additional feature: if you drag a window beyond the bottom border of the screen and `modifier1` or `modifier2` is released before the left mouse button, the window will be minimized.
+
+All this is been implemented with the goal of being as intuitive as possible; therefore, you will be able to train your muscle memory quickly.
+
+<img src="https://github.com/franzbu/SpaceHammer.spoon/blob/main/doc/demo2.gif" />
 
 
 ## Additional Features

@@ -56,7 +56,7 @@ The lines below represent the default setup, and you do not need to add them to 
 
 ### Switch Directly to Any mSpace
 
-For switching directly to any mSpace, press `alt` and the key for your mSpace.
+For switching directly to any mSpace, press `alt` and the key for your mSpace, for example, `3`.
 
 As before, the line below represents the default setup, and you do not need to add it to your `init.lua` unless you are planning on making any alterations:
 

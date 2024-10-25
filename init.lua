@@ -410,19 +410,6 @@ function SpaceHammer:handleDrag()
       end
       return true
     elseif self:isResizing() and useResize then
-      movedNotResized = false
-      if resizing then -- set to 'true' once when mouse is clicked/trackpad is tapped
-        local frame = hs.window.focusedWindow():frame()
-        local xNew = frame.x
-        local yNew = frame.y
-        local wNew = frame.w
-        local hNew = frame.h
-        bottomRight = {}
-        bottomRight['x'] = frame.x + frame.w
-        bottomRight['y'] = frame.y + frame.h
-      end
-      resizing = false -- self:isResizing() is called multiple times -> bottomRight needs to remain untouched until mouse button is released (and used for next window when mouse button is pressed again)
-
       if mH <= -m and mV <= m and mV > -m then -- 9 o'clock
         local geomNew = hs.geometry.new(current.x + dx, current.y, currentSize.w - dx, currentSize.h)
         geomNew.x2 = bottomRight.x
@@ -824,8 +811,6 @@ end
 function SpaceHammer:handleClick()
   return function(event)
     if self.dragging then return true end
-    --fb
-    resizing = true
     flags = eventToArray(event:getFlags())
     eventType = event:getType()
 
@@ -868,12 +853,6 @@ function SpaceHammer:handleClick()
 
       self.dragging = true
       self.targetWindow = currentWindow
-      
-      if isMoving then
-        self.dragType = dragTypes.move
-      else
-        self.dragType = dragTypes.resize
-      end
     
       -- prevent error when clicking on screen (and not window) with pressed modifier(s)
       if type(getWindowUnderMouse()) == "nil" then
@@ -918,6 +897,16 @@ function SpaceHammer:handleClick()
         createCanvas(5, max.w - thickness, max.h / 5, thickness, max.h / 5)
         createCanvas(6, max.w - thickness, max.h / 5 * 3, thickness, max.h / 5)
       end
+      --fb
+      if isMoving then
+        self.dragType = dragTypes.move
+      else
+        self.dragType = dragTypes.resize
+        bottomRight = {}
+        bottomRight['x'] = frame.x + frame.w
+        bottomRight['y'] = frame.y + frame.h
+      end
+
       self.cancelHandler:start()
       self.dragHandler:start()
       self.clickHandler:stop()

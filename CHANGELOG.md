@@ -1,3 +1,7 @@
+# v0.9.9
+
+* using 'hs.geometry.x2' and 'hs.geometry.y2' for manual resizing of windows
+
 # v0.9.8
 
 * 'dofile' instead of 'require'

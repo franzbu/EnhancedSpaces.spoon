@@ -143,6 +143,16 @@ As before, you do not need to add these lines to your `init.lua` unless you want
   ...
 ```
 
+In case you would like to disable SpaceHammer's window manager because you manage your windows manually or you prefer using another window manager, change the entries like this:
+
+```lua
+  ...
+  modifierSnap1 = nil, -- default: { 'cmd', 'alt' }
+  modifierSnap2 = nil, -- default: { 'cmd', 'ctrl' }
+  modifierSnap3 = nil, -- default: { 'cmd', 'shift' }
+  ...
+```
+
 To resize and move the active window into a 2x2 grid position, use `modifierSnap1` (default the Command and Option keys) and numbers `1-8`. 
 
 To resize and move the active window into a 3x3 grid position, use `modifierSnap2` and numbers `1-9`, additionally `0`, `o`, and `p`. 

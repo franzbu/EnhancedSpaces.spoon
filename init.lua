@@ -414,21 +414,21 @@ function SpaceHammer:handleDrag()
         local geomNew = hs.geometry.new(current.x + dx, current.y, currentSize.w - dx, currentSize.h)
         geomNew.x2 = bottomRight.x
         geomNew.y2 = bottomRight.y
-          hs.window.focusedWindow():move(geomNew, nil, false, 0)
+        hs.window.focusedWindow():move(geomNew, nil, false, 0)
       elseif mH <= -m and mV <= -m then -- 10:30
         local geomNew = hs.geometry.new(current.x + dx, current.y + dy, currentSize.w - dx, currentSize.h - dy)
         geomNew.x2 = bottomRight.x
         geomNew.y2 = bottomRight.y
-          hs.window.focusedWindow():move(geomNew, nil, false, 0)
+        hs.window.focusedWindow():move(geomNew, nil, false, 0)
       elseif mH > -m and mH <= m and mV <= -m then -- 12 o'clock
         local geomNew = hs.geometry.new(current.x, current.y + dy, currentSize.w, currentSize.h - dy)
         geomNew.x2 = bottomRight.x
         geomNew.y2 = bottomRight.y
-          hs.window.focusedWindow():move(geomNew, nil, false, 0)
+        hs.window.focusedWindow():move(geomNew, nil, false, 0)
       elseif mH > m and mV <= -m then -- 1:30
         local geomNew = hs.geometry.new(current.x, current.y + dy, currentSize.w + dx, currentSize.h - dy)
         geomNew.y2 = bottomRight.y
-          hs.window.focusedWindow():move(geomNew, nil, false, 0)
+        hs.window.focusedWindow():move(geomNew, nil, false, 0)
       elseif mH > m and mV > -m and mV <= m then -- 3 o'clock
         hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y, currentSize.w + dx, currentSize.h), nil, false, 0)
       elseif mH > m and mV > m then -- 4:30
@@ -438,7 +438,7 @@ function SpaceHammer:handleDrag()
       elseif mH <= -m and mV > m then -- 7:30
         local geomNew = hs.geometry.new(current.x + dx, current.y, currentSize.w - dx, currentSize.h + dy)
         geomNew.x2 = bottomRight.x
-          hs.window.focusedWindow():move(geomNew, nil, false, 0)
+        hs.window.focusedWindow():move(geomNew, nil, false, 0)
       else -- middle area of window (M) -> moving (not resizing) window
         hs.window.focusedWindow():move({ dx, dy }, nil, false, 0)
         movedNotResized = true
@@ -897,7 +897,7 @@ function SpaceHammer:handleClick()
         createCanvas(5, max.w - thickness, max.h / 5, thickness, max.h / 5)
         createCanvas(6, max.w - thickness, max.h / 5 * 3, thickness, max.h / 5)
       end
-      --fb
+
       if isMoving then
         self.dragType = dragTypes.move
       else

@@ -497,7 +497,6 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
           if math.abs(frame.x) < wNew / 10 then -- moved past border by 10 or less percent: move window as is back within boundaries of screen
           xNew = 0 + pM
           if yNew < heightMB + pM then -- top padding
-            hs.alert.show(heightMB)
             yNew = 0 + heightMB + pM
           end
           self.targetWindow:move(hs.geometry.new(xNew, yNew, wNew, hNew), nil, false, 0)
@@ -520,7 +519,6 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
             wNew = frame.w
             xNew = max.w - wNew - pM
             if yNew < heightMB + pM then -- top padding
-              hs.alert.show(heightMB)
               yNew = 0 + heightMB + pM
             end
             self.targetWindow:move(hs.geometry.new(xNew, yNew, wNew, hNew), nil, false, 0)
@@ -562,7 +560,6 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
           if math.abs(frame.x) < wNew / 10 then -- moved past border by 10 or less percent: move window as is back within boundaries of screen
             xNew = 0 + pM
             if yNew < heightMB + pM then -- top padding
-              hs.alert.show(heightMB)
               yNew = 0 + heightMB + pM
             end
             self.targetWindow:move(hs.geometry.new(xNew, yNew, wNew, hNew), nil, false, 0)
@@ -584,7 +581,6 @@ function SpaceHammer:doMagic() -- automatic positioning and adjustments, for exa
             wNew = frame.w
             xNew = max.w - wNew - pM
             if yNew < heightMB + pM then -- top padding
-              hs.alert.show(heightMB)
               yNew = 0 + heightMB + pM
             end
             self.targetWindow:move(hs.geometry.new(xNew, yNew, wNew, hNew), nil, false, 0)

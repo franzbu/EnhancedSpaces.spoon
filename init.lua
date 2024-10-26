@@ -334,11 +334,11 @@ function SpaceHammer:new(options)
   end)
 
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "o", function()
-    local currentSize =  hs.window.focusedWindow():size() -- win:frame
+    local current =  hs.window.focusedWindow():size() -- win:frame
     local current =  hs.window.focusedWindow():topLeft() 
     deltax = 100
     deltay = 100
-    hs.window.focusedWindow():move(hs.geometry.new(current.x + deltax, current.y + deltay, currentSize.w - deltax, currentSize.h - deltay), nil, false,0)
+    hs.window.focusedWindow():move(hs.geometry.new(current.x + deltax, current.y + deltay, current.w - deltax, current.h - deltay), nil, false,0)
   end)
 
   hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "l", function()
@@ -378,8 +378,7 @@ sumdy = 0
 function SpaceHammer:handleDrag()
   return function(event)
     if not self.dragging then return nil end
-    local currentSize =  hs.window.focusedWindow():size() -- win:frame
-    local current =  hs.window.focusedWindow():topLeft() 
+    local current =  hs.window.focusedWindow():frame()
     local dx = event:getProperty(hs.eventtap.event.properties.mouseEventDeltaX)
     local dy = event:getProperty(hs.eventtap.event.properties.mouseEventDeltaY)
     if self:isMoving() then
@@ -390,12 +389,12 @@ function SpaceHammer:handleDrag()
 
       moveLeftAS = false
       moveRightAS = false
-      if current.x + currentSize.w * ratioMSpaces < 0 then   -- left
+      if current.x + current.w * ratioMSpaces < 0 then   -- left
         for i = 1, #cv do
           cv[i]:hide()
         end
         moveLeftAS = true
-      elseif current.x + currentSize.w > max.w + currentSize.w * ratioMSpaces then   -- right
+      elseif current.x + current.w > max.w + current.w * ratioMSpaces then   -- right
         for i = 1, #cv do
           cv[i]:hide()
         end
@@ -409,33 +408,38 @@ function SpaceHammer:handleDrag()
       end
       return true
     elseif self:isResizing() and useResize then
+      --[[ --fb
+      event2.newMouseEvent(event2.types.leftMouseDown, {x = current.x, y = current.y}):post() -- hs.geometry.new(current.x, current.y)):post()
+      event2.newMouseEvent(event2.types.leftMouseUp, hs.geometry.new(current.x + dx, current.y + dy)):post()
+      hs.mouse.absolutePosition(hs.geometry.new(current.x, current.y))
+      --]]
       if mH <= -m and mV <= m and mV > -m then -- 9 o'clock
-        local geomNew = hs.geometry.new(current.x + dx, current.y)--, currentSize.w - dx, currentSize.h)
+        local geomNew = hs.geometry.new(current.x + dx, current.y)--, current.w - dx, current.h)
         geomNew.x2 = bottomRight.x
         geomNew.y2 = bottomRight.y
         hs.window.focusedWindow():move(geomNew, nil, false, 0)
       elseif mH <= -m and mV <= -m then -- 10:30
-        local geomNew = hs.geometry.new(current.x + dx, current.y + dy)--, currentSize.w - dx, currentSize.h - dy)
+        local geomNew = hs.geometry.new(current.x + dx, current.y + dy)--, current.w - dx, current.h - dy)
         geomNew.x2 = bottomRight.x
         geomNew.y2 = bottomRight.y
         hs.window.focusedWindow():move(geomNew, nil, false, 0)
       elseif mH > -m and mH <= m and mV <= -m then -- 12 o'clock
-        local geomNew = hs.geometry.new(current.x, current.y + dy)--, currentSize.w, currentSize.h - dy)
+        local geomNew = hs.geometry.new(current.x, current.y + dy)--, current.w, current.h - dy)
         geomNew.x2 = bottomRight.x
         geomNew.y2 = bottomRight.y
         hs.window.focusedWindow():move(geomNew, nil, false, 0)
       elseif mH > m and mV <= -m then -- 1:30
-        local geomNew = hs.geometry.new(current.x, current.y + dy, currentSize.w + dx, currentSize.h - dy)
+        local geomNew = hs.geometry.new(current.x, current.y + dy, current.w + dx, current.h - dy)
         geomNew.y2 = bottomRight.y
         hs.window.focusedWindow():move(geomNew, nil, false, 0)
       elseif mH > m and mV > -m and mV <= m then -- 3 o'clock
-        hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y, currentSize.w + dx, currentSize.h), nil, false, 0)
+        hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y, current.w + dx, current.h), nil, false, 0)
       elseif mH > m and mV > m then -- 4:30
-        hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y, currentSize.w + dx, currentSize.h + dy), nil, false, 0)
+        hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y, current.w + dx, current.h + dy), nil, false, 0)
       elseif mV > m and mH <= m and mH > -m then -- 6 o'clock
-        hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y, currentSize.w, currentSize.h + dy), nil, false, 0)
+        hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y, current.w, current.h + dy), nil, false, 0)
       elseif mH <= -m and mV > m then -- 7:30
-        local geomNew = hs.geometry.new(current.x + dx, current.y, currentSize.w - dx, currentSize.h + dy)
+        local geomNew = hs.geometry.new(current.x + dx, current.y, current.w - dx, current.h + dy)
         geomNew.x2 = bottomRight.x
         hs.window.focusedWindow():move(geomNew, nil, false, 0)
       else -- middle area of window (M) -> moving (not resizing) window

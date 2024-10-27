@@ -1,7 +1,7 @@
 # EnhancedSpaces
 
 
-macOS introduced changes to Apple's Spaces feature that broke many third party tools that had added various enhancements, among them Hammerspoon's own spaces.
+macOS introduced changes to Apple's Spaces feature that broke many third party tools that had added various enhancements, among them Hammerspoon's spaces.
 
 That is the reason EnhancedSpaces exists; it started as a replacement for Apple's Spaces - in EnhancedSpaces they are called mSpaces, providing features Apple doesn't, such as sticky windows and - most importantly, bringing back time-saving features such as easily and quickly moving windows between mSpaces, opening windows on pre-arranged mSpaces and the latter optionally in pre-arranged sizes and positions.
 
@@ -57,7 +57,7 @@ The lines below represent the default setup, and you don't need to add them to y
 
 For switching directly to any mSpace, press `alt` and the key for your mSpace, for example, `3`.
 
-As before, the line below represents the default setup, and you don't need to add it to your `init.lua` unless you're planning on making any changes:
+As before, the line below represents the default setup, and you don't need to add it to your `init.lua` unless you want to apply any changes:
 
 ```lua
   ...
@@ -69,7 +69,7 @@ As before, the line below represents the default setup, and you don't need to ad
 
 For moving windows to an mSpace, press `alt-ctrl` and the key for the target mSpace.
 
-As before, the line below represents the default setup, and you don't need to add it to your `init.lua` unless you prefer to change this shortcut:
+As before, the line below represents the default setup, and you don't need to add it to your `init.lua` unless you want to apply changes:
 
 ```lua
   ...
@@ -83,9 +83,9 @@ By now we have covered the basics, but we haven't walked over the finish line ye
 
 To unlock the full potential of mSpaces, it is helpful to understand the underlying philosophy: Each mSpace is a representation of your windows rather than just a space containing them - or, in other words, an mSpace can be understood as a set of 'symbolic links' to a subset of your open windows. Due to this approach you could, for instance, have two mSpaces with the same windows in different sizes and positions, or - a scenario that is more likely - you can have the same Notes, Calendar, Finder or Safari window on two, three, or all your mSpaces.
   
-To make a window visible on another mSpace as well, press  `ctrl-shift` modifiers and additionally press the key corresponding to the target mSpace, for instance, `3`. 
+To make a window visible on another mSpace as well, press the `ctrl-shift` modifiers and additionally press the key corresponding to the target mSpace, for instance, `3`. 
 
-As before, the below line represents the default setup, and you don't need to add it to your `init.lua` unless you prefer a different shortcut:
+As before, the below line represents the default setup, and you don't need to add it to your `init.lua` unless you want to apply changes:
 
 ```lua
   ...
@@ -102,7 +102,7 @@ Apart from switching between all windows, for which you will obviously use macOS
 
 #### Switching between Windows of the Current mSpace
 
-For restricting switching to the windows of your current mSpace only, press `alt` and `tab`. 
+For switching to the windows of your current mSpace, press `alt` and `tab`. 
 
 As before, the below lines represent the default setup, and you don't need to add them to your `init.lua` unless you prefer different shortcuts:
 
@@ -248,12 +248,13 @@ Now, by pressing `modifierSnapKey1` and `j`, for example, scenario 'a2' is activ
 
 ### Move windows to Adjacent mSpaces
 
-You can also use your pointing device to move a window to an adjacent mSpace by pressing the Option (`alt`) or Control (`ctrl`) key and dragging 80 percent or more of the window beyond the left or right screen border. If you release the modifier before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you switch to the mSpace alongside with the window. 
+You can also use your pointing device to move a window to an adjacent mSpace by pressing the Option (`alt`) or Control (`ctrl`) key and dragging 80 percent or more of the window beyond the left or right screen border. If you release the modifier key before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you switch to the mSpace alongside with the window. 
 
-As per default, `modifier1` uses the same modifier key as `modifierMS` and`modifier2` the same as `modifierMoveWinMSpace`. They don't interfere; however, in case you prefer different mouse modifiers, you can add the following lines to your `init.lua` and adjust them to your liking:
+As per default, `modifier1` uses the same modifier key as `modifierMS` and `modifier2` the same as `modifierMoveWinMSpace`. They don't interfere; however, in case you prefer different mouse modifiers, you can add the following lines to your `init.lua` and adjust them to your liking:
 
 ```lua
    ...
+  -- mouse modifiers
   modifier1 = { 'alt' }, -- default: { 'alt' }
   modifier2 = { 'ctrl' }, -- default: { 'ctrl' }
   ...
@@ -266,7 +267,7 @@ Similar to other operations, at times it can be simpler and faster if you use bo
 
 #### Manual Moving and Positioning
 
-To make moving windows easier than the usual clicking on the title bar (which you're still free to do), hold `modifier1` or `modifier2` down, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
+To make moving windows easier than the usual clicking on the title bar (which you're still free to do), hold down `modifier1` or `modifier2`, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
 
 
 #### Automatic Resizing and Positioning - Mouse, Trackpad
@@ -339,7 +340,7 @@ In case you would also like to pre-define the position of the window on the mSpa
   ...
 ```
 
-'a1', for example, represents the left half of your screen, 'a2' for the right half of your screen. To get the entire list of possible scenarios, see section 'Automatic Resizing and Positioning - Keyboard'.
+'a1', for example, represents the left half of your screen, 'a2' the right half of your screen. To get the entire list of possible scenarios, see section 'Automatic Resizing and Positioning - Keyboard'.
 
 
 ### Padding
@@ -357,7 +358,7 @@ In case you would like to change the padding in between the windows and/or betwe
 
 ### Change Size, Color, and Opacity of Grid Indicators
 
-In case you would like to change the size, color and/or opacity of the grid indicators, add the following line to your `init.lua` and alter then according to your liking. The values, in the same order, stand for: width, red, green, blue, opacity. Apart from the width, values between 0 and 1 are possible:
+In case you would like to change the size, color and/or opacity of the grid indicators, add the following line to your `init.lua`, and alter the values according to your liking. The values, in the same order, stand for: width, red, green, blue, opacity. Apart from the width, values between 0 and 1 are possible:
 
 ```lua
   ...
@@ -366,7 +367,6 @@ In case you would like to change the size, color and/or opacity of the grid indi
 
   ...
 ```
-
 
 ## Experimental Features
 
@@ -385,7 +385,7 @@ In order to enable manual resizing, add the following to your `init.lua`:
 
 To manually resize a window, hold your `modifier1` or `modifier2` down, then click the right mouse button in any part of the window and drag the window.
 
-To have the additional possibility of precisely resizing windows horizontally-only or vertically-only, 30 percent of the window (15 precent left and right of the middle of each border) is reserved for horizontal-only and vertical-only resizing. The size of this area can be adjusted; for more information see below.
+To have the additional possibility of precisely resizing windows horizontally-only or vertically-only, 30 percent of the window (15 precent left and right of the middle of each window border) is reserved for horizontal-only and vertical-only resizing. The size of this area can be adjusted; for more information see below.
 
 <img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/demo1.gif" />
 
@@ -396,7 +396,7 @@ At the center of the window there is an erea (M) where you can also move the win
 
 #### Manual Resizing of Windows - Margin
 
-You can change the size of the area of the window where the vertical-only and horizontal-only resizing applies by adjusting the option `margin`. The standard value is 0.3, which corresponds to 30 percent. Changing it to 0 results in deactivating this options, changing it to 1 results in deactivating resizing.
+You can change the size of the area of the window where the vertical-only and horizontal-only resizing applies by adjusting the option `margin`. The standard value is 0.3, which corresponds to 30 percent. Changing it to 0 would result in deactivating this options, changing it to 1 would result in deactivating resizing.
 
 ```lua
   ...
@@ -404,9 +404,6 @@ You can change the size of the area of the window where the vertical-only and ho
   margin = 0.2, -- default: 0.3
   ...
 ```
-
-Afterwards delete the folder `EnhancedSpaces.spoon` in `~/.hammerspoon/Spoons/` and delete the corresponding section in your `init.lua`.
-
 
 ## Notes
 
@@ -479,3 +476,6 @@ In case you have used the option `openAppMSpace`, disable or remove that section
   ]]
   ...
 ```
+
+Afterwards delete the folder `EnhancedSpaces.spoon` in `~/.hammerspoon/Spoons/` and delete the corresponding section in your `init.lua`.
+

@@ -3,7 +3,7 @@
 
 macOS introduced changes to Apple's Spaces feature that broke many third party tools that had added major enhancements, among them Hammerspoon's own spaces.
 
-That is the reason SpaceHammer exists; it started as a replacement for Apple's Spaces - in SpaceHammer they are called mSpaces, providing features Apple doesn't, such as sticky windows and - most importantly, bringing back time-saving possibilities such as easily and quickly moving windows between mSpaces, opening windows on pre-arranged mSpaces and the latter optionally in pre-arranged sizes and positions.
+That is the reason SpaceHammer exists; it started as a replacement for Apple's Spaces - in SpaceHammer they are called mSpaces, providing features Apple doesn't, such as sticky windows and - most importantly, bringing back time-saving features such as easily and quickly moving windows between mSpaces, opening windows on pre-arranged mSpaces and the latter optionally in pre-arranged sizes and positions.
 
 As an additional feature, you can use SpaceHammer's integrated window manager for resizing and positioning your windows with keyboard shortcuts or, optionally, with the help of your mouse or trackpad. However, you can also use your favorite window manager to organize the windows on your mSpaces.
 
@@ -12,7 +12,7 @@ SpaceHammer has been inspired by various applications, among them AeroSpace, Moo
 
 ## Installation
 
-SpaceHammer requires [Hammerspoon](https://www.hammerspoon.org/), so if you have not been using the latter yet, go ahead with its installation. Besides installing Hammerspoon for SpaceHammer's sake, you might also become interested in Hammerspoon's virtually endless possibilities for taylor-made customizations of your macOS at a later stage. 
+SpaceHammer requires [Hammerspoon](https://www.hammerspoon.org/), so if you have not been using the latter yet, go ahead with its installation. Besides installing Hammerspoon for SpaceHammer's sake, you might also be interested in Hammerspoon's virtually endless possibilities for taylor-made customizations of your macOS. 
 
 To install SpaceHammer, after downloading and unzipping, move the folder to `~/.hammerspoon/Spoons` and make sure the name of the folder is `SpaceHammer.spoon`. 
 
@@ -41,7 +41,7 @@ Restart Hammerspoon and you're ready to go; it is normal that the start of Space
 
 ### Usage
 
-You can use the Control (`ctrl`) - in case you're in an elegant alternative in the form of a hyper key, see section 'Notes' below - and the `s` keys to cycle through your mSpaces. To cycle in reverse order, press `ctrl` and `a`. To move the active window to the mSpace on the left (right) and switch there alongside with the window, press `ctrl` and `q` (`w`); to move the window while staying on the current mSpace press `ctrl` and `d` (`ctrl` and `w`).
+You can use the Control (`ctrl`) - in case you're interested in an elegant alternative in the form of a hyper key, see section 'Notes' below - and the `s` keys to cycle through your mSpaces. To cycle in reverse order, press `ctrl` and `a`. To move the active window to the mSpace on the left (right) and switch there alongside with the window, press `ctrl` and `q` (`w`); to move the window while staying on the current mSpace press `ctrl` and `d` (`ctrl` and `w`).
 
 The lines below represent the default setup, and you don't need to add them to your `init.lua` unless you want to apply changes:
 
@@ -57,7 +57,7 @@ The lines below represent the default setup, and you don't need to add them to y
 
 For switching directly to any mSpace, press `alt` and the key for your mSpace, for example, `3`.
 
-As before, the line below represents the default setup, and you don't need to add it to your `init.lua` unless you're planning on making any alterations:
+As before, the line below represents the default setup, and you don't need to add it to your `init.lua` unless you're planning on making any changes:
 
 ```lua
   ...
@@ -79,9 +79,9 @@ As before, the line below represents the default setup, and you don't need to ad
 
 ### Same Window on More Than One mSpace
 
-By now we have covered the basics, but we have not walked over the finish line yet. That being said, this section is mainly for advanced users; it is about having 'the same window on more than one mSpace, also known als 'sticky windows'. 
+By now we have covered the basics, but we haven't walked over the finish line yet. That being said, this section is mainly for advanced use cases, namely having 'the same window on more than one mSpace, also known as 'sticky windows'. 
 
-If you want to unlock the full potential of mSpaces, it is helpful to understand the underlying philosophy. Each mSpace is a representation of your windows rather than just a space containing them - or, in other words, an mSpace can be understood as a set of 'symbolic links' to a subset - that can also be all - of your open windows. Due to this approach you could, for instance, have two mSpaces with the same windows in different sizes and positions, or - a scenario that is more likely - you can have the same Notes, Calendar, Finder or Safari window on two, three, or all your mSpaces.
+To unlock the full potential of mSpaces, it is helpful to understand the underlying philosophy: Each mSpace is a representation of your windows rather than just a space containing them - or, in other words, an mSpace can be understood as a set of 'symbolic links' to a subset of your open windows. Due to this approach you could, for instance, have two mSpaces with the same windows in different sizes and positions, or - a scenario that is more likely - you can have the same Notes, Calendar, Finder or Safari window on two, three, or all your mSpaces.
   
 To make a window visible on another mSpace as well, press  `ctrl-shift` modifiers and additionally press the key corresponding to the target mSpace, for instance, `3`. 
 

@@ -3,14 +3,14 @@ local function scriptPath()
   return str:match("(.*/)")
 end
 
-local SpaceHammer = {}
+local EnhancedSpaces = {}
 
-SpaceHammer.author = "Franz B. <csaa6335@gmail.com>"
-SpaceHammer.homepage = "https://github.com/franzbu/SpaceHammer.spoon"
-SpaceHammer.license = "MIT"
-SpaceHammer.name = "SpaceHammer"
-SpaceHammer.version = "0.9.10"
-SpaceHammer.spoonPath = scriptPath()
+EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
+EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
+EnhancedSpaces.license = "MIT"
+EnhancedSpaces.name = "EnhancedSpaces"
+EnhancedSpaces.version = "0.9.11"
+EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
   local map = {}
@@ -38,7 +38,7 @@ local function buttonNameToEventType(name, optionName)
   error(optionName .. ': only "left" and "right" mouse button supported, got ' .. name)
 end
 
-function SpaceHammer:new(options)
+function EnhancedSpaces:new(options)
   hs.window.animationDuration = 0
   options = options or {}
 
@@ -292,13 +292,14 @@ function SpaceHammer:new(options)
       end)
     end
   end
+
   goToSpace(currentMSpace) -- refresh
   moveResize.clickHandler:start()
   return moveResize
 end
 
 
-function SpaceHammer:stop()
+function EnhancedSpaces:stop()
   for i = 1, #cv do -- delete canvases
     cv[i]:delete()
   end
@@ -309,12 +310,14 @@ end
 
 sumdx = 0
 sumdy = 0
-function SpaceHammer:handleDrag()
+--event2 = hs.eventtap.event
+function EnhancedSpaces:handleDrag()
   return function(event)
+    --print(tostring(event:getProperty(hs.eventtap.event.types.rightMouseDown)))
     local current =  hs.window.focusedWindow():frame()
     local dx = event:getProperty(hs.eventtap.event.properties.mouseEventDeltaX)
     local dy = event:getProperty(hs.eventtap.event.properties.mouseEventDeltaY)
-    if isMoving then
+    if isMoving then --self:isMoving() then
       hs.window.focusedWindow():move({ dx, dy }, nil, false, 0)
       sumdx = sumdx + dx
       sumdy = sumdy + dy
@@ -382,7 +385,7 @@ function SpaceHammer:handleDrag()
 end
 
 
-function SpaceHammer:handleClick()
+function EnhancedSpaces:handleClick()
   return function(event)
     flags = eventToArray(event:getFlags())
     eventType = event:getType()
@@ -478,7 +481,7 @@ function SpaceHammer:handleClick()
 end
 
 
-function SpaceHammer:handleCancel()
+function EnhancedSpaces:handleCancel()
   return function()
     self:doMagic()
     self:stop()
@@ -486,7 +489,7 @@ function SpaceHammer:handleCancel()
 end
 
 
-function SpaceHammer:doMagic() -- automatic positioning and adjustments, for example, prevent window from moving/resizing beyond screen boundaries
+function EnhancedSpaces:doMagic() -- automatic positioning and adjustments, for example, prevent window from moving/resizing beyond screen boundaries
   local targetWindow = hs.window.focusedWindow()
   local modifierDM = eventToArray(hs.eventtap.checkKeyboardModifiers()) -- modifiers (still) pressed after releasing mouse button 
   local frame = hs.window.focusedWindow():frame()
@@ -1142,7 +1145,7 @@ function assignMS(w, boolgotoSpace)
             else
               winMSpaces[getWinMSpacesPos(w)].frame[indexOf(mspaces, openAppMSpace[i][2])] = hs.geometry.point(max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h)                                                                                                    -- put window in middle of screen
             end
-            if boolgotoSpace then                                                                                                                                                                    -- not when SpaceHammer is started
+            if boolgotoSpace then                                                                                                                                                                    -- not when EnhancedSpaces is started
               goToSpace(indexOf(mspaces, openAppMSpace[i][2]))
             end
           else
@@ -1355,4 +1358,4 @@ function snap(scenario)
 end
 
 
-return SpaceHammer
+return EnhancedSpaces

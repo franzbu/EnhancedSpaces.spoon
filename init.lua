@@ -292,49 +292,6 @@ function SpaceHammer:new(options)
       end)
     end
   end
-
-  --[[ -- debug
-  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "m", function()
-   print("_______winAll_________")
-    for i, v in pairs(winAll) do
-      print(i, v)
-    end
-    print("_______winMSpaces_________")
-    for i, v in pairs(winMSpaces) do
-      print(i .. ": " .. "mspace " .. tostring(winMSpaces[i].mspace))
-      print("id: " .. winMSpaces[i].win:application():name())
-      local ms = ""
-      for j = 1, #mspaces do
-        ms = ms .. tostring(winMSpaces[i].mspace[j]) .. ", "
-      end
-      print("mSpaces: " .. ms)
-
-      for j = 1, #mspaces do -- frame
-        print(tostring(winMSpaces[i].frame[j]))
-      end
-
-    end
-  end)
-
-  -- list names of apps of (visible) windows
-  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "i", function()
-    for i = 1, #winMSpaces do -- frame
-      print(winMSpaces[i].win:application():name())
-    end
-  end)
-
-  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "o", function()
-    local current =  hs.window.focusedWindow():size() -- win:frame
-    local current =  hs.window.focusedWindow():topLeft() 
-    deltax = 100
-    deltay = 100
-    hs.window.focusedWindow():move(hs.geometry.new(current.x + deltax, current.y + deltay, current.w - deltax, current.h - deltay), nil, false,0)
-  end)
-
-  hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "l", function()
-  end)
-  --]]
-
   goToSpace(currentMSpace) -- refresh
   moveResize.clickHandler:start()
   return moveResize
@@ -352,14 +309,12 @@ end
 
 sumdx = 0
 sumdy = 0
---event2 = hs.eventtap.event
 function SpaceHammer:handleDrag()
   return function(event)
-    --print(tostring(event:getProperty(hs.eventtap.event.types.rightMouseDown)))
     local current =  hs.window.focusedWindow():frame()
     local dx = event:getProperty(hs.eventtap.event.properties.mouseEventDeltaX)
     local dy = event:getProperty(hs.eventtap.event.properties.mouseEventDeltaY)
-    if isMoving then --self:isMoving() then
+    if isMoving then
       hs.window.focusedWindow():move({ dx, dy }, nil, false, 0)
       sumdx = sumdx + dx
       sumdy = sumdy + dy
@@ -419,7 +374,6 @@ function SpaceHammer:handleDrag()
         hs.window.focusedWindow():move({ dx, dy }, nil, false, 0)
         movedNotResized = true
       end
-      --]]
       return true
     else
       return nil

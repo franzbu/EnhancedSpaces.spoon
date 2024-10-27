@@ -1,3 +1,7 @@
+# v0.9.10
+
+* Code cleanup, added 'moveLeftMS = false' and 'moveRightMS = false' to doMagic()
+
 # v0.9.9
 
 * using 'hs.geometry.x2' and 'hs.geometry.y2' for manual resizing of windows

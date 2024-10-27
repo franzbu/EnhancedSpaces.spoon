@@ -1,7 +1,7 @@
 # EnhancedSpaces
 
 
-macOS introduced changes to Apple's Spaces feature that broke many third party tools that had added major enhancements, among them Hammerspoon's own spaces.
+macOS introduced changes to Apple's Spaces feature that broke many third party tools that had added various enhancements, among them Hammerspoon's own spaces.
 
 That is the reason EnhancedSpaces exists; it started as a replacement for Apple's Spaces - in EnhancedSpaces they are called mSpaces, providing features Apple doesn't, such as sticky windows and - most importantly, bringing back time-saving features such as easily and quickly moving windows between mSpaces, opening windows on pre-arranged mSpaces and the latter optionally in pre-arranged sizes and positions.
 

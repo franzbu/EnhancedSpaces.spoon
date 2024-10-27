@@ -916,17 +916,6 @@ function isIncludedWinAll(w) -- check whether window id is included in table
 end
 
 
-function isIncludedWinMSpaces(w) -- check whether window id is included in table
-  local a = false
-  for i,v in pairs(winAll) do
-    if w:id() == winMSpaces[i].win:id() then
-      return i
-    end
-  end
-  return 0
-end
-
-
 function copyTable(a)
   b = {}
   for i,v in pairs(a) do

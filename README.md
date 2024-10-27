@@ -1,16 +1,13 @@
 # SpaceHammer
 
+
+macOS introduced changes to Apple's Spaces feature that broke many third party tools that had added major enhancements, among them Hammerspoon's own spaces.
+
+That is the reason SpaceHammer exists; it started as a replacement for Apple's Spaces - in SpaceHammer they are called mSpaces, providing features Apple doesn't, such as sticky windows and - most importantly, bringing back time-saving possibilities such as easily and quickly moving windows between mSpaces, opening windows on pre-arranged mSpaces and the latter optionally in pre-arranged sizes and positions.
+
+As an additional feature, you can use SpaceHammer's integrated window manager for resizing and positioning your windows with keyboard shortcuts or, optionally, with the help of your mouse or trackpad. However, you can also use your favorite window manager to organize the windows on your mSpaces.
+
 SpaceHammer has been inspired by various applications, among them AeroSpace, Moom and BetterTouchTool. SpaceHammer has simplified my life with macOS; may it do the same for you.
-
-'To simplify one's life is not too bad, but do I need that when it comes to my Mac, and what does this tool actually do to justify spending my time with it?', you might ask. 
-
-Well, first, spending your time with SpaceHammer might actually save you time. As far as the features of this tool are concerned, the answer is simple: It helps you organize your workspace, which comes down to two main tasks: managing your spaces and your applications and windows on them. 
-
-SpaceHammer is a replacement for Apple's Spaces - in SpaceHammer they are called mSpaces -, providing features Apple does not, such as sticky windows and the possibility to easily and quickly move windows between mSpaces and switch between the latter.
-
-Additionally, you can use SpaceHammer's integrated window manager for resizing and positioning your windows with keyboard shortcuts or, optionally, with the help of your mouse or trackpad. However, you can also use SpaceHammer alongside with your favorite window manager to organize the windows on your mSpaces.
-
-'Still, this is nothing groundbrakingly new', I hear you say, and you are right. You might be surprised, though, what difference a slightly altered approach can make. But read on and judge for yourself.
 
 
 ## Installation
@@ -27,9 +24,9 @@ mkdir -p ~/.hammerspoon/Spoons && git clone https://github.com/franzbu/SpaceHamm
 
 ```
 
-## Usage
+## mSpaces
 
-Once you have installed SpaceHammer, add the following lines to the file `~/.hammerspoon/init.lua`; you might want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you will be greeted with:
+Once you've installed SpaceHammer, add the following lines to the file `~/.hammerspoon/init.lua`; you might want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you will be greeted with:
 
 ```lua
 local SpaceHammer = hs.loadSpoon('SpaceHammer')
@@ -40,13 +37,13 @@ SpaceHammer:new({
 
 ```
 
-Restart Hammerspoon and you are ready to go; it is normal that the start of SpaceHammer takes a couple of seconds as this is the time the watchdogs need for registering. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let us find out what you can do with your new mSpaces.
+Restart Hammerspoon and you're ready to go; it is normal that the start of SpaceHammer takes a couple of seconds as this is the time the watchdogs need for registering. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let us find out what you can do with your new mSpaces.
 
-## mSpaces
+### Usage
 
-You can use the Control (`ctrl`) - in case you are in an elegant alternative in the form of a hyper key, see section 'Notes' below - and the `s` keys to cycle through your mSpaces. To cycle in reverse order, press `ctrl` and `a`. To move the active window to the mSpace on the left (right) and switch there alongside with the window, press `ctrl` and `q` (`w`); to move the window while staying on the current mSpace press `ctrl` and `d` (`ctrl` and `w`).
+You can use the Control (`ctrl`) - in case you're in an elegant alternative in the form of a hyper key, see section 'Notes' below - and the `s` keys to cycle through your mSpaces. To cycle in reverse order, press `ctrl` and `a`. To move the active window to the mSpace on the left (right) and switch there alongside with the window, press `ctrl` and `q` (`w`); to move the window while staying on the current mSpace press `ctrl` and `d` (`ctrl` and `w`).
 
-The lines below represent the default setup, and you do not need to add them to your `init.lua` unless you want to apply changes:
+The lines below represent the default setup, and you don't need to add them to your `init.lua` unless you want to apply changes:
 
 ```lua
   ...
@@ -60,7 +57,7 @@ The lines below represent the default setup, and you do not need to add them to 
 
 For switching directly to any mSpace, press `alt` and the key for your mSpace, for example, `3`.
 
-As before, the line below represents the default setup, and you do not need to add it to your `init.lua` unless you are planning on making any alterations:
+As before, the line below represents the default setup, and you don't need to add it to your `init.lua` unless you're planning on making any alterations:
 
 ```lua
   ...
@@ -72,7 +69,7 @@ As before, the line below represents the default setup, and you do not need to a
 
 For moving windows to an mSpace, press `alt-ctrl` and the key for the target mSpace.
 
-As before, the line below represents the default setup, and you do not need to add it to your `init.lua` unless you prefer to change this shortcut:
+As before, the line below represents the default setup, and you don't need to add it to your `init.lua` unless you prefer to change this shortcut:
 
 ```lua
   ...
@@ -88,7 +85,7 @@ If you want to unlock the full potential of mSpaces, it is helpful to understand
   
 To make a window visible on another mSpace as well, press  `ctrl-shift` modifiers and additionally press the key corresponding to the target mSpace, for instance, `3`. 
 
-As before, the below line represents the default setup, and you do not need to add it to your `init.lua` unless you prefer a different shortcut:
+As before, the below line represents the default setup, and you don't need to add it to your `init.lua` unless you prefer a different shortcut:
 
 ```lua
   ...
@@ -96,7 +93,7 @@ As before, the below line represents the default setup, and you do not need to a
   ...
 ```
 
-To delete a reference, press `modifierReference` and `0`. In case you are 'de-referencing' the last representation of a window on your mSpaces, the window gets minimized.
+To delete a reference, press `modifierReference` and `0`. In case you're 'de-referencing' the last representation of a window on your mSpaces, the window gets minimized.
 
 
 ### Switching Between Windows
@@ -107,7 +104,7 @@ Apart from switching between all windows, for which you will obviously use macOS
 
 For restricting switching to the windows of your current mSpace only, press `alt` and `tab`. 
 
-As before, the below lines represent the default setup, and you do not need to add them to your `init.lua` unless you prefer different shortcuts:
+As before, the below lines represent the default setup, and you don't need to add them to your `init.lua` unless you prefer different shortcuts:
 
 
 ```lua
@@ -135,7 +132,7 @@ With SpaceHammer you can automatically resize and position the windows on your m
 
 The following lines show the default keyboard shortcuts for the automatic resizing and positioning of windows.
 
-As before, you do not need to add these lines to your `init.lua` unless you want to apply changes. 
+As before, you don't need to add these lines to your `init.lua` unless you want to apply changes. 
 
 ```lua
   ...
@@ -247,8 +244,7 @@ As you can see in the example above, `modifierSnapKey2` and `modifierSnapKey3` a
 Now, by pressing `modifierSnapKey1` and `j`, for example, scenario 'a2' is activated, which means that the active window snaps into the right half of the screen.
 
 
-
-## Using Mouse/Trackpad with mSpaces
+## Using Mouse/Trackpad
 
 ### Move windows to Adjacent mSpaces
 
@@ -261,17 +257,17 @@ You can also use your pointing device to move a window to an adjacent mSpace by 
   ...
 ```
 
-## Using Mouse Trackpad for Moving and Resizing Windows
+### Using Mouse Trackpad for Moving and Resizing Windows
 
 Similar to other operations, at times it can be simpler and faster if you let your keyboard and pointing device cooperate. Thus SpaceHammer provides an alternative by enabling the use of a pointing device whenever it has the potential of being beneficial. 
 
 
-### Manual Moving and Positioning
+#### Manual Moving and Positioning
 
-To make moving windows easier than the usual clicking on the title bar (which you are still free to do), hold `modifier1` or `modifier2` down, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
+To make moving windows easier than the usual clicking on the title bar (which you're still free to do), hold `modifier1` or `modifier2` down, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
 
 
-### Automatic Resizing and Positioning - Mouse, Trackpad
+#### Automatic Resizing and Positioning - Mouse, Trackpad
 
 For automatic resizing and positioning of a window, you simply move between 10 and 80 percent of the window beyond the left, right, or bottom borders of your screen using while pressing `alt` or `ctrl`. 
 

@@ -248,7 +248,9 @@ Now, by pressing `modifierSnapKey1` and `j`, for example, scenario 'a2' is activ
 
 ### Move windows to Adjacent mSpaces
 
-You can also use your pointing device to move a window to an adjacent mSpace by pressing the Option (`alt`) or Control (`ctrl`) key and dragging 80 percent or more of the window beyond the left or right screen border. If you release the modifier before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you switch to the mSpace alongside with the window. In case you prefer different mouse modifiers, you can add the following lines to your `init.lua` and adjust them to your liking:
+You can also use your pointing device to move a window to an adjacent mSpace by pressing the Option (`alt`) or Control (`ctrl`) key and dragging 80 percent or more of the window beyond the left or right screen border. If you release the modifier before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you switch to the mSpace alongside with the window. 
+
+As per default, `modifier1` uses the same modifier key as `modifierMS` and`modifier2` the same as `modifierMoveWinMSpace`. They don't interfere; however, in case you prefer different mouse modifiers, you can add the following lines to your `init.lua` and adjust them to your liking:
 
 ```lua
    ...
@@ -259,7 +261,7 @@ You can also use your pointing device to move a window to an adjacent mSpace by 
 
 ### Using Mouse Trackpad for Moving and Resizing Windows
 
-Similar to other operations, at times it can be simpler and faster if you let your keyboard and pointing device cooperate. Thus EnhancedSpaces provides an alternative by enabling the use of a pointing device whenever it has the potential of being beneficial. 
+Similar to other operations, at times it can be simpler and faster if you use both your keyboard and pointing device at the same time. Thus EnhancedSpaces provides an alternative by enabling the use of a pointing device whenever it has the potential of being beneficial. 
 
 
 #### Manual Moving and Positioning

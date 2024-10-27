@@ -1,43 +1,43 @@
-# SpaceHammer
+# EnhancedSpaces
 
 
 macOS introduced changes to Apple's Spaces feature that broke many third party tools that had added major enhancements, among them Hammerspoon's own spaces.
 
-That is the reason SpaceHammer exists; it started as a replacement for Apple's Spaces - in SpaceHammer they are called mSpaces, providing features Apple doesn't, such as sticky windows and - most importantly, bringing back time-saving features such as easily and quickly moving windows between mSpaces, opening windows on pre-arranged mSpaces and the latter optionally in pre-arranged sizes and positions.
+That is the reason EnhancedSpaces exists; it started as a replacement for Apple's Spaces - in EnhancedSpaces they are called mSpaces, providing features Apple doesn't, such as sticky windows and - most importantly, bringing back time-saving features such as easily and quickly moving windows between mSpaces, opening windows on pre-arranged mSpaces and the latter optionally in pre-arranged sizes and positions.
 
-As an additional feature, you can use SpaceHammer's integrated window manager for resizing and positioning your windows with keyboard shortcuts or, optionally, with the help of your mouse or trackpad. However, you can also use your favorite window manager to organize the windows on your mSpaces.
+As an additional feature, you can use EnhancedSpaces's integrated window manager for resizing and positioning your windows with keyboard shortcuts or, optionally, with the help of your mouse or trackpad. However, you can also use your favorite window manager to organize the windows on your mSpaces.
 
-SpaceHammer has been inspired by various applications, among them AeroSpace, Moom and BetterTouchTool. SpaceHammer has simplified my life with macOS; may it do the same for you.
+EnhancedSpaces has been inspired by various applications, among them AeroSpace, Moom and BetterTouchTool. EnhancedSpaces has simplified my life with macOS; may it do the same for you.
 
 
 ## Installation
 
-SpaceHammer requires [Hammerspoon](https://www.hammerspoon.org/), so if you have not been using the latter yet, go ahead with its installation. Besides installing Hammerspoon for SpaceHammer's sake, you might also be interested in Hammerspoon's virtually endless possibilities for taylor-made customizations of your macOS. 
+EnhancedSpaces requires [Hammerspoon](https://www.hammerspoon.org/), so if you have not been using the latter yet, go ahead with its installation. Besides installing Hammerspoon for EnhancedSpaces's sake, you might also be interested in Hammerspoon's virtually endless possibilities for taylor-made customizations of your macOS. 
 
-To install SpaceHammer, after downloading and unzipping, move the folder to `~/.hammerspoon/Spoons` and make sure the name of the folder is `SpaceHammer.spoon`. 
+To install EnhancedSpaces, after downloading and unzipping, move the folder to `~/.hammerspoon/Spoons` and make sure the name of the folder is `EnhancedSpaces.spoon`. 
 
 Alternatively, you can run the following terminal command:
 
 ```bash
 
-mkdir -p ~/.hammerspoon/Spoons && git clone https://github.com/franzbu/SpaceHammer.spoon.git ~/.hammerspoon/Spoons/SpaceHammer.spoon
+mkdir -p ~/.hammerspoon/Spoons && git clone https://github.com/franzbu/EnhancedSpaces.spoon.git ~/.hammerspoon/Spoons/EnhancedSpaces.spoon
 
 ```
 
 ## mSpaces
 
-Once you've installed SpaceHammer, add the following lines to the file `~/.hammerspoon/init.lua`; you might want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you will be greeted with:
+Once you've installed EnhancedSpaces, add the following lines to the file `~/.hammerspoon/init.lua`; you might want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you will be greeted with:
 
 ```lua
-local SpaceHammer = hs.loadSpoon('SpaceHammer')
-SpaceHammer:new({
+local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')
+EnhancedSpaces:new({
   mSpaces = { '1', '2', '3', 'E', 'T' }, -- default { '1', '2', '3' }
   startmSpace = 'E', -- default 2
 })
 
 ```
 
-Restart Hammerspoon and you're ready to go; it is normal that the start of SpaceHammer takes a couple of seconds as this is the time the watchdogs need for registering. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let us find out what you can do with your new mSpaces.
+Restart Hammerspoon and you're ready to go; it is normal that the start of EnhancedSpaces takes a couple of seconds as this is the time the watchdogs need for registering. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let us find out what you can do with your new mSpaces.
 
 ### Usage
 
@@ -98,7 +98,7 @@ To delete a reference, press `modifierReference` and `0`. In case you're 'de-ref
 
 ### Switching Between Windows
 
-Apart from switching between all windows, for which you will obviously use macOS' integrated window switcher (Command-Tab) or the third party switcher of your choice, such as [AltTab](https://alt-tab-macos.netlify.app/), additional possibilities have been implemented in SpaceHammer for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').
+Apart from switching between all windows, for which you will obviously use macOS' integrated window switcher (Command-Tab) or the third party switcher of your choice, such as [AltTab](https://alt-tab-macos.netlify.app/), additional possibilities have been implemented in EnhancedSpaces for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').
 
 #### Switching between Windows of the Current mSpace
 
@@ -125,7 +125,7 @@ For switching between the references of a window ('sticky windows'), press `alt`
 
 ## Moving and Resizing Windows:
 
-With SpaceHammer you can automatically resize and position the windows on your mSpaces according to a dynamically changing grid size. 
+With EnhancedSpaces you can automatically resize and position the windows on your mSpaces according to a dynamically changing grid size. 
 
 
 ### Automatic Resizing and Positioning - Keyboard
@@ -142,7 +142,7 @@ As before, you don't need to add these lines to your `init.lua` unless you want 
   ...
 ```
 
-In case you would like to disable SpaceHammer's window manager because you manage your windows manually or you prefer using another window manager, change the entries like this:
+In case you would like to disable EnhancedSpaces's window manager because you manage your windows manually or you prefer using another window manager, change the entries like this:
 
 ```lua
   ...
@@ -259,7 +259,7 @@ You can also use your pointing device to move a window to an adjacent mSpace by 
 
 ### Using Mouse Trackpad for Moving and Resizing Windows
 
-Similar to other operations, at times it can be simpler and faster if you let your keyboard and pointing device cooperate. Thus SpaceHammer provides an alternative by enabling the use of a pointing device whenever it has the potential of being beneficial. 
+Similar to other operations, at times it can be simpler and faster if you let your keyboard and pointing device cooperate. Thus EnhancedSpaces provides an alternative by enabling the use of a pointing device whenever it has the potential of being beneficial. 
 
 
 #### Manual Moving and Positioning
@@ -286,14 +286,14 @@ As long as windows are resized - or moved within the borders of the screen -, it
 
 All this is been implemented with the goal of being as intuitive as possible; therefore, you will be able to train your muscle memory quickly.
 
-<img src="https://github.com/franzbu/SpaceHammer.spoon/blob/main/doc/demo2.gif" />
+<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/demo2.gif" />
 
 
 ## Additional Features
 
 ### Open Windows in Pre-Arranged mSpaces
 
-If you want SpaceHammer to automatically move windows to specific mSpaces when they are opened, add the following lines to your `init.lua`: 
+If you want EnhancedSpaces to automatically move windows to specific mSpaces when they are opened, add the following lines to your `init.lua`: 
 
 ```lua
   ...
@@ -385,11 +385,11 @@ To manually resize a window, hold your `modifier1` or `modifier2` down, then cli
 
 To have the additional possibility of precisely resizing windows horizontally-only or vertically-only, 30 percent of the window (15 precent left and right of the middle of each border) is reserved for horizontal-only and vertical-only resizing. The size of this area can be adjusted; for more information see below.
 
-<img src="https://github.com/franzbu/SpaceHammer.spoon/blob/main/doc/demo1.gif" />
+<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/demo1.gif" />
 
 At the center of the window there is an erea (M) where you can also move the window by pressing the right mouse button. 
 
-<img src="https://github.com/franzbu/SpaceHammer.spoon/blob/main/doc/resizing.png" width="200">
+<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/resizing.png" width="200">
 
 
 #### Manual Resizing of Windows - Margin
@@ -403,14 +403,14 @@ You can change the size of the area of the window where the vertical-only and ho
   ...
 ```
 
-Afterwards delete the folder `SpaceHammer.spoon` in `~/.hammerspoon/Spoons/` and delete the corresponding section in your `init.lua`.
+Afterwards delete the folder `EnhancedSpaces.spoon` in `~/.hammerspoon/Spoons/` and delete the corresponding section in your `init.lua`.
 
 
 ## Notes
 
 ### Hyper Key
 
-SpaceHammer (and other applications for that matter) can benefit from setting the Caps Lock key up as so called hyper key, which basically means that you get an additional modifier key, as - due to the impracticality of pressing four keys at once - you would hardly be tempted to use the combination of four modifiers otherwise. 
+EnhancedSpaces (and other applications for that matter) can benefit from setting the Caps Lock key up as so called hyper key, which basically means that you get an additional modifier key, as - due to the impracticality of pressing four keys at once - you would hardly be tempted to use the combination of four modifiers otherwise. 
 
 Among others, you can use the application [Karabiner Elements](https://karabiner-elements.pqrs.org/) for creating such a hyper key.
 
@@ -450,7 +450,7 @@ For this modification, go to 'Settings - Complex Modifications', click 'Add your
 }
 ```
 
-Now you can assign your newly created `hyper key` for any modifiers in SpaceHammer, for example, `modifierMS`:
+Now you can assign your newly created `hyper key` for any modifiers in EnhancedSpaces, for example, `modifierMS`:
 
 
 ```lua
@@ -461,9 +461,9 @@ Now you can assign your newly created `hyper key` for any modifiers in SpaceHamm
 ```
 Now, pressing `Caps Lock` and `a`, for instance, switches to the mSpace on the left.
 
-### Uninstall SpaceHammer
+### Uninstall EnhancedSpaces
 
-In case you have used the option `openAppMSpace`, disable or remove that section from your `init.lua` and (re)start SpaceHammer afterwards to move all open windows to your main mSpace, which after disabling or uninstalling SpaceHammer will automatically become your default space.
+In case you have used the option `openAppMSpace`, disable or remove that section from your `init.lua` and (re)start EnhancedSpaces afterwards to move all open windows to your main mSpace, which after disabling or uninstalling EnhancedSpaces will automatically become your default space.
 
 ```lua
   ...

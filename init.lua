@@ -889,7 +889,7 @@ function mergeModifiers(m1, m2)
     table.insert(m1_2, m1[i])
   end
   for i = 1, #m2 do
-    ap = false -- already present
+    local ap = false -- already present
     for j = 1, #m1_2 do -- avoid double entries
       if m1_2[j] == m2[i] then
         ap = true

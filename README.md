@@ -5,14 +5,14 @@ macOS introduced changes to Apple's Spaces feature that broke many third party t
 
 That is the reason EnhancedSpaces exists; it started as a replacement for Apple's Spaces - in EnhancedSpaces they are called mSpaces, providing features Apple doesn't, such as sticky windows and - most importantly, bringing back time-saving features such as easily and quickly moving windows between mSpaces, opening windows on pre-arranged mSpaces and the latter optionally in pre-arranged sizes and positions.
 
-As an additional feature, you can use EnhancedSpaces's integrated window manager for resizing and positioning your windows with keyboard shortcuts or, optionally, with the help of your mouse or trackpad. However, you can also use your favorite window manager to organize the windows on your mSpaces.
+As an additional feature, you can use EnhancedSpaces' integrated window manager for resizing and positioning your windows with keyboard shortcuts or, optionally, with the help of your mouse or trackpad. However, you can also use your favorite window manager to organize the windows on your mSpaces.
 
 EnhancedSpaces has been inspired by various applications, among them AeroSpace, Moom and BetterTouchTool. EnhancedSpaces has simplified my life with macOS; may it do the same for you.
 
 
 ## Installation
 
-EnhancedSpaces requires [Hammerspoon](https://www.hammerspoon.org/), so if you have not been using the latter yet, go ahead with its installation. Besides installing Hammerspoon for EnhancedSpaces's sake, you might also be interested in Hammerspoon's virtually endless possibilities for taylor-made customizations of your macOS. 
+EnhancedSpaces requires [Hammerspoon](https://www.hammerspoon.org/), so if you have not been using the latter yet, go ahead with its installation. Besides installing Hammerspoon for EnhancedSpaces' sake, you might also be interested in Hammerspoon's virtually endless possibilities for taylor-made customizations of your macOS. 
 
 To install EnhancedSpaces, after downloading and unzipping, move the folder to `~/.hammerspoon/Spoons` and make sure the name of the folder is `EnhancedSpaces.spoon`. 
 
@@ -142,7 +142,7 @@ As before, you don't need to add these lines to your `init.lua` unless you want 
   ...
 ```
 
-In case you would like to disable EnhancedSpaces's window manager because you manage your windows manually or you prefer using another window manager, change the entries like this:
+In case you would like to disable EnhancedSpaces' window manager because you manage your windows manually or you prefer using another window manager, change the entries like this:
 
 ```lua
   ...

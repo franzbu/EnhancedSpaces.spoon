@@ -842,15 +842,12 @@ end
 -- creating canvases at screen borders
 function createCanvas(n, x, y, w, h)
   cv[n] = hs.canvas.new(hs.geometry.rect(x, y, w, h))
-  cv[n]:insertElement(
-    {
-      action = 'fill',
-      type = 'rectangle',
-      fillColor = { red = gridIndicator[2], green = gridIndicator[3], blue = gridIndicator[4], alpha = gridIndicator[5] },
-      roundedRectRadii = { xRadius = 5.0, yRadius = 5.0 },
-    },
-    1
-  )
+  cv[n]:insertElement({
+    action = 'fill',
+    type = 'rectangle',
+    fillColor = { red = gridIndicator[2], green = gridIndicator[3], blue = gridIndicator[4], alpha = gridIndicator[5] },
+    roundedRectRadii = { xRadius = 5.0, yRadius = 5.0 },
+  }, 1)
   cv[n]:show()
 end
 

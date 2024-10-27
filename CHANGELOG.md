@@ -1,3 +1,7 @@
+# v0.9.11
+
+* As the name SpaceHammer had already been used, this tool has been renamed.
+
 # v0.9.10
 
 * Code cleanup, added 'moveLeftMS = false' and 'moveRightMS = false' to doMagic()

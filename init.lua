@@ -910,6 +910,7 @@ function isIncludedWinAll(w) -- check whether window id is included in table
   for i,v in pairs(winAll) do
     if w:id() == winAll[i]:id() then
       a = true
+      break
     end
   end
   return a

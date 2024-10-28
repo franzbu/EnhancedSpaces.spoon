@@ -6,22 +6,20 @@ Every power user sooner or later feels restricted by the confinements of a singl
 
 mSpaces have both advantages and disadvantages compared to multi-monitor arrangements. One of the advantages is that you don't have to move your neck and head around to look at another screen - using mSpaces is like making the individual monitors of your multi-monitor arrangement swap by means of a keyboard shortcut. The obvious disadvantage of mSpaces is that you can't see more than one of them at a time; however, while every user has a different workflow, for many of us that is simply unnecessary, in which case the benefits of mScreens comfortably outweigh the downsides. 
 
-I gave up on my multi-monitor arrangement in favor of virtual screens years ago and have never looked back. I started out using macOS' built-in Spaces and kept installing third-party tools that added much needed improvements to Apple's rather simplistic approach.
+I gave up on my multi-monitor arrangement in favor of virtual screens years ago and have never looked back. I started out using macOS' built-in Spaces and used third-party tools that added much needed improvements to Apple's rather simplistic approach.
 
-However, with macOS Sequoia Apple introduced changes to Apple's Spaces that broke the third-party enhancements for good that I had been using. 
+However, with macOS Sequoia Apple introduced changes to Apple's Spaces that broke the third-party enhancements that I had been using for good. 
 
-This is when I decided to develop an application that would be as uncompromising as can be when it comes to arranging windows. EnhancedSpaces is the culmination of that. It has been developed with the goal of being intuitive to use as well as efficient; it thus has time-saving features such as moving windows between mSpaces quickly, using sticky windows, and opening windows on pre-arranged mSpaces in pre-arranged sizes and positions.
+That is when I decided to develop an application that would be as uncompromising as can be when it comes to arranging windows. EnhancedSpaces is the culmination of that. It has been developed with the goal of being intuitive to use as well as efficient; it thus has time-saving features such as moving windows between mSpaces quickly, using sticky windows, and opening windows on pre-arranged mSpaces in pre-arranged sizes and positions.
 
 EnhancedSpaces also features an integrated window manager for resizing and positioning your windows with keyboard shortcuts or, optionally, with the help of your mouse or trackpad.
 
-When it comes to macOS, the obvious choice for developing such an application is Swift; however, I had come to appreciate Hammerspoon when adding extensions and customizations to macOS and wanted to give its approach with Lua a shot, and Hammerspoon has excelled.
-
-EnhancedSpaces brings back all the enhancements I had in place before macOS Sequoia broke them, and more - with its no-compromise approach it has simplified my life with macOS. May it do the same for you.
+When it comes to macOS, the obvious choice for developing such an application is Swift; however, I had come to appreciate Hammerspoon when adding extensions and customizations to macOS and wanted to give its approach with Lua a shot, and Hammerspoon has delivered. EnhancedSpaces brings back all the enhancements I had in place before macOS Sequoia broke them, and more - with its no-compromise approach it has simplified my life with macOS. May it do the same for you.
 
 
 ## Installation
 
-As already mentioned, EnhancedSpaces requires [Hammerspoon](https://www.hammerspoon.org/), so if you haven't been using the latter yet, go ahead with its installation.
+As has been discussed, EnhancedSpaces requires [Hammerspoon](https://www.hammerspoon.org/), so if you haven't been using the latter yet, go ahead with its installation.
 
 To install EnhancedSpaces, after downloading and unzipping, move the folder to `~/.hammerspoon/Spoons` and make sure the name of the folder is `EnhancedSpaces.spoon`. 
 

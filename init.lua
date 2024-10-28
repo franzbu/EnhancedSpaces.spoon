@@ -325,7 +325,6 @@ sumdy = 0
 --event2 = hs.eventtap.event
 function EnhancedSpaces:handleDrag()
   return function(event)
-    --print(tostring(event:getProperty(hs.eventtap.event.types.rightMouseDown)))
     local current =  hs.window.focusedWindow():frame()
     local dx = event:getProperty(hs.eventtap.event.properties.mouseEventDeltaX)
     local dy = event:getProperty(hs.eventtap.event.properties.mouseEventDeltaY)

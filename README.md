@@ -229,7 +229,7 @@ As has been mentioned, these keyboard shortcuts are fully customizable. Let's fi
 
 In case you would like to make changes, you can combine any of the three modifiers `modifierSnap1`, `modifierSnap1`, and `modifierSnap1` with any of the scenarios.
 
-This is best shown by means of an example: let's assume that you just need windows to snap into three different grid positions:
+This is best shown by means of an example: Let's assume that you just need windows to snap into three different grid positions:
 - (1) right half of screen -> 'a2'
 - (2) right middle ninth of screen -> 'b11'
 - (3) middle third, upper two cells -> 'c5'
@@ -285,15 +285,15 @@ For automatic resizing and positioning of a window, you simply move between 10 a
 As long as windows are resized - or moved within the borders of the screen -, it makes no difference whether you use `modifier1` or `modifier2`. However, once a window is moved beyond the screen borders, different positioning and resizing scenarios are called into action; they are as follows:
 
 * modifier1 (`alt`, unless changed): 
-  * If windows are moved beyond the left (right) borders of the screen: imagine your screen border divided into three sections: if the cursor crosses the screen border in the middle section, the window snaps into the left (right) half of the screen. Crossing the screen border in the upper and lower sections, the window snaps into the respective quarters of the screen.
-  * If windows are moved beyond the bottom border of the screen: again, imagine your bottom screen border divided into three sections: if the cursor crosses the screen border in the middle section, the window snaps into full screen. Crossing the screen border in the left or right sections, the window snaps into the respective halves of the screen.
+  * If windows are moved beyond the left (right) borders of the screen: Imagine your screen border divided into three sections: if the cursor crosses the screen border in the middle section, the window snaps into the left (right) half of the screen. Crossing the screen border in the upper and lower sections, the window snaps into the respective quarters of the screen.
+  * If windows are moved beyond the bottom border of the screen: Again, imagine your bottom screen border divided into three sections: if the cursor crosses the screen border in the middle section, the window snaps into full screen. Crossing the screen border in the left or right sections, the window snaps into the respective halves of the screen.
 
 * modifier2 (`ctrl`, unless changed): 
   * The difference to `modifier1` is that your screen has an underlying 3x3 grid. This means that windows snap into the left third of the 3x3 grid when dragged beyond the left screen border and into the right third when dragged beyond the right screen border. If `ctrl` is released before the left mouse button, the window will snap into the middle column.
  
 * The moment dragging of a window starts, indicators will appear around the borders of the screen to guide you. For changing the appearance of the indicators, see section 'Change Size, Color, and Opacity of Grid Indicators' below.
 
-- Additional feature: if you drag a window beyond the bottom border of the screen and `modifier1` or `modifier2` is released before the left mouse button, the window will be minimized.
+- Additional feature: If you drag a window beyond the bottom border of the screen and `modifier1` or `modifier2` is released before the left mouse button, the window will be minimized.
 
 All this has been implemented with the goal of being intuitive; therefore, you will be able to train your muscle memory quickly.
 

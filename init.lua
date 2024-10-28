@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.11"
+EnhancedSpaces.version = "0.9.12"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -163,9 +163,11 @@ function EnhancedSpaces:new(options)
   end)
   hs.window.filter.default:subscribe(hs.window.filter.windowOnScreen, function(w)
     refreshWinMSpaces()
-    moveMiddleAfterMouseMinimize(w)
-    assignMS(w, true)
-    w:focus()
+    if not enteredFullscreen then
+      moveMiddleAfterMouseMinimize(w)
+      assignMS(w, true)
+      w:focus()
+    end
   end)
   hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(w)
     refreshWinMSpaces()
@@ -175,6 +177,17 @@ function EnhancedSpaces:new(options)
   filter = dofile(hs.spoons.resourcePath('lib/window_filter.lua'))
   filter.default:subscribe(filter.windowMoved, function(w)
     adjustWinFrame()
+  end)
+  -- next 2 filters are for avoiding calling assignMS() after leaving a window's fullscreen
+  enteredFullscreen = false
+  hs.window.filter.default:subscribe(hs.window.filter.windowFullscreened, function()
+    enteredFullscreen = true
+  end)
+  hs.window.filter.default:subscribe(hs.window.filter.windowUnfullscreened, function(w)
+    --hs.timer.doAfter(0.5, function() -- delay necessary in case altered filter.default (delay 0.5 -> 0.01) is used
+      enteredFullscreen = false
+      w:focus()
+    --end)
   end)
 
   -- cycle through windows of current mSpace
@@ -292,7 +305,6 @@ function EnhancedSpaces:new(options)
       end)
     end
   end
-
   goToSpace(currentMSpace) -- refresh
   moveResize.clickHandler:start()
   return moveResize
@@ -377,6 +389,7 @@ function EnhancedSpaces:handleDrag()
         hs.window.focusedWindow():move({ dx, dy }, nil, false, 0)
         movedNotResized = true
       end
+      --]]
       return true
     else
       return nil
@@ -851,7 +864,6 @@ function createCanvas(n, x, y, w, h)
   cv[n]:show()
 end
 
-
  -- event looks like this: {'alt' 'true'}; function turns table into an 'array' so
  -- it can be compared to the other arrays (modifier1, modifier2,...)
 function eventToArray(a) -- maybe extend to work with more than one modifier at at time
@@ -915,6 +927,18 @@ function isIncludedWinAll(w) -- check whether window id is included in table
   end
   return a
 end
+
+--[[
+function isIncludedWinMSpaces(w) -- check whether window id is included in table
+  local a = false
+  for i,v in pairs(winAll) do
+    if w:id() == winMSpaces[i].win:id() then
+      return i
+    end
+  end
+  return 0
+end
+--]]
 
 
 function copyTable(a)
@@ -1133,7 +1157,7 @@ function assignMS(w, boolgotoSpace)
               winMSpaces[getWinMSpacesPos(w)].frame[indexOf(mspaces, openAppMSpace[i][2])] = hs.geometry.point(max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h)                                                                                                    -- put window in middle of screen
             end
             if boolgotoSpace then                                                                                                                                                                    -- not when EnhancedSpaces is started
-              goToSpace(indexOf(mspaces, openAppMSpace[i][2]))
+              --goToSpace(indexOf(mspaces, openAppMSpace[i][2]))
             end
           else
             winMSpaces[getWinMSpacesPos(w)].mspace[j] = false

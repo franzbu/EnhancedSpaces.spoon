@@ -14,7 +14,7 @@ That is when I decided to develop an application that would be uncompromising wh
 
 EnhancedSpaces also features an integrated window manager for resizing and positioning your windows with keyboard shortcuts or, optionally, with the help of your mouse or trackpad.
 
-When it comes to macOS, the obvious choice for developing such an application is Swift; however, I had come to appreciate Hammerspoon when adding extensions and customizations to macOS and wanted to see how far its approach with Lua can go, and Hammerspoon has delivered. I discount the seeming disadvantage that you might have to install the lightweight Hammerspoon (see directly below) for using EnhancedSpaces because the installation of Hammerspoon is simple and might benefit you down the road. 
+When it comes to macOS, the obvious choice for developing such an application is Swift; however, I had come to appreciate Hammerspoon when adding extensions and customizations to macOS and wanted to see how far its approach with Lua can go, and Hammerspoon has delivered. 
 
 With its no-compromise approach, EnhancedSpaces has simplified my life with macOS. May it do the same for you.
 

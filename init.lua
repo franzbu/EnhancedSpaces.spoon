@@ -978,7 +978,7 @@ function goToSpace(target)
   end
   currentMSpace = target
   menubar:setTitle(mspaces[target])
-
+  refreshWinMSpaces() --fb
   AdjustWindowsOnCurrentMS()
 end
 

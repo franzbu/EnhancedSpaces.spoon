@@ -178,16 +178,14 @@ function EnhancedSpaces:new(options)
   filter.default:subscribe(filter.windowMoved, function(w)
     adjustWinFrame()
   end)
-  -- next 2 filters are for avoiding calling assignMS() after leaving a window's fullscreen
+  -- next 2 filters are for avoiding calling assignMS() after unfullscreening a window
   enteredFullscreen = false
   hs.window.filter.default:subscribe(hs.window.filter.windowFullscreened, function()
     enteredFullscreen = true
   end)
   hs.window.filter.default:subscribe(hs.window.filter.windowUnfullscreened, function(w)
-    --hs.timer.doAfter(0.5, function() -- delay necessary in case altered filter.default (delay 0.5 -> 0.01) is used
-      enteredFullscreen = false
-      w:focus()
-    --end)
+    enteredFullscreen = false
+    w:focus()
   end)
 
   -- cycle through windows of current mSpace

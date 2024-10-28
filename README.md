@@ -4,28 +4,28 @@ First things first: Who is this application for?
 
 Every power user sooner or later feels restricted by the confinements of a single screen; there is simply never enough space. While the obvious remedy is a multi-monitor arrangement, there is a lesser known solution that enables the user to have more than one screen on a single display: virtual screens or, as they are called in EnhancedSpaces, mSpaces. 
 
-mSpaces have both advantages and disadvantages compared to multi-monitor arrangements. An advantage is that you don't have to move your neck and head around to look at another screen - using mSpaces is like swapping the individual monitors of your multi-monitor arrangement around by means of a keyboard shortcut. The obvious disadvantage of virtual screens is that you can't see more than one mSpace at a time; however, while every user has a different workflow, for many of us this is simply unnecessary, in which case the benefits of virtual screens easily outweigh the downsides. 
+mSpaces have both advantages and disadvantages compared to multi-monitor arrangements. One of the advantages is that you don't have to move your neck and head around to look at another screen - using mSpaces is like making the individual monitors of your multi-monitor arrangement swap by means of a keyboard shortcut. The obvious disadvantage of virtual screens is that you can't see more than one mSpace at a time; however, while every user has a different workflow, for many of us this is unnecessary, in which case the benefits of virtual screens comfortably outweigh the downsides. 
 
 I gave up on my multi-monitor arrangement in favor of virtual screens years ago and have never looked back. I started out using macOS' built-in Spaces and kept installing third-party tools that added much needed improvements to Apple's rather simplistic approach.
 
 However, with macOS Sequoia Apple introduced changes to Apple's Spaces that broke the third-party enhancements for good that I had been using. 
 
-This is when I decided to develop an application that would be as uncompromising as can be when it comes to arranging windows. EnhancedSpaces is the culmination of that. It has been developed with the goal of being intuitive to use as well as efficient, and it thus has time-saving features such as moving windows between mSpaces quickly, using sticky windows, and opening windows on pre-arranged mSpaces in pre-arranged sizes and positions.
+This is when I decided to develop an application that would be as uncompromising as can be when it comes to arranging windows. EnhancedSpaces is the culmination of that. It has been developed with the goal of being intuitive to use as well as efficient; it thus has time-saving features such as moving windows between mSpaces quickly, using sticky windows, and opening windows on pre-arranged mSpaces in pre-arranged sizes and positions.
 
-Optionally, there is an integrated window manager for resizing and positioning your windows with keyboard shortcuts or, optionally, with the help of your mouse or trackpad.
+EnhancedSpaces also features an integrated window manager for resizing and positioning your windows with keyboard shortcuts or, optionally, with the help of your mouse or trackpad.
 
-When it comes to macOS, the obvious choice for the development of such an application is Swift; however, I had come to appreciate Hammerspoon when adding extensions and customizations to macOS and wanted to give it a shot for this bigger talk, and it has turned out to be what I wanted it to be.
+When it comes to macOS, the obvious choice for developing such an application is Swift; however, I had come to appreciate Hammerspoon when adding extensions and customizations to macOS and wanted to give its approach with Lua a shot, and Hammerspoon has excelled.
 
-EnhancedSpaces brings back all the enhancements I had in place before macOS Sequoia broke them, and more - with its no-compromise approach it has simplified my life with macOS; may it do the same for you.
+EnhancedSpaces brings back all the enhancements I had in place before macOS Sequoia broke them, and more - with its no-compromise approach it has simplified my life with macOS. May it do the same for you.
 
 
 ## Installation
 
-As already mentioned, EnhancedSpaces requires [Hammerspoon](https://www.hammerspoon.org/), so if you have not been using the latter yet, go ahead with its installation.
+As already mentioned, EnhancedSpaces requires [Hammerspoon](https://www.hammerspoon.org/), so if you haven't been using the latter yet, go ahead with its installation.
 
 To install EnhancedSpaces, after downloading and unzipping, move the folder to `~/.hammerspoon/Spoons` and make sure the name of the folder is `EnhancedSpaces.spoon`. 
 
-Alternatively, you can run the following terminal command:
+As an alternative to manually downloading and installing, you can run the following terminal command:
 
 ```bash
 
@@ -35,7 +35,7 @@ mkdir -p ~/.hammerspoon/Spoons && git clone https://github.com/franzbu/EnhancedS
 
 ## mSpaces
 
-Once you've installed EnhancedSpaces, add the following lines to the file `~/.hammerspoon/init.lua` (you can edit this file by clicking the Hammerspoon icon in your menubar and choosing 'Open Config'); you might want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you will be greeted with:
+Once you've installed EnhancedSpaces, add the following lines to the file `~/.hammerspoon/init.lua` (you can edit that file by clicking the Hammerspoon icon in your menubar and choosing 'Open Config'). You might want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you will be greeted with:
 
 ```lua
 local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')
@@ -46,7 +46,7 @@ EnhancedSpaces:new({
 
 ```
 
-Restart Hammerspoon and you're ready to go; it is normal that the start of EnhancedSpaces takes a couple of seconds. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let us find out what you can do with your new mSpaces.
+Restart Hammerspoon and you're ready to go; it is normal that the start of EnhancedSpaces takes a couple of seconds. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let's find out what you can do with your new mSpaces.
 
 ### Usage
 
@@ -90,11 +90,11 @@ As before, the line below represents the default setup, and you don't need to ad
 
 By now we have covered the basics, but we haven't walked over the finish line yet. That being said, this section is mainly for advanced use cases, namely having 'the same window on more than one mSpace, also known as 'sticky windows'. 
 
-To unlock the full potential of mSpaces, it is helpful to understand the underlying philosophy: Each mSpace is a representation of your windows rather than just a space containing them - or, in other words, an mSpace can be understood as a set of 'symbolic links' to a subset of your open windows. Due to this approach, you could, for instance, have two mSpaces with the same windows in different sizes and positions, or - a scenario that is more likely - you can have the same Notes, Calendar, Finder or Safari window on two, three, or all your mSpaces.
+To unlock the full potential of mSpaces, it is helpful to understand the underlying philosophy: Each mSpace is a representation of your windows rather than just a space containing them - or, in other words, an mSpace can be understood as a set of symbolic links to a subset of your open windows. Due to this approach, you could, for instance, have two mSpaces with the same windows in different sizes and positions, or you can have the same Notes, Calendar, Finder or Safari window on two, three, or all your mSpaces.
   
-To make a window visible on another mSpace as well, press the `ctrl-shift` modifiers and additionally press the key corresponding to the target mSpace, for instance, `3`. 
+To create such a reference of a window on an additional mSpace, press the `ctrl-shift` modifiers and additionally press the key corresponding to the target mSpace, for instance, `3`. 
 
-As before, the below line represents the default setup, and you don't need to add it to your `init.lua` unless you want to apply changes:
+As before, the below line represents the default modifiers, and you don't need to add it to your `init.lua` unless you want to apply changes:
 
 ```lua
   ...
@@ -151,7 +151,7 @@ As before, you don't need to add these lines to your `init.lua` unless you want 
   ...
 ```
 
-In case you would like to disable EnhancedSpaces' window manager because you manage your windows manually or prefer using another window manager, change the entries as follows:
+In case you would like to disable EnhancedSpaces' window manager because you manage your windows manually or prefer using another window manager, change the lines as follows:
 
 ```lua
   ...
@@ -248,31 +248,30 @@ Let's further assume that you would like to use `modifierSnap1` with the keys `j
   },
   ...
 ```
-As you can see in the example above, `modifierSnapKey2` and `modifierSnapKey3` are not used and are therefore without any entries.
+As you can see in the example above, `modifierSnapKey2` and `modifierSnapKey3` are not used and are therefore empty.
 
 Now, by pressing `modifierSnapKey1` and `j`, for example, scenario 'a2' is activated, which means that the active window snaps into the right half of the screen.
 
 
 ## Using Mouse/Trackpad
 
+Similar to many operations, at times it can be simpler and faster if you use both your keyboard and pointing device at the same time. Thus EnhancedSpaces provides an alternative by enabling the use of a pointing device whenever it has the potential of being beneficial. 
+
 ### Move windows to Adjacent mSpaces
 
 You can also use your pointing device to move a window to an adjacent mSpace by pressing the Option (`alt`) or Control (`ctrl`) key and dragging 80 percent or more of the window beyond the left or right screen border. If you release the modifier key before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you switch to the mSpace alongside with the window. 
 
-As per default, `modifier1` uses the same modifier key as `modifierMS` and `modifier2` the same as `modifierMoveWinMSpace`. They don't interfere; however, in case you prefer different mouse modifiers, you can add the following lines to your `init.lua` and adjust them to your liking:
+As per default, `modifier1` uses the same modifier key as `modifierMS` and `modifier2` the same as `modifierMoveWinMSpace`. They don't interfere; however, in case you prefer to change these pointing device modifiers, you can add the following lines to your `init.lua` and adjust them to your liking:
 
 ```lua
    ...
-  -- mouse modifiers
+  -- pointing device modifiers
   modifier1 = { 'alt' }, -- default: { 'alt' }
   modifier2 = { 'ctrl' }, -- default: { 'ctrl' }
   ...
 ```
 
-### Using Mouse Trackpad for Moving and Resizing Windows
-
-Similar to other operations, at times it can be simpler and faster if you use both your keyboard and pointing device at the same time. Thus EnhancedSpaces provides an alternative by enabling the use of a pointing device whenever it has the potential of being beneficial. 
-
+### Using Mouse or Trackpad for Moving and Resizing Windows
 
 #### Manual Moving and Positioning
 
@@ -287,16 +286,16 @@ As long as windows are resized - or moved within the borders of the screen -, it
 
 * modifier1 (`alt`, unless changed): 
   * If windows are moved beyond the left (right) borders of the screen: imagine your screen border divided into three sections: if the cursor crosses the screen border in the middle section, the window snaps into the left (right) half of the screen. Crossing the screen border in the upper and lower sections, the window snaps into the respective quarters of the screen.
-  * If windows are moved beyond the bottom border of the screen: imagine your bottom screen border divided into three sections: if the cursor crosses the screen border in the middle section, the window snaps into full screen. Crossing the screen border in the left or right sections, the window snaps into the respective halfs of the screen.
+  * If windows are moved beyond the bottom border of the screen: again, imagine your bottom screen border divided into three sections: if the cursor crosses the screen border in the middle section, the window snaps into full screen. Crossing the screen border in the left or right sections, the window snaps into the respective halves of the screen.
 
 * modifier2 (`ctrl`, unless changed): 
-  * The difference to `modifier1` is that your screen has a 3x3 grid. This means that windows snap into the left third of the 3x3 grid when dragged beyond the left screen border and into the right third when dragged beyond the right screen border. If `ctrl` is released before the left mouse button, the window will snap into the middle column.
+  * The difference to `modifier1` is that your screen has an underlying 3x3 grid. This means that windows snap into the left third of the 3x3 grid when dragged beyond the left screen border and into the right third when dragged beyond the right screen border. If `ctrl` is released before the left mouse button, the window will snap into the middle column.
  
-* The moment dragging of a window starts, indicators will appear around the borders of the screen to guide you. For changing the appearance of the indicators see section 'Change Size, Color, and Opacity of Grid Indicators' below.
+* The moment dragging of a window starts, indicators will appear around the borders of the screen to guide you. For changing the appearance of the indicators, see section 'Change Size, Color, and Opacity of Grid Indicators' below.
 
 - Additional feature: if you drag a window beyond the bottom border of the screen and `modifier1` or `modifier2` is released before the left mouse button, the window will be minimized.
 
-All this is been implemented with the goal of being as intuitive as possible; therefore, you will be able to train your muscle memory quickly.
+All this has been implemented with the goal of being intuitive; therefore, you will be able to train your muscle memory quickly.
 
 <img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/demo2.gif" />
 
@@ -318,7 +317,7 @@ If you want EnhancedSpaces to automatically move windows to specific mSpaces whe
   ...
 ```
 
-The way appications are assigend to certain mSpaces is self-explanatory. To get the names of the applications of open windows, you can simply run the following command in Hammerspoon's Console:
+The way appications are assigend to certain mSpaces should be self-explanatory. To get the names of the applications of open windows, you can simply run the following command in Hammerspoon's Console:
 
 ```lua
 for _, v in pairs(hs.window.filter.default:getWindows()) do print(v:application():name()) end
@@ -336,7 +335,7 @@ You will get an output like this:
 2024-10-20 07:38:13: Finder
 ```
 
-In case you would also like to pre-define the position of the window on the mSpace, you can add that information as well:
+In case you would also like to pre-define the position of the window on the mSpace, you can add that as follows:
 
 ```lua
   ...
@@ -349,7 +348,7 @@ In case you would also like to pre-define the position of the window on the mSpa
   ...
 ```
 
-'a1', for example, represents the left half of your screen, 'a2' the right half of your screen. To get the entire list of possible scenarios, see section 'Automatic Resizing and Positioning - Keyboard'.
+'a1', for example, represents the left half of your screen, 'a2' the right half of your screen. To get the entire list of possible scenarios, see section 'Automatic Resizing and Positioning - Keyboard' above.
 
 
 ### Padding
@@ -381,7 +380,7 @@ In case you would like to change the size, color and/or opacity of the grid indi
 
 ### Manual Resizing
 
-Similar to manual moving, manual resizing of windows can be initiated by positioning the cursor in virtually any area of the window. Be aware, though, that windows of certain applications can behave in a stuttering and sluggish way when being resized. 
+Similar to manual moving, manual resizing of windows can be initiated by positioning the cursor in any area of a window. Be aware, though, that windows of certain applications can behave in a sluggish way when being resized. 
 
 In order to enable manual resizing, add the following to your `init.lua`:
 

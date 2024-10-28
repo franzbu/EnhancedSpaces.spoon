@@ -4,15 +4,13 @@
 
 Every power user sooner or later feels restricted by the confinements of a single screen; there is simply never enough space. While the obvious remedy is a multi-monitor arrangement, there is a lesser known solution that enables the user to have more than one screen on a single display: virtual screens or, as they are called in EnhancedSpaces, mSpaces. 
 
-mSpaces have both advantages and disadvantages compared to multi-monitor arrangements. One of the advantages is that you don't have to move your neck and head around to look at another screen - using mSpaces is like making the individual monitors of your multi-monitor arrangement swap by means of a keyboard shortcut. The obvious disadvantage of mSpaces is that you can't see more than one of them at a time; however, while every user has a different workflow, for many of us that is simply unnecessary, in which case the benefits of mScreens comfortably outweigh the downsides. 
+mSpaces have both advantages and disadvantages compared to multi-monitor arrangements. One of the advantages is that you don't have to move your neck and head around to look at another screen - using mSpaces is like making the monitors of your multi-monitor arrangement swap by means of a keyboard shortcut. The obvious disadvantage of mSpaces is that you can't see more than one of them at a time; however, while every user has a different workflow, for many of us that is simply unnecessary, in which case the benefits of mScreens comfortably outweigh the downsides. 
 
-I gave up on my multi-monitor arrangement in favor of virtual screens years ago and have never looked back. I started out using macOS' built-in Spaces and used third-party tools that added much needed improvements to Apple's rather simplistic approach.
+I dismissed my multi-monitor arrangement in favor of virtual screens years ago and have never looked back. I started out using macOS' built-in Spaces and used third-party tools that added much needed improvements to Apple's rather simplistic approach.
 
-However, with updates to macOS Apple introduced changes to Apple's Spaces that broke for good the third-party enhancements that I had been using. 
+However, with updates to macOS, Apple introduced changes to their Spaces that broke for good those tools I had been using. 
 
-That is when I decided to develop an application that would be uncompromising when it comes to arranging windows. EnhancedSpaces has further been developed with the goal of being intuitive to use as well as efficient; it thus has time-saving features such as moving windows between mSpaces instantly, using sticky windows, and opening windows on pre-arranged mSpaces in pre-arranged sizes and positions.
-
-EnhancedSpaces also features an integrated window manager for resizing and positioning your windows with keyboard shortcuts or, optionally, with the help of your mouse or trackpad.
+So I decided to develop an application that combined window and space management in a way I had been imagining. EnhancedSpaces has been developed with the goal of being intuitive to use as well as efficient; it thus has time-saving features such as moving windows between mSpaces instantly, using sticky windows, and opening windows on pre-arranged mSpaces in pre-arranged sizes and positions. EnhancedSpaces' window manager has been designed for resizing and positioning your windows with keyboard shortcuts or, optionally, with the help of your mouse or trackpad.
 
 When it comes to macOS, the obvious choice for developing such an application is Swift; however, I have come to appreciate Hammerspoon for its power and flexibility and wanted to see how far its approach with Lua can go with a project like this, and Hammerspoon has delivered. 
 

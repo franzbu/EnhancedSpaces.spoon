@@ -1,11 +1,11 @@
 # EnhancedSpaces
 
 
-macOS introduced changes to Apple's Spaces feature that broke many third party tools that had added various enhancements, among them Hammerspoon's spaces.
+macOS introduced changes to Apple's Spaces feature that broke many third party tools that had added various enhancements.
 
-That is the reason EnhancedSpaces exists; it started as a replacement for Apple's Spaces - in EnhancedSpaces they are called mSpaces, providing features Apple doesn't, such as sticky windows and - most importantly, bringing back time-saving features such as easily and quickly moving windows between mSpaces, opening windows on pre-arranged mSpaces and the latter optionally in pre-arranged sizes and positions.
+That is the reason EnhancedSpaces exists; it started as a replacement for Apple's Spaces - in EnhancedSpaces they are called mSpaces, providing features Apple doesn't, such as sticky windows and - most importantly, bringing back time-saving features such as moving windows between mSpaces quickly, opening windows on pre-arranged mSpaces and the latter optionally in pre-arranged sizes and positions.
 
-As an additional feature, you can use EnhancedSpaces' integrated window manager for resizing and positioning your windows with keyboard shortcuts or, optionally, with the help of your mouse or trackpad. However, you can also use your favorite window manager to organize the windows on your mSpaces.
+As an additional feature, you can use EnhancedSpaces' integrated window manager for resizing and positioning your windows with keyboard shortcuts or, optionally, with the help of your mouse or trackpad.
 
 EnhancedSpaces has been inspired by various applications, among them AeroSpace, Moom and BetterTouchTool. EnhancedSpaces has simplified my life with macOS; may it do the same for you.
 
@@ -26,7 +26,7 @@ mkdir -p ~/.hammerspoon/Spoons && git clone https://github.com/franzbu/EnhancedS
 
 ## mSpaces
 
-Once you've installed EnhancedSpaces, add the following lines to the file `~/.hammerspoon/init.lua`; you might want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you will be greeted with:
+Once you've installed EnhancedSpaces, add the following lines to the file `~/.hammerspoon/init.lua` (you can edit this file by clicking the Hammerspoon icon in your menubar and choosing 'Open Config'); you might want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you will be greeted with:
 
 ```lua
 local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')
@@ -37,7 +37,7 @@ EnhancedSpaces:new({
 
 ```
 
-Restart Hammerspoon and you're ready to go; it is normal that the start of EnhancedSpaces takes a couple of seconds as this is the time the watchdogs need for registering. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let us find out what you can do with your new mSpaces.
+Restart Hammerspoon and you're ready to go; it is normal that the start of EnhancedSpaces takes a couple of seconds. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let us find out what you can do with your new mSpaces.
 
 ### Usage
 
@@ -55,7 +55,7 @@ The lines below represent the default setup, and you don't need to add them to y
 
 ### Switch Directly to Any mSpace
 
-For switching directly to any mSpace, press `alt` and the key for your mSpace, for example, `3`.
+For switching directly to any mSpace, press the Option key (`alt`) and the key for your mSpace, for example, `3`.
 
 As before, the line below represents the default setup, and you don't need to add it to your `init.lua` unless you want to apply any changes:
 
@@ -81,7 +81,7 @@ As before, the line below represents the default setup, and you don't need to ad
 
 By now we have covered the basics, but we haven't walked over the finish line yet. That being said, this section is mainly for advanced use cases, namely having 'the same window on more than one mSpace, also known as 'sticky windows'. 
 
-To unlock the full potential of mSpaces, it is helpful to understand the underlying philosophy: Each mSpace is a representation of your windows rather than just a space containing them - or, in other words, an mSpace can be understood as a set of 'symbolic links' to a subset of your open windows. Due to this approach you could, for instance, have two mSpaces with the same windows in different sizes and positions, or - a scenario that is more likely - you can have the same Notes, Calendar, Finder or Safari window on two, three, or all your mSpaces.
+To unlock the full potential of mSpaces, it is helpful to understand the underlying philosophy: Each mSpace is a representation of your windows rather than just a space containing them - or, in other words, an mSpace can be understood as a set of 'symbolic links' to a subset of your open windows. Due to this approach, you could, for instance, have two mSpaces with the same windows in different sizes and positions, or - a scenario that is more likely - you can have the same Notes, Calendar, Finder or Safari window on two, three, or all your mSpaces.
   
 To make a window visible on another mSpace as well, press the `ctrl-shift` modifiers and additionally press the key corresponding to the target mSpace, for instance, `3`. 
 
@@ -98,7 +98,7 @@ To delete a reference, press `modifierReference` and `0`. In case you're 'de-ref
 
 ### Switching Between Windows
 
-Apart from switching between all windows, for which you will obviously use macOS' integrated window switcher (Command-Tab) or the third party switcher of your choice, such as [AltTab](https://alt-tab-macos.netlify.app/), additional possibilities have been implemented in EnhancedSpaces for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').
+Apart from switching between all windows, for which you obviously use macOS' integrated window switcher (Command-Tab) or the third party switcher of your choice, such as [AltTab](https://alt-tab-macos.netlify.app/), additional possibilities have been implemented in EnhancedSpaces for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').
 
 #### Switching between Windows of the Current mSpace
 
@@ -142,7 +142,7 @@ As before, you don't need to add these lines to your `init.lua` unless you want 
   ...
 ```
 
-In case you would like to disable EnhancedSpaces' window manager because you manage your windows manually or you prefer using another window manager, change the entries like this:
+In case you would like to disable EnhancedSpaces' window manager because you manage your windows manually or prefer using another window manager, change the entries as follows:
 
 ```lua
   ...
@@ -156,7 +156,7 @@ To resize and move the active window into a 2x2 grid position, use `modifierSnap
 
 To resize and move the active window into a 3x3 grid position, use `modifierSnap2` and numbers `1-9`, additionally `0`, `o`, and `p`. 
 
-`modifierSnap3` also uses a 3x3 grid; however, the windows snap into different sizes, see '3x3 Grid - Double (and Quadruple) Sizes' below.
+`modifierSnap3` also uses a 3x3 grid; however, the windows snap into different sizes, see '3x3 Grid - Additional Window Sizes' below.
 
 Below you find the pre-assigned keyboard shortcuts.
 
@@ -187,7 +187,7 @@ Below you find the pre-assigned keyboard shortcuts.
 
 
 #### 3x3 Grid - Additional Window Sizes
-You can have windows take up more cells on the 3x3 grid. The pre-defined positions and sizes are as follows (descriptions might be tricky; so simply try the keyboard shortcuts out):
+In this case, the pre-defined positions and sizes of the windows are as follows (descriptions might be tricky; so simply try them out):
 
 - `modifierSnap3` and `1`: left two thirds of screen: 6 cells -> 'c1'
 - `modifierSnap3` and `2`: right two thirds of screen: 6 cells -> 'c2'
@@ -202,7 +202,7 @@ You can have windows take up more cells on the 3x3 grid. The pre-defined positio
 - `modifierSnap3` and `o`: top middle and right thirds: 4 cells -> 'c11'
 - `modifierSnap3` and `p`: bottom middle and right thirds: 4 cells -> 'c12'
 
-As has been mentioned, these keyboard shortcuts are fully customizable. Let us first have a look at the standard setup, i.e., the way the keyboard shortcuts have been pre-defined:
+As has been mentioned, these keyboard shortcuts are fully customizable. Let's first have a look at the way the keyboard shortcuts have been pre-arranged:
 
 
 ```lua
@@ -220,12 +220,12 @@ As has been mentioned, these keyboard shortcuts are fully customizable. Let us f
 
 In case you would like to make changes, you can combine any of the three modifiers `modifierSnap1`, `modifierSnap1`, and `modifierSnap1` with any of the scenarios.
 
-This is best shown by means of an example: let us assume that you just need windows to snap into three different grid positions:
+This is best shown by means of an example: let's assume that you just need windows to snap into three different grid positions:
 - (1) right half of screen -> 'a2'
 - (2) right middle ninth of screen -> 'b11'
 - (3) middle third, upper two cells -> 'c5'
 
-Let us further assume that you would like to use `modifierSnap1` with the keys `j`, `k`, and `l` to achieve that; then you would add the following lines to your `init.lua`:
+Let's further assume that you would like to use `modifierSnap1` with the keys `j`, `k`, and `l` to achieve that; then you would add the following lines to your `init.lua`:
 
 ```lua
   ...
@@ -327,7 +327,7 @@ You will get an output like this:
 2024-10-20 07:38:13: Finder
 ```
 
-In case you would also like to pre-define the position of the window on the mSpace, you can add that information as a third entry:
+In case you would also like to pre-define the position of the window on the mSpace, you can add that information as well:
 
 ```lua
   ...
@@ -461,7 +461,7 @@ Now you can assign your newly created `hyper key` for any modifiers in EnhancedS
 Now, pressing `Caps Lock` and `a`, for instance, switches to the mSpace on the left.
 
 
-### Uninstall EnhancedSpaces
+### Uninstalling EnhancedSpaces
 
 In case you have used the option `openAppMSpace`, disable or remove that section from your `init.lua` and (re)start EnhancedSpaces to move all open windows to your main mSpace, which after disabling or uninstalling EnhancedSpaces will automatically become your default space.
 

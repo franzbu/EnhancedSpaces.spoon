@@ -155,15 +155,6 @@ function EnhancedSpaces:new(options)
     end
     assignMS(winAll[i], false)
   end
-  --[[
-    for i = 1, #winAll do
-    if winAll[i]:topLeft().x >= max.w - 1 then                                                                                                                                                                 -- window in 'hiding spot'
-      -- move window to middle of the current mSpace
-      winMSpaces[getWinMSpacesPos(winAll[i])].frame[currentMSpace] = hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2, winAll[i]:frame().w, winAll[i]:frame().h)                                                                                      -- put window in middle of screen
-      assignMS(winAll[i], false)
-    end
-  end
-  --]]
 
   -- watchdogs
   hs.window.filter.default:subscribe(hs.window.filter.windowNotOnScreen, function(w)

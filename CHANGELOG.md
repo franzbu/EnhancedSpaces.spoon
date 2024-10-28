@@ -1,3 +1,7 @@
+# v0.9.12
+
+* filter subscriptions for 'windowFullscreened' and 'windowUnfullscreened' added -> fixed calling assignMS() after leaving a window's fullscreen mode
+
 # v0.9.11
 
 * As the name SpaceHammer had already been used, this tool has been renamed.

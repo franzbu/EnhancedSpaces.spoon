@@ -8,7 +8,7 @@ mSpaces have both advantages and disadvantages compared to multi-monitor arrange
 
 I gave up on my multi-monitor arrangement in favor of virtual screens years ago and have never looked back. I started out using macOS' built-in Spaces and used third-party tools that added much needed improvements to Apple's rather simplistic approach.
 
-However, with updates to macOS Apple introduced changes to Apple's Spaces that broke the third-party enhancements that I had been using for good. 
+However, with updates to macOS, Apple introduced changes to Apple's Spaces that broke for good the third-party enhancements that I had been using. 
 
 That is when I decided to develop an application that would be as uncompromising as can be when it comes to arranging windows. EnhancedSpaces is the culmination of that. It has been developed with the goal of being intuitive to use as well as efficient; it thus has time-saving features such as moving windows between mSpaces quickly, using sticky windows, and opening windows on pre-arranged mSpaces in pre-arranged sizes and positions.
 

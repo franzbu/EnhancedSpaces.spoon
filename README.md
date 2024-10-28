@@ -8,15 +8,15 @@ mSpaces have both advantages and disadvantages compared to multi-monitor arrange
 
 I gave up on my multi-monitor arrangement in favor of virtual screens years ago and have never looked back. I started out using macOS' built-in Spaces and kept installing third-party tools that added much needed improvements to Apple's rather simplistic approach.
 
-However, with macOS Sequoia Apple introded changes to Apple's Spaces that broke the third-party enhancements for good I had been using. 
+However, with macOS Sequoia Apple introduced changes to Apple's Spaces that broke the third-party enhancements for good that I had been using. 
 
 This is when I decided to develop an application that would be as uncompromising as can be when it comes to arranging windows. EnhancedSpaces is the culmination of that. It has been developed with the goal of being intuitive to use as well as efficient, and it thus has time-saving features such as moving windows between mSpaces quickly, using sticky windows, and opening windows on pre-arranged mSpaces in pre-arranged sizes and positions.
 
 Optionally, there is an integrated window manager for resizing and positioning your windows with keyboard shortcuts or, optionally, with the help of your mouse or trackpad.
 
-When it comes to macOS, the obvious choice for the development of such an application is Swift; however, I had come to appreciate Hammerspoon when adding extensions and customizations to macOS, and it has been a good choice.
+When it comes to macOS, the obvious choice for the development of such an application is Swift; however, I had come to appreciate Hammerspoon when adding extensions and customizations to macOS and wanted to give it a shot for this bigger talk, and it has turned out to be what I wanted it to be.
 
-EnhancedSpaces has brought back all the enhancements I had in place before macOS Sequoia broke them, and more, and it has simplified my life with macOS; may it do the same for you.
+EnhancedSpaces brings back all the enhancements I had in place before macOS Sequoia broke them, and more - with its no-compromise approach it has simplified my life with macOS; may it do the same for you.
 
 
 ## Installation

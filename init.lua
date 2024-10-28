@@ -474,13 +474,11 @@ function EnhancedSpaces:handleClick()
         createCanvas(5, max.w - thickness, max.h / 5, thickness, max.h / 5)
         createCanvas(6, max.w - thickness, max.h / 5 * 3, thickness, max.h / 5)
       end
-
       if isResizing then
         bottomRight = {}
         bottomRight['x'] = frame.x + frame.w
         bottomRight['y'] = frame.y + frame.h
       end
-
       self.cancelHandler:start()
       self.dragHandler:start()
       self.clickHandler:stop()
@@ -927,18 +925,6 @@ function isIncludedWinAll(w) -- check whether window id is included in table
   return a
 end
 
---[[
-function isIncludedWinMSpaces(w) -- check whether window id is included in table
-  local a = false
-  for i,v in pairs(winAll) do
-    if w:id() == winMSpaces[i].win:id() then
-      return i
-    end
-  end
-  return 0
-end
---]]
-
 
 function copyTable(a)
   b = {}
@@ -1018,10 +1004,8 @@ function moveToSpace(target, origin, boolKeyboard)
   local fwin = hs.window.focusedWindow()
   max = fwin:screen():frame()
   fwin:setTopLeft(hs.geometry.point(max.w - 1, max.h))
-
   winMSpaces[getWinMSpacesPos(fwin)].mspace[target] = true
   winMSpaces[getWinMSpacesPos(fwin)].mspace[origin] = false
-
   -- keep position when moved by keyboard shortcut, otherwise move to middle of screen
   if boolKeyboard then
     winMSpaces[getWinMSpacesPos(fwin)].frame[target] = winMSpaces[getWinMSpacesPos(fwin)].frame[origin]
@@ -1033,7 +1017,6 @@ end
 
 function refreshWinMSpaces()
     winAll = filter_all:getWindows() --hs.window.sortByFocused)
-
   -- delete closed or minimized windows
   for i = 1, #winMSpaces do
     if not isIncludedWinAll(winMSpaces[i].win) then
@@ -1072,7 +1055,7 @@ function refreshWinMSpaces()
 end
 
 
--- when 'normal' window switchers such as altTab or macOS' cmd-tab are used, cmdTabFocus() switches to correct mSpace
+-- when 'normal' window switchers such as AltTab or macOS' cmd-tab are used, cmdTabFocus() switches to correct mSpace
 function cmdTabFocus()
   -- when choosing to switch to window by cycling through all apps, go to mSpace of chosen window
   if hs.window.focusedWindow() ~= nil and winMSpaces[getWinMSpacesPos(hs.window.focusedWindow())] ~= nil then
@@ -1088,7 +1071,7 @@ function cmdTabFocus()
 end
 
 
--- triggered by hs.window.filter.windowFocused -> adjusts coordinates of moved window
+-- triggered by hs.window.filter.windowMoved -> adjusts coordinates of moved window
 function adjustWinFrame()
   -- subscribed filter for some reason takes a couple of seconds to trigger method -> alternative: hs.timer.doEvery()
   if hs.window.focusedWindow() ~= nil then
@@ -1137,7 +1120,6 @@ function derefWinMSpace()
   if all_false then
     fwin:minimize()
   end
-  --menubar:setTitle(mspaces[currentMSpace])
   goToSpace(currentMSpace) -- refresh
 end
 

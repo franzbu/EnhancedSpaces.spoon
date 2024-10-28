@@ -1,3 +1,7 @@
+# v0.9.14
+
+* fixed recovering of windows at start of EnhancedSpaces
+
 # v0.9.13
 
 * improved smothnesss when leaving fullscreen mode

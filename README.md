@@ -10,11 +10,11 @@ I gave up on my multi-monitor arrangement in favor of virtual screens years ago 
 
 However, with macOS Sequoia Apple introded changes to Apple's Spaces that broke the third-party enhancements for good I had been using. 
 
-This is when I decided to develop an application that would be as uncompromising as can be when it comes to arranging windows. EnhancedSpaces is the culmination of that. EnhancedSpaces has been developed with the goal of being intuitive to use as well as efficient, and it thus has time-saving features such as moving windows between mSpaces quickly, sticky windows, and opening windows on pre-arranged mSpaces - optionally in pre-arranged sizes and positions.
+This is when I decided to develop an application that would be as uncompromising as can be when it comes to arranging windows. EnhancedSpaces is the culmination of that. It has been developed with the goal of being intuitive to use as well as efficient, and it thus has time-saving features such as moving windows between mSpaces quickly, using sticky windows, and opening windows on pre-arranged mSpaces in pre-arranged sizes and positions.
 
 Optionally, there is an integrated window manager for resizing and positioning your windows with keyboard shortcuts or, optionally, with the help of your mouse or trackpad.
 
-When it comes to macOS, the obvious choice for the development of such an application is Swift; however, I had come to appreciate Hammerspoon when adding extensions and customizations to macOS, and it has been a good choice - I can recommend Hammerspoon for small as well as more extensive adjustments.
+When it comes to macOS, the obvious choice for the development of such an application is Swift; however, I had come to appreciate Hammerspoon when adding extensions and customizations to macOS, and it has been a good choice.
 
 EnhancedSpaces has brought back all the enhancements I had in place before macOS Sequoia broke them, and more, and it has simplified my life with macOS; may it do the same for you.
 

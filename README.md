@@ -419,17 +419,17 @@ You can change the size of the area of the window where the vertical-only and ho
 
 EnhancedSpaces (and other applications for that matter) can benefit from setting the Caps Lock key up as so called hyper key, which basically means that you get an additional modifier key, as - due to the impracticality of pressing four modifier keys at once - you would hardly be tempted to use such a combination otherwise. 
 
-Among others, you can use the application [Karabiner Elements](https://karabiner-elements.pqrs.org/) for creating a hyper key.
+Among others, you can use the application [Karabiner Elements](https://karabiner-elements.pqrs.org/) for the creation of your hyper key.
 
 #### Option 1
 
-In this scenario, the original function of the Caps Lock key remains untouched. Using the aforementioned Karabiner Elements, in 'Settings - Complex Modifications' you can click 'Add predefined rule' and search for 'Caps Lock → Hyper Key (⌃⌥⇧⌘) (Caps Lock if alone)'. As the name suggests, with this modification you keep the original function of Caps Lock when it is pressed and released, while at the same time it functions as hyper key when another key is pressed before Caps Lock is released.
+In this scenario, the original function of the Caps Lock key remains untouched. Using the aforementioned Karabiner Elements, in 'Settings - Complex Modifications' you can click 'Add predefined rule' and search for 'Caps Lock → Hyper Key (⌃⌥⇧⌘) (Caps Lock if alone)'. As the name suggests, with this modification you keep the original function of Caps Lock when it is pressed and released, while it also functions as hyper key when another key is pressed before Caps Lock is released.
 
 #### Option 2
 
-As an alternative to option 1, I present my setup: Caps Lock's functionality is further extended by using a single press (without any other keys) of Caps Lock as simulating pressing the hyper key and spacebar keys, which in turn can be used to open an application such as Alfred, which is what I use it for. 
+As an alternative to option one, I present my setup: Caps Lock's functionality is further extended by using a single press (without any other keys) of Caps Lock as simulating pressing the hyper key and spacebar keys, which in turn can be used to open an application such as Alfred, which is what I use this for. 
 
-The original purpose of Caps Lock is still available; you can trigger this function by pressing the Shift (Command, Option, and Control work likewise) and Caps Lock keys simultaneously.
+The original purpose of Caps Lock is still available; you can trigger that function by pressing the Shift (Command, Option, and Control work likewise) and Caps Lock keys simultaneously.
 
 For this modification, go to 'Settings - Complex Modifications', click 'Add your own rule' and paste the following lines:
 
@@ -463,7 +463,6 @@ Now you can assign your newly created `hyper key` for any modifiers in EnhancedS
 ```lua
   ...
   modifierMS = { 'cmd', 'alt', 'ctrl', 'shift' }, -- default: { 'ctrl' }
-  modifierMSKeys = { 'a', 's', 'd', 'f', 'q', 'w' }, -- default: { 'a', 's', 'd', 'f', 'q', 'w' }
   ...
 ```
 Now, pressing `Caps Lock` and `a`, for instance, switches to the mSpace on the left.

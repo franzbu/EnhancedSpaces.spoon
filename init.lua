@@ -320,7 +320,6 @@ end
 
 sumdx = 0
 sumdy = 0
---event2 = hs.eventtap.event
 function EnhancedSpaces:handleDrag()
   return function(event)
     local current =  hs.window.focusedWindow():frame()

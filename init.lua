@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.12"
+EnhancedSpaces.version = "0.9.13"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -162,12 +162,12 @@ function EnhancedSpaces:new(options)
     refreshWinMSpaces()
   end)
   hs.window.filter.default:subscribe(hs.window.filter.windowOnScreen, function(w)
-    refreshWinMSpaces()
     if not enteredFullscreen then
-      moveMiddleAfterMouseMinimize(w)
+      refreshWinMSpaces()
+      moveMiddleAfterMouseMinimized(w)
       assignMS(w, true)
+      w:focus()
     end
-    w:focus()
   end)
   hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(w)
     refreshWinMSpaces()
@@ -180,12 +180,15 @@ function EnhancedSpaces:new(options)
   end)
   -- next 2 filters are for avoiding calling assignMS() after unfullscreening a window
   enteredFullscreen = false
-  hs.window.filter.default:subscribe(hs.window.filter.windowFullscreened, function()
+  filter.default:subscribe(filter.windowFullscreened, function()
     enteredFullscreen = true
   end)
-  hs.window.filter.default:subscribe(hs.window.filter.windowUnfullscreened, function(w)
-    enteredFullscreen = false
-    w:focus()
+  filter.default:subscribe(filter.windowUnfullscreened, function(w)
+    hs.timer.doAfter(0.5, function() -- not necessary with ' hs.window.filter.default:subscribe...'
+      w:focus()
+      enteredFullscreen = false
+      assignMS(w, false)
+    end)
   end)
 
   -- cycle through windows of current mSpace
@@ -1141,7 +1144,7 @@ end
 
 -- move windows to pre-defined mSpaces; at start (not boolgotoSpace) and later (boolgotoSpace)
 function assignMS(w, boolgotoSpace)
-  if openAppMSpace ~= nil then
+  if openAppMSpace ~= nil and not enteredFullscreen then
     for i = 1, #openAppMSpace do
       if w:application():name():gsub('%W', '') == openAppMSpace[i][1]:gsub('%W', '') then
         for j = 1, #mspaces do
@@ -1166,7 +1169,7 @@ end
 
 
 -- in case a window has previously been minimized by dragging beyond bottom screen border (or for another reason extends beyond bottom screen border), it will be moved to middle of screen
-function moveMiddleAfterMouseMinimize(w)
+function moveMiddleAfterMouseMinimized(w)
   if w:frame().y + w:frame().h > max.h + heightMB then
     w:setFrame(hs.geometry.point(max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h))
     winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = hs.geometry.point(max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h)

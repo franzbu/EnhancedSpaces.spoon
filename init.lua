@@ -166,8 +166,8 @@ function EnhancedSpaces:new(options)
     if not enteredFullscreen then
       moveMiddleAfterMouseMinimize(w)
       assignMS(w, true)
-      w:focus()
     end
+    w:focus()
   end)
   hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(w)
     refreshWinMSpaces()
@@ -1157,7 +1157,7 @@ function assignMS(w, boolgotoSpace)
               winMSpaces[getWinMSpacesPos(w)].frame[indexOf(mspaces, openAppMSpace[i][2])] = hs.geometry.point(max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h)                                                                                                    -- put window in middle of screen
             end
             if boolgotoSpace then                                                                                                                                                                    -- not when EnhancedSpaces is started
-              --goToSpace(indexOf(mspaces, openAppMSpace[i][2]))
+              goToSpace(indexOf(mspaces, openAppMSpace[i][2]))
             end
           else
             winMSpaces[getWinMSpacesPos(w)].mspace[j] = false

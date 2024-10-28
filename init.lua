@@ -178,7 +178,7 @@ function EnhancedSpaces:new(options)
   filter.default:subscribe(filter.windowMoved, function(w)
     adjustWinFrame()
   end)
-  -- next 2 filters are for avoiding calling assignMS(_, true) after unfullscreening a window
+  -- next 2 filters are for avoiding calling assignMS(_, true) after unfullscreening a window ('windowOnScreen' is called for each window after a window gets unfullscreened)
   enteredFullscreen = false
   filter.default:subscribe(filter.windowFullscreened, function()
     enteredFullscreen = true

@@ -10,13 +10,13 @@ I gave up on my multi-monitor arrangement in favor of virtual screens years ago 
 
 However, with updates to macOS, Apple introduced changes to Apple's Spaces that broke for good the third-party enhancements that I had been using. 
 
-That is when I decided to develop an application that would be as uncompromising as can be when it comes to arranging windows. EnhancedSpaces is the culmination of that. It has been developed with the goal of being intuitive to use as well as efficient; it thus has time-saving features such as moving windows between mSpaces quickly, using sticky windows, and opening windows on pre-arranged mSpaces in pre-arranged sizes and positions.
+That is when I decided to develop an application that would be uncompromising when it comes to arranging windows, and for me EnhancedSpaces has become that. It has been developed with the goal of being intuitive to use as well as efficient; it thus has time-saving features such as moving windows between mSpaces quickly, using sticky windows, and opening windows on pre-arranged mSpaces in pre-arranged sizes and positions.
 
 EnhancedSpaces also features an integrated window manager for resizing and positioning your windows with keyboard shortcuts or, optionally, with the help of your mouse or trackpad.
 
-When it comes to macOS, the obvious choice for developing such an application is Swift; however, I had come to appreciate Hammerspoon when adding extensions and customizations to macOS and wanted to give its approach with Lua a shot, and Hammerspoon has delivered - also here no compromises. I discount that you might have to install the lightweight Hammerspoon (see directly below) because this is simple and might benefit you down the road. 
+When it comes to macOS, the obvious choice for developing such an application is Swift; however, I had come to appreciate Hammerspoon when adding extensions and customizations to macOS and wanted to see how far its approach with Lua can go, and Hammerspoon has delivered. I discount the seeming disadvantage that you might have to install the lightweight Hammerspoon (see directly below) for using EnhancedSpaces because the installation of Hammerspoon is simple and might benefit you down the road. 
 
-EnhancedSpaces brings back all the enhancements I had in place and more - with its no-compromise approach it has simplified my life with macOS. May it do the same for you.
+With its no-compromise approach, EnhancedSpaces has simplified my life with macOS. May it do the same for you.
 
 
 ## Installation

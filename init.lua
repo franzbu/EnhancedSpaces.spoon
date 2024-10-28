@@ -184,7 +184,7 @@ function EnhancedSpaces:new(options)
     enteredFullscreen = true
   end)
   filter.default:subscribe(filter.windowUnfullscreened, function(w)
-    hs.timer.doAfter(0.5, function() -- not necessary with ' hs.window.filter.default:subscribe...'
+    hs.timer.doAfter(0.5, function() -- not necessary with 'hs.window.filter.default:subscribe...'
       w:focus()
       enteredFullscreen = false
       assignMS(w, false)

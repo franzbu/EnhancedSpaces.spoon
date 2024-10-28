@@ -2,7 +2,7 @@
 
 First things first: Who is this application for? 
 
-Every power user sooner or later feels restricted by the confinements of a single screen; there is simply never enough space. While the obvious remedy is a multi-monitor arrangement, there is a lesser known solution that enables the user to have more then one screen on a single display: virtual screens or, as they are called in EnhancedSpaces, mSpaces. 
+Every power user sooner or later feels restricted by the confinements of a single screen; there is simply never enough space. While the obvious remedy is a multi-monitor arrangement, there is a lesser known solution that enables the user to have more than one screen on a single display: virtual screens or, as they are called in EnhancedSpaces, mSpaces. 
 
 mSpaces have both advantages and disadvantages compared to multi-monitor arrangements. An advantage is that you don't have to move your neck and head around to look at another screen - using mSpaces is like swapping the individual monitors of your multi-monitor arrangement around by means of a keyboard shortcut. The obvious disadvantage of virtual screens is that you can't see more than one mSpace at a time; however, while every user has a different workflow, for many of us this is simply unnecessary, with the benefits of virtual screens easily outweighing the downsides. 
 

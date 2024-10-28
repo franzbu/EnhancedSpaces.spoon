@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.13"
+EnhancedSpaces.version = "0.9.14"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -151,11 +151,19 @@ function EnhancedSpaces:new(options)
   for i = 1, #winAll do
     if winAll[i]:topLeft().x >= max.w - 1 then                                                                                                                                                                 -- window in 'hiding spot'
       -- move window to middle of the current mSpace
-      winMSpaces[getWinMSpacesPos(winAll[i])].frame[currentMSpace] = hs.geometry.point(
-      max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2, winAll[i]:frame().w, winAll[i]:frame().h)                                                                                      -- put window in middle of screen
+      winMSpaces[getWinMSpacesPos(winAll[i])].frame[currentMSpace] = hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2, winAll[i]:frame().w, winAll[i]:frame().h)                                                                                      -- put window in middle of screen
+    end
+    assignMS(winAll[i], false)
+  end
+  --[[
+    for i = 1, #winAll do
+    if winAll[i]:topLeft().x >= max.w - 1 then                                                                                                                                                                 -- window in 'hiding spot'
+      -- move window to middle of the current mSpace
+      winMSpaces[getWinMSpacesPos(winAll[i])].frame[currentMSpace] = hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2, winAll[i]:frame().w, winAll[i]:frame().h)                                                                                      -- put window in middle of screen
       assignMS(winAll[i], false)
     end
   end
+  --]]
 
   -- watchdogs
   hs.window.filter.default:subscribe(hs.window.filter.windowNotOnScreen, function(w)
@@ -970,7 +978,6 @@ function goToSpace(target)
   max = hs.screen.mainScreen():frame()
   maxWithMB = hs.screen.mainScreen():fullFrame()
   heightMB = maxWithMB.h - max.h   -- height menu bar
-
   for i,v in pairs(winMSpaces) do
     if winMSpaces[i].mspace[target] == true then
       winMSpaces[i].win:setFrame(winMSpaces[i].frame[target]) -- 'unhide' window

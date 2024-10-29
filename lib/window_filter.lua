@@ -147,7 +147,7 @@ do
     -- hs.window.filter._showCandidates() -- from the console
     'Spotlight', 'Notification Center', 'loginwindow', 'ScreenSaverEngine', 'PressAndHold',
     -- preferences etc
-    'PopClip','Isolator', 'CheatSheet', 'CornerClickBG', 'Alfred 2', 'Moom', 'CursorSense Manager',
+    'PopClip','Isolator', 'CheatSheet', 'CornerClickBG', 'Alfred', 'Moom', 'CursorSense Manager', -- original: 'Alfred 2'
     -- menulets
     'Music Manager', 'Google Drive', 'Dropbox', '1Password mini', 'Colors for Hue', 'MacID',
     'CrashPlan menu bar', 'Flux', 'Jettison', 'Bartender', 'SystemPal', 'BetterSnapTool', 'Grandview', 'Radium',

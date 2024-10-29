@@ -1,6 +1,6 @@
 # EnhancedSpaces
 
-## First Things First: Who Is This Tool For? 
+## First Things First: Who Is This For? 
 
 Every power user sooner or later feels restricted by the confinements of a single screen; there is simply never enough space. While the obvious remedy is a multi-monitor arrangement, there is a lesser known solution that enables the user to have more than one screen on a single display: virtual screens or, as they are called in EnhancedSpaces, mSpaces. 
 

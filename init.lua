@@ -200,7 +200,7 @@ function EnhancedSpaces:new(options)
     hs.timer.doAfter(0.5, function() -- not necessary with 'hs.window.filter.default:subscribe...'
       w:focus()
       enteredFullscreen = false
-      refreshWinMSpaces()
+      refreshWinMSpaces() --fb
     end)
   end)
 
@@ -987,7 +987,7 @@ function goToSpace(target)
   end
   currentMSpace = target
   menubar:setTitle(mspaces[target])
-  refreshWinMSpaces()
+  refreshWinMSpaces() --fb
   AdjustWindowsOnCurrentMS()
   if #windowsOnCurrentMS > 0 then
     windowsOnCurrentMS[1]:focus() -- activate last used window when switching to mSpace

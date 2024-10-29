@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.14"
+EnhancedSpaces.version = "0.9.15"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -148,14 +148,19 @@ function EnhancedSpaces:new(options)
   windowsOnCurrentMS = {}
   
   -- recover stranded windows at start
+  ---[[
   for i = 1, #winAll do
-    if winAll[i]:topLeft().x >= max.w - 1 then                                                                                                                                                                 -- window in 'hiding spot'
-      -- move window to middle of the current mSpace
-      winMSpaces[getWinMSpacesPos(winAll[i])].frame[currentMSpace] = hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2, winAll[i]:frame().w, winAll[i]:frame().h)                                                                                      -- put window in middle of screen
+    -- if window not on current mSpace, move it; i.e., if on current mSpace, don't resize
+    if winAll[i]:topLeft().x >= max.w - 1 then -- don't touch windows that are on current screen, even if they ar in openAppMSpace
+      if indexOpenAppMSpace(winAll[i]) ~= nil then -- te be recovered according to openAppMSpace
+        assignMS(winAll[i], false)
+      else -- this means that window was on another mSpace, but is not in openAppMSpace                                                                                                                                                              -- window in 'hiding spot'
+        -- move window to middle of the current mSpace
+        winMSpaces[getWinMSpacesPos(winAll[i])].frame[currentMSpace] = hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2, winAll[i]:frame().w, winAll[i]:frame().h)                                                                                      -- put window in middle of screen
+      end
     end
-    assignMS(winAll[i], false)
   end
-
+  
   -- watchdogs
   hs.window.filter.default:subscribe(hs.window.filter.windowNotOnScreen, function(w)
     refreshWinMSpaces()
@@ -164,6 +169,7 @@ function EnhancedSpaces:new(options)
     if not enteredFullscreen then
       refreshWinMSpaces()
       moveMiddleAfterMouseMinimized(w)
+      print('windowOnScreen')
       assignMS(w, true)
       w:focus()
     end
@@ -184,9 +190,10 @@ function EnhancedSpaces:new(options)
   end)
   filter.default:subscribe(filter.windowUnfullscreened, function(w)
     hs.timer.doAfter(0.5, function() -- not necessary with 'hs.window.filter.default:subscribe...'
+      refreshWinMSpaces()
       w:focus()
       enteredFullscreen = false
-      assignMS(w, false)
+      refreshWinMSpaces()
     end)
   end)
 
@@ -1118,27 +1125,38 @@ end
 
 -- move windows to pre-defined mSpaces; at start (not boolgotoSpace) and later (boolgotoSpace)
 function assignMS(w, boolgotoSpace)
-  if openAppMSpace ~= nil and not enteredFullscreen then
-    for i = 1, #openAppMSpace do
-      if w:application():name():gsub('%W', '') == openAppMSpace[i][1]:gsub('%W', '') then
-        for j = 1, #mspaces do
-          if openAppMSpace[i][2] == mspaces[j] then
-            winMSpaces[getWinMSpacesPos(w)].mspace[j] = true
-            if openAppMSpace[i][3] ~= nil then
-              winMSpaces[getWinMSpacesPos(w)].frame[j] = snap(openAppMSpace[i][3])
-            else
-              winMSpaces[getWinMSpacesPos(w)].frame[indexOf(mspaces, openAppMSpace[i][2])] = hs.geometry.point(max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h)                                                                                                    -- put window in middle of screen
-            end
-            if boolgotoSpace then                                                                                                                                                                    -- not when EnhancedSpaces is started
-              goToSpace(indexOf(mspaces, openAppMSpace[i][2]))
-            end
-          else
-            winMSpaces[getWinMSpacesPos(w)].mspace[j] = false
-          end
+  print('assignMS... ' .. tostring(boolgotoSpace))
+  if indexOpenAppMSpace(w) ~= nil then
+    local i = indexOpenAppMSpace(w)
+    for j = 1, #mspaces do
+      if openAppMSpace[i][2] == mspaces[j] then
+        winMSpaces[getWinMSpacesPos(w)].mspace[j] = true
+        if openAppMSpace[i][3] ~= nil then
+          winMSpaces[getWinMSpacesPos(w)].frame[j] = snap(openAppMSpace[i][3])
+        else
+          winMSpaces[getWinMSpacesPos(w)].frame[indexOf(mspaces, openAppMSpace[i][2])] = hs.geometry.point(
+          max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h)                                                                                                      -- put window in middle of screen
         end
+        if boolgotoSpace then                                                                                                                                                                      -- not when EnhancedSpaces is started
+          goToSpace(indexOf(mspaces, openAppMSpace[i][2]))
+        end
+      else
+        winMSpaces[getWinMSpacesPos(w)].mspace[j] = false
       end
     end
   end
+end
+
+function indexOpenAppMSpace(w)
+  if openAppMSpace ~= nil then
+    for i = 1, #openAppMSpace do
+      if w:application():name():gsub('%W', '') == openAppMSpace[i][1]:gsub('%W', '') then
+        return i
+      end
+    end
+    return nil
+  end
+  return nil
 end
 
 

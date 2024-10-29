@@ -1133,7 +1133,6 @@ end
 
 
 function assignMS(w, boolgotoSpace)
-  print('assignMS... ' .. tostring(boolgotoSpace))
   if indexOpenAppMSpace(w) ~= nil then
     local i = indexOpenAppMSpace(w)
     for j = 1, #mspaces do

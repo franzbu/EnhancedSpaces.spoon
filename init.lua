@@ -155,6 +155,15 @@ function EnhancedSpaces:new(options)
     end
     assignMS(winAll[i], false)
   end
+  --[[
+    for i = 1, #winAll do
+    if winAll[i]:topLeft().x >= max.w - 1 then                                                                                                                                                                 -- window in 'hiding spot'
+      -- move window to middle of the current mSpace
+      winMSpaces[getWinMSpacesPos(winAll[i])].frame[currentMSpace] = hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2, winAll[i]:frame().w, winAll[i]:frame().h)                                                                                      -- put window in middle of screen
+      assignMS(winAll[i], false)
+    end
+  end
+  --]]
 
   -- watchdogs
   hs.window.filter.default:subscribe(hs.window.filter.windowNotOnScreen, function(w)
@@ -877,9 +886,7 @@ end
 
 function modifiersEqual(a, b)
   if a == nil or b == nil then return false end
-  if #a ~= #b then 
-    return false
-  end 
+  if #a ~= #b then return false end 
   table.sort(a)
   table.sort(b)
   for i = 1, #a do
@@ -963,9 +970,7 @@ function getnextMSpaceNumber(cS)
 end
 
 
-winOnlyMoved = false -- prevent watchdog from giving focus to window if it has been moved to other mspace without switching there
 function goToSpace(target)
-  winOnlyMoved = false
   max = hs.screen.mainScreen():frame()
   maxWithMB = hs.screen.mainScreen():fullFrame()
   heightMB = maxWithMB.h - max.h   -- height menu bar
@@ -978,12 +983,12 @@ function goToSpace(target)
   end
   currentMSpace = target
   menubar:setTitle(mspaces[target])
-  refreshWinMSpaces() --fb
+  refreshWinMSpaces()
   AdjustWindowsOnCurrentMS()
 end
 
 
--- adjust table with windows on current mSpace for lib.window_switcher
+-- prepare table with windows on current mSpace for lib.window_switcher
 function AdjustWindowsOnCurrentMS()
   windowsOnCurrentMS = {}
   for i = 1, #winAll do
@@ -998,7 +1003,6 @@ end
 
 
 function moveToSpace(target, origin, boolKeyboard)
-  winOnlyMoved = true
   local fwin = hs.window.focusedWindow()
   max = fwin:screen():frame()
   fwin:setTopLeft(hs.geometry.point(max.w - 1, max.h))
@@ -1014,7 +1018,7 @@ end
 
 
 function refreshWinMSpaces()
-    winAll = filter_all:getWindows() --hs.window.sortByFocused)
+  winAll = filter_all:getWindows() --hs.window.sortByFocused)
   -- delete closed or minimized windows
   for i = 1, #winMSpaces do
     if not isIncludedWinAll(winMSpaces[i].win) then
@@ -1049,7 +1053,6 @@ function refreshWinMSpaces()
   end
   -- adjust table with windows on current mSpace for lib.window_switcher
   AdjustWindowsOnCurrentMS()
-  winOnlyMoved = false
 end
 
 

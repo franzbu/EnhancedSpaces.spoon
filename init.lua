@@ -236,8 +236,7 @@ function EnhancedSpaces:new(options)
     winMSpaces[pos].win:focus()
   end)
 
-  --_________ reference/dereference windows to/from mspaces, goto mspaces _________
-  -- reference
+  -- reference/dereference windows to/from mspaces, goto mspaces
   for i = 1, #mspaces do
     hs.hotkey.bind(modifierReference, mspaces[i], function()
       refWinMSpace(i)
@@ -248,7 +247,7 @@ function EnhancedSpaces:new(options)
     derefWinMSpace()
   end)
 
-  --_________ switching spaces / moving windows _________
+  -- switching spaces/moving windows
   hs.hotkey.bind(modifierMS, modifierMSKeys[1], function() -- previous space (incl. cycle)
     currentMSpace = getprevMSpaceNumber(currentMSpace)
     goToSpace(currentMSpace)
@@ -296,7 +295,7 @@ function EnhancedSpaces:new(options)
     end
   end
 
-  -- ___________ keyboard shortcuts - snapping windows into grid postions ___________
+  -- keyboard shortcuts - snapping windows into grid postions
   if modifierSnap1 ~= nil then
     for i = 1, #modifierSnapKeys[1] do
       hs.hotkey.bind(modifierSnap1, modifierSnapKeys[1][i][2], function()

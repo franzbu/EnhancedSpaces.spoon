@@ -1,3 +1,7 @@
+# v0.9.15
+
+* improved assigning positions and spaces for windows at start
+
 # v0.9.14
 
 * fixed recovering of windows at start of EnhancedSpaces

@@ -148,7 +148,6 @@ function EnhancedSpaces:new(options)
   windowsOnCurrentMS = {}
   
   -- recover stranded windows at start
-  ---[[
   for i = 1, #winAll do
     -- if window not on current mSpace, move it; i.e., if on current mSpace, don't resize
     if winAll[i]:topLeft().x >= max.w - 1 then -- don't touch windows that are on current screen, even if they ar in openAppMSpace
@@ -160,23 +159,32 @@ function EnhancedSpaces:new(options)
       end
     end
   end
-  
+
   -- watchdogs
   hs.window.filter.default:subscribe(hs.window.filter.windowNotOnScreen, function(w)
-    refreshWinMSpaces()
+    if w:application():name() ~= 'Alfred' then
+      refreshWinMSpaces()
+      AdjustWindowsOnCurrentMS()
+      if #windowsOnCurrentMS > 0 then
+        windowsOnCurrentMS[1]:focus() -- activate last active window on current mSpace when closing/minimizing one
+      end
+    end
   end)
   hs.window.filter.default:subscribe(hs.window.filter.windowOnScreen, function(w)
-    if not enteredFullscreen then
-      refreshWinMSpaces()
-      moveMiddleAfterMouseMinimized(w)
-      print('windowOnScreen')
-      assignMS(w, true)
-      w:focus()
+    if w:application():name() ~= 'Alfred' then
+      if not enteredFullscreen then
+        refreshWinMSpaces()
+        moveMiddleAfterMouseMinimized(w)
+        assignMS(w, true)
+        w:focus()
+      end
     end
   end)
   hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(w)
-    refreshWinMSpaces()
-    cmdTabFocus()
+    if w:application():name() ~= 'Alfred' then
+      refreshWinMSpaces()
+      cmdTabFocus()
+    end
   end)
   -- 'window_filter.lua' has been adjusted: 'local WINDOWMOVED_DELAY=0.01' instead of '0.5' to get rid of delay
   filter = dofile(hs.spoons.resourcePath('lib/window_filter.lua'))
@@ -190,7 +198,6 @@ function EnhancedSpaces:new(options)
   end)
   filter.default:subscribe(filter.windowUnfullscreened, function(w)
     hs.timer.doAfter(0.5, function() -- not necessary with 'hs.window.filter.default:subscribe...'
-      refreshWinMSpaces()
       w:focus()
       enteredFullscreen = false
       refreshWinMSpaces()
@@ -394,7 +401,6 @@ function EnhancedSpaces:handleDrag()
         hs.window.focusedWindow():move({ dx, dy }, nil, false, 0)
         movedNotResized = true
       end
-      --]]
       return true
     else
       return nil
@@ -983,6 +989,9 @@ function goToSpace(target)
   menubar:setTitle(mspaces[target])
   refreshWinMSpaces()
   AdjustWindowsOnCurrentMS()
+  if #windowsOnCurrentMS > 0 then
+    windowsOnCurrentMS[1]:focus() -- activate last used window when switching to mSpace
+  end
 end
 
 
@@ -1123,7 +1132,6 @@ function derefWinMSpace()
 end
 
 
--- move windows to pre-defined mSpaces; at start (not boolgotoSpace) and later (boolgotoSpace)
 function assignMS(w, boolgotoSpace)
   print('assignMS... ' .. tostring(boolgotoSpace))
   if indexOpenAppMSpace(w) ~= nil then

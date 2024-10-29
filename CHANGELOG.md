@@ -1,3 +1,7 @@
+# v0.9.16
+
+* bug fixes
+  
 # v0.9.15
 
 * improved assigning positions and spaces for windows at start

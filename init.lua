@@ -145,15 +145,15 @@ function EnhancedSpaces:new(options)
       end
     end
   end
-  windowsOnCurrentMS = {}
+  windowsOnCurrentMS = {} -- always up-to-date list of windows on current mSpace
   
   -- recover stranded windows at start
   for i = 1, #winAll do
     -- if window not on current mSpace, move it; i.e., if on current mSpace, don't resize
-    if winAll[i]:topLeft().x >= max.w - 1 then -- don't touch windows that are on current screen, even if they ar in openAppMSpace
+    if winAll[i]:topLeft().x >= max.w - 1 then -- don't touch windows that are on current screen, even if they are in openAppMSpace
       if indexOpenAppMSpace(winAll[i]) ~= nil then -- te be recovered according to openAppMSpace
         assignMS(winAll[i], false)
-      else -- this means that window was on another mSpace, but is not in openAppMSpace                                                                                                                                                              -- window in 'hiding spot'
+      else -- this means that window was on another mSpace, but is not in openAppMSpace                                                                                                                                       -- window in 'hiding spot'
         -- move window to middle of the current mSpace
         winMSpaces[getWinMSpacesPos(winAll[i])].frame[currentMSpace] = hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2, winAll[i]:frame().w, winAll[i]:frame().h)                                                                                      -- put window in middle of screen
       end
@@ -164,7 +164,7 @@ function EnhancedSpaces:new(options)
   hs.window.filter.default:subscribe(hs.window.filter.windowNotOnScreen, function(w)
     if w:application():name() ~= 'Alfred' then
       refreshWinMSpaces()
-      AdjustWindowsOnCurrentMS()
+      adjustWindowOncurrentMS()
       if #windowsOnCurrentMS > 0 then
         windowsOnCurrentMS[1]:focus() -- activate last active window on current mSpace when closing/minimizing one
       end
@@ -200,7 +200,7 @@ function EnhancedSpaces:new(options)
     hs.timer.doAfter(0.5, function() -- not necessary with 'hs.window.filter.default:subscribe...'
       w:focus()
       enteredFullscreen = false
-      refreshWinMSpaces() --fb
+      refreshWinMSpaces()
     end)
   end)
 
@@ -214,7 +214,7 @@ function EnhancedSpaces:new(options)
   switcher.ui.textSize = 16
   switcher.ui.showSelectedTitle = false
   hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[1], function()
-    AdjustWindowsOnCurrentMS()
+    adjustWindowOncurrentMS()
     switcher:next(windowsOnCurrentMS)
   end)
   hs.hotkey.bind({modifierSwitchWin[1], 'shift' }, modifierSwitchWinKeys[1], function()
@@ -222,10 +222,9 @@ function EnhancedSpaces:new(options)
   end)
 
   -- cycle through references of one window
-  local nextFR = 1
   hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[2], function()
     pos = getWinMSpacesPos(hs.window.focusedWindow())
-    nextFR = getnextMSpaceNumber(currentMSpace)
+    local nextFR = getnextMSpaceNumber(currentMSpace)
     while not winMSpaces[pos].mspace[nextFR] do
       if nextFR == #mspaces then
         nextFR = 1
@@ -350,19 +349,13 @@ function EnhancedSpaces:handleDrag()
       moveLeftMS = false
       moveRightMS = false
       if current.x + current.w * ratioMSpaces < 0 then   -- left
-        for i = 1, #cv do
-          cv[i]:hide()
-        end
+        for i = 1, #cv do cv[i]:hide() end
         moveLeftMS = true
       elseif current.x + current.w > max.w + current.w * ratioMSpaces then   -- right
-        for i = 1, #cv do
-          cv[i]:hide()
-        end
+        for i = 1, #cv do cv[i]:hide() end
         moveRightMS = true
       else
-        for i = 1, #cv do
-          cv[i]:show()
-        end
+        for i = 1, #cv do cv[i]:show() end
         moveLeftMS = false
         moveRightMS = false
       end
@@ -413,7 +406,6 @@ function EnhancedSpaces:handleClick()
   return function(event)
     flags = eventToArray(event:getFlags())
     eventType = event:getType()
-
     -- enable active modifiers (modifier1, modifier2, modifierMS)
     isMoving = false
     isResizing = false
@@ -876,8 +868,8 @@ end
  -- event looks like this: {'alt' 'true'}; function turns table into an 'array' so
  -- it can be compared to the other arrays (modifier1, modifier2,...)
 function eventToArray(a) -- maybe extend to work with more than one modifier at at time
-  k = 1
-  b = {}
+  local k = 1
+  local b = {}
   for i,_ in pairs(a) do
     if i == "cmd" or i == "alt" or i == "ctrl" or i == "shift" then -- or i == "fn" then
       b[k] = i
@@ -903,7 +895,7 @@ end
 
 
 function mergeModifiers(m1, m2)
-  m1_2 = {} -- merge modifier1 and modifier2:
+  local m1_2 = {} -- merge modifier1 and modifier2:
   for i = 1, #m1 do
     table.insert(m1_2, m1[i])
   end
@@ -925,19 +917,17 @@ end
 
 
 function isIncludedWinAll(w) -- check whether window id is included in table
-  local a = false
   for i,v in pairs(winAll) do
     if w:id() == winAll[i]:id() then
-      a = true
-      break
+      return true
     end
   end
-  return a
+  return false
 end
 
 
 function copyTable(a)
-  b = {}
+  local b = {}
   for i,v in pairs(a) do
     b[i] = v
   end
@@ -987,16 +977,16 @@ function goToSpace(target)
   end
   currentMSpace = target
   menubar:setTitle(mspaces[target])
-  refreshWinMSpaces() --fb
-  AdjustWindowsOnCurrentMS()
+  refreshWinMSpaces()
+  adjustWindowOncurrentMS()
   if #windowsOnCurrentMS > 0 then
-    windowsOnCurrentMS[1]:focus() -- activate last used window when switching to mSpace
+    windowsOnCurrentMS[1]:focus() -- activate last used window on new mSpace
   end
 end
 
 
 -- prepare table with windows on current mSpace for lib.window_switcher
-function AdjustWindowsOnCurrentMS()
+function adjustWindowOncurrentMS()
   windowsOnCurrentMS = {}
   for i = 1, #winAll do
     for j = 1, #mspaces do
@@ -1059,7 +1049,7 @@ function refreshWinMSpaces()
     end
   end
   -- adjust table with windows on current mSpace for lib.window_switcher
-  AdjustWindowsOnCurrentMS()
+  adjustWindowOncurrentMS()
 end
 
 
@@ -1141,8 +1131,7 @@ function assignMS(w, boolgotoSpace)
         if openAppMSpace[i][3] ~= nil then
           winMSpaces[getWinMSpacesPos(w)].frame[j] = snap(openAppMSpace[i][3])
         else
-          winMSpaces[getWinMSpacesPos(w)].frame[indexOf(mspaces, openAppMSpace[i][2])] = hs.geometry.point(
-          max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h)                                                                                                      -- put window in middle of screen
+          winMSpaces[getWinMSpacesPos(w)].frame[indexOf(mspaces, openAppMSpace[i][2])] = hs.geometry.point(max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h)                                                                                                      -- put window in middle of screen
         end
         if boolgotoSpace then                                                                                                                                                                      -- not when EnhancedSpaces is started
           goToSpace(indexOf(mspaces, openAppMSpace[i][2]))

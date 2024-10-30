@@ -324,8 +324,10 @@ end
 
 
 function EnhancedSpaces:stop()
-  for i = 1, #cv do -- delete canvases
-    cv[i]:delete()
+  if cv ~= nil then
+    for i = 1, #cv do -- delete canvases
+      cv[i]:delete()
+    end
   end
   self.cancelHandler:stop()
   self.dragHandler:stop()

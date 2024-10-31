@@ -92,7 +92,6 @@ app name of current window
 - no modifier: toggle selected item
 - menuModifier1: only the selected item enabled
 - menuModifier2: all enabled -> references on all mSpaces
-- menuModifier3:    
 
 —----------
 

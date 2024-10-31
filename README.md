@@ -46,8 +46,33 @@ EnhancedSpaces:new({
 
 Restart Hammerspoon (menubar icon - 'Reload Config') and you're ready to go; it is normal that the start of EnhancedSpaces takes a couple of seconds. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let's find out what you can do with your new mSpaces.
 
-### Usage
+## Menu
+The menu can be used to switch to another mSpace, to move a window to another mSpace, to get a window from anther mSpace, and to create references of windows - more about references later.
 
+Pressing on EnhancedSpaces' icon in the menubar, you will see a menu like this - you can actually see `2` on top of the menu, which represents the mSpace listed in macOS' menubar :
+
+<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu1.png" width="200">
+
+Choosing 'mSpace' lets you switch to another mSpace:
+
+<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu2.png" width="200">
+
+The next entry lets you toggle references for the currently active window - more about references later:
+
+<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu3.png" width="200">
+
+In "Send Window" you see a list of all windows on the current mSpace and, selecting one, a list of all mSpaces you can send the window to:
+
+<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu4.png" width="200">
+
+Get windows, finally, enables you to do the opposite - you get a list of all open windows not on your current mSpace, and selecting them changes that:
+
+<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu5.png" width="200">
+
+More about using the menu to come, e.g., you can also use modifier keys to unlock additional features.
+
+
+## Keyboard Shortcuts
 You can use the Control (`ctrl`) - in case you're interested in an elegant alternative in the form of a hyper key, see section 'Notes' below - and the `s` keys to cycle through your mSpaces. To cycle in reverse order, press `ctrl` and `a`. To move the active window to the mSpace on the left (right) and switch there alongside with the window, press `ctrl` and `q` (`w`); to move the window while staying on the current mSpace press `ctrl` and `d` (`ctrl` and `w`).
 
 The lines below represent the default setup, and you don't need to add them to your `init.lua` unless you want to apply changes:

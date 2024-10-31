@@ -69,7 +69,47 @@ Get windows, finally, enables you to do the opposite - you get a list of all ope
 
 <img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu5.png" width="200">
 
-More about using the menu to come, e.g., you can also use modifier keys to unlock additional features.
+
+You can also use modifier keys to unlock additional features. Here a quick overview, explanations will follow at a later stage.
+
+```lua
+  ...
+  -- menu: modifier keys to unlock additional features
+  menuModifier1 = { 'alt' }, -- default: { 'alt' }
+  menuModifier2 = { 'ctrl' }, -- default: { 'ctrl' }
+  menuModifier3 = { 'alt', 'ctrl' }, -- default: menuModifier1 and menuModifier1
+  ...
+```
+
+Menu: 
+
+mSpace
+- no modifier: switch
+
+—----------
+
+app name of current window
+- no modifier: toggle selected item
+- menuModifier1: only the selected item enabled
+- menuModifier2: all enabled -> references on all mSpaces
+- menuModifier3:    
+
+—----------
+
+Send Window
+- no modifier: references on other mSpaces remain unaffected
+- menuModifier1: keep reference on current mSpace
+- menuModifier2: references on all mSpaces
+- menuModifier3: tagging along
+
+—----------
+
+Get Window
+- no modifier: move window to  current mSpace
+- menuModifier1: create reference on current mSpace
+- menuModifier2: create reference on all mSpaces
+
+
 
 
 ## Keyboard Shortcuts

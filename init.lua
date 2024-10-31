@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.16"
+EnhancedSpaces.version = "0.9.17"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -45,6 +45,10 @@ function EnhancedSpaces:new(options)
   pM = options.outerPadding or 5
   local innerPadding = options.innerPadding or 5
   pI = innerPadding / 2
+
+  menuModifier1 = options.menuModifier1 or { 'alt' } 
+  menuModifier2 = options.menuModifier2 or { 'ctrl' } 
+  menuModifier3 = options.menuModifier3 or mergeModifiers(menuModifier1, menuModifier2)
 
   modifier1 = options.modifier1 or { 'alt' } 
   modifier2 = options.modifier2 or { 'ctrl' } 
@@ -122,9 +126,6 @@ function EnhancedSpaces:new(options)
     moveResize:handleDrag()
   )
 
-  menubar = hs.menubar.new(true, "A"):setTitle(mspaces[currentMSpace])
-  menubar:setTooltip("mSpace")
-
   max = hs.screen.mainScreen():frame()
 
   filter_all = hs.window.filter.new()
@@ -146,6 +147,11 @@ function EnhancedSpaces:new(options)
     end
   end
   windowsOnCurrentMS = {} -- always up-to-date list of windows on current mSpace
+  windowsNotOnCurrentMS = {}
+
+  menubar = hs.menubar.new(true, "A"):setTitle(mspaces[currentMSpace])
+  menubar:setTooltip("mSpace")
+
   
   -- recover stranded windows at start
   for i = 1, #winAll do
@@ -157,21 +163,25 @@ function EnhancedSpaces:new(options)
         -- move window to middle of the current mSpace
         winMSpaces[getWinMSpacesPos(winAll[i])].frame[currentMSpace] = hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2, winAll[i]:frame().w, winAll[i]:frame().h)                                                                                      -- put window in middle of screen
       end
+      refreshMenu()
     end
   end
 
   -- watchdogs
   hs.window.filter.default:subscribe(hs.window.filter.windowNotOnScreen, function(w)
-    if w:application():name() ~= 'Alfred' then
+    if w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' then
+      --print('windowNotOnScreen')
       refreshWinMSpaces()
-      adjustWindowOncurrentMS()
+      adjustWindowsOncurrentMS()
       if #windowsOnCurrentMS > 0 then
         windowsOnCurrentMS[1]:focus() -- activate last active window on current mSpace when closing/minimizing one
       end
+      refreshMenu()
     end
   end)
   hs.window.filter.default:subscribe(hs.window.filter.windowOnScreen, function(w)
-    if w:application():name() ~= 'Alfred' then
+    if w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' then
+      --print('windowOnScreen' .. w:application():name())
       if not enteredFullscreen then
         refreshWinMSpaces()
         moveMiddleAfterMouseMinimized(w)
@@ -181,22 +191,28 @@ function EnhancedSpaces:new(options)
     end
   end)
   hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(w)
-    if w:application():name() ~= 'Alfred' then
+    if w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' then
+      --print('windowFocused')
       refreshWinMSpaces()
       cmdTabFocus()
+      refreshMenu()
     end
   end)
   -- 'window_filter.lua' has been adjusted: 'local WINDOWMOVED_DELAY=0.01' instead of '0.5' to get rid of delay
   filter = dofile(hs.spoons.resourcePath('lib/window_filter.lua'))
   filter.default:subscribe(filter.windowMoved, function(w)
+    --print('windowMoved')
     adjustWinFrame()
+    refreshMenu()
   end)
   -- next 2 filters are for avoiding calling assignMS(_, true) after unfullscreening a window ('windowOnScreen' is called for each window after a window gets unfullscreened)
   enteredFullscreen = false
   filter.default:subscribe(filter.windowFullscreened, function()
+    --print('windowFullscreened')
     enteredFullscreen = true
   end)
   filter.default:subscribe(filter.windowUnfullscreened, function(w)
+    --print('windowUnfullscreened')
     hs.timer.doAfter(0.5, function() -- not necessary with 'hs.window.filter.default:subscribe...'
       w:focus()
       enteredFullscreen = false
@@ -214,7 +230,7 @@ function EnhancedSpaces:new(options)
   switcher.ui.textSize = 16
   switcher.ui.showSelectedTitle = false
   hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[1], function()
-    adjustWindowOncurrentMS()
+    adjustWindowsOncurrentMS()
     switcher:next(windowsOnCurrentMS)
   end)
   hs.hotkey.bind({modifierSwitchWin[1], 'shift' }, modifierSwitchWinKeys[1], function()
@@ -317,10 +333,221 @@ function EnhancedSpaces:new(options)
       end)
     end
   end
+  adjustWindowsOncurrentMS()
+  refreshMenu()
   goToSpace(currentMSpace) -- refresh
   moveResize.clickHandler:start()
   return moveResize
 end
+
+
+function refreshMenu()
+  ESMenu = {
+    { title = "mSpaces",
+      menu = createMSpaceMenu(),
+    },
+    { title = "-" },
+    { title = getToogleRefWindow()[1], disabled = getToogleRefWindow()[2],
+      menu = createToggleRefMenu(),
+    },
+    { title = "-" },
+    { title = "Send Window",
+      menu = createSendWindowMenu(),
+    },
+    { title = "Get Window",
+      menu = createGetWindowMenu(),
+    },
+  }
+  menubar:setMenu(ESMenu)
+end
+
+-- switch to mSpace
+function createMSpaceMenu()
+  mSpaceMenu = {}
+  for i = 1, #mspaces do
+    table.insert(mSpaceMenu, { title = mspaces[i], checked = mSpaceMenuItemChecked(i), disabled = mSpaceMenuItemChecked(i), fn = function(mods)
+      goToSpace(i)
+    end })
+  end
+  return mSpaceMenu
+end
+function mSpaceMenuItemChecked(j)
+  if j == currentMSpace then
+    return true
+  else
+    return false
+  end
+end
+
+-- menu returns table with modifers pressed in this format: '{ alt = true, cmd = false, ctrl = false, fn = false, shift = false } -> turned into array of used modifiers
+function getModifiersMods(mods)
+  local t = {}
+  for i,v in pairs(mods) do
+    if v then
+      table.insert(t, i)
+    end
+  end
+  return t
+end
+-- references: toggle (no modifier); menuModifier1: remove all references but the one clicked; menuModifier2: reference all but the one clicked; menuModifier3: reference all
+function getToogleRefWindow()
+  if #windowsOnCurrentMS > 0 then
+    return { windowsOnCurrentMS[1]:application():name(), false }
+  else
+    return { '', true }
+  end
+end
+function createToggleRefMenu()
+  local w = hs.window.focusedWindow()
+  winMenu = {}
+  for i = 1, #mspaces do
+    table.insert(winMenu, { title = mspaces[i], checked = winPresent(w, i), fn = function(mods)
+      --print('=======')
+      --print(hs.inspect(mods))
+      --print(hs.inspect(getModifiersMods(mods)))
+      --if mods.alt and mods.ctrl then -- menuModifier3: only the selected item enabled and moving there
+      if modifiersEqual(getModifiersMods(mods), menuModifier3) then -- menuModifier3: only the selected item enabled and moving there
+        for j = 1, #mspaces do
+          if j == i then
+            winMSpaces[getWinMSpacesPos(w)].mspace[j] = true
+          else
+            winMSpaces[getWinMSpacesPos(w)].mspace[j] = false
+          end
+        end
+        goToSpace(i)
+      --elseif mods.alt then -- menuModifier1: remove all refs except the one clicked
+      elseif modifiersEqual(getModifiersMods(mods), menuModifier1) then -- menuModifier1: remove all refs except the one clicked
+        for j = 1, #mspaces do
+          if j == i then
+            winMSpaces[getWinMSpacesPos(w)].mspace[j] = true
+          else
+            winMSpaces[getWinMSpacesPos(w)].mspace[j] = false
+          end
+        end
+      --elseif mods.ctrl then -- menuModifier2: put refs on all mSpaces
+      elseif modifiersEqual(getModifiersMods(mods), menuModifier2) then -- menuModifier2: put refs on all mSpaces
+        for j = 1, #mspaces do
+          winMSpaces[getWinMSpacesPos(w)].mspace[j] = true
+        end
+      else  -- toggle (true and false on current mSpace)
+        winMSpaces[getWinMSpacesPos(w)].mspace[i] = not winMSpaces[getWinMSpacesPos(w)].mspace[i]
+      end
+      -- triggering watchdog 'windowMoved' as workaround for initiating refreshMenu() for menu to get updated (immediately)
+      winMSpaces[getWinMSpacesPos(w)].win:move({ 1, 0 }, nil, false, 0)
+      winMSpaces[getWinMSpacesPos(w)].win:move({ -1, 0 }, nil, false, 0)
+
+      refreshWinMSpaces()
+      goToSpace(currentMSpace)
+    end })
+  end
+  return winMenu
+end
+function winPresent(w, i)
+  if w ~= nil and winMSpaces[getWinMSpacesPos(w)].mspace[i] ~= nil then
+    if winMSpaces[getWinMSpacesPos(w)].mspace[i] then
+      return true
+    else
+      return false
+    end
+  end
+  return false
+end
+
+
+-- move windows from current mSpace to another one: no modifier: stay; menuModifier1: keep reference on current mSpace; menuModifier2: references on all mSpaces; menuModifier3 to tag along
+function createSendWindowMenu()
+  moveWindowMenu = {}
+  for i = 1, #windowsOnCurrentMS do 
+    table.insert(moveWindowMenu, { title = windowsOnCurrentMS[i]:application():name(), --fn = function(mods) print ('xxx') end,
+      menu = createSendWindowMenuItems(windowsOnCurrentMS[i])
+    } )
+    --if #createSendWindowMenuItems(windowsOnCurrentMS[i]) == 0 then
+    --  moveWindowMenu[i].disabled = true
+    --end
+  end
+  return moveWindowMenu
+end
+function createSendWindowMenuItems(w)
+  moveWindowMenuItems = {}
+  for i = 1, #mspaces do
+    if  winMSpaces[getWinMSpacesPos(w)].mspace[i] then
+      table.insert(moveWindowMenuItems, { title = mspaces[i], checked = true, disabled = true })
+    else --if not winMSpaces[getWinMSpacesPos(w)].mspace[i] then
+      table.insert(moveWindowMenuItems, { title = mspaces[i], checked = winMSpaces[getWinMSpacesPos(w)].mspace[i], fn = function(mods)
+        --if mods.alt and mods.ctrl then -- menuModifier3: move to new mSpace alongside with window
+        if modifiersEqual(getModifiersMods(mods), menuModifier3) then -- menuModifier3: move to new mSpace alongside with window
+          winMSpaces[getWinMSpacesPos(w)].mspace[currentMSpace] = false
+          winMSpaces[getWinMSpacesPos(w)].mspace[i] = true
+          goToSpace(i)
+        --elseif mods.alt then -- menuModifier1: keep reference on current mSpace
+        elseif modifiersEqual(getModifiersMods(mods), menuModifier1) then -- menuModifier1: keep reference on current mSpace
+          winMSpaces[getWinMSpacesPos(w)].mspace[i] = true
+        --elseif mods.ctrl then -- menuModifier2: references on all mSpaces
+        elseif modifiersEqual(getModifiersMods(mods), menuModifier2) then -- menuModifier2: references on all mSpaces
+          for i = 1, #mspaces do
+            winMSpaces[getWinMSpacesPos(w)].mspace[i] = true
+          end
+        else -- no modifier: stay on screen
+          winMSpaces[getWinMSpacesPos(w)].mspace[currentMSpace] = false
+          winMSpaces[getWinMSpacesPos(w)].mspace[i] = true
+        end
+        -- triggering watchdog 'windowMoved' as workaround for initiating refreshMenu() for menu to get updated (immediately)
+        --winMSpaces[getWinMSpacesPos(w)].win:move({ 1, 0 }, nil, false, 0)
+        --winMSpaces[getWinMSpacesPos(w)].win:move({ -1, 0 }, nil, false, 0)
+        goToSpace(currentMSpace)
+      end })
+    end
+  end
+  return moveWindowMenuItems
+end
+
+
+-- fetch window from another mSpace to current one -> with modifier add reference, without move
+function createGetWindowMenu()
+  getWindowMenu = {}
+  for i = 1, #windowsNotOnCurrentMS do
+    table.insert(getWindowMenu, { title = windowsNotOnCurrentMS[i]:application():name(), fn = function(mods) 
+      local w = winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].win
+      -- get index of mSpace where window is currently active
+      local indexTrue
+      for j = 1, #mspaces do 
+        if winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] then
+          indexTrue = j
+          break
+        end
+      end
+
+      for j = 1, #mspaces do -- copy frame from currently mSpace where window is currently active to other mSpaces
+        winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].frame[j] = winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].frame[indexTrue]
+      end
+
+      winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[currentMSpace] = true -- to be done in all cases
+      --if mods.alt then -- menuModifier1: get reference of window
+      if modifiersEqual(getModifiersMods(mods), menuModifier1) then -- menuModifier1: get reference of window
+      -- add window to current mSpace
+      --elseif mods.ctrl then -- menuModifier2: put reference on all mSpaces
+      elseif modifiersEqual(getModifiersMods(mods), menuModifier2) then -- menuModifier2: put reference on all mSpaces
+        -- put reference on all other mSpaces
+        for j = 1, #mspaces do
+          if j ~= currentMSpace then --and not winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] then
+            --winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].frame[j] = w:frame()
+            winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] = true -- add window to other mSpaces          
+          end
+        end
+      else -- no modifier: move window to current mSpace and delete reference on all other mSpaces
+        for j = 1, #mspaces do
+          if j ~= currentMSpace and winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] then
+            winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] = false -- remove window from other mSpaces          
+          end
+        end
+      end
+      goToSpace(currentMSpace)
+      w:focus()
+    end })
+  end
+  return getWindowMenu
+end
+-- end menu
 
 
 function EnhancedSpaces:stop()
@@ -422,10 +649,16 @@ function EnhancedSpaces:handleClick()
       if modifiersEqual(flags, modifier1) then
         isResizing = true
       elseif modifier2 ~= nil and modifiersEqual(flags, modifier2) then
-        isResizing = true 
+        isResizing = true
       elseif modifierMS ~= nil and modifiersEqual(flags, modifierMS) then
         isResizing = true
       end
+    end
+
+    -- if menu is open, handleClick() needs to be stopped (it still reacts on mouse button release, which is fine)
+    if hs.window.focusedWindow() == nil or hs.window.focusedWindow():application():name() == 'Hammerspoon' then
+      isResizing = false
+      isMoving = false
     end
 
     if isMoving or isResizing then
@@ -435,7 +668,7 @@ function EnhancedSpaces:handleClick()
           return nil
         end
       end
-    
+
       -- prevent error when clicking on screen (and not window) with pressed modifier(s)
       if type(getWindowUnderMouse()) == "nil" then
         self.cancelHandler:start()
@@ -447,9 +680,9 @@ function EnhancedSpaces:handleClick()
 
       local win = getWindowUnderMouse():focus()
       local frame = win:frame()
-      max = win:screen():frame() 
+      max = win:screen():frame()
       maxWithMB = win:screen():fullFrame()
-      heightMB = maxWithMB.h - max.h   -- height menu bar
+      heightMB = maxWithMB.h - max.h -- height menu bar
       local xNew = frame.x
       local yNew = frame.y
       local wNew = frame.w
@@ -979,7 +1212,7 @@ function goToSpace(target)
   currentMSpace = target
   menubar:setTitle(mspaces[target])
   refreshWinMSpaces()
-  adjustWindowOncurrentMS()
+  adjustWindowsOncurrentMS()
   if #windowsOnCurrentMS > 0 then
     windowsOnCurrentMS[1]:focus() -- activate last used window on new mSpace
   end
@@ -987,7 +1220,24 @@ end
 
 
 -- prepare table with windows on current mSpace for lib.window_switcher
-function adjustWindowOncurrentMS()
+
+function adjustWindowsOncurrentMS()
+  windowsOnCurrentMS = {}
+  windowsNotOnCurrentMS = {}
+  for i = 1, #winAll do
+    for j = 1, #mspaces do
+      if winMSpaces[getWinMSpacesPos(winAll[i])].mspace[currentMSpace] then
+        table.insert(windowsOnCurrentMS, winAll[i])
+        break
+      else
+        table.insert(windowsNotOnCurrentMS, winAll[i])
+        break
+      end
+    end
+  end
+end
+--[[
+function adjustWindowsOncurrentMS()
   windowsOnCurrentMS = {}
   for i = 1, #winAll do
     for j = 1, #mspaces do
@@ -998,6 +1248,7 @@ function adjustWindowOncurrentMS()
     end
   end
 end
+--]]
 
 
 function moveToSpace(target, origin, boolKeyboard)
@@ -1012,6 +1263,8 @@ function moveToSpace(target, origin, boolKeyboard)
   else  
     winMSpaces[getWinMSpacesPos(fwin)].frame[target] = hs.geometry.point(max.w / 2 - fwin:frame().w / 2, max.h / 2 - fwin:frame().h / 2, fwin:frame().w, fwin:frame().h) -- put window in middle of screen            
   end
+  --refreshMenu()
+  refreshWinMSpaces()
 end
 
 
@@ -1050,7 +1303,8 @@ function refreshWinMSpaces()
     end
   end
   -- adjust table with windows on current mSpace for lib.window_switcher
-  adjustWindowOncurrentMS()
+  adjustWindowsOncurrentMS()
+  --refreshMenu()
 end
 
 
@@ -1102,6 +1356,8 @@ function refWinMSpace(target) -- add 'copy' of window on current mspace to targe
   winMSpaces[getWinMSpacesPos(fwin)].mspace[target] = true
   -- copy frame from original mSpace
   winMSpaces[getWinMSpacesPos(fwin)].frame[target] = winMSpaces[getWinMSpacesPos(fwin)].frame[currentMSpace]
+  refreshMenu()
+  refreshWinMSpaces()
 end
 
 
@@ -1120,6 +1376,8 @@ function derefWinMSpace()
     fwin:minimize()
   end
   goToSpace(currentMSpace) -- refresh
+  refreshMenu()
+  refreshWinMSpaces()
 end
 
 

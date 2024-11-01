@@ -5,13 +5,13 @@ Every power user sooner or later feels restricted by the confinements of a singl
 
 mSpaces have both advantages and disadvantages compared to multi-monitor arrangements. One of the advantages is that you don't have to move your neck and head around to look at another screen - using mSpaces is like making the monitors of your multi-monitor arrangement swap by means of a keyboard shortcut. The obvious disadvantage of mSpaces is that you can't see more than one of them at a time; however, while every user has a different workflow, for many of us that is simply unnecessary, in which case the benefits of mScreens comfortably outweigh the downsides. 
 
-I dismissed my multi-monitor arrangement in favor of virtual screens years ago and have never looked back. I started out using macOS' built-in Spaces and used third-party tools that added improvements to Apple's rather simplistic approach. However, Apple keeping introducing under-the-hood changes to their Spaces made adding enhancements increasingly difficult.
+I dismissed my multi-monitor arrangement in favor of virtual screens years ago and have never looked back. I started out using macOS' built-in Spaces and used third-party tools that added much needed improvements to Apple's rather simplistic approach.
 
-So I have developed an application that manages mSpaces and windows in a way I've always wanted it. One of the main goals while developing EnhancedSpaces has been that it can be used intuitively and efficiently; managing your mSpaces and windows is thus as simple as using a keyboard sortcut, pointing device, or menu.
+However, with updates to macOS, Apple introduced changes to their Spaces that broke for good those tools I had been using. 
 
-EnhancedSpaces has features such as switching and moving windows between mSpaces instantly, using sticky windows, and automatically opening windows on pre-arranged mSpaces in pre-arranged sizes and positions, and with EnhancedSpaces' window manager you can resize and position your windows with keyboard shortcuts or, optionally, with your mouse or trackpad.
+So I decided to develop an application that combines window and space management in a way I had been imagining. EnhancedSpaces has been developed with the goal of being intuitive to use as well as efficient; it thus has time-saving features such as moving windows between mSpaces instantly, using sticky windows, and opening windows on pre-arranged mSpaces in pre-arranged sizes and positions. EnhancedSpaces' window manager has been designed for resizing and positioning your windows with keyboard shortcuts or, optionally, with the help of your mouse or trackpad.
 
-In other words, EnhancedSpaces is a substitute for Apple's Spaces and at the same time provides features for easily resizing and positioning the windows on your mSpaces.
+In other words, EnhancedSpaces is a substitute for Apple's Spaces, while at the same time providing features for resizing and positioning the windows on your mSpaces in various ways.
 
 EnhancedSpaces has simplified my life with macOS. May it do the same for you.
 
@@ -19,9 +19,27 @@ EnhancedSpaces has simplified my life with macOS. May it do the same for you.
 ## Installation
 As has been discussed, EnhancedSpaces requires [Hammerspoon](https://www.hammerspoon.org/), so if you haven't been using the latter yet, go ahead with its installation.
 
-A few words about Hammerspoon: When it comes to macOS, the obvious choice for developing an application like this is Swift; however, I have come to appreciate Hammerspoon for its power and flexibility and wanted to see how far its approach with Lua can go with a project like this, and Hammerspoon has delivered. 
+A few words about Hammerspoon: When it comes to macOS, the obvious choice for developing an application like this is Swift; however, I have come to appreciate Hammerspoon for its power and flexibility and wanted to see how far its approach with Lua can go with a project like this, and Hammerspoon has delivered. I can recommend Hammerspoon to anyone who by simply adding a few lines to its configuration file `init.lua` can add features to macOS. 
 
-To install EnhancedSpaces, after downloading and unzipping, move the folder to `~/.hammerspoon/Spoons` and make sure the name of the folder is `EnhancedSpaces.spoon`. 
+Care for an example?
+
+```lua
+  ...
+  -- PIA Switzerland
+hs.hotkey.bind({ "cmd", "shift" }, "s", function()
+  os.execute("/usr/local/bin/piactl set region switzerland", true)
+  os.execute("/usr/local/bin/piactl connect", true)
+end)
+-- PIA disconnect
+hs.hotkey.bind({ "cmd", "shift", "ctrl" }, "d", function()
+  os.execute("/usr/local/bin/piactl disconnect", true)
+end)
+  ...
+```
+
+These few lines enable you, for example, to connect to PIA's VPN server in Switzerland using the keyboard shortcut `Command-Shift-s`, while `Command-Shift-d` accordingly disconnect from the VPN server.
+
+But back to EnhancedSpaces: To install EnhancedSpaces, after downloading and unzipping, move the folder to `~/.hammerspoon/Spoons` and make sure the name of the folder is `EnhancedSpaces.spoon`. 
 
 As an alternative to manually downloading and installing, you can run the following terminal command:
 

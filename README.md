@@ -41,6 +41,15 @@ EnhancedSpaces:new({
 
 ```
 
+If you would just like to go ahead without delay, as an alternative to manually editing `init.lua` you can run the following terminal command; in this case the mSpaces `1`, `2`, and `3`are created, with `2`as the mSpace visible at start:
+
+```bash
+
+echo -e "local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')\nEnhancedSpaces:new({\nmSpaces = { '1', '2', '3' }, -- default { '1', '2', '3' }\nstartmSpace = 'E', -- default 2\n})" >> ~/.hammerspoon/init.lua
+
+
+```
+
 Restart Hammerspoon (menubar icon - 'Reload Config') and you're ready to go; it is normal that the start of EnhancedSpaces takes a couple of seconds. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let's find out what you can do with your new mSpaces.
 
 
@@ -532,4 +541,5 @@ In case you have used the option `openAppMSpace`, disable or remove that section
 ```
 
 Afterwards delete the folder `EnhancedSpaces.spoon` in `~/.hammerspoon/Spoons/` and delete the corresponding section in your `init.lua`.
+
 

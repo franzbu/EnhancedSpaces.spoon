@@ -547,6 +547,10 @@ You can change the size of the area of the window where the vertical-only and ho
 
 ## Notes
 
+### Mission Control
+
+For Apple's Mission Control (F3) to present windows in adequate manner, enable `System Settings` - `Desktop & Dock` - `Group windows by application`, which you find close to bottom of the settings window.
+
 ### Hyper Key
 
 EnhancedSpaces (and other applications for that matter) can benefit from setting the Caps Lock key up as so called hyper key, which basically means that you get an additional modifier key, as - due to the impracticality of pressing four modifier keys at once - you would hardly be tempted to use such a combination otherwise. 

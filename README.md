@@ -401,7 +401,7 @@ You can use modifier keys to unlock additional menu features. These are the defa
   menuModifier3 = { 'alt', 'ctrl' }, -- default: menuModifier1 and menuModifier1
   ...
 ```
-`menuModifier3` by default is pressing `menuModifier1` and `menuModifier2`. Here you can see what effect the modifier keys have; the first menu entry, 'mSpaces', reveals its whole potential without any modifier keys and is therefore not listed:
+`menuModifier3` by default combines `menuModifier1` and `menuModifier2`, in other words, `menuModifier3` means pressing `menuModifier1` and `menuModifier2` (which you can change by changing the according line above). Here you can see what effect the modifier keys have; the first menu entry, 'mSpaces', reveals its whole potential without any modifier keys and is therefore not listed:
 
 
 #### Menu - 'active window'

@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.17"
+EnhancedSpaces.version = "0.9.18"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -49,6 +49,7 @@ function EnhancedSpaces:new(options)
   menuModifier1 = options.menuModifier1 or { 'alt' } 
   menuModifier2 = options.menuModifier2 or { 'ctrl' } 
   menuModifier3 = options.menuModifier3 or mergeModifiers(menuModifier1, menuModifier2)
+  menuTitles = options.menuTitles or { send = "Send Window", get = "Get Window", help = 'Help', about = 'About' }
 
   modifier1 = options.modifier1 or { 'alt' } 
   modifier2 = options.modifier2 or { 'ctrl' } 
@@ -340,7 +341,7 @@ function EnhancedSpaces:new(options)
   return moveResize
 end
 
-   
+
 function refreshMenu()
   ---[[
   ESMenu = {
@@ -352,15 +353,15 @@ function refreshMenu()
       menu = createToggleRefMenu(),
     },
     { title = "-" },
-    { title = "Send Window",
+    { title = menuTitles.send,
       menu = createSendWindowMenu(),
     },
-    { title = "Get Window",
+    { title = menuTitles.get,
       menu = createGetWindowMenu(),
     },
     { title = "-" },
-    { title = 'Help', fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = 'About', fn =  function() hs.dialog.blockAlert('EnhancedSpaces', '\nSimplify your life.\n') end },
+    { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', '\nSimplify your life.\n') end },
 
   }
   --]]

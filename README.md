@@ -10,7 +10,7 @@ I dismissed my multi-monitor arrangement in favor of virtual screens years ago a
 
 So I've developed an application that manages mSpaces and windows in a way I've always wanted it. One of the main goals while developing EnhancedSpaces has been that it can be used intuitively and efficiently; managing your mSpaces and windows is thus as simple as using a keyboard sortcut, pointing device, or menu.
 
-EnhancedSpaces has features such as switching and moving windows between mSpaces instantly, using sticky windows, automatically opening windows on pre-arranged mSpaces in pre-arranged sizes and positions, and choosing custom wallpapers for each mSpace. With EnhancedSpaces' window manager you can resize and position your windows with keyboard shortcuts or, optionally, with your mouse or trackpad.
+EnhancedSpaces has features such as switching and moving windows between mSpaces instantly, using sticky windows, and automatically opening windows on pre-arranged mSpaces in pre-arranged sizes and positions. With EnhancedSpaces' window manager you can resize and position your windows with keyboard shortcuts or, optionally, with your mouse or trackpad.
 
 In other words, EnhancedSpaces is a substitute for Apple's Spaces and at the same time provides features for easily resizing and positioning the windows on your mSpaces.
 
@@ -71,6 +71,8 @@ echo -e "local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')\nEnhancedSpaces:n
 ```
 
 Restart Hammerspoon (menubar icon - 'Reload Config') and you're ready to go; it is normal that the start of EnhancedSpaces takes a couple of seconds. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let's find out what you can do with your new mSpaces.
+
+On a side note: You can assign individual wallpapers to your mSpaces; more about this feature in the section [Custom Wallpapers](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#custom-wallpapers).
 
 
 ## Menu
@@ -432,7 +434,7 @@ menuTitles = { send = "Senden", get = "Holen", help = 'Hilfe', about = 'Über' }
 ...
 ```
 
-With the entry above, you get the following Germanized menu:
+With the entry above, you get the following menu in German:
 
 <img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu6.png" width="200">
 

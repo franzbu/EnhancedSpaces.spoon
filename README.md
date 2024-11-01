@@ -10,7 +10,7 @@ I dismissed my multi-monitor arrangement in favor of virtual screens years ago a
 
 So I've developed an application that manages mSpaces and windows in a way I've always wanted it. One of the main goals while developing EnhancedSpaces has been that it can be used intuitively and efficiently; managing your mSpaces and windows is thus as simple as using a keyboard sortcut, pointing device, or menu.
 
-EnhancedSpaces has features such as switching and moving windows between mSpaces instantly, using sticky windows, and automatically opening windows on pre-arranged mSpaces in pre-arranged sizes and positions, and with EnhancedSpaces' window manager you can resize and position your windows with keyboard shortcuts or, optionally, with your mouse or trackpad.
+EnhancedSpaces has features such as switching and moving windows between mSpaces instantly, using sticky windows, automatically opening windows on pre-arranged mSpaces in pre-arranged sizes and positions, and choosing custom wallpapers for each mSpace. With EnhancedSpaces' window manager you can resize and position your windows with keyboard shortcuts or, optionally, with your mouse or trackpad.
 
 In other words, EnhancedSpaces is a substitute for Apple's Spaces and at the same time provides features for easily resizing and positioning the windows on your mSpaces.
 
@@ -464,14 +464,25 @@ For changing the menu titles regarding Hammerspoon, for example, to have them in
 ```lua
   ...
   hammerspoonMenuItems = { reload = "Konfiguration neu laden", open = "Konfiguration öffnen", console = 'Konsole', preferences = 'Einstellungen', about = 'Über Hammerspoon', update = 'Nach Updates suchen', relaunch = 'Hammerspoon neu starten', quit = 'Hammerspoon beenden' }, -- default: { reload = "Reload Config", open = "Open Config", console = 'Console', preferences = 'Preferences', about = 'About Hammerspoon', update = 'Check for Updates...', relaunch = 'Relaunch Hammerspoon', quit = 'Quit Hammerspoon' }
-  
-  
   ...
 ```
 
 With the lines above, you get the following menu:
 
 <img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs2_ger.png" width="360">
+
+
+### Custom Wallpapers
+For enabling the feature that each mSpace can have an individual wallpaper, add the following lines to your `init.lua`: 
+
+```lua
+  ...
+  -- individual wallpaper for each mSpace
+  customWallpaper = true, -- default: false
+  ...
+```
+
+Add the wallpapers you would like to use in the format `jpg` to the folder `~/.hammerspoon/Spoons/EnhancedSpaces.spoon/wallpapers/`. Name the files after your mSpaces, for example, `1.jpg` or `e.jpg`. If you name one file `default.jpg`, this wallpaper will be used whenever there is an mSpace with no matching wallpaper.
 
 
 ### Padding

@@ -12,8 +12,6 @@ That is why I've decided to develop an application that manages mSpaces and wind
 
 EnhancedSpaces has features such as switching and moving windows between mSpaces instantly, using sticky windows, and automatically opening windows on pre-arranged mSpaces in pre-arranged sizes and positions. With EnhancedSpaces' window manager you can resize and position your windows with keyboard shortcuts or, optionally, with your mouse or trackpad. You will also come accross features such as the possibility of choosing a different wallpaper for every mSpace.
 
-In other words, EnhancedSpaces is a substitute for Apple's Spaces and at the same time provides features for easily resizing and positioning the windows on your mSpaces.
-
 EnhancedSpaces has simplified my life with macOS. May it do the same for you.
 
 

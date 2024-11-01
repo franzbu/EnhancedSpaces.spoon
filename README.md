@@ -25,13 +25,13 @@ I can recommend Hammerspoon; by simply adding a few lines to its configuration f
 ```lua
 ...
 -- PIA Switzerland
-hs.hotkey.bind({ "cmd", "shift" }, "s", function()
-  os.execute("/usr/local/bin/piactl set region switzerland", true)
-  os.execute("/usr/local/bin/piactl connect", true)
+hs.hotkey.bind({ 'cmd', 'shift' }, 's', function()
+  os.execute('/usr/local/bin/piactl set region switzerland', true)
+  os.execute('/usr/local/bin/piactl connect', true)
 end)
 -- PIA disconnect
-hs.hotkey.bind({ "cmd", "shift" }, "d", function()
-  os.execute("/usr/local/bin/piactl disconnect", true)
+hs.hotkey.bind({ 'cmd', 'shift' }, 'd', function()
+  os.execute('/usr/local/bin/piactl disconnect', true)
 end)
 ...
 ```
@@ -65,7 +65,7 @@ EnhancedSpaces:new({
 If you would just like to go ahead without delay, as an alternative to manually editing `init.lua`, you can run the following terminal command; in this case the mSpaces `1`, `2`, and `3`are created, with `2`as the mSpace visible at start:
 
 ```bash
-echo -e "local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')\nEnhancedSpaces:new({\nmSpaces = { '1', '2', '3' }, -- default { '1', '2', '3' }\nstartmSpace = 'E', -- default 2\n})" >> ~/.hammerspoon/init.lua
+echo -e 'local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')\nEnhancedSpaces:new({\nmSpaces = { '1', '2', '3' }, -- default { '1', '2', '3' }\nstartmSpace = 'E', -- default 2\n})' >> ~/.hammerspoon/init.lua
 ```
 
 Restart Hammerspoon (menubar icon - 'Reload Config') and you're ready to go; it is normal that the start of EnhancedSpaces takes a couple of seconds. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let's find out what you can do with your new mSpaces.
@@ -80,23 +80,23 @@ EnhancedSpaces' menu can be used to switch to another mSpace, to move a window t
 
 Pressing on EnhancedSpaces' icon in the menubar, a menu like this will appear - the `2` on top of the screenshots below is what EnhancedSpaces shows on macOS' menubar; it represents the mSpace you're on:
 
-<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu1.png" width="200">
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu1.png' width='200'>
 
 With 'mSpace' you can switch to another mSpace:
 
-<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu2.png" width="200">
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu2.png' width='200'>
 
 The next entry in the menu shows the currently active window; here you can toggle its references:
 
-<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu3.png" width="200">
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu3.png' width='200'>
 
-In 'Send Window" you get a list of all windows on the current mSpace and, after selecting one, a list of all mSpaces you can send the window to:
+In 'Send Window' you get a list of all windows on the current mSpace and, after selecting one, a list of all mSpaces you can send the window to:
 
-<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu4.png" width="350">
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu4.png' width='350'>
 
 Selecting 'Get Windows' you get a list of all open windows that are not on your current mSpace, and by selecting one of those windows, it is moved to the current mSpace.
 
-<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu5.png" width="300">
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu5.png' width='300'>
 
 For more advanced use cases, there is the possibility of using modifier keys with your menu, for example, you can tag along with the window when sending it to another mSpace - more about that in the section [Advanced Menu Features](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#advanced-menu-features). 
 
@@ -425,13 +425,13 @@ For changing the menu titles, for example, to have them in your preferred langua
 
 ```lua
 ...
-menuTitles = { send = "Senden", get = "Holen", help = 'Hilfe', about = 'Über' }, -- default: { send = "Send Window", get = "Get Window", help = 'Help', about = 'About' }
+menuTitles = { send = 'Senden', get = 'Holen', help = 'Hilfe', about = 'Über' }, -- default: { send = 'Send Window', get = 'Get Window', help = 'Help', about = 'About' }
 ...
 ```
 
 With the entry above, you get the following menu in German:
 
-<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu6.png" width="200">
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu6.png' width='200'>
 
 
 ### Including Hammerspoon's Menu in EnhancedSpaces'
@@ -446,13 +446,13 @@ For including Hammerspoon's menu in EnhancedSpaces', add the following to your `
 
 This results in the following changes to EnhancedSpaces' menu:
 
-<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs1.png" width="200">
-<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs2.png" width="360">
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs1.png' width='200'>
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs2.png' width='360'>
 
 
 This also means that Hammerspoon's menu icon in the menubar becomes redundant and can be disabled. To do so, uncheck 'Show menu icon' in Hammerspoon's preferences:
 
-<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs_mbicon.png" width="500">
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs_mbicon.png' width='500'>
 
 
 #### Changing Hammerspoon's Menu Titles
@@ -460,13 +460,13 @@ For changing the menu titles regarding Hammerspoon, for example, to have them in
 
 ```lua
   ...
-  hammerspoonMenuItems = { reload = "Konfiguration neu laden", open = "Konfiguration öffnen", console = 'Konsole', preferences = 'Einstellungen', about = 'Über Hammerspoon', update = 'Nach Updates suchen', relaunch = 'Hammerspoon neu starten', quit = 'Hammerspoon beenden' }, -- default: { reload = "Reload Config", open = "Open Config", console = 'Console', preferences = 'Preferences', about = 'About Hammerspoon', update = 'Check for Updates...', relaunch = 'Relaunch Hammerspoon', quit = 'Quit Hammerspoon' }
+  hammerspoonMenuItems = { reload = 'Konfiguration neu laden', open = 'Konfiguration öffnen', console = 'Konsole', preferences = 'Einstellungen', about = 'Über Hammerspoon', update = 'Nach Updates suchen', relaunch = 'Hammerspoon neu starten', quit = 'Hammerspoon beenden' }, -- default: { reload = 'Reload Config', open = 'Open Config', console = 'Console', preferences = 'Preferences', about = 'About Hammerspoon', update = 'Check for Updates...', relaunch = 'Relaunch Hammerspoon', quit = 'Quit Hammerspoon' }
   ...
 ```
 
 With the lines above, you get the following menu:
 
-<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs2_ger.png" width="360">
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs2_ger.png' width='360'>
 
 
 ### Custom Wallpapers
@@ -525,11 +525,11 @@ To manually resize a window, hold your `modifier1` or `modifier2` down, then cli
 
 To have the additional possibility of precisely resizing windows horizontally-only or vertically-only, 30 percent of the window (15 precent left and right of the middle of each window border) is reserved for horizontal-only and vertical-only resizing. The size of this area can be adjusted; for more information see below.
 
-<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/demo1.gif" />
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/demo1.gif' />
 
 At the center of the window there is an erea (M) where you can also move the window by pressing the right mouse button. 
 
-<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/resizing.png" width="200">
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/resizing.png' width='200'>
 
 
 #### Manual Resizing of Windows - Margin
@@ -589,6 +589,7 @@ For this modification, go to 'Settings - Complex Modifications', click 'Add your
         }
     ]
 }
+```
 ```
 
 Now you can assign your newly created `hyper key` for any modifiers in EnhancedSpaces, for example, `modifierMS`:

@@ -447,8 +447,7 @@ For including Hammerspoon's menu in EnhancedSpaces', add the following lines to 
 ```lua
   ...
   -- enable Hammerspoon's menu in EnhancedSpaces'
-  hammerspoonMenu = true, -- default: hammerspoonMenu = true
-  hammerspoonMenuItems = { reload = "Konfiguration neu laden", open = "Konfiguration öffnen", console = 'Konsole', preferences = 'Einstellungen', about = 'Über Hammerspoon', update = 'Nach Updates suchen', relaunch = 'Hammerspoon neu starten', quit = 'Hammerspoon beenden' }, -- default: hammerspoonMenuItems = { reload = "Reload Config", open = "Open Config", console = 'Console', preferences = 'Preferences', about = 'About Hammerspoon', update = 'Check for Updates...', relaunch = 'Relaunch Hammerspoon', quit = 'Quit Hammerspoon' }
+  hammerspoonMenu = true, -- default: false
   ...
 ```
 
@@ -468,9 +467,7 @@ For changing the menu titles regarding Hammerspoon, for example, to have them in
 
 ```lua
   ...
-  -- enable Hammerspoon's menu in EnhancedSpaces'
-  hammerspoonMenu = true, -- default: hammerspoonMenu = true
-  hammerspoonMenuItems = { reload = "Konfiguration neu laden", open = "Konfiguration öffnen", console = 'Konsole', preferences = 'Einstellungen', about = 'Über Hammerspoon', update = 'Nach Updates suchen', relaunch = 'Hammerspoon neu starten', quit = 'Hammerspoon beenden' },
+  hammerspoonMenuItems = { reload = "Konfiguration neu laden", open = "Konfiguration öffnen", console = 'Konsole', preferences = 'Einstellungen', about = 'Über Hammerspoon', update = 'Nach Updates suchen', relaunch = 'Hammerspoon neu starten', quit = 'Hammerspoon beenden' }, -- default: { reload = "Reload Config", open = "Open Config", console = 'Console', preferences = 'Preferences', about = 'About Hammerspoon', update = 'Check for Updates...', relaunch = 'Relaunch Hammerspoon', quit = 'Quit Hammerspoon' }
   ...
 ```
 

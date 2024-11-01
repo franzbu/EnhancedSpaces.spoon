@@ -470,7 +470,7 @@ With the lines above, you get the following menu:
 
 
 ### Custom Wallpapers
-For enabling the feature that each mSpace can have an individual wallpaper, add the following lines to your `init.lua`: 
+For enabling the feature that each mSpace can have an individual wallpaper, add the following to your `init.lua`: 
 
 ```lua
   ...

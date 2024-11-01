@@ -61,7 +61,7 @@ EnhancedSpaces:new({
 
 ```
 
-If you would just like to go ahead without delay, as an alternative to manually editing `init.lua` you can run the following terminal command; in this case the mSpaces `1`, `2`, and `3`are created, with `2`as the mSpace visible at start:
+If you would just like to go ahead without delay, as an alternative to manually editing `init.lua`, you can run the following terminal command; in this case the mSpaces `1`, `2`, and `3`are created, with `2`as the mSpace visible at start:
 
 ```bash
 

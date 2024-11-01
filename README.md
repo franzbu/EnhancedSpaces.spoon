@@ -408,13 +408,13 @@ Below you can see what effect the modifier keys have; the first menu entry, 'mSp
 #### Menu - 'active window'
 - no modifier: toggle reference of active window on selected mSpace; if all mSpaces end up unchecked, the window is minimized
 - menuModifier1: delete all reference except for the selected mSpace
-- menuModifier2: put references of active window on all mSpaces
+- menuModifier2: put references of window on all mSpaces
 - menuModifier3: same as `menuModifier1`, additionally tagging along with the window
 
 #### Menu - Send Window
 - no modifier: send reference of window to selected mSpace; references on other mSpaces remain unaffected
 - menuModifier1: send window to selected mSpace while keeping a reference of the window on the current mSpace
-- menuModifier2: put references of the window on all mSpaces
+- menuModifier2: put references of window on all mSpaces
 - menuModifier3: same as `menuModifier1`, additionally tagging along with the window
 
 #### Menu - Get Window

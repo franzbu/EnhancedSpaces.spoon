@@ -1,3 +1,4 @@
+
 # EnhancedSpaces
 
 ## First Things First: Who Is This For? 
@@ -50,7 +51,7 @@ mkdir -p ~/.hammerspoon/Spoons && git clone https://github.com/franzbu/EnhancedS
 ```
 
 ## mSpaces
-Once you've installed EnhancedSpaces, add the following lines to the file `~/.hammerspoon/init.lua` (you can edit that file by clicking Hammerspoon's icon in your menubar and choosing 'Open Config'). You might want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you will be greeted with:
+Once you've installed EnhancedSpaces, add the following lines to the file `~/.hammerspoon/init.lua` (you can edit that file by clicking the Hammerspoon icon in your menubar and choosing 'Open Config'). You might want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you will be greeted with:
 
 ```lua
 local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')
@@ -92,14 +93,17 @@ The next entry in the menu shows the currently active window; here you can toggl
 
 In 'Send Window" you see a list of all windows on the current mSpace and, after selecting one, a list of all mSpaces you can send the window to:
 
-<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu4.png" width="200">
+<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu4.png" width="350">
 
 Selecting 'Get Windows' you see a list of all open windows that are not on your current mSpace, and by selecting one of those windows, it is moved to the current mSpace.
 
-<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu5.png" width="200">
+<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu5.png" width="300">
 
+
+For more advanced use cases, there is the possibility to use modifier keys with your menu, for example, you can tag along with the window when sending it to another mSpace - more about that in the section 'Advanced Menu Features'.
 
 There is the possibility to use modifier keys with your menu, for example, you can tag along with the window when sending it to another mSpace - more about that in the section 'Advanced Menu Features'. There you can also see how to change the menu entries, for example, to your preferred language. Additionally, there you are shown how to include Hammerspoon's menu into EnhancedSpaces', which has the side effect of making Hammerspoon's own redundant, i.e., it can be removed from your menubar.
+
 
 ## Keyboard Shortcuts
 You can use the Control (`ctrl`) - in case you're interested in an elegant alternative in the form of a hyper key, see section 'Notes' below - and the `s` keys to cycle through your mSpaces. To cycle in reverse order, press `ctrl` and `a`. To move the active window to the mSpace on the left (right) and switch there alongside with the window, press `ctrl` and `q` (`w`); to move the window while staying on the current mSpace press `ctrl` and `d` (`ctrl` and `w`).
@@ -334,8 +338,6 @@ As long as windows are resized - or moved within the borders of the screen -, it
 
 - Additional feature: If you drag a window beyond the bottom border of the screen and `modifier1` or `modifier2` is released before the left mouse button, the window will be minimized.
 
-<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/demo2.gif" />
-
 
 ## Additional Features
 ### Open Windows in Pre-Arranged mSpaces
@@ -423,19 +425,58 @@ You can use modifier keys to unlock additional menu features. These are the defa
 
 
 #### Changing Menu Titles
-For changing the menu titles, for example, to have them in your preferred language, you can add the following line to your `init.lua`; this is an example for menu tiles in German:
+For changing the menu titles, for example, to have them in your preferred language, you can add the following line to your `init.lua`; this is an example for having the menu tiles in German:
 
 ```lua
-  ...
+...
 menuTitles = { send = "Senden", get = "Holen", help = 'Hilfe', about = 'Über' }, -- default: { send = "Send Window", get = "Get Window", help = 'Help', about = 'About' }
-  ...
+...
 ```
-This entry would result in the following menu:
+
+With the line above, you get the following menu:
 
 <img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu6.png" width="200">
 
-### Padding
 
+
+### Including Hammerspoon's Menu in EnhancedSpaces'
+For including Hammerspoon's menu can be included in EnhancedSpaces' - which in turn means that Hammerspoon's menu icon in the menubar becomes unnecessary and can be disabled - add the following lines to your `init.lua`: 
+
+```lua
+  ...
+  -- enable Hammerspoon's menu in EnhancedSpaces'
+  hammerspoonMenu = true, -- default: hammerspoonMenu = true
+  hammerspoonMenuItems = { reload = "Konfiguration neu laden", open = "Konfiguration öffnen", console = 'Konsole', preferences = 'Einstellungen', about = 'Über Hammerspoon', update = 'Nach Updates suchen', relaunch = 'Hammerspoon neu starten', quit = 'Hammerspoon beenden' }, -- default: hammerspoonMenuItems = { reload = "Reload Config", open = "Open Config", console = 'Console', preferences = 'Preferences', about = 'About Hammerspoon', update = 'Check for Updates...', relaunch = 'Relaunch Hammerspoon', quit = 'Quit Hammerspoon' }
+  ...
+```
+
+This results in the following changes to EnhancesSpaces' menu:
+
+<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs1.png" width="200">
+<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs2.png" width="260">
+
+
+To disable Hammerspoon's menubar icon, uncheck 'Show menu icon' in Hammerspoon's 'Preferences':
+
+<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs_mbicon.png" width="500">
+
+
+#### Changing Hammerspoon's Menu Titles
+For changing the menu titles regarding Hammerspoon, for example, to have them in your preferred language, you can add the following line to your `init.lua`; this is an example for having the menu tiles in German:
+
+```lua
+  ...
+  -- enable Hammerspoon's menu in EnhancedSpaces'
+  hammerspoonMenu = true, -- default: hammerspoonMenu = true
+  hammerspoonMenuItems = { reload = "Konfiguration neu laden", open = "Konfiguration öffnen", console = 'Konsole', preferences = 'Einstellungen', about = 'Über Hammerspoon', update = 'Nach Updates suchen', relaunch = 'Hammerspoon neu starten', quit = 'Hammerspoon beenden' },
+  ...
+```
+
+With the lines above, you get the following menu:
+<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs2_ger.png" width="300">
+
+
+### Padding
 In case you would like to change the padding in between the windows and/or between the windows and the screen border, add the following lines with values to your liking to your `init.lua`:
 
 ```lua
@@ -569,5 +610,3 @@ In case you have used the option `openAppMSpace`, disable or remove that section
 ```
 
 Afterwards delete the folder `EnhancedSpaces.spoon` in `~/.hammerspoon/Spoons/` and delete the corresponding section in your `init.lua`.
-
-

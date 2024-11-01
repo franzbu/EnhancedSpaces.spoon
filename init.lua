@@ -144,12 +144,11 @@ function EnhancedSpaces:new(options)
     winMSpaces[i].mspace = {}
     winMSpaces[i].frame = {}
     for k = 1, #mspaces do
+      winMSpaces[i].frame[k] = winAll[i]:frame()
       if k == currentMSpace then
         winMSpaces[i].mspace[k] = true
-        winMSpaces[i].frame[k] = winAll[i]:frame()
       else
         winMSpaces[i].mspace[k] = false
-        winMSpaces[i].frame[k] = winAll[i]:frame()
       end
     end
   end
@@ -175,8 +174,8 @@ function EnhancedSpaces:new(options)
   end
 
   -- watchdogs
-  hs.window.filter.default:subscribe(hs.window.filter.windowNotOnScreen, function(w)
-    if w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' then
+  hs.window.filter.default:subscribe(hs.window.filter.windowNotOnScreen, function()
+    --if w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' then
       --print('windowNotOnScreen')
       refreshWinMSpaces()
       adjustWindowsOncurrentMS()
@@ -184,7 +183,7 @@ function EnhancedSpaces:new(options)
         windowsOnCurrentMS[1]:focus() -- activate last active window on current mSpace when closing/minimizing one
       end
       refreshMenu()
-    end
+    --end
   end)
   hs.window.filter.default:subscribe(hs.window.filter.windowOnScreen, function(w)
     if w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' then
@@ -1316,10 +1315,11 @@ end
 function refreshWinMSpaces()
   winAll = filter_all:getWindows() --hs.window.sortByFocused)
   -- delete closed or minimized windows
+  ::again::
   for i = 1, #winMSpaces do
     if not isIncludedWinAll(winMSpaces[i].win) then
       table.remove(winMSpaces, i)
-      break
+      goto again
     end
   end
 
@@ -1337,12 +1337,11 @@ function refreshWinMSpaces()
       winMSpaces[#winMSpaces].mspace = {}
       winMSpaces[#winMSpaces].frame = {}
       for k = 1, #mspaces do
+        winMSpaces[#winMSpaces].frame[k] = winAll[i]:frame()
         if k == currentMSpace then
           winMSpaces[#winMSpaces].mspace[k] = true
-          winMSpaces[#winMSpaces].frame[k] = winAll[i]:frame()
         else
           winMSpaces[#winMSpaces].mspace[k] = false
-          winMSpaces[#winMSpaces].frame[k] = winAll[i]:frame()
         end
       end
     end

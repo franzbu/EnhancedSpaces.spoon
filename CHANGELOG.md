@@ -1,3 +1,7 @@
+# v0.9.21
+
+* disable send/get in menu in case in case there are no windows on current/other mSpace(s)
+
 # v0.9.20
 
 * added option for choosing custom wallpapers for each mSpace

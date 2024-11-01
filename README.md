@@ -24,8 +24,8 @@ A few words about Hammerspoon: When it comes to macOS, the obvious choice for de
 I can recommend Hammerspoon to anyone who by simply adding a few lines to its configuration file `init.lua` can add features to macOS. Care for an example?
 
 ```lua
-  ...
-  -- PIA Switzerland
+...
+-- PIA Switzerland
 hs.hotkey.bind({ "cmd", "shift" }, "s", function()
   os.execute("/usr/local/bin/piactl set region switzerland", true)
   os.execute("/usr/local/bin/piactl connect", true)
@@ -34,7 +34,7 @@ end)
 hs.hotkey.bind({ "cmd", "shift", "ctrl" }, "d", function()
   os.execute("/usr/local/bin/piactl disconnect", true)
 end)
-  ...
+...
 ```
 
 These few lines enable you, for instance, to connect to PIA's VPN server in Switzerland using the keyboard shortcut `Command-Shift-s`, while `Command-Shift-d` accordingly disconnect from the VPN server.

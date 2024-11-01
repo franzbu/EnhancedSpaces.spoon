@@ -98,13 +98,14 @@ Selecting 'Get Windows' you get a list of all open windows that are not on your 
 
 <img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu5.png" width="300">
 
-For more advanced use cases, there is the possibility of using modifier keys with your menu, for example, you can tag along with the window when sending it to another mSpace - more about that in the section 'Advanced Menu Features'. 
+For more advanced use cases, there is the possibility of using modifier keys with your menu, for example, you can tag along with the window when sending it to another mSpace - more about that in the section [Advanced Menu Features](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#advanced-menu-features). 
 
 There you can also see how to change the menu entries to your preferred language. Additionally, there you are shown how to include Hammerspoon's menu into EnhancedSpaces', which has the side effect of making Hammerspoon's redundant, i.e., it can be removed from your menubar.
 
 
 ## Keyboard Shortcuts
-You can use the Control (`ctrl`) - in case you're interested in an elegant alternative in the form of a hyper key, see section 'Notes' below - and the `s` keys to cycle through your mSpaces. To cycle in reverse order, press `ctrl` and `a`. To move the active window to the mSpace on the left (right) and switch there alongside with the window, press `ctrl` and `q` (`w`); to move the window while staying on the current mSpace press `ctrl` and `d` (`ctrl` and `w`).
+You can use the Control (`ctrl`) - in case you're interested in an elegant alternative in the form of a hyper key, see section [Hyper Key](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#hyper-key)
+ below - and the `s` keys to cycle through your mSpaces. To cycle in reverse order, press `ctrl` and `a`. To move the active window to the mSpace on the left (right) and switch there alongside with the window, press `ctrl` and `q` (`w`); to move the window while staying on the current mSpace press `ctrl` and `d` (`ctrl` and `w`).
 
 The lines below represent the default setup, and you don't need to add them to your `init.lua` unless you want to apply changes:
 
@@ -332,7 +333,7 @@ As long as windows are resized - or moved within the borders of the screen -, it
 * modifier2 (`ctrl`, unless changed): 
   * The difference to `modifier1` is that your screen has an underlying 3x3 grid. This means that windows snap into the left third of the 3x3 grid when dragged beyond the left screen border and into the right third when dragged beyond the right screen border. If `ctrl` is released before the left mouse button, the window will snap into the middle column.
  
-* The moment dragging of a window starts, indicators will appear around the borders of the screen to guide you. For changing the appearance of the indicators, see section 'Change Size, Color, and Opacity of Grid Indicators' below.
+* The moment dragging of a window starts, indicators will appear around the borders of the screen to guide you. For changing the appearance of the indicators, see section [Change Size, Color, and Opacity of Grid Indicators](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#change-size-color-and-opacity-of-grid-indicators) below.
 
 - Additional feature: If you drag a window beyond the bottom border of the screen and `modifier1` or `modifier2` is released before the left mouse button, the window will be minimized.
 
@@ -384,7 +385,7 @@ In case you would also like to pre-define the position of the window on the mSpa
   ...
 ```
 
-'a1', for example, represents the left half of your screen, 'a2' the right half of your screen. To get the entire list of possible scenarios, see section 'Automatic Resizing and Positioning - Keyboard' above.
+'a1', for example, represents the left half of your screen, 'a2' the right half of your screen. To get the entire list of possible scenarios, see section [Automatic Resizing and Positioning - Keyboard](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#automatic-resizing-and-positioning---keyboard) above.
 
 
 ### Advanced Menu Features

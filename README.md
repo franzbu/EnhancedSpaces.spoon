@@ -22,7 +22,7 @@ EnhancedSpaces requires [Hammerspoon](https://www.hammerspoon.org/), so if you h
 
 A few words about Hammerspoon: When it comes to macOS, the obvious choice for developing an application like this is Swift; however, I have come to appreciate Hammerspoon for its power and flexibility and wanted to see how far its approach with Lua can go with a project like this, and Hammerspoon has delivered. 
 
-I can recommend Hammerspoon beyond it being a requirement for EnhancedSpaces; by simply adding a few lines to its configuration file `init.lua` you can get many a workflow done more quickly and easily. Care for an example?
+I can recommend Hammerspoon beyond it being a requirement for EnhancedSpaces; by simply adding a few lines to its configuration file `init.lua` you can get many a workflow simplified. Care for an example?
 
 ```lua
 ...

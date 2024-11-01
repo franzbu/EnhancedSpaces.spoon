@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.19"
+EnhancedSpaces.version = "0.9.20"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -97,6 +97,8 @@ function EnhancedSpaces:new(options)
   currentMSpace = indexOf(options.MSpaces, options.startMSpace) or 2
 
   gridIndicator = options.gridIndicator or { 20, 1, 0, 0, 0.33 }
+
+  customWallpaper = options.customWallpaper or false
 
   local moveResize = {
     disabledApps = tableToMap(options.disabledApps or {}),
@@ -364,7 +366,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.19\n\n\n\nMake working on you Mac simpler.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.20\n\n\n\nMake working on you Mac simpler.') end },
     
     { title = "-" },
     { title = hsTitle(),
@@ -1244,6 +1246,17 @@ function goToSpace(target)
   end
   currentMSpace = target
   menubar:setTitle(mspaces[target])
+
+  --adjust wallpaper
+  if customWallpaper then
+    local screen = hs.screen.mainScreen()
+    if hs.fs.displayName(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/wallpapers/' .. mspaces[currentMSpace] .. '.jpg') then
+      screen:desktopImageURL('file://' .. hs.configdir .. '/Spoons/EnhancedSpaces.spoon/wallpapers/' .. mspaces[currentMSpace] .. '.jpg')
+    else
+      screen:desktopImageURL('file://' .. hs.configdir .. '/Spoons/EnhancedSpaces.spoon/wallpapers/default.jpg')
+    end
+  end
+
   refreshWinMSpaces()
   adjustWindowsOncurrentMS()
   if #windowsOnCurrentMS > 0 then

@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.18"
+EnhancedSpaces.version = "0.9.19"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -50,6 +50,10 @@ function EnhancedSpaces:new(options)
   menuModifier2 = options.menuModifier2 or { 'ctrl' } 
   menuModifier3 = options.menuModifier3 or mergeModifiers(menuModifier1, menuModifier2)
   menuTitles = options.menuTitles or { send = "Send Window", get = "Get Window", help = 'Help', about = 'About' }
+  
+  hammerspoonMenu = options.hammerspoonMenu or false
+  hammerspoonMenuItems = options.hammerspoonMenuItems or { reload = "Reload Config", open = "Open Config", console = 'Console', preferences = 'Preferences', about = 'About Hammerspoon', update = 'Check for Updates...', relaunch = 'Relaunch Hammerspoon', quit = 'Quit Hammerspoon' }
+
 
   modifier1 = options.modifier1 or { 'alt' } 
   modifier2 = options.modifier2 or { 'ctrl' } 
@@ -343,7 +347,6 @@ end
 
 
 function refreshMenu()
-  ---[[
   ESMenu = {
     { title = "mSpaces",
       menu = createMSpaceMenu(),
@@ -362,10 +365,33 @@ function refreshMenu()
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
     { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', '\nSimplify your life.\n') end },
-
+    
+    { title = "-" },
+    { title = hsTitle(),
+      menu = hsMenu(),
+    },
   }
-  --]]
   menubar:setMenu(ESMenu)
+end
+function hsTitle()
+  if not hammerspoonMenu then return nil end
+  return 'Hammerspoon '
+end
+function hsMenu()
+  if not hammerspoonMenu then return nil end
+  return {
+    { title = hammerspoonMenuItems.reload, fn = function() hs.reload() end },
+    { title = hammerspoonMenuItems.open, fn = function() os.execute('/usr/bin/open ~/.hammerspoon/init.lua') end },
+    { title = "-" },
+    { title = hammerspoonMenuItems.console, fn = function() hs.toggleConsole() end },
+    { title = hammerspoonMenuItems.preferences, fn = function() hs.openPreferences() end },
+    { title = "-" },
+    { title = hammerspoonMenuItems.about, fn = function() hs.openAbout() end },
+    { title = hammerspoonMenuItems.update, fn = function() hs.checkForUpdates() end },
+    { title = "-" },
+    { title = hammerspoonMenuItems.relaunch, fn = function() hs.relaunch() end },
+    { title = hammerspoonMenuItems.quit, fn = function() os.execute('/usr/bin/killall -9 Hammerspoon') end },
+  }
 end
 
 -- switch to mSpace

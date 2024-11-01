@@ -54,7 +54,7 @@ Restart Hammerspoon (menubar icon - 'Reload Config') and you're ready to go; it 
 
 
 ## Menu
-EnhancedSpaces can entirely be controlled using keyboard shortcuts; nevertheless, sometimes it is convenient to do whatever you want to do using a menu -  even more so at the beginning when the muscle memory for the hotkeys is still not at its peak.
+EnhancedSpaces can entirely be controlled using keyboard shortcuts; nevertheless, sometimes it is convenient to do whatever you want to do using a menu -  even more so at the beginning when your muscle memory for the hotkeys might not be at its peak yet.
 
 EnhancedSpaces' menu can be used to switch to another mSpace, to move a window to another mSpace, to get a window from anther mSpace, and to create references of windows, i.e., the briefly mentioned 'sticky windows', which means that the same window can be shown on more than one mSpace - more about references in the section 'Same Window on More Than One mSpace'.
 
@@ -314,8 +314,6 @@ As long as windows are resized - or moved within the borders of the screen -, it
 * The moment dragging of a window starts, indicators will appear around the borders of the screen to guide you. For changing the appearance of the indicators, see section 'Change Size, Color, and Opacity of Grid Indicators' below.
 
 - Additional feature: If you drag a window beyond the bottom border of the screen and `modifier1` or `modifier2` is released before the left mouse button, the window will be minimized.
-
-All this has been implemented with the goal of being intuitive; therefore, you will be able to train your muscle memory quickly.
 
 <img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/demo2.gif" />
 

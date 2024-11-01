@@ -1,5 +1,9 @@
 # v0.9.17
 
+* added possibility for changing (language of) menu titles
+
+# v0.9.17
+
 * added menu
 
 # v0.9.16

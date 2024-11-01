@@ -438,21 +438,20 @@ With the line above, you get the following menu:
 
 
 ### Including Hammerspoon's Menu in EnhancedSpaces'
-For including Hammerspoon's menu can be included in EnhancedSpaces' - which in turn means that Hammerspoon's menu icon in the menubar becomes unnecessary and can be disabled - add the following lines to your `init.lua`: 
+For including Hammerspoon's menu can be included in EnhancedSpaces' - which in turn means that Hammerspoon's menu icon in the menubar becomes unnecessary and can be disabled - add the following line to your `init.lua`: 
 
 ```lua
   ...
   -- enable Hammerspoon's menu in EnhancedSpaces'
   hammerspoonMenu = true, -- default: hammerspoonMenu = true
-  hammerspoonMenuItems = { reload = "Konfiguration neu laden", open = "Konfiguration öffnen", console = 'Konsole', preferences = 'Einstellungen', about = 'Über Hammerspoon', update = 'Nach Updates suchen', relaunch = 'Hammerspoon neu starten', quit = 'Hammerspoon beenden' }, -- default: hammerspoonMenuItems = { reload = "Reload Config", open = "Open Config", console = 'Console', preferences = 'Preferences', about = 'About Hammerspoon', update = 'Check for Updates...', relaunch = 'Relaunch Hammerspoon', quit = 'Quit Hammerspoon' }
   ...
 ```
 
 This results in the following changes to EnhancesSpaces' menu:
 
 <img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs1.png" width="200">
-<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs2.png" width="260">
 
+<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs2.png" width="260">
 
 To disable Hammerspoon's menubar icon, uncheck 'Show menu icon' in Hammerspoon's 'Preferences':
 
@@ -464,8 +463,6 @@ For changing the menu titles regarding Hammerspoon, for example, to have them in
 
 ```lua
   ...
-  -- enable Hammerspoon's menu in EnhancedSpaces'
-  hammerspoonMenu = true, -- default: hammerspoonMenu = true
   hammerspoonMenuItems = { reload = "Konfiguration neu laden", open = "Konfiguration öffnen", console = 'Konsole', preferences = 'Einstellungen', about = 'Über Hammerspoon', update = 'Nach Updates suchen', relaunch = 'Hammerspoon neu starten', quit = 'Hammerspoon beenden' },
   ...
 ```

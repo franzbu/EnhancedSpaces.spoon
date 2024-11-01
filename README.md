@@ -76,7 +76,7 @@ Restart Hammerspoon (menubar icon - 'Reload Config') and you're ready to go; it 
 ## Menu
 EnhancedSpaces can entirely be controlled using keyboard shortcuts; nevertheless, sometimes it can be convenient to do whatever you want to do by means of a menu -  even more so at the beginning when your muscle memory regarding the new hotkeys is not at its peak yet.
 
-EnhancedSpaces' menu can be used to switch to another mSpace, to move a window to another mSpace, to get a window from anther mSpace, and to create references of windows, i.e., the already mentioned 'sticky windows', which means that the same window can be shown on more than one mSpace - more about references in the section 'Same Window on More Than One mSpace'.
+EnhancedSpaces' menu can be used to switch to another mSpace, to move a window to another mSpace, to get a window from anther mSpace, and to create references of windows, i.e., the already mentioned 'sticky windows', which means that the same window can be shown on more than one mSpace - more about references in the section [Same Window on More Than One mSpace](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#same-window-on-more-than-one-mspace).
 
 Pressing on EnhancedSpaces' icon in the menubar, a menu like this will appear - the `2` on top of the screenshots below is what EnhancedSpaces shows on macOS' menubar; it represents the mSpace you're on:
 
@@ -462,8 +462,8 @@ For changing the menu titles regarding Hammerspoon, for example, to have them in
 
 ```lua
   ...
-  -- default: { reload = "Reload Config", open = "Open Config", console = 'Console', preferences = 'Preferences', about = 'About Hammerspoon', update = 'Check for Updates...', relaunch = 'Relaunch Hammerspoon', quit = 'Quit Hammerspoon' }
-  hammerspoonMenuItems = { reload = "Konfiguration neu laden", open = "Konfiguration öffnen", console = 'Konsole', preferences = 'Einstellungen', about = 'Über Hammerspoon', update = 'Nach Updates suchen', relaunch = 'Hammerspoon neu starten', quit = 'Hammerspoon beenden' }, 
+  hammerspoonMenuItems = { reload = "Konfiguration neu laden", open = "Konfiguration öffnen", console = 'Konsole', preferences = 'Einstellungen', about = 'Über Hammerspoon', update = 'Nach Updates suchen', relaunch = 'Hammerspoon neu starten', quit = 'Hammerspoon beenden' }, -- default: { reload = "Reload Config", open = "Open Config", console = 'Console', preferences = 'Preferences', about = 'About Hammerspoon', update = 'Check for Updates...', relaunch = 'Relaunch Hammerspoon', quit = 'Quit Hammerspoon' }
+  
   
   ...
 ```

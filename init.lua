@@ -340,8 +340,9 @@ function EnhancedSpaces:new(options)
   return moveResize
 end
 
-
+   
 function refreshMenu()
+  ---[[
   ESMenu = {
     { title = "mSpaces",
       menu = createMSpaceMenu(),
@@ -357,7 +358,12 @@ function refreshMenu()
     { title = "Get Window",
       menu = createGetWindowMenu(),
     },
+    { title = "-" },
+    { title = 'Help', fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
+    { title = 'About', fn =  function() hs.dialog.blockAlert('EnhancedSpaces', '\nSimplify your life.\n') end },
+
   }
+  --]]
   menubar:setMenu(ESMenu)
 end
 

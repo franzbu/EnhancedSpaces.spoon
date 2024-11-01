@@ -451,13 +451,13 @@ For including Hammerspoon's menu in EnhancedSpaces', add the following lines to 
   ...
 ```
 
-This results in the following changes to EnhancesSpaces' menu:
+This results in the following changes to EnhancedSpaces' menu:
 
 <img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs1.png" width="200">
 <img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs2.png" width="360">
 
 
-This also means that Hammerspoon's menu icon in the menubar becomes unnecessary and can be disabled. To do so, uncheck 'Show menu icon' in Hammerspoon's 'Preferences':
+This also means that Hammerspoon's menu icon in the menubar becomes unnecessary and can be disabled. To do so, uncheck 'Show menu icon' in Hammerspoon's preferences:
 
 <img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs_mbicon.png" width="500">
 

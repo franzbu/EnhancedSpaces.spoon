@@ -6,7 +6,7 @@ Every power user sooner or later feels restricted by the confinements of a singl
 
 mSpaces have both advantages and disadvantages compared to multi-monitor arrangements. One of the advantages is that you don't have to move your neck and head around to look at another screen - using mSpaces is like making the monitors of your multi-monitor arrangement swap by means of a keyboard shortcut. The obvious disadvantage of mSpaces is that you can't see more than one of them at a time; however, while every user has a different workflow, for many of us that is simply unnecessary, in which case the benefits of mScreens comfortably outweigh the downsides.
 
-I dismissed my multi-monitor arrangement in favor of virtual screens years ago and have never looked back. I started out using macOS' built-in Spaces and used third-party tools that added improvements to Apple's rather simplistic approach. However, Apple keeping introducing under-the-hood changes to their Spaces made adding enhancements increasingly difficult.
+I dismissed my multi-monitor arrangement in favor of virtual screens years ago and have never looked back. I started out using macOS' built-in Spaces and used third-party tools that added improvements to Apple's rather simplistic approach. However, Apple's keeping introducing under-the-hood changes to their Spaces made adding enhancements increasingly difficult.
 
 So I have developed an application that manages mSpaces and windows in a way I've always wanted it. One of the main goals while developing EnhancedSpaces has been that it can be used intuitively and efficiently; managing your mSpaces and windows is thus as simple as using a keyboard sortcut, pointing device, or menu.
 
@@ -17,7 +17,7 @@ In other words, EnhancedSpaces is a substitute for Apple's Spaces and at the sam
 EnhancedSpaces has simplified my life with macOS. May it do the same for you.
 
 
-## Installation
+## Introduction
 As has been discussed, EnhancedSpaces requires [Hammerspoon](https://www.hammerspoon.org/), so if you haven't been using the latter yet, go ahead with its installation.
 
 A few words about Hammerspoon: When it comes to macOS, the obvious choice for developing an application like this is Swift; however, I have come to appreciate Hammerspoon for its power and flexibility and wanted to see how far its approach with Lua can go with a project like this, and Hammerspoon has delivered. 
@@ -38,9 +38,11 @@ end)
 ...
 ```
 
-These few lines enable you, for instance, to connect to PIA's VPN server in Switzerland using the keyboard shortcut `Command-Shift-s`, while `Command-Shift-d` accordingly disconnects from the VPN server.
+These few lines enable you, for instance, to connect to PIA's VPN server in Switzerland using the keyboard shortcut `Command-Shift-s`, while `Command-Shift-d` disconnects from the VPN server.
 
-But back to EnhancedSpaces: To install EnhancedSpaces, after downloading and unzipping, move the folder to `~/.hammerspoon/Spoons` and make sure the name of the folder is `EnhancedSpaces.spoon`. 
+
+## Installation
+To install EnhancedSpaces, after downloading and unzipping, move the folder to `~/.hammerspoon/Spoons` and make sure the name of the folder is `EnhancedSpaces.spoon`. 
 
 As an alternative to manually downloading and installing, you can run the following terminal command:
 
@@ -440,7 +442,7 @@ With the line above, you get the following menu:
 
 
 ### Including Hammerspoon's Menu in EnhancedSpaces'
-For including Hammerspoon's menu can be included in EnhancedSpaces' - which in turn means that Hammerspoon's menu icon in the menubar becomes unnecessary and can be disabled - add the following lines to your `init.lua`: 
+For including Hammerspoon's menu in EnhancedSpaces', add the following lines to your `init.lua`: 
 
 ```lua
   ...
@@ -456,7 +458,7 @@ This results in the following changes to EnhancesSpaces' menu:
 <img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs2.png" width="260">
 
 
-To disable Hammerspoon's menubar icon, uncheck 'Show menu icon' in Hammerspoon's 'Preferences':
+This also means that Hammerspoon's menu icon in the menubar becomes unnecessary and can be disabled. To do so, uncheck 'Show menu icon' in Hammerspoon's 'Preferences':
 
 <img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs_mbicon.png" width="500">
 

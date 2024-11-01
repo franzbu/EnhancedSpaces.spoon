@@ -1,6 +1,10 @@
+# v0.9.19
+
+* added option to include Hammerspoon's menu into EnhancedSpaces'
+
 # v0.9.18
 
-* added possibility for changing (language of) menu titles
+*added possibility for changing (language of) menu titles
 
 # v0.9.17
 

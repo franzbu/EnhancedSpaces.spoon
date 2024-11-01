@@ -455,7 +455,7 @@ For including Hammerspoon's menu in EnhancedSpaces', add the following lines to 
 This results in the following changes to EnhancesSpaces' menu:
 
 <img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs1.png" width="200">
-<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs2.png" width="260">
+<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs2.png" width="360">
 
 
 This also means that Hammerspoon's menu icon in the menubar becomes unnecessary and can be disabled. To do so, uncheck 'Show menu icon' in Hammerspoon's 'Preferences':
@@ -475,7 +475,7 @@ For changing the menu titles regarding Hammerspoon, for example, to have them in
 ```
 
 With the lines above, you get the following menu:
-<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs2_ger.png" width="300">
+<img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs2_ger.png" width="360">
 
 
 ### Padding

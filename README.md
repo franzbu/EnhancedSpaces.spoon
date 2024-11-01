@@ -10,7 +10,7 @@ I dismissed my multi-monitor arrangement in favor of virtual screens years ago a
 
 That is why I've decided to develop an application that manages mSpaces and windows in a way I've always wanted it. One of the main goals throughout development has been that EnhancedSpaces can be used intuitively and efficiently; managing your mSpaces and windows is thus as simple as using a keyboard sortcut, pointing device, or menu.
 
-EnhancedSpaces has features such as switching and moving windows between mSpaces instantly, using sticky windows, and automatically opening windows on pre-arranged mSpaces in pre-arranged sizes and positions. With EnhancedSpaces' window manager you can resize and position your windows with keyboard shortcuts or, optionally, with your mouse or trackpad. You will also come accross features such as the possibility of choosing a different wallpaper for every mSpace.
+EnhancedSpaces has features such as switching and moving windows between mSpaces instantly, using sticky windows, and automatically opening windows on pre-arranged mSpaces in pre-arranged sizes and positions. With EnhancedSpaces' window manager you can resize and position your windows with keyboard shortcuts or, optionally, with your mouse or trackpad. You will also come across features such as the possibility of choosing a different wallpaper for every mSpace.
 
 EnhancedSpaces has simplified my life with macOS. May it do the same for you.
 
@@ -470,7 +470,7 @@ With the lines above, you get the following menu:
 
 
 ### Custom Wallpapers
-For enabling the feature that each mSpace can have an individual wallpaper, add the following to your `init.lua`: 
+For enabling the feature that each mSpace can have an individual wallpaper, add the following lines to your `init.lua`: 
 
 ```lua
   ...

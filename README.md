@@ -30,7 +30,7 @@ hs.hotkey.bind({ "cmd", "shift" }, "s", function()
   os.execute("/usr/local/bin/piactl connect", true)
 end)
 -- PIA disconnect
-hs.hotkey.bind({ "cmd", "shift", "ctrl" }, "d", function()
+hs.hotkey.bind({ "cmd", "shift" }, "d", function()
   os.execute("/usr/local/bin/piactl disconnect", true)
 end)
 ...

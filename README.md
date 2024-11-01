@@ -405,12 +405,11 @@ You can use modifier keys to unlock additional menu features. These are the defa
 
 Below you can see what effect the modifier keys have; the first menu entry, 'mSpaces', reveals its whole potential without any modifier keys and is therefore not listed:
 
-
 #### Menu - 'active window'
 - no modifier: toggle reference of active window on selected mSpace; if all mSpaces end up unchecked, the window is minimized
 - menuModifier1: delete all reference except for the selected mSpace
 - menuModifier2: put references of active window on all mSpaces
-
+- menuModifier3: same as `menuModifier1`, additionally tagging along with the window
 
 #### Menu - Send Window
 - no modifier: send reference of window to selected mSpace; references on other mSpaces remain unaffected
@@ -418,12 +417,10 @@ Below you can see what effect the modifier keys have; the first menu entry, 'mSp
 - menuModifier2: put references of the window on all mSpaces
 - menuModifier3: same as `menuModifier1`, additionally tagging along with the window
 
-
 #### Menu - Get Window
 - no modifier: move selected window to current mSpace
 - menuModifier1: create reference of selected window on current mSpace; references on other mSpaces remain unaffected
 - menuModifier2: create reference of selected window on all mSpaces
-
 
 #### Changing Menu Titles
 For changing the menu titles, for example, to have them in your preferred language, you can add the following line to your `init.lua`; this is an example for changing the menu tiles to German:

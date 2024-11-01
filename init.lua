@@ -367,7 +367,6 @@ function refreshMenu()
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
     { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.20\n\n\n\nMakes working on your Mac simpler.') end },
-    
     { title = "-" },
     { title = hsTitle(),
       menu = hsMenu(),

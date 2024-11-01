@@ -1,7 +1,6 @@
 # EnhancedSpaces
 
 ## First Things First: Who Is This For? 
-
 Every power user sooner or later feels restricted by the confinements of a single screen; there is simply never enough space. While the obvious remedy is a multi-monitor arrangement, there is a lesser known solution that enables the user to have more than one screen on a single display: virtual screens or, as they are called in EnhancedSpaces, mSpaces. 
 
 mSpaces have both advantages and disadvantages compared to multi-monitor arrangements. One of the advantages is that you don't have to move your neck and head around to look at another screen - using mSpaces is like making the monitors of your multi-monitor arrangement swap by means of a keyboard shortcut. The obvious disadvantage of mSpaces is that you can't see more than one of them at a time; however, while every user has a different workflow, for many of us that is simply unnecessary, in which case the benefits of mScreens comfortably outweigh the downsides. 
@@ -18,7 +17,6 @@ EnhancedSpaces has simplified my life with macOS. May it do the same for you.
 
 
 ## Installation
-
 As has been discussed, EnhancedSpaces requires [Hammerspoon](https://www.hammerspoon.org/), so if you haven't been using the latter yet, go ahead with its installation.
 
 To install EnhancedSpaces, after downloading and unzipping, move the folder to `~/.hammerspoon/Spoons` and make sure the name of the folder is `EnhancedSpaces.spoon`. 
@@ -32,7 +30,6 @@ mkdir -p ~/.hammerspoon/Spoons && git clone https://github.com/franzbu/EnhancedS
 ```
 
 ## mSpaces
-
 Once you've installed EnhancedSpaces, add the following lines to the file `~/.hammerspoon/init.lua` (you can edit that file by clicking the Hammerspoon icon in your menubar and choosing 'Open Config'). You might want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you will be greeted with:
 
 ```lua
@@ -46,69 +43,34 @@ EnhancedSpaces:new({
 
 Restart Hammerspoon (menubar icon - 'Reload Config') and you're ready to go; it is normal that the start of EnhancedSpaces takes a couple of seconds. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let's find out what you can do with your new mSpaces.
 
-## Menu
-The menu can be used to switch to another mSpace, to move a window to another mSpace, to get a window from anther mSpace, and to create references of windows - more about references later.
 
-Pressing on EnhancedSpaces' icon in the menubar, you will see a menu like this - you can actually see `2` on top of the menu, which represents the mSpace listed in macOS' menubar :
+## Menu
+EnhancedSpaces can be entirely controlled with keyboard shortcuts; nevertheless, sometimes it is convenient to do whatever you want to do using a menu -  even more so at the beginning when the muscle memory for the shortcuts is still not at its peak.
+
+The menu can be used to switch to another mSpace, to move a window to another mSpace, to get a window from anther mSpace, and to create references of windows, i.e., the briefly mentioned 'sticky windows', which means that the same window can be shown on more than one mSpace - more about references in the section 'Same Window on More Than One mSpace'.
+
+Pressing on EnhancedSpaces' icon in the menubar, you will see a menu like this - the `2` on top of the screenshots below is what EnhancedSpaces shows on macOS' menubar and represents the mSpace you're on:
 
 <img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu1.png" width="200">
 
-Choosing 'mSpace' lets you switch to another mSpace:
+With 'mSpace' you can switch to another mSpace:
 
 <img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu2.png" width="200">
 
-The next entry lets you toggle references for the currently active window - more about references later:
+The next entry in the menu shows the currently active window; here you can toggle its references:
 
 <img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu3.png" width="200">
 
-In "Send Window" you see a list of all windows on the current mSpace and, selecting one, a list of all mSpaces you can send the window to:
+In 'Send Window" you see a list of all windows on the current mSpace and, after selecting one, a list of all mSpaces you can send the window to:
 
 <img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu4.png" width="200">
 
-Get windows, finally, enables you to do the opposite - you get a list of all open windows not on your current mSpace, and selecting them changes that:
+Selecting 'Get Windows' you see a list of all open windows that are not on your current mSpace, and by selecting one of those windows, it is moved to the current mSpace.
 
 <img src="https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu5.png" width="200">
 
 
-You can also use modifier keys to unlock additional features. Here a quick overview, explanations will follow at a later stage.
-
-```lua
-  ...
-  -- menu: modifier keys to unlock additional features
-  menuModifier1 = { 'alt' }, -- default: { 'alt' }
-  menuModifier2 = { 'ctrl' }, -- default: { 'ctrl' }
-  menuModifier3 = { 'alt', 'ctrl' }, -- default: menuModifier1 and menuModifier1
-  ...
-```
-
-Menu: 
-
-mSpace
-- no modifier: switch
-
-—----------
-
-app name of current window
-- no modifier: toggle selected item
-- menuModifier1: only the selected item enabled
-- menuModifier2: all enabled -> references on all mSpaces
-
-—----------
-
-Send Window
-- no modifier: references on other mSpaces remain unaffected
-- menuModifier1: keep reference on current mSpace
-- menuModifier2: references on all mSpaces
-- menuModifier3: tagging along
-
-—----------
-
-Get Window
-- no modifier: move window to  current mSpace
-- menuModifier1: create reference on current mSpace
-- menuModifier2: create reference on all mSpaces
-
-
+For more advanced use cases, there is the possibility to use modifier keys with your menu, for example, you can tag along with the window when sending it to another mSpace - more about that in the section 'Advanced Menu Features'
 
 
 ## Keyboard Shortcuts
@@ -125,7 +87,6 @@ The lines below represent the default setup, and you don't need to add them to y
 
 
 ### Switch Directly to Any mSpace
-
 For switching directly to any mSpace, press the Option key (`alt`) and the key for your mSpace, for example, `3`.
 
 As before, the line below represents the default setup, and you don't need to add it to your `init.lua` unless you want to apply any changes:
@@ -137,7 +98,6 @@ As before, the line below represents the default setup, and you don't need to ad
 ```
 
 ### Move Windows Directly to Any mSpace
-
 For moving windows to an mSpace, press `alt-ctrl` and the key for the target mSpace.
 
 As before, the line below represents the default setup, and you don't need to add it to your `init.lua` unless you want to apply changes:
@@ -149,7 +109,6 @@ As before, the line below represents the default setup, and you don't need to ad
 ```
 
 ### Same Window on More Than One mSpace
-
 By now we have covered the basics, but we haven't walked over the finish line yet. That being said, this section is mainly for advanced use cases, namely having 'the same window on more than one mSpace, also known as 'sticky windows'. 
 
 To unlock the full potential of mSpaces, it is helpful to understand the underlying philosophy: Each mSpace is a representation of your windows rather than just a space containing them - or, in other words, an mSpace can be understood as a set of symbolic links to a subset of your open windows. Due to this approach, you could, for instance, have two mSpaces with the same windows in different sizes and positions, or you can have the same Notes, Calendar, Finder or Safari window on two, three, or all your mSpaces.
@@ -168,11 +127,9 @@ To delete a reference, press `modifierReference` and `0`. In case you're 'de-ref
 
 
 ### Switching Between Windows
-
 Apart from switching between all windows, for which you obviously use macOS' integrated window switcher (Command-Tab) or the third party switcher of your choice, such as [AltTab](https://alt-tab-macos.netlify.app/), additional possibilities have been implemented in EnhancedSpaces for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').
 
 #### Switching between Windows of the Current mSpace
-
 For switching to the windows of your current mSpace, press `alt` and `tab`. 
 
 As before, the below lines represent the default setup, and you don't need to add them to your `init.lua` unless you prefer different shortcuts:
@@ -190,17 +147,14 @@ For cycling through the windows of your current mSpace in reverse order, additio
 
 
 #### Switching between References of Windows
-
 For switching between the references of a window ('sticky windows'), press `alt` and `escape`. In case you prefer a different key, change the second element in the table `modifierSwitchWinKeys` (see above).
 
 
 ## Moving and Resizing Windows:
-
 With EnhancedSpaces you can automatically resize and position the windows on your mSpaces according to a dynamically changing grid size. 
 
 
 ### Automatic Resizing and Positioning - Keyboard
-
 The following lines show the default keyboard shortcuts for the automatic resizing and positioning of windows.
 
 As before, you don't need to add these lines to your `init.lua` unless you want to apply changes. 
@@ -316,11 +270,9 @@ Now, by pressing `modifierSnapKey1` and `j`, for example, scenario 'a2' is activ
 
 
 ## Using Mouse/Trackpad
-
 Similar to many operations, at times it can be simpler and faster if you use both your keyboard and pointing device at the same time. Thus EnhancedSpaces provides an alternative by enabling the use of a pointing device whenever it has the potential of being beneficial. 
 
 ### Move windows to Adjacent mSpaces
-
 You can also use your pointing device to move a window to an adjacent mSpace by pressing the Option (`alt`) or Control (`ctrl`) key and dragging 80 percent or more of the window beyond the left or right screen border. If you release the modifier key before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you switch to the mSpace alongside with the window. 
 
 As per default, `modifier1` uses the same modifier key as `modifierMS` and `modifier2` the same as `modifierMoveWinMSpace`. They don't interfere; however, in case you prefer to change these pointing device modifiers, you can add the following lines to your `init.lua` and adjust them to your liking:
@@ -334,14 +286,11 @@ As per default, `modifier1` uses the same modifier key as `modifierMS` and `modi
 ```
 
 ### Using Mouse or Trackpad for Moving and Resizing Windows
-
 #### Manual Moving and Positioning
-
 To make moving windows easier than the usual clicking on the title bar (which you're still free to do), hold down `modifier1` or `modifier2`, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
 
 
 #### Automatic Resizing and Positioning - Mouse, Trackpad
-
 For automatic resizing and positioning of a window, you simply move between 10 and 80 percent of the window beyond the left, right, or bottom borders of your screen using while pressing `alt` or `ctrl`. 
 
 As long as windows are resized - or moved within the borders of the screen -, it makes no difference whether you use `modifier1` or `modifier2`. However, once a window is moved beyond the screen borders, different positioning and resizing scenarios are called into action; they are as follows:
@@ -363,7 +312,6 @@ All this has been implemented with the goal of being intuitive; therefore, you w
 
 
 ## Additional Features
-
 ### Open Windows in Pre-Arranged mSpaces
 
 If you want EnhancedSpaces to automatically move windows to specific mSpaces when they are opened, add the following lines to your `init.lua`: 
@@ -411,6 +359,42 @@ In case you would also like to pre-define the position of the window on the mSpa
 ```
 
 'a1', for example, represents the left half of your screen, 'a2' the right half of your screen. To get the entire list of possible scenarios, see section 'Automatic Resizing and Positioning - Keyboard' above.
+
+
+### Advanced Menu Features
+
+
+You can use modifier keys to unlock additional menu features. These are the default modifiers; as usual you don't need to add these lines to your `init.lua` unless you want to apply changes:
+
+```lua
+  ...
+  -- menu: modifier keys to unlock additional features
+  menuModifier1 = { 'alt' }, -- default: { 'alt' }
+  menuModifier2 = { 'ctrl' }, -- default: { 'ctrl' }
+  menuModifier3 = { 'alt', 'ctrl' }, -- default: menuModifier1 and menuModifier1
+  ...
+```
+`menuModifier3` by default is pressing `menuModifier1` and `menuModifier2`. Here you can see what effect the modifier keys have; the first menu entry, 'mSpaces', reveals its whole potential without any modifier keys and is therefore not listed:
+
+
+#### Menu - 'active window'
+- no modifier: toggle reference of active window on selected mSpace; if all mSpaces end up unchecked, the window is minimized
+- menuModifier1: delete all reference except for the selected mSpace
+- menuModifier2: put references of active window on all mSpaces
+
+
+#### Menu - Send Window
+- no modifier: send reference of window to selected mSpace; references on other mSpaces remain unaffected
+- menuModifier1: send window to selected mSpace while keeping a reference of the window on the current mSpace
+- menuModifier2: put references of the window on all mSpaces
+- menuModifier3: same as `menuModifier1`, additionally tagging along with the window
+
+
+#### Menu - Get Window
+- no modifier: move selected window to current mSpace
+- menuModifier1: create reference of selected window on current mSpace; references on other mSpaces remain unaffected
+- menuModifier2: create reference of selected window on all mSpaces
+
 
 
 ### Padding

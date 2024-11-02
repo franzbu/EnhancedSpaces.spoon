@@ -28,12 +28,12 @@ I can recommend Hammerspoon beyond it being a requirement for EnhancedSpaces; by
 ...
 -- PIA Switzerland
 hs.hotkey.bind({ 'cmd', 'shift' }, 's', function()
-  os.execute('/usr/local/bin/piactl set region switzerland', true)
-  os.execute('/usr/local/bin/piactl connect', true)
+  os.execute('/usr/local/bin/piactl set region switzerland')
+  os.execute('/usr/local/bin/piactl connect')
 end)
 -- PIA disconnect
 hs.hotkey.bind({ 'cmd', 'shift' }, 'd', function()
-  os.execute('/usr/local/bin/piactl disconnect', true)
+  os.execute('/usr/local/bin/piactl disconnect')
 end)
 ...
 ```

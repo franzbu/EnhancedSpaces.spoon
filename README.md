@@ -405,11 +405,11 @@ Optionally, you can open a popup menu at the position of your pointing device; t
 
 With `mbSendPopupKey` only 'Send Windows' pops up:
 
-<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu1.png' width='300'>
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/popup1.png' width='300'>
 
 Likewise, with `mbGetPopupKey` only 'Get Windows' pops up:
 
-<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu2.png' width='300'>
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/popup2.png' width='300'>
 
 If you set either of the three keys for the according popup menus to `nil` (or don't include them in your `init.lua`), consequently they are not available. `popupModifier` apparently needs to be set for either of the popup menus to be shown.
 

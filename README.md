@@ -202,9 +202,9 @@ In case you would like to disable EnhancedSpaces' window manager because you man
 
 ```lua
   ...
-  modifierSnap1 = nil, -- default: { 'cmd', 'alt' }
-  modifierSnap2 = nil, -- default: { 'cmd', 'ctrl' }
-  modifierSnap3 = nil, -- default: { 'cmd', 'shift' }
+  modifierSnap1 = '', -- default: { 'cmd', 'alt' }
+  modifierSnap2 = '', -- default: { 'cmd', 'ctrl' }
+  modifierSnap3 = '', -- default: { 'cmd', 'shift' }
   ...
 ```
 

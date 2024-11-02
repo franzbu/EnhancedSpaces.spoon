@@ -77,7 +77,7 @@ On a side note: For learning how to assign individual wallpapers to your mSpaces
 
 
 ## Menu
-EnhancedSpaces can entirely be controlled using keyboard shortcuts; however, sometimes it can be convenient to do whatever you want to do by means of a menu -  even more so at the beginning when your muscle memory regarding the new hotkeys is not yet at its peak.
+EnhancedSpaces provides keyboard shortcuts for all its features; however, sometimes it is convenient to do whatever you want to do by means of a menu -  even more so at the beginning when your muscle memory regarding the new hotkeys is not yet at its peak.
 
 EnhancedSpaces' menu can be used to switch to another mSpace, to move a window to another mSpace, to get a window from anther mSpace, and to create references of windows, i.e., the already mentioned 'sticky windows', which means that the same window can be shown on more than one mSpace - more about references in the section [Same Window on More Than One mSpace](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#same-window-on-more-than-one-mspace).
 

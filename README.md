@@ -27,7 +27,7 @@ I can recommend Hammerspoon beyond it being a requirement for EnhancedSpaces; by
 
 ```lua
 ...
--- PIA Switzerland
+-- PIA
 hs.hotkey.bind({ 'cmd', 'shift' }, 's', function()
   os.execute('/usr/local/bin/piactl set region switzerland')
   os.execute('/usr/local/bin/piactl connect')

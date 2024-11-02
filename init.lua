@@ -322,21 +322,22 @@ function EnhancedSpaces:new(options)
   end
 
   -- keyboard shortcuts - snapping windows into grid postions
-  if modifierSnap1 ~= nil then
+  if modifierSnap1 ~= '' then
     for i = 1, #modifierSnapKeys[1] do
       hs.hotkey.bind(modifierSnap1, modifierSnapKeys[1][i][2], function()
         hs.window.focusedWindow():move(snap(modifierSnapKeys[1][i][1]), nil, false, 0)
       end)
     end
   end
-  if modifierSnap2 ~= nil then
+  if modifierSnap2 ~= '' then
     for i = 1, #modifierSnapKeys[2] do
       hs.hotkey.bind(modifierSnap2, modifierSnapKeys[2][i][2], function()
         hs.window.focusedWindow():move(snap(modifierSnapKeys[2][i][1]), nil, false, 0)
       end)
     end
   end
-  if modifierSnap3 ~= nil then
+  if modifierSnap3 ~= '' then
+    hs.alert.show(hs.inspect(modifierSnap3))
     for i = 1, #modifierSnapKeys[3] do
       hs.hotkey.bind(modifierSnap3, modifierSnapKeys[3][i][2], function()
         hs.window.focusedWindow():move(snap(modifierSnapKeys[3][i][1]), nil, false, 0)
@@ -350,6 +351,7 @@ function EnhancedSpaces:new(options)
       mbMainPopup:popupMenu(hs.mouse.absolutePosition() )
     end)
   end
+
   if popupModifier ~= nil and mbSendPopupKey ~= nil then
     hs.hotkey.bind(popupModifier, mbSendPopupKey, function()
       mbSendPopup:popupMenu(hs.mouse.absolutePosition() )
@@ -360,7 +362,7 @@ function EnhancedSpaces:new(options)
       mbGetPopup:popupMenu(hs.mouse.absolutePosition() )
     end)
   end
-  
+
   adjustWindowsOncurrentMS()
   refreshMenu()
   goToSpace(currentMSpace) -- refresh

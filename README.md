@@ -11,7 +11,7 @@ So I decided to develop an application that manages mSpaces and windows in the w
 
 EnhancedSpaces has a wide range of feature, such as switching and moving windows between mSpaces, using sticky windows, and automatically opening windows on pre-arranged mSpaces in pre-arranged sizes and positions. Using EnhancedSpaces' window manager, you can resize and position your windows with keyboard shortcuts or, optionally, with your mouse or trackpad.
 
-Focus has also been given to make EnhancedSpaces well-rounded, and that is why you encounter nice little features such as the possibility for choosing a different wallpaper for each mSpace.
+Focus has also been given to making EnhancedSpaces well-rounded, and that is why you encounter nice little features such as the possibility for choosing a different wallpaper for each mSpace.
 
 So who is EnhancedSpaces for? It is made for power users who like having more than one screen and want something more efficient and customizable than Apple's Spaces and at the same time prefer more flexibility in positioning their windows than tiling window managers such as AeroSpace offer. 
 

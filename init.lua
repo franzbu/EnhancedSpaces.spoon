@@ -362,7 +362,7 @@ function EnhancedSpaces:new(options)
       mbGetPopup:popupMenu(hs.mouse.absolutePosition() )
     end)
   end
-
+  
   adjustWindowsOncurrentMS()
   refreshMenu()
   goToSpace(currentMSpace) -- refresh
@@ -397,7 +397,7 @@ function refreshMenu()
   }
   menubar:setMenu(mainMenu)
 
-  mbMainPopup = hs.menubar.new()
+  mbMainPopup = hs.menubar.new(false)
   mainPopupMenu = {
     { title = "mSpaces",
       menu = createMSpaceMenu(),
@@ -416,7 +416,7 @@ function refreshMenu()
   }
   mbMainPopup:setMenu(mainPopupMenu)
 
-  mbSendPopup = hs.menubar.new()
+  mbSendPopup = hs.menubar.new(false)
   sendWindowMenu = {
     { title = "-" },
     { title = menuTitles.send, disabled = returnTrueIfZero(windowsOnCurrentMS),
@@ -425,7 +425,7 @@ function refreshMenu()
   }
   mbSendPopup:setMenu(sendWindowMenu)
 
-  mbGetPopup = hs.menubar.new()
+  mbGetPopup = hs.menubar.new(false)
   getWindowMenu = {
     { title = menuTitles.get, disabled = returnTrueIfZero(windowsNotOnCurrentMS),
       menu = createGetWindowMenu(),

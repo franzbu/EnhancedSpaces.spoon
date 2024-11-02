@@ -100,37 +100,7 @@ Selecting 'Get Windows' you get a list of all open windows that are not on your 
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu5.png' width='300'>
 
-### Popup Menus
-Optionally, you can open a popup menu at the position of your pointing device; this can be enabled by adding the following lines to `init.lua` (as popup menus are not enabled by default in EnhancedSpaces, these lines always need to be added in case you want to use a popup menu in EnhancedSpaces, not only if you would like to make changes to the keyboard shortcuts.):
-
-```lua
-  ...
-  -- popup menu
-  popupModifier = { 'cmd', 'alt', 'ctrl' }, -- default: nil
-  mbMainPopupKey = 'e', -- default: nil
-  mbSendPopupKey = 'r', -- default: nil
-  mbGetPopupKey = 't', -- default: nil
-  ...
-```
-`mbMainPopupKey` opens the main popup menu:
-
-<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/popup3.png' width='250'>
-
-With `mbSendPopupKey` only 'Send Windows' pops up:
-
-<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu1.png' width='300'>
-
-Likewise, with `mbGetPopupKey` only 'Get Windows' pops up:
-
-<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu2.png' width='300'>
-
-If you set either of the three keys for the according popup menus to `nil` (or don't include them in your `init.lua`), consequently they are not available. `popupModifier` apparently needs to be set for either of the popup menus to be shown.
-
-### Menus - Additional Features
-For more advanced use cases, there is the possibility of using modifier keys with your menu, for example, you can tag along with the window when sending it to another mSpace - more about these additional features in the section [Advanced Menu Features](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#advanced-menu-features). 
-
-There you can also see how to change the menu entries to your preferred language. Additionally, you are shown how to include Hammerspoon's menu into EnhancedSpaces', which has the additional benefit of making Hammerspoon's redundant, i.e., you can remove it from your menubar.
-
+It is also possible to use popup menus for these features; more in the section [Additional Features - Popup Menus](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#popup-menus)
 
 ## Keyboard Shortcuts
 You can use the Control (`ctrl`) - in case you're interested in an elegant alternative in the form of a hyper key, see section [Hyper Key](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#hyper-key)
@@ -415,6 +385,39 @@ In case you would also like to pre-define the position of the window on the mSpa
 ```
 
 'a1', for example, represents the left half of your screen, 'a2' the right half of your screen. To get the entire list of possible scenarios, see section [Automatic Resizing and Positioning - Keyboard](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#automatic-resizing-and-positioning---keyboard) above.
+
+
+
+### Popup Menus
+Optionally, you can open a popup menu at the position of your pointing device; this can be enabled by adding the following lines to `init.lua` (as popup menus are not enabled by default in EnhancedSpaces, these lines always need to be added in case you want to use a popup menu in EnhancedSpaces, not only if you would like to make changes to the keyboard shortcuts.):
+
+```lua
+  ...
+  -- popup menu
+  popupModifier = { 'cmd', 'alt', 'ctrl' }, -- default: nil
+  mbMainPopupKey = 'e', -- default: nil
+  mbSendPopupKey = 'r', -- default: nil
+  mbGetPopupKey = 't', -- default: nil
+  ...
+```
+`mbMainPopupKey` opens the main popup menu:
+
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/popup3.png' width='250'>
+
+With `mbSendPopupKey` only 'Send Windows' pops up:
+
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu1.png' width='300'>
+
+Likewise, with `mbGetPopupKey` only 'Get Windows' pops up:
+
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu2.png' width='300'>
+
+If you set either of the three keys for the according popup menus to `nil` (or don't include them in your `init.lua`), consequently they are not available. `popupModifier` apparently needs to be set for either of the popup menus to be shown.
+
+### Menus - Additional Features
+For more advanced use cases, there is the possibility of using modifier keys with your menu, for example, you can tag along with the window when sending it to another mSpace - more about these additional features in the section [Advanced Menu Features](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#advanced-menu-features). 
+
+There you can also see how to change the menu entries to your preferred language. Additionally, you are shown how to include Hammerspoon's menu into EnhancedSpaces', which has the additional benefit of making Hammerspoon's redundant, i.e., you can remove it from your menubar.
 
 
 ### Advanced Menu Features

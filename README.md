@@ -9,7 +9,7 @@ I dismissed my multi-monitor arrangement in favor of virtual screens years ago a
 
 So I decided to develop an application that manages mSpaces and windows in the way I've always wanted it. One of the main goals throughout development has been to  make managing your mSpaces and windows straightforward, intuitive, and efficient.
 
-EnhancedSpaces has a wide range of feature, such as switching and moving windows between mSpaces, using sticky windows, and automatically opening windows on pre-arranged mSpaces in pre-arranged sizes and positions. Using EnhancedSpaces' window manager you can resize and position your windows with keyboard shortcuts or, optionally, with your mouse or trackpad. 
+EnhancedSpaces has a wide range of feature, such as switching and moving windows between mSpaces, using sticky windows, and automatically opening windows on pre-arranged mSpaces in pre-arranged sizes and positions. Using EnhancedSpaces' window manager, you can resize and position your windows with keyboard shortcuts or, optionally, with your mouse or trackpad. 
 
 There are also little things that you don't really need but are still fun to use while at the same time being beneficial, such as the possibility for choosing a different wallpaper for each mSpace.
 

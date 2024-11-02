@@ -13,7 +13,7 @@ EnhancedSpaces has a wide range of feature, such as switching and moving windows
 
 There are also little things that you don't really need but are still fun to use while at the same time being beneficial, such as the possibility for choosing a different wallpaper for each mSpace.
 
-So who is EnhancedSpaces for? Since you ask me ;), it suits mainly power users who like having more than one screen and want something more customizable and faster than Apple's Spaces and who prefer more flexibility in positioning their windows than tiling window managers such as AeroSpace provide. 
+So who is EnhancedSpaces for? Since you ask me ;) it suits mainly power users who like having more than one screen and want something more customizable and faster than Apple's Spaces and who prefer more flexibility in positioning their windows than tiling window managers such as AeroSpace provide. 
 
 EnhancedSpaces has simplified my life with macOS. May it do the same for you.
 

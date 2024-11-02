@@ -410,7 +410,7 @@ Likewise, with `mbGetPopupKey` only 'Get Windows' pops up:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/popup1.png' width='300'>
 
-If you set either of the three keys for the according popup menus to `nil` (or don't include them in your `init.lua`), consequently they are not available. `popupModifier` apparently needs to be set for either of the popup menus to be shown.
+If you set any of the three keys for the according popup menus to `nil` (or don't include them in your `init.lua` to begin with), consequently they are not available. `popupModifier` apparently needs to be set for either of the popup menus to be shown.
 
 ### Menus - Additional Features
 For more advanced use cases, there is the possibility of using modifier keys with your menu, for example, you can tag along with the window when sending it to another mSpace - more about these additional features in the section [Advanced Menu Features](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#advanced-menu-features). 

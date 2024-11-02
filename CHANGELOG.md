@@ -1,3 +1,7 @@
+# v0.9.22
+
+* added optional popup menus
+
 # v0.9.21
 
 * disable send/get in menu in case in case there are no windows on current/other mSpace(s)

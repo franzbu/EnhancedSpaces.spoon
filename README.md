@@ -126,7 +126,7 @@ As before, the line below represents the default setup, and you don't need to ad
 ```
 
 ### Move Windows Directly to Any mSpace
-For moving windows to an mSpace, press `alt-ctrl` and the key for the target mSpace.
+For moving a window to another mSpace, press `alt-ctrl` and the key for the target mSpace.
 
 As before, the line below represents the default setup, and you don't need to add it to your `init.lua` unless you want to apply changes:
 

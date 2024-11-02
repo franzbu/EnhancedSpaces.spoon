@@ -103,7 +103,7 @@ Selecting 'Get Windows' you get a list of all open windows that are not on your 
 It is also possible to use popup menus for these features; more in the section [Additional Features - Popup Menus](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#popup-menus)
 
 ## Keyboard Shortcuts
-You can use the Control (`ctrl`) - in case you're interested in an elegant alternative in the form of a hyper key, see section [Hyper Key](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#hyper-key)
+You can use the Control (`ctrl`) - in case you're interested in an elegant alternative in the form of a hyper key, see section [Notes - Hyper Key](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#hyper-key)
  below - and the `s` keys to cycle through your mSpaces. To cycle in reverse order, press `ctrl` and `a`. To move the active window to the mSpace on the left (right) and switch there alongside with the window, press `ctrl` and `q` (`w`); to move the window while staying on the current mSpace press `ctrl` and `d` (`ctrl` and `w`).
 
 The lines below represent the default setup, and you don't need to add them to your `init.lua` unless you want to apply changes:
@@ -332,7 +332,7 @@ As long as windows are resized - or moved within the borders of the screen -, it
 * modifier2 (`ctrl`, unless changed): 
   * The difference to `modifier1` is that your screen has an underlying 3x3 grid. This means that windows snap into the left third of the 3x3 grid when dragged beyond the left screen border and into the right third when dragged beyond the right screen border. If `ctrl` is released before the left mouse button, the window will snap into the middle column.
  
-* The moment dragging of a window starts, indicators will appear around the borders of the screen to guide you. For changing the appearance of the indicators, see section [Change Size, Color, and Opacity of Grid Indicators](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#change-size-color-and-opacity-of-grid-indicators) below.
+* The moment dragging of a window starts, indicators will appear around the borders of the screen to guide you. For changing the appearance of the indicators, see section [Additional Features - Change Size, Color, and Opacity of Grid Indicators](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#change-size-color-and-opacity-of-grid-indicators) below.
 
 - Additional feature: If you drag a window beyond the bottom border of the screen and `modifier1` or `modifier2` is released before the left mouse button, the window will be minimized.
 

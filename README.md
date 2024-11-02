@@ -492,7 +492,7 @@ For changing the menu titles regarding Hammerspoon, for example, to have them in
   ...
 ```
 
-You get the following menu:
+This is the resulting menu:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs2_ger.png' width='360'>
 

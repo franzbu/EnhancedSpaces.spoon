@@ -478,7 +478,6 @@ For including Hammerspoon's menu in EnhancedSpaces', add the following to your `
 
 This results in the following changes to EnhancedSpaces' menu:
 
-<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs1.png' width='200'>
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs2.png' width='360'>
 
 This also means that Hammerspoon's menu icon in the menubar becomes redundant and can be disabled. To do so, uncheck 'Show menu icon' in Hammerspoon's preferences.
@@ -619,7 +618,7 @@ For this modification, go to 'Settings - Complex Modifications', click 'Add your
     ]
 }
 ```
-```
+
 
 Now you can assign your newly created `hyper key` for any modifiers in EnhancedSpaces, for example, `modifierMS`:
 

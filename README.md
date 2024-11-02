@@ -122,11 +122,13 @@ EnhancedSpaces:new({
   modifierMSKeys = { 'a', 's', 'd', 'f', 'q', 'w' }, -- default: { 'a', 's', 'd', 'f', 'q', 'w' }
 })
 ```
-The same goes for all extensions and modifications of EnhancedSpaces; they have to be inserted as shown below; the order in which you put them doesn't matter at all and is entirely up to you. 
+The same goes for all extensions and modifications for EnhancedSpaces; they have to be inserted as shown below; the order in which you put them is entirely up to you. 
 
 ```lua
 EnhancedSpaces:new({
-  -- All modifications and extensions to EnhancedSpaces before the closing brackets below
+
+  -- all modifications to EnhancedSpaces here, i.e., below 'EnhancedSpaces:new({' and above '})'
+
 })
 ```
 

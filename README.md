@@ -80,7 +80,7 @@ EnhancedSpaces can entirely be controlled using keyboard shortcuts; however, som
 
 EnhancedSpaces' menu can be used to switch to another mSpace, to move a window to another mSpace, to get a window from anther mSpace, and to create references of windows, i.e., the already mentioned 'sticky windows', which means that the same window can be shown on more than one mSpace - more about references in the section [Same Window on More Than One mSpace](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#same-window-on-more-than-one-mspace).
 
-Clicking the EnhancedSpaces' icon in the menubar, a menu like this appears - the `2` on top of the screenshot represents the icon EnhancedSpaces shows on macOS' menubar; it shows the current mSpace:
+Clicking the EnhancedSpaces' icon in the menubar, a menu like this appears - the `2` on top of the screenshot represents the icon EnhancedSpaces shows on macOS' menubar; it indicates the current mSpace:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu1.png' width='200'>
 

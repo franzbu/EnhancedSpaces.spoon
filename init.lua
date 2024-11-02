@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.21"
+EnhancedSpaces.version = "0.9.22"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -54,6 +54,10 @@ function EnhancedSpaces:new(options)
   hammerspoonMenu = options.hammerspoonMenu or false
   hammerspoonMenuItems = options.hammerspoonMenuItems or { reload = "Reload Config", open = "Open Config", console = 'Console', preferences = 'Preferences', about = 'About Hammerspoon', update = 'Check for Updates...', relaunch = 'Relaunch Hammerspoon', quit = 'Quit Hammerspoon' }
 
+  popupModifier = options.popupModifier or nil
+  mbMainPopupKey = options.mbMainPopupKey or nil
+  mbSendPopupKey = options.mbSendPopupKey or nil
+  mbGetPopupKey = options.mbGetPopupKey or nil
 
   modifier1 = options.modifier1 or { 'alt' } 
   modifier2 = options.modifier2 or { 'ctrl' } 
@@ -339,6 +343,24 @@ function EnhancedSpaces:new(options)
       end)
     end
   end
+
+  -- popup menus
+  if popupModifier ~= nil and mbMainPopupKey ~= nil then
+    hs.hotkey.bind(popupModifier, mbMainPopupKey, function()
+      mbMainPopup:popupMenu(hs.mouse.absolutePosition() )
+    end)
+  end
+  if popupModifier ~= nil and mbSendPopupKey ~= nil then
+    hs.hotkey.bind(popupModifier, mbSendPopupKey, function()
+      mbSendPopup:popupMenu(hs.mouse.absolutePosition() )
+    end)
+  end
+  if popupModifier ~= nil and mbGetPopupKey ~= nil then
+    hs.hotkey.bind(popupModifier, mbGetPopupKey, function()
+      mbGetPopup:popupMenu(hs.mouse.absolutePosition() )
+    end)
+  end
+  
   adjustWindowsOncurrentMS()
   refreshMenu()
   goToSpace(currentMSpace) -- refresh
@@ -348,7 +370,7 @@ end
 
 
 function refreshMenu()
-  ESMenu = {
+  mainMenu = {
     { title = "mSpaces",
       menu = createMSpaceMenu(),
     },
@@ -365,13 +387,49 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.21\n\n\n\nMakes working on your Mac simpler.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.22\n\n\n\nMakes working on your Mac simpler.') end },
     { title = "-" },
-    { title = hsTitle(),
+    { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),
     },
   }
-  menubar:setMenu(ESMenu)
+  menubar:setMenu(mainMenu)
+
+  mbMainPopup = hs.menubar.new()
+  mainPopupMenu = {
+    { title = "mSpaces",
+      menu = createMSpaceMenu(),
+    },
+    { title = "-" },
+    { title = getToogleRefWindow()[1], disabled = getToogleRefWindow()[2],
+      menu = createToggleRefMenu(),
+    },
+    { title = "-" },
+    { title = menuTitles.send, disabled = returnTrueIfZero(windowsOnCurrentMS),
+      menu = createSendWindowMenu(),
+    },
+    { title = menuTitles.get, disabled = returnTrueIfZero(windowsNotOnCurrentMS),
+      menu = createGetWindowMenu(),
+    },
+  }
+  mbMainPopup:setMenu(mainPopupMenu)
+
+  mbSendPopup = hs.menubar.new()
+  sendWindowMenu = {
+    { title = "-" },
+    { title = menuTitles.send, disabled = returnTrueIfZero(windowsOnCurrentMS),
+      menu = createSendWindowMenu(),
+    },
+  }
+  mbSendPopup:setMenu(sendWindowMenu)
+
+  mbGetPopup = hs.menubar.new()
+  getWindowMenu = {
+    { title = menuTitles.get, disabled = returnTrueIfZero(windowsNotOnCurrentMS),
+      menu = createGetWindowMenu(),
+    },
+  }
+  mbGetPopup:setMenu(getWindowMenu)
 end
 function returnTrueIfZero(t) -- disable send/get titles in menu in case windowsOnCurrentMS/windowsNotOnCurrentMS is empty
   if #t == 0 then
@@ -381,7 +439,7 @@ function returnTrueIfZero(t) -- disable send/get titles in menu in case windowsO
 end
 function hsTitle()
   if not hammerspoonMenu then return nil end
-  return 'Hammerspoon '
+  return 'Hammerspoon'
 end
 function hsMenu()
   if not hammerspoonMenu then return nil end
@@ -485,7 +543,7 @@ function winPresent(w, i)
   return false
 end
 
---fb
+
 -- move windows from current mSpace to another one: no modifier: stay; menuModifier1: keep reference on current mSpace; menuModifier2: references on all mSpaces; menuModifier3 to tag along
 function createSendWindowMenu()
   moveWindowMenu = {}

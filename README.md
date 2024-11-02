@@ -88,7 +88,7 @@ The title 'mSpace' lets you switch to another mSpace:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu2.png' width='200'>
 
-The next entry in the menu shows the currently active window; here you can toggle its references (this entry is missing in case there is no active window, for example, if you're on an empty mSpace). You can get more information about this feature in the section [Same Window on More Than One mSpace](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#same-window-on-more-than-one-mspace).
+The next entry in the menu shows the currently active window; here you can toggle its references (this entry is missing in case there is no active window, for example, when you're on an empty mSpace). You can get more information about this feature in the section [Same Window on More Than One mSpace](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#same-window-on-more-than-one-mspace).
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu3.png' width='200'>
 

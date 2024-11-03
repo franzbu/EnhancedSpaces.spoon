@@ -179,7 +179,7 @@ function EnhancedSpaces:new(options)
 
   -- watchdogs
   hs.window.filter.default:subscribe(hs.window.filter.windowNotOnScreen, function()
-    hs.timer.doAfter(0.001, function() --delay necessary, otherwise 'filter_all = hs.window.filter.new()' not ready after two Orion windows are 'cmd-q'-ed at once
+    hs.timer.doAfter(0.00001, function() --delay necessary, otherwise 'filter_all = hs.window.filter.new()' not ready after two Orion windows are 'cmd-q'-ed at once
       refreshWinMSpaces()
       adjustWindowsOncurrentMS()
       if #windowsOnCurrentMS > 0 then

@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.22"
+EnhancedSpaces.version = "0.9.23"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -362,7 +362,7 @@ function EnhancedSpaces:new(options)
       mbGetPopup:popupMenu(hs.mouse.absolutePosition() )
     end)
   end
-  
+
   adjustWindowsOncurrentMS()
   refreshMenu()
   goToSpace(currentMSpace) -- refresh
@@ -389,7 +389,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.22\n\n\n\nMakes working on your Mac simpler.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.23\n\n\n\nMakes working on your Mac simpler.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),
@@ -550,7 +550,7 @@ end
 function createSendWindowMenu()
   moveWindowMenu = {}
   for i = 1, #windowsOnCurrentMS do 
-    table.insert(moveWindowMenu, { title = windowsOnCurrentMS[i]:application():name(), --fn = function(mods) print ('xxx') end,
+    table.insert(moveWindowMenu, { title = windowsOnCurrentMS[i]:application():name(),
       menu = createSendWindowMenuItems(windowsOnCurrentMS[i])
     } )
     --if #createSendWindowMenuItems(windowsOnCurrentMS[i]) == 0 then
@@ -573,16 +573,13 @@ function createSendWindowMenuItems(w)
         elseif modifiersEqual(getModifiersMods(mods), menuModifier1) then -- menuModifier1: keep reference on current mSpace
           winMSpaces[getWinMSpacesPos(w)].mspace[i] = true
         elseif modifiersEqual(getModifiersMods(mods), menuModifier2) then -- menuModifier2: references on all mSpaces
-          for i = 1, #mspaces do
-            winMSpaces[getWinMSpacesPos(w)].mspace[i] = true
+          for j = 1, #mspaces do
+            winMSpaces[getWinMSpacesPos(w)].mspace[j] = true
           end
         else -- no modifier: stay on screen
           winMSpaces[getWinMSpacesPos(w)].mspace[currentMSpace] = false
           winMSpaces[getWinMSpacesPos(w)].mspace[i] = true
         end
-        -- triggering watchdog 'windowMoved' as workaround for initiating refreshMenu() for menu to get updated (immediately)
-        --winMSpaces[getWinMSpacesPos(w)].win:move({ 1, 0 }, nil, false, 0)
-        --winMSpaces[getWinMSpacesPos(w)].win:move({ -1, 0 }, nil, false, 0)
         goToSpace(currentMSpace)
       end })
     end
@@ -597,8 +594,7 @@ function createGetWindowMenu()
   for i = 1, #windowsNotOnCurrentMS do
     table.insert(getWindowMenu, { title = windowsNotOnCurrentMS[i]:application():name(), fn = function(mods) 
       local w = winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].win
-      -- get index of mSpace where window is currently active
-      local indexTrue
+      local indexTrue -- get index of mSpace where window is currently active to set frame accordingly
       for j = 1, #mspaces do 
         if winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] then
           indexTrue = j
@@ -612,8 +608,8 @@ function createGetWindowMenu()
 
       winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[currentMSpace] = true -- to be done in all cases
       if modifiersEqual(getModifiersMods(mods), menuModifier1) then -- menuModifier1: get reference of window
-      -- add window to current mSpace
-      -- nothing to be done ATM
+        -- add window to current mSpace
+        -- nothing to be done ATM
       elseif modifiersEqual(getModifiersMods(mods), menuModifier2) then -- menuModifier2: put reference on all mSpaces
         -- put reference on all other mSpaces
         for j = 1, #mspaces do
@@ -628,10 +624,23 @@ function createGetWindowMenu()
           end
         end
       end
+      --[[
+      print('----------')
+      for j = 1, #mspaces do
+        print(winMSpaces[getWinMSpacesPos(w)].mspace[j])
+        print(tostring((winMSpaces[getWinMSpacesPos(w)].frame[j])))
+      end
+      --]]
+
       goToSpace(currentMSpace)
       w:focus()
     end })
-  end
+   
+
+    end
+
+  
+
   return getWindowMenu
 end
 -- end menu

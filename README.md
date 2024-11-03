@@ -21,12 +21,12 @@ EnhancedSpaces has simplified my life with macOS. May it do the same for you.
 ## Introduction
 EnhancedSpaces requires [Hammerspoon](https://www.hammerspoon.org/), so if you haven't used the latter yet, go ahead with its installation.
 
-A few words about Hammerspoon: When it comes to macOS, the obvious choice for developing an application like this is Swift; however, I discovered Hammerspoon a little while ago, have fallen in love with it for its power and flexibility and wanted to see how far it can carry me with a project like this, and my love for Hammerspoon has only deepened. 
+A few words about Hammerspoon: When it comes to macOS, the obvious choice for developing an application like this is Swift; however, I discovered Hammerspoon some time ago, have fallen in love with it for its power and flexibility and wanted to see how far it can carry me in regard to a project like this, and my love for Hammerspoon has only deepened. 
 
-I can recommend Hammerspoon beyond it being a requirement for EnhancedSpaces; by simply adding a few lines to its configuration file `init.lua` you can get many a workflow simplified. Care for an example?
+I can recommend Hammerspoon beyond it being a requirement for EnhancedSpaces; by simply adding a few lines to its configuration file `init.lua`, you can get many a workflow simplified. Care for an example?
 
 ```lua
--- PIA
+-- connect to VPN
 hs.hotkey.bind({ 'cmd', 'shift' }, 's', function()
   os.execute('/usr/local/bin/piactl set region switzerland')
   os.execute('/usr/local/bin/piactl connect')
@@ -110,7 +110,7 @@ The lines below represent the default setup, and you don't need to add them to y
   modifierMSKeys = { 'a', 's', 'd', 'f', 'q', 'w' }, -- default: { 'a', 's', 'd', 'f', 'q', 'w' }
 ```
 
-Just in case it is not entirely clear where exactly to add these lines in your file `init.lua`:
+Just in case it is not entirely clear where to add these lines and future modifications in your file `init.lua`, the order of the modifications is entirely up to you:
 
 ```lua
 local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')
@@ -120,17 +120,11 @@ EnhancedSpaces:new({
 
   modifierMS = { 'ctrl' }, -- default: { 'ctrl' }
   modifierMSKeys = { 'a', 's', 'd', 'f', 'q', 'w' }, -- default: { 'a', 's', 'd', 'f', 'q', 'w' }
+
+  --  ______________ modifications to EnhancedSpaces above this line ______________
 })
 ```
-The same goes for all extensions and modifications for EnhancedSpaces; they have to be inserted as shown below; the order in which you put them is entirely up to you. 
 
-```lua
-EnhancedSpaces:new({
-
-  -- all modifications to EnhancedSpaces here, i.e., below 'EnhancedSpaces:new({' and above '})'
-
-})
-```
 
 ### Switch Directly to Any mSpace
 For switching directly to any mSpace, press the Option key (`alt`) and the key for your mSpace, for example, `3`.

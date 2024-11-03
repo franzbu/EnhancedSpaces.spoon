@@ -9,7 +9,7 @@ I dismissed my multi-monitor arrangement in favor of virtual screens years ago a
 
 So I decided to develop an application that manages Spaces and windows in the way I've always wanted. One of the main goals has been to make managing Spaces and windows straightforward, intuitive, and efficient.
 
-EnhancedSpaces' features include switching and moving windows between mSpaces, using sticky windows, and automatically opening windows on pre-defined mSpaces in pre-defined sizes and positions. Using EnhancedSpaces' window manager, you can resize and rearrange your windows with keyboard shortcuts or with your mouse or trackpad.
+EnhancedSpaces' features include switching and moving windows between mSpaces, using sticky windows, and automatically opening windows on predefined mSpaces in predefined sizes and positions. Using EnhancedSpaces' window manager, you can resize and rearrange your windows with keyboard shortcuts or with your mouse or trackpad.
 
 Focus has also been given to making EnhancedSpaces enjoyable to use. So you can customize the EnhancedSpaces' menus to your needs, for example changing them to your preferred language, and set individual wallpapers for your mSpaces.
 
@@ -74,9 +74,6 @@ echo -e "local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')\nEnhancedSpaces:n
 
 Restart Hammerspoon (menubar icon - 'Reload Config') and you're ready to go; it is normal that the start of EnhancedSpaces takes a couple of seconds. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let's find out what you can do with your new mSpaces.
 
-On a side note: For learning how to assign individual wallpapers to your mSpaces, go to section [Custom Wallpapers](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#custom-wallpapers).
-
-
 ## Menu
 EnhancedSpaces provides keyboard shortcuts for all its features; however, sometimes it is convenient to do whatever you want to do by means of a menu -  even more so at the beginning when your muscle memory regarding the new hotkeys is not yet at its peak.
 
@@ -128,7 +125,6 @@ EnhancedSpaces:new({
   --  ______________ modifications to EnhancedSpaces above this line ______________
 })
 ```
-
 
 ### Switch Directly to Any mSpace
 For switching directly to any mSpace, press the Option key (`alt`) and the key for your mSpace, for example, `3`.

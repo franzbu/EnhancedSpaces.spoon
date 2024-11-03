@@ -23,7 +23,7 @@ EnhancedSpaces requires [Hammerspoon](https://www.hammerspoon.org/), so if you h
 
 A few words about Hammerspoon: When it comes to macOS, the obvious choice for developing an application like this is Swift; however, I discovered Hammerspoon some time ago, have fallen in love with it for its power and flexibility and wanted to see how far it can carry me in regard to a project like this, and my love for Hammerspoon has only deepened. 
 
-I can recommend Hammerspoon beyond it being a requirement for EnhancedSpaces; by simply adding a few lines to its configuration file `init.lua`, you can get many a workflow simplified. Care for an example?
+I can recommend Hammerspoon beyond it being a requirement for EnhancedSpaces; it's one of the most powerful and flexible ways to add value to your macOS in virtually any respect. Care for an example?
 
 ```lua
 -- connect to VPN
@@ -37,7 +37,7 @@ hs.hotkey.bind({ 'cmd', 'shift' }, 'd', function()
 end)
 ```
 
-These few lines enable you, for instance, to connect to PIA's VPN server using the keyboard shortcut `Command-Shift-s`, while `Command-Shift-d` disconnects from the VPN server.
+These few lines of code enable you to connect to PIA's VPN server using the keyboard shortcut `Command-Shift-s`, while `Command-Shift-d` disconnects from the VPN server. Even if you're not familiar with writing code, there are countless ready-made examples available, and even without having ever written any code, it is easy to adjust the above lines to, for instance, connect to your VPN server using `x` in your hotkey instead of `d`, right?
 
 
 But let's focus on EnhancedSpaces for now.

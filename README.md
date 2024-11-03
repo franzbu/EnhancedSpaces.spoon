@@ -409,7 +409,7 @@ There you can also see how to change the menu entries to your preferred language
 
 
 ### Advanced Menu Features
-You can use modifier keys to unlock additional menu features. Below you can see the default modifiers; as usual you don't need to add these lines to your `init.lua` unless you want to make changes:
+For advanced users it is possible to use modifier keys to unlock additional menu features. Below you can see the default modifiers; as usual you don't need to add these lines to your `init.lua` unless you want to make changes:
 
 ```lua
   -- menu: modifier keys to unlock additional features
@@ -420,7 +420,7 @@ You can use modifier keys to unlock additional menu features. Below you can see 
 
 `menuModifier3` by default combines `menuModifier1` and `menuModifier2`, in other words, `menuModifier3` means pressing `menuModifier1` and `menuModifier2` at the same time. 
 
-Below you can see what effect the modifier keys have; the first menu entry, 'mSpaces', reveals its whole potential without any additional modifier keys and is therefore not in this list:
+Below you can see what effect the modifier keys have; the first menu entry, 'mSpaces', reveals its whole potential without any additional modifier keys and is therefore not listed:
 
 #### Menu - 'active window'
 - no modifier: toggle reference of active window on selected mSpace; if all mSpaces end up unchecked, the window is minimized

@@ -545,7 +545,7 @@ You can change the size of the area of the window where the vertical-only and ho
 
 ### Mission Control
 
-For Apple's Mission Control (F3) to present windows on mSpaces adequately, enable `System Settings` - `Desktop & Dock` - `Group windows by application` (close to bottom).
+For Apple's Mission Control (F3) to show windows on mSpaces adequately, enable `System Settings` - `Desktop & Dock` - `Group windows by application`.
 
 ### Hyper Key
 

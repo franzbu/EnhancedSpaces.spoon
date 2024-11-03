@@ -1,5 +1,9 @@
 # v0.9.22
 
+* ironing out of some bugs
+   
+# v0.9.22
+
 * added optional popup menus
 
 # v0.9.21

@@ -179,15 +179,14 @@ function EnhancedSpaces:new(options)
 
   -- watchdogs
   hs.window.filter.default:subscribe(hs.window.filter.windowNotOnScreen, function()
-    --if w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' then
-      --print('windowNotOnScreen')
+    hs.timer.doAfter(0.001, function() --delay necessary, otherwise 'filter_all = hs.window.filter.new()' not ready after two Orion windows are 'cmd-q'-ed at once
       refreshWinMSpaces()
       adjustWindowsOncurrentMS()
       if #windowsOnCurrentMS > 0 then
         windowsOnCurrentMS[1]:focus() -- activate last active window on current mSpace when closing/minimizing one
       end
       refreshMenu()
-    --end
+    end)
   end)
   hs.window.filter.default:subscribe(hs.window.filter.windowOnScreen, function(w)
     if w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' then
@@ -211,8 +210,9 @@ function EnhancedSpaces:new(options)
   -- 'window_filter.lua' has been adjusted: 'local WINDOWMOVED_DELAY=0.01' instead of '0.5' to get rid of delay
   filter = dofile(hs.spoons.resourcePath('lib/window_filter.lua'))
   filter.default:subscribe(filter.windowMoved, function(w)
-    --print('windowMoved')
+    print('windowMoved')
     adjustWinFrame()
+    refreshWinMSpaces()
     refreshMenu()
   end)
   -- next 2 filters are for avoiding calling assignMS(_, true) after unfullscreening a window ('windowOnScreen' is called for each window after a window gets unfullscreened)
@@ -525,8 +525,8 @@ function createToggleRefMenu()
         winMSpaces[getWinMSpacesPos(w)].mspace[i] = not winMSpaces[getWinMSpacesPos(w)].mspace[i]
       end
       -- triggering watchdog 'windowMoved' as workaround for initiating refreshMenu() for menu to get updated (immediately)
-      winMSpaces[getWinMSpacesPos(w)].win:move({ 1, 0 }, nil, false, 0)
-      winMSpaces[getWinMSpacesPos(w)].win:move({ -1, 0 }, nil, false, 0)
+      w:move({ -1, 0 }, nil, false, 0)
+      w:move({ 1, 0 }, nil, false, 0)
 
       refreshWinMSpaces()
       goToSpace(currentMSpace)
@@ -535,14 +535,13 @@ function createToggleRefMenu()
   return winMenu
 end
 function winPresent(w, i)
-  if w ~= nil and winMSpaces[getWinMSpacesPos(w)] ~= nil then --winMSpaces[getWinMSpacesPos(w)].mspace[i] ~= nil then
+  --if w ~= nil and winMSpaces[getWinMSpacesPos(w)] ~= nil then --winMSpaces[getWinMSpacesPos(w)].mspace[i] ~= nil then
     if winMSpaces[getWinMSpacesPos(w)].mspace[i] then
       return true
     else
       return false
     end
-  end
-  return false
+  --end
 end
 
 
@@ -580,7 +579,7 @@ function createSendWindowMenuItems(w)
           winMSpaces[getWinMSpacesPos(w)].mspace[currentMSpace] = false
           winMSpaces[getWinMSpacesPos(w)].mspace[i] = true
         end
-        goToSpace(currentMSpace)
+        goToSpace(currentMSpace) --refresh
       end })
     end
   end
@@ -1359,12 +1358,18 @@ end
 
 function refreshWinMSpaces()
   winAll = filter_all:getWindows() --hs.window.sortByFocused)
+  --[[
+  print('=======')
+  for i = 1, #winAll do
+    print(winAll[i]:application():name())
+  end
+  --]]
   -- delete closed or minimized windows
-  ::again::
+  --::again::
   for i = 1, #winMSpaces do
     if not isIncludedWinAll(winMSpaces[i].win) then
       table.remove(winMSpaces, i)
-      goto again
+      --goto again
     end
   end
 

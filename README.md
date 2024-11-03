@@ -40,7 +40,7 @@ end)
 These few lines enable you, for instance, to connect to PIA's VPN server using the keyboard shortcut `Command-Shift-s`, while `Command-Shift-d` disconnects from the VPN server.
 
 
-But let's focus on EnhancedSpaces now.
+But let's focus on EnhancedSpaces for now.
 
 ## Installation
 To install EnhancedSpaces, after downloading and unzipping, move the folder to `~/.hammerspoon/Spoons` and make sure the name of the folder is `EnhancedSpaces.spoon`. 

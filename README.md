@@ -83,7 +83,7 @@ Clicking the EnhancedSpaces' icon in the menubar, a menu like this appears - the
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu1.png' width='200'>
 
-'mSpaces' lets you switch to another mSpace:
+`mSpaces` lets you switch to another mSpace:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu2.png' width='200'>
 
@@ -91,17 +91,17 @@ The next entry in the menu is dynamic and always shows the currently active wind
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu3.png' width='200'>
 
-Selecting 'Send Window' you get a list of all windows on the current mSpace and the mSpaces you can send the window to:
+Selecting `Send Window` you get a list of all windows on the current mSpace and the mSpaces you can send the window to:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu4.png' width='350'>
 
-Selecting 'Get Windows' you get a list of all open windows that are not on your current mSpace, and by selecting one, it is moved to the current mSpace.
+Selecting `Get Windows` you get a list of all open windows that are not on your current mSpace, and by selecting one, it is moved to the current mSpace.
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu5.png' width='300'>
 
-It is also possible to use popup menus; more in the section [Additional Features - Popup Menus](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#popup-menus)
+It is also possible to use popup menus with the same functionality; more about that in the section [Additional Features - Popup Menus](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#popup-menus)
 
-For advanced use cases, such as pressing a modifier key while sending a window to another mSpace in order to tag along with the window, i.e., move to that mSpace, see section [Menus - Additional Features](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#menus---additional-features).
+For additional functionality of the menu by means of holding a modifier key, such as creating references of a window on all mSpaces at once or tagging along with a window while sending it to another mSpace, see section [Menus - Additional Features](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#menus---additional-features).
 
 ## Keyboard Shortcuts
 You can use the Control (`ctrl` - in case you're interested in an elegant alternative in the form of a hyper key, see section [Notes - Hyper Key](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#hyper-key)) and the `s` keys to cycle through your mSpaces. To cycle in reverse order, press `ctrl` and `a`. To move the active window to the mSpace on the left (right) and switch there alongside with the window, press `ctrl` and `q` (`w`); to move the window while staying on the current mSpace press `ctrl` and `d` (`ctrl` and `f`).

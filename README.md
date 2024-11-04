@@ -77,7 +77,7 @@ Reload Hammerspoon's configuration (menubar icon - 'Reload Config') and you're r
 ## Menu
 EnhancedSpaces provides keyboard shortcuts for all its features; however, sometimes it is convenient to do whatever you want to do by means of a menu -  even more so at the beginning when your muscle memory regarding the new hotkeys might not yet be at its peak.
 
-EnhancedSpaces' menu can be used to switch to another mSpace, to move a window to another mSpace, to get a window from anther mSpace, and to create references of windows, i.e., the already mentioned 'sticky windows', which means that the same window can be shown on more than one mSpace - more about references in the section [Same Window on More Than One mSpace](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#same-window-on-more-than-one-mspace).
+EnhancedSpaces' menu can be used to switch to another mSpace with or without moving a window along, to get a window from anther mSpace, and to create references of windows, i.e., the already mentioned 'sticky windows', which means that the same window can be shown on more than one mSpace - more about references of windows in the section [Same Window on More Than One mSpace](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#same-window-on-more-than-one-mspace).
 
 Clicking the EnhancedSpaces' icon in the menubar, a menu like this appears - the `2` on top of the screenshot represents the icon EnhancedSpaces shows on macOS' menubar; it indicates the current mSpace:
 

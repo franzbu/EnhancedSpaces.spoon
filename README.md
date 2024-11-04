@@ -83,7 +83,7 @@ Clicking the EnhancedSpaces' icon in the menubar, a menu like this appears - the
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu1.png' width='200'>
 
-The title 'mSpace' lets you switch to another mSpace:
+'mSpaces' lets you switch to another mSpace:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu2.png' width='200'>
 
@@ -91,7 +91,7 @@ The next entry in the menu is dynamic and always shows the currently active wind
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu3.png' width='200'>
 
-In 'Send Window' you get a list of all windows on the current mSpace and the mSpaces you can send the window to:
+Selecting 'Send Window' you get a list of all windows on the current mSpace and the mSpaces you can send the window to:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu4.png' width='350'>
 

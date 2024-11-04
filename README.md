@@ -21,7 +21,7 @@ EnhancedSpaces has simplified my life with macOS. May it do the same for you.
 ## Introduction
 EnhancedSpaces requires [Hammerspoon](https://www.hammerspoon.org/), so if you haven't used the latter yet, go ahead with its installation.
 
-A few words about Hammerspoon: When it comes to macOS, the obvious choice for developing an application like this is Swift; however, I discovered Hammerspoon some time ago, have fallen in love with it for its power and flexibility and wanted to see how far it can carry me in regard to a project like this, and my love for Hammerspoon has only deepened. 
+A few words about Hammerspoon: When it comes to macOS, the obvious choice for developing an application like this is Swift; however, I discovered Hammerspoon with its Lua-based approach some time ago, have fallen in love with it for its power and flexibility and wanted to see how far it can carry me in regard to a project like this, and my love for Hammerspoon has only deepened. 
 
 I can recommend Hammerspoon beyond it being a requirement for EnhancedSpaces; it's one of the most powerful and flexible ways to add value to your macOS in virtually any respect. Care for an example?
 

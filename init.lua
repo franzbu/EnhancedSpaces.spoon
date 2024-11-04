@@ -210,7 +210,7 @@ function EnhancedSpaces:new(options)
   -- 'window_filter.lua' has been adjusted: 'local WINDOWMOVED_DELAY=0.01' instead of '0.5' to get rid of delay
   filter = dofile(hs.spoons.resourcePath('lib/window_filter.lua'))
   filter.default:subscribe(filter.windowMoved, function(w)
-    print('windowMoved')
+    --print('windowMoved')
     adjustWinFrame()
     refreshWinMSpaces()
     refreshMenu()

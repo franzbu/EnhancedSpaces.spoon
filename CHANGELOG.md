@@ -1,6 +1,6 @@
-# v0.9.22
+# v0.9.23
 
-* ironing out of some bugs
+* ironing out some bugs
    
 # v0.9.22
 

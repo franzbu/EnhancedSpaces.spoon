@@ -101,6 +101,8 @@ Selecting 'Get Windows' you get a list of all open windows that are not on your 
 
 It is also possible to use popup menus; more in the section [Additional Features - Popup Menus](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#popup-menus)
 
+For advanced use cases, such as pressing a modifier key while sending a window to another mSpace in order to tag along with the window, i.e., move to that mSpace, see section [Menus - Additional Features](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#menus---additional-features).
+
 ## Keyboard Shortcuts
 You can use the Control (`ctrl` - in case you're interested in an elegant alternative in the form of a hyper key, see section [Notes - Hyper Key](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#hyper-key)) and the `s` keys to cycle through your mSpaces. To cycle in reverse order, press `ctrl` and `a`. To move the active window to the mSpace on the left (right) and switch there alongside with the window, press `ctrl` and `q` (`w`); to move the window while staying on the current mSpace press `ctrl` and `d` (`ctrl` and `f`).
 

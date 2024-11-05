@@ -424,15 +424,15 @@ Optionally, you can open a popup menu at the position of your pointing device; t
   mbGetPopupKey = 't', -- default: nil
 ```
 
-`mbMainPopupKey` opens the main popup menu:
+`popupModifier - mbMainPopupKey` opens the main popup menu:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/popup3.png' width='250'>
 
-With `mbSendPopupKey` only 'Send Windows' pops up:
+With `popupModifier - mbSendPopupKey` only 'Send Windows' pops up:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/popup2.png' width='300'>
 
-Likewise, with `mbGetPopupKey` only 'Get Windows' pops up:
+Likewise, with `popupModifier - mbGetPopupKey` only 'Get Windows' pops up:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/popup1.png' width='300'>
 

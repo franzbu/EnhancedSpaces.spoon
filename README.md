@@ -410,7 +410,7 @@ Likewise, with `mbGetPopupKey` only 'Get Windows' pops up:
 If you set any of the three keys for the according popup menus to `nil` (or don't include them in your `init.lua` to begin with), consequently they are not available. `popupModifier` needs to be set for either of the popup menus to be shown.
 
 
-### Advanced Menu Features
+## Advanced Menu Features
 For advanced users it is possible to use modifier keys to unlock additional menu features. Below you can see the default modifiers; as usual you don't need to add these lines to your `init.lua` unless you want to make changes:
 
 ```lua
@@ -441,7 +441,7 @@ Below you can see what effect the modifier keys have; the first menu entry, 'mSp
 - menuModifier1: create reference of selected window on current mSpace; references on other mSpaces remain unaffected
 - menuModifier2: create reference of selected window on all mSpaces
 
-#### Changing Menu Titles
+### Changing Menu Titles
 For changing the menu titles, for example, to have them in your preferred language, you can add the following line to your `init.lua`; this is an example for changing the menu tiles to German:
 
 ```lua
@@ -453,7 +453,7 @@ With the entries above, you get the following menu:
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu6.png' width='200'>
 
 
-#### Including Hammerspoon's Menu in EnhancedSpaces'
+### Including Hammerspoon's Menu in EnhancedSpaces'
 For including Hammerspoon's menu in EnhancedSpaces', add the following to your `init.lua`: 
 
 ```lua

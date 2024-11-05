@@ -101,7 +101,10 @@ Selecting `Get Windows` you get a list of all open windows that are not on your 
 
 It is also possible to use popup menus; more about that in the section [Additional Features - Popup Menus](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#popup-menus)
 
-For additional functionality of the menu by means of holding a modifier key, for example, creating references of a window on all mSpaces at once or tagging along with a window while sending it to another mSpace, see section [Menus - Additional Features](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#menus---additional-features).
+For additional functionality there is the possibility of using modifier keys with your menus, for example, for creating references of a window on all mSpaces at once or tagging along with a window while sending it to another mSpace, see section [Advanced Menu Features](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#advanced-menu-features).
+
+There you can also see how to change the menu entries to your preferred language. Additionally, you are shown how to include Hammerspoon's menu into EnhancedSpaces', which has the additional benefit of making Hammerspoon's redundant, i.e., you can remove it from your menubar.
+
 
 ## Keyboard Shortcuts
 You can use the Control (`ctrl` - in case you're interested in an elegant alternative in the form of a hyper key, see section [Notes - Hyper Key](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#hyper-key)) and the `s` keys to cycle through your mSpaces. To cycle in reverse order, press `ctrl` and `a`. To move the active window to the mSpace on the left (right) and switch there alongside with the window, press `ctrl` and `q` (`w`); to move the window while staying on the current mSpace press `ctrl` and `d` (`ctrl` and `f`).
@@ -382,7 +385,7 @@ In case you would also like to pre-define the position of the window on the mSpa
 
 
 ### Popup Menus
-Optionally, you can open a popup menu at the position of your pointing device; this can be enabled by adding the following lines to `init.lua` (as popup menus are not enabled by default in EnhancedSpaces, these lines always need to be added in case you want to use a popup menu in EnhancedSpaces, not only if you would like to make changes to the keyboard shortcuts.):
+Optionally, you can open a popup menu at the position of your pointing device; this can be enabled by adding the following lines to `init.lua` (as popup menus are not enabled by default in EnhancedSpaces, these lines always need to be added in case you want to use a popup menu in EnhancedSpaces, not only if you would like to make changes to the keyboard shortcuts):
 
 ```lua
   -- popup menu
@@ -404,12 +407,7 @@ Likewise, with `mbGetPopupKey` only 'Get Windows' pops up:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/popup1.png' width='300'>
 
-If you set any of the three keys for the according popup menus to `nil` (or don't include them in your `init.lua` to begin with), consequently they are not available. `popupModifier` apparently needs to be set for either of the popup menus to be shown.
-
-### Menus - Additional Features
-For more advanced use cases, there is the possibility of using modifier keys with your menu, for example, you can tag along with the window when sending it to another mSpace - more about these additional features in the section [Advanced Menu Features](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#advanced-menu-features). 
-
-There you can also see how to change the menu entries to your preferred language. Additionally, you are shown how to include Hammerspoon's menu into EnhancedSpaces', which has the additional benefit of making Hammerspoon's redundant, i.e., you can remove it from your menubar.
+If you set any of the three keys for the according popup menus to `nil` (or don't include them in your `init.lua` to begin with), consequently they are not available. `popupModifier` needs to be set for either of the popup menus to be shown.
 
 
 ### Advanced Menu Features
@@ -455,7 +453,7 @@ With the entries above, you get the following menu:
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu6.png' width='200'>
 
 
-### Including Hammerspoon's Menu in EnhancedSpaces'
+#### Including Hammerspoon's Menu in EnhancedSpaces'
 For including Hammerspoon's menu in EnhancedSpaces', add the following to your `init.lua`: 
 
 ```lua

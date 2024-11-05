@@ -490,7 +490,7 @@ For including Hammerspoon's menu in EnhancedSpaces', add the following to your `
   hammerspoonMenu = true, -- default: false
 ```
 
-This results in the following changes to EnhancedSpaces' menu:
+This results in the following addition to EnhancedSpaces' menu:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs2.png' width='360'>
 

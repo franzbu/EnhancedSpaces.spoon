@@ -469,7 +469,7 @@ This also means that Hammerspoon's menu icon in the menubar becomes redundant an
 
 
 #### Changing Hammerspoon's Menu Titles
-For changing the menu titles regarding Hammerspoon, for example, to have them in your preferred language, you can add the following to your `init.lua`; this is an example for having the menu tiles in German:
+For changing the menu titles regarding Hammerspoon, for example, to show them in your preferred language, you can add the following to your `init.lua`; this is an example for having the menu tiles in German:
 
 ```lua
   hammerspoonMenuItems = { reload = 'Konfiguration neu laden', open = 'Konfiguration öffnen', console = 'Konsole', preferences = 'Einstellungen', about = 'Über Hammerspoon', update = 'Nach Updates suchen', relaunch = 'Hammerspoon neu starten', quit = 'Hammerspoon beenden' }, -- default: { reload = 'Reload Config', open = 'Open Config', console = 'Console', preferences = 'Preferences', about = 'About Hammerspoon', update = 'Check for Updates...', relaunch = 'Relaunch Hammerspoon', quit = 'Quit Hammerspoon' }
@@ -488,11 +488,11 @@ For enabling the feature that each mSpace can have an individual wallpaper, add 
   customWallpaper = true, -- default: false
 ```
 
-Add the wallpapers you would like to use in the format `jpg` to the folder `~/.hammerspoon/Spoons/EnhancedSpaces.spoon/wallpapers/`. Name each file after the reflective mSpace, for example, `1.jpg` or `e.jpg`. If you name one file `default.jpg`, that wallpaper will be used whenever there is an mSpace with no pre-assigned wallpaper.
+Add the wallpapers you would like to use in the format `jpg` to the folder `~/.hammerspoon/Spoons/EnhancedSpaces.spoon/wallpapers/`, and name each file after the corresponding mSpace, for example, `1.jpg` or `e.jpg`. If you name one file `default.jpg`, that wallpaper will be used whenever there is an mSpace with no corresponding wallpaper.
 
 
 ### Padding
-In case you would like to change the padding in between the windows and/or between the windows and the screen border, add the following lines with values to your liking to your `init.lua`:
+In case you would like to change the gap in between the windows and/or between the windows and the screen border, add the following lines with values to your liking to your `init.lua`:
 
 ```lua
   -- padding between window borders and screen borders

@@ -56,7 +56,7 @@ mkdir -p ~/.hammerspoon/Spoons && git clone https://github.com/franzbu/EnhancedS
 ## Setting up EnhancedSpaces
 Configuring EnhancedSpaces involves rolling up your sleeves and grabbing your keyboard. While it is understandable that even some power users prefer a graphical user interface for adjusting the preferences of their applications, there are substantial advantages to text based configuration that are easily missed unless experienced first-hand, one of them being that once you've got the knack of it, making changes to your setup is straightforward and efficient, which are reasons you have become interested in EnhancedSpaces in the first place, am I right?
 
-So once you've installed EnhancedSpaces, add the following lines to the file `~/.hammerspoon/init.lua` (you can edit that file by clicking the Hammerspoon icon in your menubar and choosing 'Open Config'). You might want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you will be greeted with:
+So once you've installed EnhancedSpaces, add the following lines to the file `~/.hammerspoon/init.lua` (you can edit that file by clicking the Hammerspoon icon in your menu bar and choosing 'Open Config'). You might want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you will be greeted with:
 
 ```lua
 local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')
@@ -72,14 +72,14 @@ If you would just like to go ahead without delay, as an alternative to manually 
 echo -e "local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')\nEnhancedSpaces:new({\nmSpaces = { '1', '2', '3' }, -- default { '1', '2', '3' }\nstartmSpace = 'E', -- default 2\n})" >> ~/.hammerspoon/init.lua
 ```
 
-Reload Hammerspoon's configuration (menubar icon - 'Reload Config') and you're ready to go; it is normal that the start of EnhancedSpaces takes a couple of seconds. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let's find out what you can do with your new mSpaces.
+Reload Hammerspoon's configuration (menu bar icon - 'Reload Config') and you're ready to go; it is normal that the start of EnhancedSpaces takes a couple of seconds. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let's find out what you can do with your new mSpaces.
 
 ## Menu
 EnhancedSpaces provides keyboard shortcuts for handling windows and mSpaces; however, sometimes it is convenient to do whatever you want to do by means of a menu -  even more so at the beginning when your muscle memory regarding the new hotkeys might not yet be at its peak.
 
 EnhancedSpaces' menu can be used to switch to another mSpace with or without moving a window along, to get a window from another mSpace, and to create references of windows, i.e., the already mentioned 'sticky windows', which means that the same window can be shown on more than one mSpace - more about references of windows in the section [Same Window on More Than One mSpace](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#same-window-on-more-than-one-mspace).
 
-Clicking EnhancedSpaces' icon in the menubar, a menu like this appears - the `2` on top of the screenshot represents the icon EnhancedSpaces shows on macOS' menubar; it indicates the current mSpace:
+Clicking EnhancedSpaces' icon in the menu bar, a menu like this appears - the `2` on top of the screenshot represents the icon EnhancedSpaces shows on macOS' menu bar; it indicates the current mSpace:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu1.png' width='200'>
 
@@ -103,7 +103,7 @@ It is also possible to use popup menus; more about that in the section [Addition
 
 For additional functionality there is the possibility of using modifier keys with your menus, for example, for creating references of a window on all mSpaces at once or tagging along with a window while sending it to another mSpace, see section [Advanced Menu Features](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#advanced-menu-features).
 
-There you can also see how to change the menu entries to your preferred language. Additionally, you are shown how to include Hammerspoon's menu into EnhancedSpaces', which has the additional benefit of making Hammerspoon's redundant, i.e., you can remove it from your menubar.
+There you can also see how to change the menu entries to your preferred language. Additionally, you are shown how to include Hammerspoon's menu into EnhancedSpaces', which has the additional benefit of making Hammerspoon's redundant, i.e., you can remove it from your menu bar.
 
 
 ## Keyboard Shortcuts
@@ -351,7 +351,7 @@ If you want EnhancedSpaces to automatically move windows to specific mSpaces whe
   }, -- default: nil
 ```
 
-The way appications are assigend to certain mSpaces should be self-explanatory. To get the names of the applications of currently open windows, you can run the following command in Hammerspoon's Console:
+The way applications are assigned to certain mSpaces should be self-explanatory. To get the names of the applications of currently open windows, you can run the following command in Hammerspoon's Console:
 
 ```lua
 for _, v in pairs(hs.window.filter.default:getWindows()) do print(v:application():name()) end
@@ -494,7 +494,7 @@ This results in the following addition to EnhancedSpaces' menu:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs2.png' width='360'>
 
-This also means that Hammerspoon's menu icon in the menubar becomes redundant and can be disabled. To do so, uncheck 'Show menu icon' in Hammerspoon's preferences.
+This also means that Hammerspoon's menu icon in the menu bar becomes redundant and can be disabled. To do so, uncheck 'Show menu icon' in Hammerspoon's preferences.
 
 
 #### Changing Hammerspoon's Menu Titles
@@ -526,14 +526,14 @@ To have the additional possibility of precisely resizing windows horizontally-on
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/demo1.gif' />
 
-At the center of the window there is an erea (M) where you can also move the window by pressing the right mouse button. 
+At the center of the window there is an area (M) where you can also move the window by pressing the right mouse button. 
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/resizing.png' width='200'>
 
 
 #### Manual Resizing of Windows - Margin
 
-You can change the size of the area of the window where the vertical-only and horizontal-only resizing applies by adjusting the option `margin`. The standard value is 0.3, which corresponds to 30 percent. Changing it to 0 would result in deactivating this options, changing it to 1 would result in making resizing this way impossible.
+You can change the size of the area of the window where the vertical-only and horizontal-only resizing applies by adjusting the option `margin`. The standard value is 0.3, which corresponds to 30 percent. Changing it to 0 would result in deactivating this option, changing it to 1 would result in making resizing this way impossible.
 
 ```lua
   -- adjust the size of the area with vertical-only and horizontal-only resizing:
@@ -548,7 +548,7 @@ For Apple's Mission Control (F3) to show windows on mSpaces adequately, enable `
 
 ### Hyper Key
 
-EnhancedSpaces (and other applications for that matter) can benefit from setting the Caps Lock key up as so called hyper key, which basically means that you get an additional modifier key, as - due to the impracticality of pressing four modifier keys at once - you would hardly be tempted to use such a combination otherwise. 
+EnhancedSpaces (and other applications for that matter) can benefit from setting the Caps Lock key up as so-called hyper key, which basically means that you get an additional modifier key, as - due to the impracticality of pressing four modifier keys at once - you would hardly be tempted to use such a combination otherwise. 
 
 Among others, you can use the application [Karabiner Elements](https://karabiner-elements.pqrs.org/) for the creation of your hyper key.
 

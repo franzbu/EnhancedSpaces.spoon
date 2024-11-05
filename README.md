@@ -588,7 +588,7 @@ For this modification, go to 'Settings - Complex Modifications', click 'Add your
 }
 ```
 
-Now you can assign your newly created `hyper key` for any modifiers in EnhancedSpaces, for example, `modifierMS`:
+Now you can assign your newly created `hyper key` to any modifiers in EnhancedSpaces, for example, `modifierMS`:
 
 
 ```lua

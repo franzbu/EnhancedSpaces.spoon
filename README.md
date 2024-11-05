@@ -383,6 +383,35 @@ In case you would also like to pre-define the position of the window on the mSpa
 'a1', for example, represents the left half of your screen, 'a2' the right half of your screen. To get the entire list of possible scenarios, see section [Automatic Resizing and Positioning - Keyboard](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#automatic-resizing-and-positioning---keyboard) above.
 
 
+### Custom Wallpapers
+For enabling the feature that each mSpace can have an individual wallpaper, add the following to your `init.lua`: 
+
+```lua
+  -- individual wallpaper for each mSpace
+  customWallpaper = true, -- default: false
+```
+
+Add the wallpapers you would like to use in the format `jpg` to the folder `~/.hammerspoon/Spoons/EnhancedSpaces.spoon/wallpapers/`, and name each file after the corresponding mSpace, for example, `1.jpg` or `e.jpg`. If you name one file `default.jpg`, that wallpaper will be used whenever there is an mSpace with no corresponding wallpaper.
+
+
+### Padding
+In case you would like to change the gap in between the windows and/or between the windows and the screen border, add the following lines with values to your liking to your `init.lua`:
+
+```lua
+  -- padding between window borders and screen borders
+  outerPadding = 5, -- default: 5
+  -- padding between window borders
+  innerPadding = 5, -- default: 5
+```
+
+### Change Size, Color, and Opacity of Grid Indicators
+
+In case you would like to change the size, color and/or opacity of the grid indicators, add the following line to your `init.lua`, and alter the values according to your liking. The values, in the same order, stand for: width, red, green, blue, opacity. Apart from the width, values between 0 and 1 are possible:
+
+```lua
+  -- change grid indicators:
+    gridIndicator = { 20, 1, 0, 0, 0.33 }, -- default: { 20, 1, 0, 0, 0.33 }, 
+```
 
 ### Popup Menus
 Optionally, you can open a popup menu at the position of your pointing device; this can be enabled by adding the following lines to `init.lua` (as popup menus are not enabled by default in EnhancedSpaces, these lines always need to be added in case you want to use a popup menu in EnhancedSpaces, not only if you would like to make changes to the keyboard shortcuts):
@@ -480,40 +509,8 @@ This is the resulting menu:
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs2_ger.png' width='360'>
 
 
-### Custom Wallpapers
-For enabling the feature that each mSpace can have an individual wallpaper, add the following to your `init.lua`: 
-
-```lua
-  -- individual wallpaper for each mSpace
-  customWallpaper = true, -- default: false
-```
-
-Add the wallpapers you would like to use in the format `jpg` to the folder `~/.hammerspoon/Spoons/EnhancedSpaces.spoon/wallpapers/`, and name each file after the corresponding mSpace, for example, `1.jpg` or `e.jpg`. If you name one file `default.jpg`, that wallpaper will be used whenever there is an mSpace with no corresponding wallpaper.
-
-
-### Padding
-In case you would like to change the gap in between the windows and/or between the windows and the screen border, add the following lines with values to your liking to your `init.lua`:
-
-```lua
-  -- padding between window borders and screen borders
-  outerPadding = 5, -- default: 5
-  -- padding between window borders
-  innerPadding = 5, -- default: 5
-```
-
-### Change Size, Color, and Opacity of Grid Indicators
-
-In case you would like to change the size, color and/or opacity of the grid indicators, add the following line to your `init.lua`, and alter the values according to your liking. The values, in the same order, stand for: width, red, green, blue, opacity. Apart from the width, values between 0 and 1 are possible:
-
-```lua
-  -- change grid indicators:
-    gridIndicator = { 20, 1, 0, 0, 0.33 }, -- default: { 20, 1, 0, 0, 0.33 }, 
-```
-
 ## Experimental Features
-
 ### Manual Resizing
-
 Similar to manual moving, manual resizing of windows can be initiated by positioning the cursor in any area of a window. Be aware, though, that windows of certain applications can behave in a sluggish way when being resized. 
 
 In order to enable manual resizing, add the following to your `init.lua`:

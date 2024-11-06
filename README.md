@@ -498,7 +498,7 @@ This also means that Hammerspoon's menu icon in the menu bar becomes redundant a
 
 
 #### Changing Hammerspoon's Menu Titles
-For changing the menu titles regarding Hammerspoon, for example, to show them in your preferred language, you can add the following to your `init.lua`; this is an example for having the menu tiles in German:
+For changing the menu titles regarding Hammerspoon, for example, to show them in your preferred language, you can add the following to your `init.lua`; this is an example for changing the menu titles to German:
 
 ```lua
   hammerspoonMenuItems = { reload = 'Konfiguration neu laden', open = 'Konfiguration öffnen', console = 'Konsole', preferences = 'Einstellungen', about = 'Über Hammerspoon', update = 'Nach Updates suchen', relaunch = 'Hammerspoon neu starten', quit = 'Hammerspoon beenden' }, -- default: { reload = 'Reload Config', open = 'Open Config', console = 'Console', preferences = 'Preferences', about = 'About Hammerspoon', update = 'Check for Updates...', relaunch = 'Relaunch Hammerspoon', quit = 'Quit Hammerspoon' }

@@ -99,7 +99,7 @@ Selecting `Get Windows` you get a list of all open windows that are not on your 
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu5.png' width='300'>
 
-It is also possible to use popup menus; more about that in the section [Additional Features - Popup Menus](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#popup-menus)
+It is also possible to use popup menus; more about that feature in the section [Additional Features - Popup Menus](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#popup-menus)
 
 For additional functionality there is the possibility of using modifier keys with your menus, for example, for creating references of a window on all mSpaces at once or tagging along with a window while sending it to another mSpace, see section [Advanced Menu Features](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#advanced-menu-features).
 

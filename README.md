@@ -43,7 +43,7 @@ These few lines of code enable you to connect to one of PIA's VPN servers using 
 But let's focus on EnhancedSpaces for now.
 
 ## Installation
-To install EnhancedSpaces, after downloading and unzipping, move the folder to `~/.hammerspoon/Spoons` and make sure the name of the folder is `EnhancedSpaces.spoon`. 
+Download EnhancedSpaces and move the folder to `~/.hammerspoon/Spoons`. Make sure the name of the folder is `EnhancedSpaces.spoon`. 
 
 As an alternative to manually downloading and installing, you can run the following terminal command:
 

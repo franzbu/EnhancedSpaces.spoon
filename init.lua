@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.24"
+EnhancedSpaces.version = "0.9.25"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -559,13 +559,15 @@ end
 -- move windows from current mSpace to another one: no modifier: stay; menuModifier1: keep reference on current mSpace; menuModifier2: references on all mSpaces; menuModifier3 to tag along
 function createSendWindowMenu()
   moveWindowMenu = {}
-  for i = 1, #windowsOnCurrentMS do 
-    table.insert(moveWindowMenu, { title = windowsOnCurrentMS[i]:application():name(),
-      menu = createSendWindowMenuItems(windowsOnCurrentMS[i])
-    } )
-    --if #createSendWindowMenuItems(windowsOnCurrentMS[i]) == 0 then
-    --  moveWindowMenu[i].disabled = true
-    --end
+  for i = 1, #windowsOnCurrentMS do
+    if windowsOnCurrentMS[i] ~= nil then
+      table.insert(moveWindowMenu, { title = windowsOnCurrentMS[i]:application():name(),
+        menu = createSendWindowMenuItems(windowsOnCurrentMS[i])
+      } )
+      --if #createSendWindowMenuItems(windowsOnCurrentMS[i]) == 0 then
+      --  moveWindowMenu[i].disabled = true
+      --end
+    end
   end
   return moveWindowMenu
 end
@@ -602,55 +604,52 @@ end
 function createGetWindowMenu()
   getWindowMenu = {}
   for i = 1, #windowsNotOnCurrentMS do
-    table.insert(getWindowMenu, { title = windowsNotOnCurrentMS[i]:application():name(), fn = function(mods) 
-      local w = winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].win
-      local indexTrue -- get index of mSpace where window is currently active to set frame accordingly
-      for j = 1, #mspaces do 
-        if winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] then
-          indexTrue = j
-          break
-        end
-      end
-
-      for j = 1, #mspaces do -- copy frame from currently mSpace where window is currently active to other mSpaces
-        winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].frame[j] = winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].frame[indexTrue]
-      end
-
-      winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[currentMSpace] = true -- to be done in all cases
-      if modifiersEqual(getModifiersMods(mods), menuModifier1) then -- menuModifier1: get reference of window
-        -- add window to current mSpace
-        -- nothing to be done ATM
-      elseif modifiersEqual(getModifiersMods(mods), menuModifier2) then -- menuModifier2: put reference on all mSpaces
-        -- put reference on all other mSpaces
-        for j = 1, #mspaces do
-          if j ~= currentMSpace then --and not winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] then
-            winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] = true -- add window to other mSpaces          
+    if windowsNotOnCurrentMS[i] ~= nil then
+      table.insert(getWindowMenu, { title = windowsNotOnCurrentMS[i]:application():name(), fn = function(mods) 
+        local w = winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].win
+        local indexTrue -- get index of mSpace where window is currently active to set frame accordingly
+        for j = 1, #mspaces do 
+          if winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] then
+            indexTrue = j
+            break
           end
         end
-      else -- no modifier: move window to current mSpace and delete reference on all other mSpaces
-        for j = 1, #mspaces do
-          if j ~= currentMSpace and winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] then
-            winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] = false -- remove window from other mSpaces          
+
+        for j = 1, #mspaces do -- copy frame from currently mSpace where window is currently active to other mSpaces
+          winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].frame[j] = winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].frame[indexTrue]
+        end
+
+        winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[currentMSpace] = true -- to be done in all cases
+        if modifiersEqual(getModifiersMods(mods), menuModifier1) then -- menuModifier1: get reference of window
+          -- add window to current mSpace
+          -- nothing to be done ATM
+        elseif modifiersEqual(getModifiersMods(mods), menuModifier2) then -- menuModifier2: put reference on all mSpaces
+          -- put reference on all other mSpaces
+          for j = 1, #mspaces do
+            if j ~= currentMSpace then --and not winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] then
+              winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] = true -- add window to other mSpaces          
+            end
+          end
+        else -- no modifier: move window to current mSpace and delete reference on all other mSpaces
+          for j = 1, #mspaces do
+            if j ~= currentMSpace and winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] then
+              winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] = false -- remove window from other mSpaces          
+            end
           end
         end
-      end
-      --[[
-      print('----------')
-      for j = 1, #mspaces do
-        print(winMSpaces[getWinMSpacesPos(w)].mspace[j])
-        print(tostring((winMSpaces[getWinMSpacesPos(w)].frame[j])))
-      end
-      --]]
+        --[[
+        print('----------')
+        for j = 1, #mspaces do
+          print(winMSpaces[getWinMSpacesPos(w)].mspace[j])
+          print(tostring((winMSpaces[getWinMSpacesPos(w)].frame[j])))
+        end
+        --]]
 
-      goToSpace(currentMSpace)
-      w:focus()
-    end })
-   
-
+        goToSpace(currentMSpace)
+        w:focus()
+      end })
     end
-
-  
-
+  end
   return getWindowMenu
 end
 -- end menu
@@ -1380,6 +1379,7 @@ function refreshWinMSpaces()
   for i = 1, #winMSpaces do
     if not isIncludedWinAll(winMSpaces[i].win) then
       table.remove(winMSpaces, i)
+      break
       --goto again
     end
   end

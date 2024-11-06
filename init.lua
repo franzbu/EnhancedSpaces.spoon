@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.23"
+EnhancedSpaces.version = "0.9.24"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -104,6 +104,8 @@ function EnhancedSpaces:new(options)
 
   customWallpaper = options.customWallpaper or false
 
+  startupCommands = options.startupCommands or nil
+
   local moveResize = {
     disabledApps = tableToMap(options.disabledApps or {}),
     moveStartMouseEvent = buttonNameToEventType('left', 'moveMouseButton'),
@@ -179,7 +181,7 @@ function EnhancedSpaces:new(options)
 
   -- watchdogs
   hs.window.filter.default:subscribe(hs.window.filter.windowNotOnScreen, function()
-    hs.timer.doAfter(0.00001, function() --delay necessary, otherwise 'filter_all = hs.window.filter.new()' not ready after two Orion windows are 'cmd-q'-ed at once
+    hs.timer.doAfter(0.000000001, function() --delay necessary, otherwise 'filter_all = hs.window.filter.new()' not ready after two Orion windows are 'cmd-q'-ed at once
       refreshWinMSpaces()
       adjustWindowsOncurrentMS()
       if #windowsOnCurrentMS > 0 then
@@ -210,7 +212,7 @@ function EnhancedSpaces:new(options)
   -- 'window_filter.lua' has been adjusted: 'local WINDOWMOVED_DELAY=0.01' instead of '0.5' to get rid of delay
   filter = dofile(hs.spoons.resourcePath('lib/window_filter.lua'))
   filter.default:subscribe(filter.windowMoved, function(w)
-    --print('windowMoved')
+    print('windowMoved')
     adjustWinFrame()
     refreshWinMSpaces()
     refreshMenu()
@@ -361,6 +363,13 @@ function EnhancedSpaces:new(options)
     hs.hotkey.bind(popupModifier, mbGetPopupKey, function()
       mbGetPopup:popupMenu(hs.mouse.absolutePosition() )
     end)
+  end
+
+  -- startup commands
+  if startupCommands ~= nil then
+    for i = 1, #startupCommands do
+      os.execute(startupCommands[i])
+    end
   end
 
   adjustWindowsOncurrentMS()
@@ -525,6 +534,8 @@ function createToggleRefMenu()
         winMSpaces[getWinMSpacesPos(w)].mspace[i] = not winMSpaces[getWinMSpacesPos(w)].mspace[i]
       end
       -- triggering watchdog 'windowMoved' as workaround for initiating refreshMenu() for menu to get updated (immediately)
+      --winMSpaces[getWinMSpacesPos(w)].win:move({ 1, 0 }, nil, false, 0)
+      --winMSpaces[getWinMSpacesPos(w)].win:move({ -1, 0 }, nil, false, 0)
       w:move({ -1, 0 }, nil, false, 0)
       w:move({ 1, 0 }, nil, false, 0)
 

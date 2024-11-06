@@ -612,4 +612,4 @@ In case you have used the option `openAppMSpace`, disable or remove that section
   ]]
 ```
 
-Stop Hammerspoon, delete the folder `EnhancedSpaces.spoon` in `~/.hammerspoon/Spoons/` and delete the corresponding section in your `init.lua`.
+As final step, stop Hammerspoon, delete the folder `EnhancedSpaces.spoon` in `~/.hammerspoon/Spoons/` and remove the corresponding section from your `init.lua`.

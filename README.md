@@ -3,19 +3,19 @@
 ## First Things First: Who Is This For? 
 Every power user sooner or later feels restricted by the confinements of a single screen; there simply is no such thing as too much space. While a multi-monitor arrangement provides the obvious remedy, there is a lesser-known solution that enables the user to have more than one screen on a single display: virtual screens or, as they are called in EnhancedSpaces, mSpaces.
 
-mSpaces have both advantages and disadvantages compared to multi-monitor arrangements. One of the advantages is that you don't have to move your head around to look at another screen - using mSpaces is like swapping the monitors of your multi-monitor arrangement around by means of a keyboard shortcut. An obvious disadvantage of mSpaces is that you can't look at more than one of them at a time; however, while every user prefers a different workflow, for many of us that is simply unnecessary, in which case the benefits of mSpaces comfortably outweigh the downsides.
+mSpaces have both advantages and disadvantages compared to multi-monitor arrangements. One of the advantages is that you don't have to move your head around to look at another screen - using mSpaces is like swapping the monitors of your multi-monitor arrangement around by means of a keyboard shortcut. An obvious disadvantage of mSpaces is that you can't look at more than one of them at a time; however, while every user prefers a different workflow, for many of us looking at two or more monitors simultaneously is simply unnecessary, in which case the benefits of mSpaces comfortably outweigh the downsides.
 
 I dismissed my multi-monitor arrangement in favor of virtual screens years ago and have never looked back. I started out using macOS' built-in Spaces and used add-ons that added improvements to Apple's rather simplistic approach. However, Apple hasn't seemed to care for developers of add-ons for Spaces, and recent changes to macOS made the use of any of the tools that provided deeper integration, such as moving windows to other Spaces or switching to other Spaces, impossible.
 
-So I decided to develop an application that manages virtual screens and windows in the way I've always wanted, while remaining independent from Apple's Spaces and as such not being affected by any potential future changes Apple might apply to its Spaces. 
+So I decided to develop an application that manages virtual screens and windows in the way I've always wanted, while remaining independent from Apple's Spaces and as such not being affected by any potential future changes Apple might apply. 
 
 One of the main goals has been to make managing mSpaces and windows straightforward, intuitive, and efficient. EnhancedSpaces' features include switching and moving windows between mSpaces, using sticky windows, and automatically opening windows on predefined mSpaces in predefined sizes and positions. Using EnhancedSpaces' window manager, you can resize and rearrange your windows with keyboard shortcuts or with your mouse or trackpad. Additionally, the most common features are also available via menu or popup menu.
 
-Focus has also been given to making EnhancedSpaces enjoyable to use. You can customize EnhancedSpaces' menus to your needs, for example changing them to your preferred language, and set individual wallpapers for your mSpaces.
+Focus has also been given to making EnhancedSpaces enjoyable to use. You can customize EnhancedSpaces' menus to your needs, for example change them to your preferred language, and set individual wallpapers for your mSpaces.
 
 So who is EnhancedSpaces for? It is made for power users who like working on multiple screens and want something more efficient and customizable than Apple's Spaces and at the same time prefer more flexibility than tiling window managers such as AeroSpace can offer. 
 
-EnhancedSpaces has simplified my life with macOS. May it do the same for you.
+EnhancedSpaces has both increased my productivity and simplified my life with macOS. May it do the same for you.
 
 
 ## Introduction

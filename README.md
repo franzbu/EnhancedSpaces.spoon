@@ -510,6 +510,24 @@ This is the resulting menu:
 
 
 ## Experimental Features
+### Startup Commands
+In case you would like EnhancedSpaces to start commands at startup, you can add those commands do your `init.lua`:
+
+```lua
+  startupCommands = {
+    'command 1',
+    'command 2',
+    'command 3',
+  }
+```
+Below is an example for starting [JankyBorders](https://github.com/FelixKratz/JankyBorders):
+
+```lua
+  startupCommands = {
+    '/opt/homebrew/bin/borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0 &',
+  }
+```
+
 ### Manual Resizing
 Similar to manual moving, manual resizing of windows can be initiated by positioning the cursor in any area of a window. Be aware, though, that windows of certain applications can behave in a sluggish way when being resized. 
 

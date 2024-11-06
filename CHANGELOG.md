@@ -1,6 +1,10 @@
+# v0.9.25
+
+* bug fixes
+  
 # v0.9.24
 
-* added option for startup commands
+*added option for startup commands
 
 # v0.9.23
 

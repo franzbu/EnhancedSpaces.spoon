@@ -332,7 +332,7 @@ As long as windows are resized - or moved within the borders of the screen -, it
 * modifier2 (`ctrl`, unless changed): 
   * The difference to `modifier1` is that your screen has an underlying 3x3 grid. This means that windows snap into the left third of the 3x3 grid when dragged beyond the left screen border and into the right third when dragged beyond the right screen border. If `ctrl` is released before the left mouse button, the window will snap into the middle column.
  
-* The moment dragging of a window starts, indicators will appear around the borders of the screen to guide you. For changing the appearance of the indicators, see section [Additional Features - Change Size, Color, and Opacity of Grid Indicators](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#change-size-color-and-opacity-of-grid-indicators) below.
+* The moment dragging of a window starts, indicators will appear around the borders of the screen to guide you. For changing the appearance of the indicators, see section [Additional Features - Change Size, Color, and Opacity of Grid Indicators](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#change-size-color-and-opacity-of-grid-indicators).
 
 - Additional feature: If you drag a window beyond the bottom border of the screen and `modifier1` or `modifier2` is released before the left mouse button, the window will be minimized.
 
@@ -380,7 +380,7 @@ In case you would also like to pre-define the position of the window on the mSpa
   },
 ```
 
-'a1', for example, represents the left half of your screen, 'a2' the right half of your screen. To get the entire list of possible scenarios, see section [Automatic Resizing and Positioning - Keyboard](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#automatic-resizing-and-positioning---keyboard) above.
+'a1', for example, represents the left half of your screen, 'a2' the right half of your screen. To get the entire list of possible scenarios, see section [Automatic Resizing and Positioning - Keyboard](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#automatic-resizing-and-positioning---keyboard).
 
 
 ### Custom Wallpapers

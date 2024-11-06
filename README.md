@@ -13,7 +13,7 @@ One of the main goals has been to make managing mSpaces and windows straightforw
 
 Focus has also been given to making EnhancedSpaces enjoyable to use. You can customize EnhancedSpaces' menus to your needs, for example change them to your preferred language, and set individual wallpapers for your mSpaces.
 
-So who is EnhancedSpaces for? It is made for power users who like working on multiple screens and want something more efficient and customizable than Apple's Spaces and at the same time prefer more flexibility than tiling window managers such as AeroSpace can offer. 
+So who is EnhancedSpaces for? It is made for power users who like working on multiple screens and want something more efficient and customizable than Apple's Spaces and at the same time prefer more flexibility than tiling window managers can offer. 
 
 EnhancedSpaces has both increased my productivity and simplified my life with macOS. May it do the same for you.
 

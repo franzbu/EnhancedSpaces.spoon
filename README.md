@@ -69,7 +69,7 @@ EnhancedSpaces:new({
 If you would just like to go ahead without delay, as an alternative to manually editing `init.lua`, the following terminal command will do that for you; here the default options are used, which means that mSpaces `1`, `2`, and `3`are created, with `2` as default mSpace:
 
 ```bash
-echo -e "local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')\nEnhancedSpaces:new({\nmSpaces = { '1', '2', '3' }, -- default { '1', '2', '3' }\nstartmSpace = 'E', -- default 2\n})" >> ~/.hammerspoon/init.lua
+echo -e "local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')\nEnhancedSpaces:new({\nmSpaces = { '1', '2', '3' }, -- default { '1', '2', '3' }\nstartmSpace = '2', -- default 2\n})" >> ~/.hammerspoon/init.lua
 ```
 
 Reload Hammerspoon's configuration (menu bar icon - 'Reload Config') and you're ready to go; it is normal that the start of EnhancedSpaces takes a couple of seconds. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let's find out what you can do with your new mSpaces.

@@ -175,19 +175,17 @@ function EnhancedSpaces:new(options)
         -- move window to middle of the current mSpace
         winMSpaces[getWinMSpacesPos(winAll[i])].frame[currentMSpace] = hs.geometry.point(max.w / 2 - winAll[i]:frame().w / 2, max.h / 2 - winAll[i]:frame().h / 2, winAll[i]:frame().w, winAll[i]:frame().h)                                                                                      -- put window in middle of screen
       end
-      refreshMenu()
     end
   end
 
-  -- watchdogs --fb
+  -- watchdogs
   hs.window.filter.default:subscribe(hs.window.filter.windowNotOnScreen, function()
     --print('____________ windowNotOnScreen ____________' )--.. w:application():name())
-    hs.timer.doAfter(0.000000001, function() --delay necessary, otherwise 'filter_all = hs.window.filter.new()' not ready after two Orion windows are 'cmd-q'-ed at once
+    hs.timer.doAfter(0.000000001, function() --delay necessary, otherwise 'filter_all = hs.window.filter.new()' not ready after closing of windows (in certain situations)
       refreshWinMSpaces()
       if #windowsOnCurrentMS > 0 then
         windowsOnCurrentMS[1]:focus() -- activate last active window on current mSpace when closing/minimizing one
       end
-      --refreshMenu()
       refreshWinMSpaces()
     end)
   end)
@@ -207,7 +205,6 @@ function EnhancedSpaces:new(options)
       --print('____________ windowFocused ____________')
       refreshWinMSpaces()
       cmdTabFocus()
-      --refreshMenu()
     end
   end)
   -- 'window_filter.lua' has been adjusted: 'local WINDOWMOVED_DELAY=0.01' instead of '0.5' to get rid of delay
@@ -216,7 +213,6 @@ function EnhancedSpaces:new(options)
     --print('____________ windowMoved ____________')
     adjustWinFrame()
     refreshWinMSpaces()
-    --refreshMenu()
   end)
   -- next 2 filters are for avoiding calling assignMS(_, true) after unfullscreening a window ('windowOnScreen' is called for each window after a window gets unfullscreened)
   enteredFullscreen = false
@@ -553,7 +549,7 @@ function winPresent(w, i)
       return false
     end
   end
-  return false --fb 
+  return false
 end
 
 
@@ -1352,15 +1348,8 @@ end
 
 
 function refreshWinMSpaces()
-  winAll = filter_all:getWindows() --hs.window.sortByFocused)
-  --[[
-  print('=======')
-  for i = 1, #winAll do
-    print(winAll[i]:application():name())
-  end
-  print('______ done _______')
-  --]]
-  -- delete closed or minimized windows
+  winAll = filter_all:getWindows()
+  -- remove minimized/closed windows
   ::again::
   for i = 1, #winMSpaces do
     if not isIncludedWinAll(winMSpaces[i].win) then
@@ -1479,7 +1468,6 @@ function derefWinMSpace()
     fwin:minimize()
   end
   goToSpace(currentMSpace) -- refresh
-  --refreshMenu()
   refreshWinMSpaces()
 end
 

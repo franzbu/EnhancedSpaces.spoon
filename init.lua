@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.26"
+EnhancedSpaces.version = "0.9.27"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -184,7 +184,6 @@ function EnhancedSpaces:new(options)
     --print('____________ windowNotOnScreen ____________' )--.. w:application():name())
     hs.timer.doAfter(0.000000001, function() --delay necessary, otherwise 'filter_all = hs.window.filter.new()' not ready after two Orion windows are 'cmd-q'-ed at once
       refreshWinMSpaces()
-      --adjustWindowsOncurrentMS()
       if #windowsOnCurrentMS > 0 then
         windowsOnCurrentMS[1]:focus() -- activate last active window on current mSpace when closing/minimizing one
       end
@@ -244,7 +243,6 @@ function EnhancedSpaces:new(options)
   switcher.ui.textSize = 16
   switcher.ui.showSelectedTitle = false
   hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[1], function()
-    --adjustWindowsOncurrentMS()
     switcher:next(windowsOnCurrentMS)
   end)
   hs.hotkey.bind({modifierSwitchWin[1], 'shift' }, modifierSwitchWinKeys[1], function()
@@ -341,7 +339,6 @@ function EnhancedSpaces:new(options)
     end
   end
   if modifierSnap3 ~= '' then
-    hs.alert.show(hs.inspect(modifierSnap3))
     for i = 1, #modifierSnapKeys[3] do
       hs.hotkey.bind(modifierSnap3, modifierSnapKeys[3][i][2], function()
         hs.window.focusedWindow():move(snap(modifierSnapKeys[3][i][1]), nil, false, 0)
@@ -374,8 +371,6 @@ function EnhancedSpaces:new(options)
     end
   end
 
-  --adjustWindowsOncurrentMS()
-  --refreshMenu()
   refreshWinMSpaces()
   goToSpace(currentMSpace) -- refresh
   moveResize.clickHandler:start()
@@ -401,7 +396,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.26\n\n\n\nIncreases your productivity so you have more time for what really matters in life.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.27\n\n\n\nIncreases your productivity so you have more time for what really matters in life.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),
@@ -558,7 +553,7 @@ function winPresent(w, i)
       return false
     end
   end
-  return false
+  return false --fb 
 end
 
 
@@ -1333,24 +1328,9 @@ function goToSpace(target)
   end
 
   refreshWinMSpaces()
-  --adjustWindowsOncurrentMS()
 
   if #windowsOnCurrentMS > 0 then
     windowsOnCurrentMS[1]:focus() -- activate last used window on new mSpace
-  end
-end
-
-
--- prepare table windowsOnCurrentMS with windows on current mSpace for lib.window_switcher; also prepare windowsNotOnCurrentMS
-function adjustWindowsOncurrentMS()
-  windowsOnCurrentMS = {}
-  windowsNotOnCurrentMS = {}
-  for i = 1, #winAll do
-    if winMSpaces[getWinMSpacesPos(winAll[i])].mspace[currentMSpace] then
-      table.insert(windowsOnCurrentMS, winAll[i])
-    else
-      table.insert(windowsNotOnCurrentMS, winAll[i])
-    end
   end
 end
 
@@ -1381,12 +1361,12 @@ function refreshWinMSpaces()
   print('______ done _______')
   --]]
   -- delete closed or minimized windows
-  --::again::
+  ::again::
   for i = 1, #winMSpaces do
     if not isIncludedWinAll(winMSpaces[i].win) then
       table.remove(winMSpaces, i)
-      break
-      --goto again
+      --break
+      goto again
     end
   end
 
@@ -1425,8 +1405,6 @@ function refreshWinMSpaces()
     end
   end
 
-  -- adjust table with windows on current mSpace for lib.window_switcher
-  --adjustWindowsOncurrentMS()
   hs.timer.doAfter(0.25, function()
     refreshMenu()
   end)

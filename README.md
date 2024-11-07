@@ -511,7 +511,7 @@ This is the resulting menu:
 
 ## Experimental Features
 ### Startup Commands
-In case you would like EnhancedSpaces to start commands at startup, you can add those commands do your `init.lua`:
+In case you would like EnhancedSpaces to execute commands at startup, you can add those commands do your `init.lua`:
 
 ```lua
   startupCommands = {

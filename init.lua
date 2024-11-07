@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.25"
+EnhancedSpaces.version = "0.9.26"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -179,20 +179,22 @@ function EnhancedSpaces:new(options)
     end
   end
 
-  -- watchdogs
+  -- watchdogs --fb
   hs.window.filter.default:subscribe(hs.window.filter.windowNotOnScreen, function()
+    --print('____________ windowNotOnScreen ____________' )--.. w:application():name())
     hs.timer.doAfter(0.000000001, function() --delay necessary, otherwise 'filter_all = hs.window.filter.new()' not ready after two Orion windows are 'cmd-q'-ed at once
       refreshWinMSpaces()
-      adjustWindowsOncurrentMS()
+      --adjustWindowsOncurrentMS()
       if #windowsOnCurrentMS > 0 then
         windowsOnCurrentMS[1]:focus() -- activate last active window on current mSpace when closing/minimizing one
       end
-      refreshMenu()
+      --refreshMenu()
+      refreshWinMSpaces()
     end)
   end)
   hs.window.filter.default:subscribe(hs.window.filter.windowOnScreen, function(w)
     if w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' then
-      --print('windowOnScreen' .. w:application():name())
+      --print('____________ windowOnScreen ____________' .. w:application():name())
       if not enteredFullscreen then
         refreshWinMSpaces()
         moveMiddleAfterMouseMinimized(w)
@@ -203,28 +205,28 @@ function EnhancedSpaces:new(options)
   end)
   hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(w)
     if w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' then
-      --print('windowFocused')
+      --print('____________ windowFocused ____________')
       refreshWinMSpaces()
       cmdTabFocus()
-      refreshMenu()
+      --refreshMenu()
     end
   end)
   -- 'window_filter.lua' has been adjusted: 'local WINDOWMOVED_DELAY=0.01' instead of '0.5' to get rid of delay
   filter = dofile(hs.spoons.resourcePath('lib/window_filter.lua'))
   filter.default:subscribe(filter.windowMoved, function(w)
-    --print('windowMoved')
+    --print('____________ windowMoved ____________')
     adjustWinFrame()
     refreshWinMSpaces()
-    refreshMenu()
+    --refreshMenu()
   end)
   -- next 2 filters are for avoiding calling assignMS(_, true) after unfullscreening a window ('windowOnScreen' is called for each window after a window gets unfullscreened)
   enteredFullscreen = false
   filter.default:subscribe(filter.windowFullscreened, function()
-    --print('windowFullscreened')
+    --print('____________ windowFullscreened ____________')
     enteredFullscreen = true
   end)
   filter.default:subscribe(filter.windowUnfullscreened, function(w)
-    --print('windowUnfullscreened')
+    --print('____________ windowUnfullscreened ____________')
     hs.timer.doAfter(0.5, function() -- not necessary with 'hs.window.filter.default:subscribe...'
       w:focus()
       enteredFullscreen = false
@@ -242,7 +244,7 @@ function EnhancedSpaces:new(options)
   switcher.ui.textSize = 16
   switcher.ui.showSelectedTitle = false
   hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[1], function()
-    adjustWindowsOncurrentMS()
+    --adjustWindowsOncurrentMS()
     switcher:next(windowsOnCurrentMS)
   end)
   hs.hotkey.bind({modifierSwitchWin[1], 'shift' }, modifierSwitchWinKeys[1], function()
@@ -372,8 +374,9 @@ function EnhancedSpaces:new(options)
     end
   end
 
-  adjustWindowsOncurrentMS()
-  refreshMenu()
+  --adjustWindowsOncurrentMS()
+  --refreshMenu()
+  refreshWinMSpaces()
   goToSpace(currentMSpace) -- refresh
   moveResize.clickHandler:start()
   return moveResize
@@ -398,7 +401,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.25\n\n\n\nIncreases your productivity so you have more time for what really matters in life.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.26\n\n\n\nIncreases your productivity so you have more time for what really matters in life.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),
@@ -508,51 +511,54 @@ function createToggleRefMenu()
   local w = hs.window.focusedWindow()
   winMenu = {}
   for i = 1, #mspaces do
-    table.insert(winMenu, { title = mspaces[i], checked = winPresent(w, i), fn = function(mods)
-      if modifiersEqual(getModifiersMods(mods), menuModifier3) then -- menuModifier3: only the selected item enabled and moving there
-        for j = 1, #mspaces do
-          if j == i then
-            winMSpaces[getWinMSpacesPos(w)].mspace[j] = true
-          else
-            winMSpaces[getWinMSpacesPos(w)].mspace[j] = false
+    table.insert(winMenu, {
+      title = mspaces[i], 
+      checked = winPresent(w, i),
+      fn = function(mods)
+        if modifiersEqual(getModifiersMods(mods), menuModifier3) then -- menuModifier3: only the selected item enabled and moving there
+          for j = 1, #mspaces do
+            if j == i then
+              winMSpaces[getWinMSpacesPos(w)].mspace[j] = true
+            else
+              winMSpaces[getWinMSpacesPos(w)].mspace[j] = false
+            end
           end
-        end
-        goToSpace(i)
-      elseif modifiersEqual(getModifiersMods(mods), menuModifier1) then -- menuModifier1: remove all refs except the one clicked
-        for j = 1, #mspaces do
-          if j == i then
-            winMSpaces[getWinMSpacesPos(w)].mspace[j] = true
-          else
-            winMSpaces[getWinMSpacesPos(w)].mspace[j] = false
+          goToSpace(i)
+        elseif modifiersEqual(getModifiersMods(mods), menuModifier1) then -- menuModifier1: remove all refs except the one clicked
+          for j = 1, #mspaces do
+            if j == i then
+              winMSpaces[getWinMSpacesPos(w)].mspace[j] = true
+            else
+              winMSpaces[getWinMSpacesPos(w)].mspace[j] = false
+            end
           end
+        elseif modifiersEqual(getModifiersMods(mods), menuModifier2) then -- menuModifier2: put refs on all mSpaces
+          for j = 1, #mspaces do
+            winMSpaces[getWinMSpacesPos(w)].mspace[j] = true
+          end
+        else  -- toggle (true and false on current mSpace)
+          winMSpaces[getWinMSpacesPos(w)].mspace[i] = not winMSpaces[getWinMSpacesPos(w)].mspace[i]
         end
-      elseif modifiersEqual(getModifiersMods(mods), menuModifier2) then -- menuModifier2: put refs on all mSpaces
-        for j = 1, #mspaces do
-          winMSpaces[getWinMSpacesPos(w)].mspace[j] = true
-        end
-      else  -- toggle (true and false on current mSpace)
-        winMSpaces[getWinMSpacesPos(w)].mspace[i] = not winMSpaces[getWinMSpacesPos(w)].mspace[i]
-      end
-      -- triggering watchdog 'windowMoved' as workaround for initiating refreshMenu() for menu to get updated (immediately)
-      --winMSpaces[getWinMSpacesPos(w)].win:move({ 1, 0 }, nil, false, 0)
-      --winMSpaces[getWinMSpacesPos(w)].win:move({ -1, 0 }, nil, false, 0)
-      w:move({ -1, 0 }, nil, false, 0)
-      w:move({ 1, 0 }, nil, false, 0)
+        -- triggering watchdog 'windowMoved' as workaround for initiating refreshMenu() for menu to get updated (immediately)
+        w:move({ -1, 0 }, nil, false, 0)
+        w:move({ 1, 0 }, nil, false, 0)
 
-      refreshWinMSpaces()
-      goToSpace(currentMSpace)
-    end })
+        refreshWinMSpaces()
+        goToSpace(currentMSpace)
+      end,
+    })
   end
   return winMenu
 end
 function winPresent(w, i)
-  --if w ~= nil and winMSpaces[getWinMSpacesPos(w)] ~= nil then --winMSpaces[getWinMSpacesPos(w)].mspace[i] ~= nil then
+  if w ~= nil and winMSpaces[getWinMSpacesPos(w)] ~= nil then
     if winMSpaces[getWinMSpacesPos(w)].mspace[i] then
       return true
     else
       return false
     end
-  --end
+  end
+  return false
 end
 
 
@@ -561,12 +567,10 @@ function createSendWindowMenu()
   moveWindowMenu = {}
   for i = 1, #windowsOnCurrentMS do
     if windowsOnCurrentMS[i] ~= nil then
-      table.insert(moveWindowMenu, { title = windowsOnCurrentMS[i]:application():name(),
-        menu = createSendWindowMenuItems(windowsOnCurrentMS[i])
-      } )
-      --if #createSendWindowMenuItems(windowsOnCurrentMS[i]) == 0 then
-      --  moveWindowMenu[i].disabled = true
-      --end
+      table.insert(moveWindowMenu, {
+       title = windowsOnCurrentMS[i]:application():name(),
+        menu = createSendWindowMenuItems(windowsOnCurrentMS[i]),
+      })
     end
   end
   return moveWindowMenu
@@ -575,25 +579,33 @@ function createSendWindowMenuItems(w)
   moveWindowMenuItems = {}
   for i = 1, #mspaces do
     if winMSpaces[getWinMSpacesPos(w)].mspace[i] then
-      table.insert(moveWindowMenuItems, { title = mspaces[i], checked = true, disabled = true })
+      table.insert(moveWindowMenuItems, { 
+        title = mspaces[i], 
+        checked = true, 
+        disabled = true,
+      })
     else 
-      table.insert(moveWindowMenuItems, { title = mspaces[i], checked = winMSpaces[getWinMSpacesPos(w)].mspace[i], fn = function(mods)
-        if modifiersEqual(getModifiersMods(mods), menuModifier3) then -- menuModifier3: move to new mSpace alongside with window
-          winMSpaces[getWinMSpacesPos(w)].mspace[currentMSpace] = false
-          winMSpaces[getWinMSpacesPos(w)].mspace[i] = true
-          goToSpace(i)
-        elseif modifiersEqual(getModifiersMods(mods), menuModifier1) then -- menuModifier1: keep reference on current mSpace
-          winMSpaces[getWinMSpacesPos(w)].mspace[i] = true
-        elseif modifiersEqual(getModifiersMods(mods), menuModifier2) then -- menuModifier2: references on all mSpaces
-          for j = 1, #mspaces do
-            winMSpaces[getWinMSpacesPos(w)].mspace[j] = true
+      table.insert(moveWindowMenuItems, { 
+        title = mspaces[i], 
+        checked = winMSpaces[getWinMSpacesPos(w)].mspace[i],
+        fn = function(mods)
+          if modifiersEqual(getModifiersMods(mods), menuModifier3) then -- menuModifier3: move to new mSpace alongside with window
+            winMSpaces[getWinMSpacesPos(w)].mspace[currentMSpace] = false
+            winMSpaces[getWinMSpacesPos(w)].mspace[i] = true
+            goToSpace(i)
+          elseif modifiersEqual(getModifiersMods(mods), menuModifier1) then -- menuModifier1: keep reference on current mSpace
+            winMSpaces[getWinMSpacesPos(w)].mspace[i] = true
+          elseif modifiersEqual(getModifiersMods(mods), menuModifier2) then -- menuModifier2: references on all mSpaces
+            for j = 1, #mspaces do
+              winMSpaces[getWinMSpacesPos(w)].mspace[j] = true
+            end
+          else -- no modifier: stay on screen
+            winMSpaces[getWinMSpacesPos(w)].mspace[currentMSpace] = false
+            winMSpaces[getWinMSpacesPos(w)].mspace[i] = true
           end
-        else -- no modifier: stay on screen
-          winMSpaces[getWinMSpacesPos(w)].mspace[currentMSpace] = false
-          winMSpaces[getWinMSpacesPos(w)].mspace[i] = true
-        end
-        goToSpace(currentMSpace) --refresh
-      end })
+          goToSpace(currentMSpace) --refresh
+        end,
+      })
     end
   end
   return moveWindowMenuItems
@@ -605,49 +617,42 @@ function createGetWindowMenu()
   getWindowMenu = {}
   for i = 1, #windowsNotOnCurrentMS do
     if windowsNotOnCurrentMS[i] ~= nil then
-      table.insert(getWindowMenu, { title = windowsNotOnCurrentMS[i]:application():name(), fn = function(mods) 
-        local w = winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].win
-        local indexTrue -- get index of mSpace where window is currently active to set frame accordingly
-        for j = 1, #mspaces do 
-          if winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] then
-            indexTrue = j
-            break
-          end
-        end
-
-        for j = 1, #mspaces do -- copy frame from currently mSpace where window is currently active to other mSpaces
-          winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].frame[j] = winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].frame[indexTrue]
-        end
-
-        winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[currentMSpace] = true -- to be done in all cases
-        if modifiersEqual(getModifiersMods(mods), menuModifier1) then -- menuModifier1: get reference of window
-          -- add window to current mSpace
-          -- nothing to be done ATM
-        elseif modifiersEqual(getModifiersMods(mods), menuModifier2) then -- menuModifier2: put reference on all mSpaces
-          -- put reference on all other mSpaces
-          for j = 1, #mspaces do
-            if j ~= currentMSpace then --and not winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] then
-              winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] = true -- add window to other mSpaces          
+      table.insert(getWindowMenu, { 
+        title = windowsNotOnCurrentMS[i]:application():name(),
+        fn = function(mods) 
+          local w = winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].win
+          local indexTrue -- get index of mSpace where window is currently active to set frame accordingly
+          for j = 1, #mspaces do 
+            if winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] then
+              indexTrue = j
+              break
             end
           end
-        else -- no modifier: move window to current mSpace and delete reference on all other mSpaces
-          for j = 1, #mspaces do
-            if j ~= currentMSpace and winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] then
-              winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] = false -- remove window from other mSpaces          
+          for j = 1, #mspaces do -- copy frame from currently mSpace where window is currently active to other mSpaces
+            winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].frame[j] = winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].frame[indexTrue]
+          end
+          winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[currentMSpace] = true -- to be done in all cases
+          if modifiersEqual(getModifiersMods(mods), menuModifier1) then -- menuModifier1: get reference of window
+            -- add window to current mSpace
+            -- nothing to be done ATM
+          elseif modifiersEqual(getModifiersMods(mods), menuModifier2) then -- menuModifier2: put reference on all mSpaces
+            -- put reference on all other mSpaces
+            for j = 1, #mspaces do
+              if j ~= currentMSpace then --and not winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] then
+                winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] = true -- add window to other mSpaces          
+              end
+            end
+          else -- no modifier: move window to current mSpace and delete reference on all other mSpaces
+            for j = 1, #mspaces do
+              if j ~= currentMSpace and winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] then
+                winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].mspace[j] = false -- remove window from other mSpaces          
+              end
             end
           end
-        end
-        --[[
-        print('----------')
-        for j = 1, #mspaces do
-          print(winMSpaces[getWinMSpacesPos(w)].mspace[j])
-          print(tostring((winMSpaces[getWinMSpacesPos(w)].frame[j])))
-        end
-        --]]
-
-        goToSpace(currentMSpace)
-        w:focus()
-      end })
+          goToSpace(currentMSpace)
+          w:focus()
+        end,
+      })
     end
   end
   return getWindowMenu
@@ -1328,7 +1333,7 @@ function goToSpace(target)
   end
 
   refreshWinMSpaces()
-  adjustWindowsOncurrentMS()
+  --adjustWindowsOncurrentMS()
 
   if #windowsOnCurrentMS > 0 then
     windowsOnCurrentMS[1]:focus() -- activate last used window on new mSpace
@@ -1373,6 +1378,7 @@ function refreshWinMSpaces()
   for i = 1, #winAll do
     print(winAll[i]:application():name())
   end
+  print('______ done _______')
   --]]
   -- delete closed or minimized windows
   --::again::
@@ -1407,9 +1413,23 @@ function refreshWinMSpaces()
       end
     end
   end
+
+  -- refresh tables with windows on current mSpace/other mSpaces
+  windowsOnCurrentMS = {}
+  windowsNotOnCurrentMS = {}
+  for i = 1, #winAll do
+    if winMSpaces[getWinMSpacesPos(winAll[i])].mspace[currentMSpace] then
+      table.insert(windowsOnCurrentMS, winAll[i])
+    else
+      table.insert(windowsNotOnCurrentMS, winAll[i])
+    end
+  end
+
   -- adjust table with windows on current mSpace for lib.window_switcher
-  adjustWindowsOncurrentMS()
-  --refreshMenu()
+  --adjustWindowsOncurrentMS()
+  hs.timer.doAfter(0.25, function()
+    refreshMenu()
+  end)
 end
 
 
@@ -1461,7 +1481,7 @@ function refWinMSpace(target) -- add 'copy' of window on current mspace to targe
   winMSpaces[getWinMSpacesPos(fwin)].mspace[target] = true
   -- copy frame from original mSpace
   winMSpaces[getWinMSpacesPos(fwin)].frame[target] = winMSpaces[getWinMSpacesPos(fwin)].frame[currentMSpace]
-  refreshMenu()
+  --()
   refreshWinMSpaces()
 end
 
@@ -1481,7 +1501,7 @@ function derefWinMSpace()
     fwin:minimize()
   end
   goToSpace(currentMSpace) -- refresh
-  refreshMenu()
+  --refreshMenu()
   refreshWinMSpaces()
 end
 

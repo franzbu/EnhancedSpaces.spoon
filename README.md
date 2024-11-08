@@ -518,7 +518,7 @@ In case you would like EnhancedSpaces to execute commands at startup, you can ad
     'command 1',
     'command 2',
     'command 3',
-  }
+  },
 ```
 Below is an example for starting [JankyBorders](https://github.com/FelixKratz/JankyBorders):
 

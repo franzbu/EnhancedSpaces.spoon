@@ -1,3 +1,7 @@
+# v0.9.27.1
+
+* bug fix: menu item 'Get Window' works as expected
+
 # v0.9.27
 
 * bug fixes

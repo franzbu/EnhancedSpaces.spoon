@@ -183,6 +183,12 @@ As before, the following line represents the default modifier keys, and you don'
 
 To delete a reference, press `modifierReference` and `0`. In case you're 'de-referencing' the last representation of a window on your mSpaces, the window gets minimized.
 
+In case you'd like to change the key for de-referencing a window, for example, if you want to add an mSpace entitled '0', you can add the following line to your `init.lua` and change it to your liking:
+
+``` lua
+  deReferenceKey = '0', -- default: '0'
+
+```
 
 ### Switching Between Windows
 Apart from switching between all of your open windows, for which you can continue using macOS' integrated window switcher (Command-Tab) or the third party switcher of your choice, such as [AltTab](https://alt-tab-macos.netlify.app/), additional possibilities have been implemented in EnhancedSpaces for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').

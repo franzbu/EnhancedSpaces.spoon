@@ -89,7 +89,7 @@ Clicking EnhancedSpaces' icon in the menu bar, a menu like this appears; it indi
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu2.png' width='200'>
 
 
-`Swap`, as its name implies, lets you swap two windows, which means that they take one another's size and position:
+`Swap`, as its name implies, lets you swap two windows, which means that they take each other's size and position:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_swap.png' width='200'>
 

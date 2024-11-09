@@ -91,7 +91,7 @@ Clicking EnhancedSpaces' icon in the menu bar, a menu like this appears; it indi
 
 `Swap`, as its name implies, lets you swap two windows, which means that they take each other's size and position:
 
-<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_swap.png' width='200'>
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_swap.png' width='380'>
 
 
 The next entry in the menu is dynamic and shows the currently active window (in case there is no active window, for example, when you're on an empty mSpace, this entry is empty by design); here you can toggle the references of the window (more about this feature in the section [Same Window on More Than One mSpace](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#same-window-on-more-than-one-mspace)).

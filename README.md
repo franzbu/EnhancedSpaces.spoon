@@ -506,7 +506,7 @@ Below you can see what effect the modifier keys have; the first menu entry, 'mSp
 For changing the menu titles, for example, to have them in your preferred language, you can add the following line to your `init.lua`; this is an example for changing the menu tiles to German:
 
 ```lua
-menuTitles = { swap = 'Vertauschen', send = 'Senden', get = 'Holen', help = 'Hilfe', about = 'Über' }, -- default: { send = 'Send Window', get = 'Get Window', help = 'Help', about = 'About' }
+menuTitles = { swap = 'Vertauschen', send = 'Senden', get = 'Holen', help = 'Hilfe', about = 'Über' }, -- default: { swap = 'Swap', send = 'Send Window', get = 'Get Window', help = 'Help', about = 'About' }
 ```
 
 With the entries above, you get the following menu:

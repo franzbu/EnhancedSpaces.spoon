@@ -9,7 +9,7 @@ I dismissed my multi-monitor arrangement in favor of virtual screens years ago a
 
 So I decided to develop an application that manages virtual screens and windows the way I've always wanted, while remaining independent from Apple's Spaces and as such not being affected by any potential future changes Apple might apply. 
 
-One of the main goals has been to make managing mSpaces and windows straightforward, intuitive, and efficient. EnhancedSpaces' features include switching and moving windows between mSpaces, using sticky windows, swapping windows which take each others' sizes and positions, and automatically opening windows on predefined mSpaces in predefined sizes and positions. Using EnhancedSpaces' window manager, you can resize and rearrange your windows with keyboard shortcuts or with your mouse or trackpad. Additionally, the most common features are also available via menu and popup menu.
+One of the main goals has been to make managing mSpaces and windows straightforward, intuitive, and efficient. EnhancedSpaces' features include switching and moving windows between mSpaces, using sticky windows, swapping windows that take each others' sizes and positions, and automatically opening windows on predefined mSpaces in predefined sizes and positions. Using EnhancedSpaces' window manager, you can resize and rearrange your windows with keyboard shortcuts or with your mouse or trackpad. Additionally, the most common features are also available via menu and popup menu.
 
 Focus has also been given to making EnhancedSpaces enjoyable to use. You can customize EnhancedSpaces' menus to your needs, for example change them to your preferred language, and set individual wallpapers for your mSpaces.
 
@@ -21,7 +21,7 @@ EnhancedSpaces has both increased my productivity and simplified my life with ma
 ## Introduction
 EnhancedSpaces requires [Hammerspoon](https://www.hammerspoon.org/), so if you haven't used the latter yet, go ahead with its installation.
 
-A few words about Hammerspoon: When it comes to macOS, the obvious choice for developing an application like this is Swift; however, I discovered Hammerspoon with its Lua-based approach some time ago, have fallen in love with it and wanted to see how far it can carry me in regard to a project like this, and my love for Hammerspoon has only deepened. 
+A few words about Hammerspoon: When it comes to macOS, the obvious choice for developing an application like this is Swift; however, I discovered Hammerspoon with its Lua-based approach some time ago, have fallen in love and wanted to see how far it can carry me in regard to a project like this, and my love for Hammerspoon has only deepened. 
 
 I can recommend Hammerspoon beyond it being a requirement for EnhancedSpaces; it's one of the most powerful and flexible ways for adding value to your macOS in virtually any respect. Care for an example?
 
@@ -40,7 +40,7 @@ end)
 These few lines of code enable you to connect to one of PIA's VPN servers using the keyboard shortcut `Command-Shift-s`, while `Command-Shift-d` disconnects from the VPN server. Even if you're not familiar with writing code, there are countless ready-made examples available, and even without having ever written any code, it's easy to adjust the above lines to, for instance, connecting to your VPN server using `c` in your hotkey instead of `s`, right?
 
 
-But let's focus on EnhancedSpaces for now.
+But let's move our focus back to EnhancedSpaces.
 
 ## Installation
 Download EnhancedSpaces and move the folder to `~/.hammerspoon/Spoons`. Make sure the name of the folder is `EnhancedSpaces.spoon`. 
@@ -66,16 +66,18 @@ EnhancedSpaces:new({
 })
 ```
 
-If you would just like to go ahead without delay, as an alternative to manually editing `init.lua`, the following terminal command will do that for you; here the default options are used, which means that mSpaces `1`, `2`, and `3`are created, with `2` as default mSpace:
+If you would just like to go ahead without delay, as an alternative to manually editing `init.lua`, the following terminal command will do that for you; here the default options are used, which means that the mSpaces `1`, `2`, and `3`are created, with `2` as default mSpace:
 
 ```bash
 echo -e "local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')\nEnhancedSpaces:new({\nmSpaces = { '1', '2', '3' }, -- default: { '1', '2', '3' }\nstartmSpace = '2', -- default: 2\n})" >> ~/.hammerspoon/init.lua
 ```
 
-Reload Hammerspoon's configuration (menu bar icon - 'Reload Config') and you're ready to go; it is normal that the start of EnhancedSpaces takes a couple of seconds. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let's find out what you can do with your new mSpaces.
+Reload Hammerspoon's configuration (menu bar icon - 'Reload Config') and you're ready to go; it is normal that the start of EnhancedSpaces takes a couple of seconds. 
+
+All you will see for now is a new icon in your menu bar indicating your current mSpace, so let's find out what you can do with your new mSpaces.
 
 ## Menu
-EnhancedSpaces provides keyboard shortcuts for handling windows and mSpaces; however, sometimes it is convenient to do whatever you want to do by means of a menu -  even more so at the beginning when your muscle memory regarding the new hotkeys might not yet be at its peak.
+EnhancedSpaces provides keyboard shortcuts for handling windows and mSpaces; however, sometimes it is convenient to do whatever you want to do by means of a menu -  even more so at the beginning when your muscle memory regarding the new hotkeys might not yet be at full steam.
 
 EnhancedSpaces' menu can be used to switch to another mSpace with or without moving a window along, to get a window from another mSpace, and to create references of windows, i.e., the already mentioned 'sticky windows', which means that the same window can be shown on more than one mSpace - more about references of windows in the section [Same Window on More Than One mSpace](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#same-window-on-more-than-one-mspace).
 
@@ -89,7 +91,7 @@ Clicking EnhancedSpaces' icon in the menu bar, a menu like this appears; it indi
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu2.png' width='200'>
 
 
-`Swap`, as its name implies, lets you swap two windows, which means that they take each other's size and position:
+`Swap`, as its name implies, lets you swap two windows, which means that they adopt each other's position and size:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_swap.png' width='380'>
 
@@ -113,20 +115,20 @@ It is also possible to use popup menus; more about that feature in the section [
 
 For additional functionality there is the possibility of using modifier keys with your menus, for example, for creating references of a window on all mSpaces at once or tagging along with a window while sending it to another mSpace, see section [Advanced Menu Features](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#advanced-menu-features).
 
-There you can also see how to change the menu entries to your preferred language. Additionally, you are shown how to include Hammerspoon's menu into EnhancedSpaces', which has the additional benefit of making Hammerspoon's redundant, i.e., you can remove it from your menu bar.
+There you can also learn how to change the menu entries to your preferred language. Additionally, you are shown how to include Hammerspoon's menu into EnhancedSpaces', which has the additional benefit of making Hammerspoon's menu redundant, i.e., you can remove it from your menu bar.
 
 
 ## Keyboard Shortcuts
-You can use the Control (`ctrl` - in case you're interested in an elegant alternative in the form of a hyper key, see section [Notes - Hyper Key](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#hyper-key)) and the `s` keys to cycle through your mSpaces. To cycle in reverse order, press `ctrl` and `a`. To move the active window to the mSpace on the left (right) and switch there alongside with the window, press `ctrl` and `q` (`w`); to move the window while staying on the current mSpace press `ctrl` and `d` (`ctrl` and `f`).
+You can use the Control (`ctrl` - in case you're interested in an elegant alternative in the form of a hyper key, see section [Notes - Hyper Key](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#hyper-key)) and `s` to cycle through your mSpaces. To cycle in reverse order, press `ctrl` and `a`. To move the active window to the mSpace on the left (right) and switch there alongside with the window, press `ctrl` and `q` (`w`); to move the window while staying on the current mSpace press `ctrl` and `d` (`ctrl` and `f`).
 
-The lines below represent the default setup, and you don't need to add them to your `init.lua` unless you want to apply changes:
+The lines below represent the default setup, and you don't need to add them to your `init.lua` unless you want to make changes:
 
 ```lua
   modifierMS = { 'ctrl' }, -- default: { 'ctrl' }
   modifierMSKeys = { 'a', 's', 'd', 'f', 'q', 'w' }, -- default: { 'a', 's', 'd', 'f', 'q', 'w' }
 ```
 
-When applying changes to the modifiers, always make sure that you substitute them with other modifiers, i.e., { 'cmd' }, { 'alt' }, { 'ctrl' }, { 'shift' } and any combinations of modifiers, e.g., { 'alt', 'ctrl' }.
+When applying changes to the modifiers, always make sure that you substitute them with other modifiers, i.e., { 'cmd' }, { 'alt' }, { 'ctrl' }, { 'shift' } or combinations of modifiers, e.g., { 'alt', 'ctrl' }.
 
 Just in case it is not entirely clear where to add these lines or future modifications in your file `init.lua`:
 
@@ -157,14 +159,14 @@ As before, the line below represents the default setup, and you don't need to ad
 ### Move Windows Directly to Any mSpace
 For moving a window to another mSpace, press `alt-ctrl` and the key for the target mSpace.
 
-As before, the line below represents the default setup, and you don't need to add it to your `init.lua` unless you want to apply changes:
+As before, the line below represents the default setup, and you don't need to add it to your `init.lua` unless you want to make changes:
 
 ```lua
   modifierSwitchMS = { 'alt', 'ctrl' }, -- default: { 'alt', 'ctrl' }
 ```
 
 ### Same Window on More Than One mSpace
-This section is about showing the same window on more than one mSpace, also known as 'sticky windows'. 
+This section is about showing the same window on more than one mSpace, also known as 'sticky window'. 
 
 To unlock the full potential of mSpaces, it is helpful to understand the underlying philosophy: Each mSpace is a representation of your windows rather than just a space containing them - or, in other words, an mSpace can be understood as a set of symbolic links to as many of your open windows as you want. 
 
@@ -182,12 +184,12 @@ To delete a reference, press `modifierReference` and `0`. In case you're 'de-ref
 
 
 ### Switching Between Windows
-Apart from switching between all windows, for which you can continue using macOS' integrated window switcher (Command-Tab) or the third party switcher of your choice, such as [AltTab](https://alt-tab-macos.netlify.app/), additional possibilities have been implemented in EnhancedSpaces for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').
+Apart from switching between all of your open windows, for which you can continue using macOS' integrated window switcher (Command-Tab) or the third party switcher of your choice, such as [AltTab](https://alt-tab-macos.netlify.app/), additional possibilities have been implemented in EnhancedSpaces for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').
 
 #### Switching between Windows of Current mSpace
 For switching between the windows of your current mSpace, press `alt` and `tab`. 
 
-As before, the below lines represent the default setup, and you don't need to add them to your `init.lua` unless you prefer different shortcuts:
+As before, the lines below represent the default setup, and you don't need to add them to your `init.lua` unless you prefer different shortcuts:
 
 
 ```lua
@@ -198,7 +200,7 @@ As before, the below lines represent the default setup, and you don't need to ad
 
 For cycling through the windows of your current mSpace in reverse order, additionally press `shift`.
 
-You can also swap the sizes and positions of two windows using keyboard shortcuts; more about this feature in the section [Swapping Windows](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#swapping-windows).
+You can also make two windows swap places using keyboard shortcuts; more about this feature in the section [Swapping Windows](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#swapping-windows).
 
 
 #### Switching between References of Windows
@@ -319,7 +321,7 @@ Now, by pressing `modifierSnapKey1` and `j`, for example, the active window snap
 ## Using Mouse/Trackpad
 Similar to many operations, at times it can be simpler and faster if you use both your keyboard and pointing device at the same time. Thus EnhancedSpaces provides an alternative by enabling the use of a pointing device whenever it has the potential of being beneficial. 
 
-### Move windows to Adjacent mSpaces
+### Move Windows to Adjacent mSpaces
 You can also use your pointing device to move a window to an adjacent mSpace by pressing the Option (`alt`) or Control (`ctrl`) key and dragging 80 percent or more of the window beyond the left or right screen border. If you release the modifier key before releasing the mouse button, the window is moved while you stay on the current mSpace, otherwise you switch to the mSpace alongside with the window. 
 
 As per default, `modifier1` uses the same modifier key as `modifierMS` and `modifier2` the same as `modifierMoveWinMSpace`. They don't interfere; however, in case you prefer to change these pointing device modifiers, you can add the following lines to your `init.lua` and adjust them to your liking:
@@ -334,7 +336,7 @@ As per default, `modifier1` uses the same modifier key as `modifierMS` and `modi
 #### Manual Moving and Positioning
 To make the process of moving windows easier than the usual clicking the title bar (which you're still free to do), hold down `modifier1` or `modifier2`, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
 
-#### Automatic Resizing and Positioning - Mouse, Trackpad
+#### Automatic Resizing and Positioning - Mouse or Trackpad
 For automatic resizing and positioning of a window, you simply move between 10 and 80 percent of the window beyond the left, right, or bottom borders of your screen using while pressing `alt` or `ctrl`. 
 
 As long as windows are resized - or moved within the borders of the screen -, it makes no difference whether you use `modifier1` or `modifier2`. However, once a window is moved beyond the screen borders, different positioning and resizing scenarios are called into action; they are as follows:
@@ -353,7 +355,6 @@ As long as windows are resized - or moved within the borders of the screen -, it
 
 ## Additional Features
 ### Open Windows in Pre-Arranged mSpaces
-
 If you want EnhancedSpaces to automatically move windows to specific mSpaces when the windows are opened, add the following to your `init.lua`: 
 
 ```lua
@@ -444,27 +445,27 @@ Optionally, you can open a popup menu at the position of your pointing device; t
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/popup3.png' width='200'>
 
 
-With `popupModifier - mbSendPopupKey` only 'Send Windows' pops up:
+With `popupModifier - mbSendPopupKey` the menu 'Send Windows' pops up:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/popup2.png' width='330'>
 
 
-Likewise, with `popupModifier - mbGetPopupKey` only 'Get Windows' pops up:
+Likewise, with `popupModifier - mbGetPopupKey` 'Get Windows' pops up:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/popup1.png' width='330'>
 
 
-Likewise, with `popupModifier - mbSwapPopupKey` only the submenu for swapping windows pops up:
+Likewise, with `popupModifier - mbSwapPopupKey` the menu for swapping two windows pops up:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/popup_menu_swap.png' width='400'>
 
 
 
-If you set any of the four keys for the according popup menus to `nil` (or don't include them in your `init.lua` to begin with), consequently they are not available. `popupModifier` needs to be set for either of the popup menus to be shown.
+If you set any of the four keys for the according popup menus to `nil` (or don't include them in your `init.lua` in the first place), consequently they are not available. `popupModifier` needs to be set for either of the popup menus to be shown.
 
 
 ## Advanced Menu Features
-For advanced users it is possible to use modifier keys to unlock additional menu features. Below you can see the default modifiers; as usual you don't need to add these lines to your `init.lua` unless you want to make changes:
+For advanced users it is possible to use modifier keys to unlock additional menu features. Below you can see the default modifiers and their functions; as usual you don't need to add these lines to your `init.lua` unless you want to make changes:
 
 ```lua
   -- menu: modifier keys to unlock additional features
@@ -522,7 +523,7 @@ This also means that Hammerspoon's menu icon in the menu bar becomes redundant a
 
 
 #### Changing Hammerspoon's Menu Titles
-For changing the menu titles regarding Hammerspoon, for example, to show them in your preferred language, you can add the following to your `init.lua`; this is an example for changing the menu titles to German:
+For changing the menu titles regarding Hammerspoon, for example, to show them in your preferred language, you can add the following to your `init.lua`; this is an example for displaying the menu in German:
 
 ```lua
   hammerspoonMenuItems = { reload = 'Konfiguration neu laden', open = 'Konfiguration öffnen', console = 'Konsole', preferences = 'Einstellungen', about = 'Über Hammerspoon', update = 'Nach Updates suchen', relaunch = 'Hammerspoon neu starten', quit = 'Hammerspoon beenden' }, -- default: { reload = 'Reload Config', open = 'Open Config', console = 'Console', preferences = 'Preferences', about = 'About Hammerspoon', update = 'Check for Updates...', relaunch = 'Relaunch Hammerspoon', quit = 'Quit Hammerspoon' }
@@ -536,7 +537,7 @@ This is the resulting menu:
 ## Experimental Features
 ### Swapping Windows
 
-Pressing `Ctrl` and `Escape`, your active window swaps places with another window of your choice on your current mSpace. In case you'd like to change the keys, add the following lines to your `init.lua` and adjust them to your liking:
+Pressing `Ctrl` and `Escape`, your active window swaps places with another window of your choice. In case you'd like to change the keys, add the following lines to your `init.lua` and adjust them to your liking:
 
 ```lua
   swapModifier = { 'ctrl' }, -- default: { 'ctrl' }

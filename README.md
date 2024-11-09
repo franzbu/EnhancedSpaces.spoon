@@ -9,7 +9,7 @@ I dismissed my multi-monitor arrangement in favor of virtual screens years ago a
 
 So I decided to develop an application that manages virtual screens and windows in the way I've always wanted, while remaining independent from Apple's Spaces and as such not being affected by any potential future changes Apple might apply. 
 
-One of the main goals has been to make managing mSpaces and windows straightforward, intuitive, and efficient. EnhancedSpaces' features include switching and moving windows between mSpaces, using sticky windows, and automatically opening windows on predefined mSpaces in predefined sizes and positions. Using EnhancedSpaces' window manager, you can resize and rearrange your windows with keyboard shortcuts or with your mouse or trackpad. Additionally, the most common features are also available via menu or popup menu.
+One of the main goals has been to make managing mSpaces and windows straightforward, intuitive, and efficient. EnhancedSpaces' features include switching and moving windows between mSpaces, using sticky windows, swapping windows which take each others' former sizes and positions, and automatically opening windows on predefined mSpaces in predefined sizes and positions. Using EnhancedSpaces' window manager, you can resize and rearrange your windows with keyboard shortcuts or with your mouse or trackpad. Additionally, the most common features are also available via menu or popup menu.
 
 Focus has also been given to making EnhancedSpaces enjoyable to use. You can customize EnhancedSpaces' menus to your needs, for example change them to your preferred language, and set individual wallpapers for your mSpaces.
 
@@ -83,21 +83,31 @@ Clicking EnhancedSpaces' icon in the menu bar, a menu like this appears - the `2
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu1.png' width='200'>
 
+
 `mSpaces` lets you switch to another mSpace:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu2.png' width='200'>
+
+
+`Swap`, as its name implies, lets you swap to windows:
+
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_swap.png' width='200'>
+
 
 The next entry in the menu is dynamic and shows the currently active window (in case there is no active window, for example, when you're on an empty mSpace, this entry is empty by design); here you can toggle the references of the window (more about this feature in the section [Same Window on More Than One mSpace](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#same-window-on-more-than-one-mspace)).
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu3.png' width='200'>
 
+
 Selecting `Send Window` you get a list of all windows on the current mSpace and the mSpaces you can send each window to:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu4.png' width='350'>
 
+
 Selecting `Get Windows` you get a list of all open windows that are not on your current mSpace, and by selecting one, it is moved to the current mSpace.
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu5.png' width='300'>
+
 
 It is also possible to use popup menus; more about that feature in the section [Additional Features - Popup Menus](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#popup-menus)
 
@@ -115,6 +125,8 @@ The lines below represent the default setup, and you don't need to add them to y
   modifierMS = { 'ctrl' }, -- default: { 'ctrl' }
   modifierMSKeys = { 'a', 's', 'd', 'f', 'q', 'w' }, -- default: { 'a', 's', 'd', 'f', 'q', 'w' }
 ```
+
+When applying changes to the modifiers, always make sure that you substitute them with other modifiers, i.e., { 'cmd' }, { 'alt' }, { 'ctrl' }, { 'shift' } and any combinations of modifiers, e.g., { 'alt', 'ctrl' }.
 
 Just in case it is not entirely clear where to add these lines or future modifications in your file `init.lua`:
 
@@ -172,7 +184,7 @@ To delete a reference, press `modifierReference` and `0`. In case you're 'de-ref
 ### Switching Between Windows
 Apart from switching between all windows, for which you can continue using macOS' integrated window switcher (Command-Tab) or the third party switcher of your choice, such as [AltTab](https://alt-tab-macos.netlify.app/), additional possibilities have been implemented in EnhancedSpaces for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').
 
-#### Switching between Windows of the Current mSpace
+#### Switching between Windows of Current mSpace
 For switching between the windows of your current mSpace, press `alt` and `tab`. 
 
 As before, the below lines represent the default setup, and you don't need to add them to your `init.lua` unless you prefer different shortcuts:
@@ -185,6 +197,8 @@ As before, the below lines represent the default setup, and you don't need to ad
 ```
 
 For cycling through the windows of your current mSpace in reverse order, additionally press `shift`.
+
+You can also swap the sizes and positions of two windows; more about this feature in the section [Swapping Windows](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#swapping-windows).
 
 
 #### Switching between References of Windows
@@ -422,21 +436,31 @@ Optionally, you can open a popup menu at the position of your pointing device; t
   mbMainPopupKey = 'e', -- default: nil
   mbSendPopupKey = 'r', -- default: nil
   mbGetPopupKey = 't', -- default: nil
+  mbSwapPopupKey = 'y', -- default: nil
 ```
 
 `popupModifier - mbMainPopupKey` opens the main popup menu:
 
-<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/popup3.png' width='250'>
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/popup3.png' width='200'>
+
 
 With `popupModifier - mbSendPopupKey` only 'Send Windows' pops up:
 
-<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/popup2.png' width='300'>
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/popup2.png' width='330'>
+
 
 Likewise, with `popupModifier - mbGetPopupKey` only 'Get Windows' pops up:
 
-<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/popup1.png' width='300'>
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/popup1.png' width='330'>
 
-If you set any of the three keys for the according popup menus to `nil` (or don't include them in your `init.lua` to begin with), consequently they are not available. `popupModifier` needs to be set for either of the popup menus to be shown.
+
+Likewise, with `popupModifier - mbSwapPopupKey` only the submenu for swapping windows pops up:
+
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/popup_menu_swap.png' width='400'>
+
+
+
+If you set any of the four keys for the according popup menus to `nil` (or don't include them in your `init.lua` to begin with), consequently they are not available. `popupModifier` needs to be set for either of the popup menus to be shown.
 
 
 ## Advanced Menu Features
@@ -474,7 +498,7 @@ Below you can see what effect the modifier keys have; the first menu entry, 'mSp
 For changing the menu titles, for example, to have them in your preferred language, you can add the following line to your `init.lua`; this is an example for changing the menu tiles to German:
 
 ```lua
-menuTitles = { send = 'Senden', get = 'Holen', help = 'Hilfe', about = 'Über' }, -- default: { send = 'Send Window', get = 'Get Window', help = 'Help', about = 'About' }
+menuTitles = { swap = 'Vertauschen', send = 'Senden', get = 'Holen', help = 'Hilfe', about = 'Über' }, -- default: { send = 'Send Window', get = 'Get Window', help = 'Help', about = 'About' }
 ```
 
 With the entries above, you get the following menu:
@@ -510,6 +534,15 @@ This is the resulting menu:
 
 
 ## Experimental Features
+### Swapping Windows
+
+Pressing `Ctrl` and `Escape`, your active window swaps places with another window of your choice on your current mSpace. In case you'd like to change the keys, add the following lines to your `init.lua` and adjust them to your liking:
+
+```lua
+  swapModifier = { 'ctrl' }, -- default: { 'ctrl' }
+  swapKey = 'escape', -- default: 'escape'
+```
+
 ### Startup Commands
 In case you would like EnhancedSpaces to execute commands at startup, you can add those commands do your `init.lua`:
 

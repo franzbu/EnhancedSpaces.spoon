@@ -25,7 +25,7 @@ A few words about Hammerspoon: When it comes to macOS, the obvious choice for de
 
 I can recommend Hammerspoon beyond it being a requirement for EnhancedSpaces; it's one of the most powerful and flexible ways for adding value to your macOS in virtually any respect. Care for an example?
 
-```lua
+``` lua
 -- connect to VPN
 hs.hotkey.bind({ 'cmd', 'shift' }, 's', function()
   os.execute('/usr/local/bin/piactl set region switzerland')
@@ -59,7 +59,7 @@ Configuring EnhancedSpaces involves rolling up your sleeves and grabbing your ke
 
 So once you've installed EnhancedSpaces, add the following lines to the file `~/.hammerspoon/init.lua` (you can edit that file by clicking the Hammerspoon icon in your menu bar and choosing 'Open Config'). You might want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you will be greeted with:
 
-```lua
+``` lua
 local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')
 EnhancedSpaces:new({
   mSpaces = { '1', '2', '3', 'E', 'T' }, -- default { '1', '2', '3' }
@@ -124,7 +124,7 @@ You can use the Control (`ctrl`) - in case you're interested in an elegant alter
 
 The lines below represent the default setup, and you don't need to add them to your `init.lua` unless you want to make changes:
 
-```lua
+``` lua
   modifierMS = { 'ctrl' }, -- default: { 'ctrl' }
   modifierMSKeys = { 'a', 's', 'd', 'f', 'q', 'w' }, -- default: { 'a', 's', 'd', 'f', 'q', 'w' }
 ```
@@ -133,7 +133,7 @@ When applying changes to the modifiers, always make sure that you substitute the
 
 Just in case it is not entirely clear where to add these lines or future modifications in your file `init.lua`:
 
-```lua
+``` lua
 local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')
 EnhancedSpaces:new({
   mSpaces = { '1', '2', '3', 'E', 'T' }, -- default: { '1', '2', '3' }
@@ -153,7 +153,7 @@ For switching directly to any mSpace, press the Option key (`alt`) and the key f
 
 As before, the line below represents the default setup, and you don't need to add it to your `init.lua` unless you want to make changes:
 
-```lua
+``` lua
   modifierMoveWinMSpace = { 'alt' }, -- default: { 'alt' }
 ```
 
@@ -162,7 +162,7 @@ For moving a window to another mSpace, press `alt-ctrl` and the key for the targ
 
 As before, the line below represents the default setup, and you don't need to add it to your `init.lua` unless you want to make changes:
 
-```lua
+``` lua
   modifierSwitchMS = { 'alt', 'ctrl' }, -- default: { 'alt', 'ctrl' }
 ```
 
@@ -177,7 +177,7 @@ To create a reference of a window via keyboard shortcut (you've already learnt h
 
 As before, the following line represents the default modifier keys, and you don't need to add it to your `init.lua` unless you want to apply changes:
 
-```lua
+``` lua
   modifierReference = { 'ctrl', 'shift' }, -- default: { 'ctrl', 'shift' }
 ```
 
@@ -199,7 +199,7 @@ For switching between the windows of your current mSpace, press `alt` and `tab`.
 As before, the lines below represent the default setup, and you don't need to add them to your `init.lua` unless you prefer different shortcuts:
 
 
-```lua
+``` lua
   -- keyboard shortcuts for switching between windows on current mSpace and between references
   modifierSwitchWin = { 'alt' }, -- default: { 'alt' }
   modifierSwitchWinKeys = { 'tab', 'escape' }, -- default: { 'tab', 'escape' }
@@ -223,7 +223,7 @@ The following lines show the default keyboard shortcuts for the automatic resizi
 
 As before, you don't need to add these lines to your `init.lua` unless you want to apply changes. 
 
-```lua
+``` lua
   modifierSnap1 = { 'cmd', 'alt' }, -- default: { 'cmd', 'alt' }
   modifierSnap2 = { 'cmd', 'ctrl' }, -- default: { 'cmd', 'ctrl' }
   modifierSnap3 = { 'cmd', 'shift' }, -- default: { 'cmd', 'shift' }
@@ -231,7 +231,7 @@ As before, you don't need to add these lines to your `init.lua` unless you want 
 
 In case you would like to disable EnhancedSpaces' window manager because you manage your windows manually or prefer using another window manager, change the lines as follows:
 
-```lua
+``` lua
   modifierSnap1 = '', -- default: { 'cmd', 'alt' }
   modifierSnap2 = '', -- default: { 'cmd', 'ctrl' }
   modifierSnap3 = '', -- default: { 'cmd', 'shift' }
@@ -290,7 +290,7 @@ Here, the pre-defined positions and sizes of the windows are as follows (descrip
 As has been mentioned, these keyboard shortcuts are fully customizable. Let's first have a look at the way the keyboard shortcuts have been pre-arranged:
 
 
-```lua
+``` lua
   modifierSnapKeys = {
     -- modifierSnapKey1
     {{'a1','1'},{'a2','2'},{'a3','3'},{'a4','4'},{'a5','5'},{'a6','6'},{'a7','7'},{'a8','8'}},
@@ -310,7 +310,7 @@ This is best shown by means of an example: Let's assume that you just need windo
 
 Let's further assume that you would like to use `modifierSnap1` with the keys `j`, `k`, and `l`, then these would be the lines to add to your `init.lua`:
 
-```lua
+``` lua
   modifierSnapKeys = {
     -- modifierSnapKey1
     {{'a2','j'},{'b11','k'},{'c5','l'}},
@@ -333,7 +333,7 @@ You can also use your pointing device to move a window to an adjacent mSpace by 
 
 As per default, `modifier1` uses the same modifier key as `modifierMS` and `modifier2` the same as `modifierMoveWinMSpace`. They don't interfere; however, in case you prefer to change these pointing device modifiers, you can add the following lines to your `init.lua` and adjust them to your liking:
 
-```lua
+``` lua
   -- pointing device modifiers
   modifier1 = { 'alt' }, -- default: { 'alt' }
   modifier2 = { 'ctrl' }, -- default: { 'ctrl' }
@@ -364,7 +364,7 @@ As long as windows are resized - or moved within the borders of the screen -, it
 ### Open Windows in Pre-Arranged mSpaces
 If you want EnhancedSpaces to automatically move windows to specific mSpaces when the windows are opened, add the following to your `init.lua`: 
 
-```lua
+``` lua
   openAppMSpace = {
     {'Google Chrome', '2'},
     {'Microsoft To Do', '3'},
@@ -375,7 +375,7 @@ If you want EnhancedSpaces to automatically move windows to specific mSpaces whe
 
 The way applications are assigned to certain mSpaces should be self-explanatory. To get the names of the applications of currently open windows, you can run the following command in Hammerspoon's Console:
 
-```lua
+``` lua
 for _, v in pairs(hs.window.filter.default:getWindows()) do print(v:application():name()) end
 ```
 
@@ -393,7 +393,7 @@ You will get an output like this:
 
 In case you would also like to pre-define the position of the window on the mSpace, you can add that information as follows:
 
-```lua
+``` lua
   openAppMSpace = {
     {'Google Chrome', '2', 'a1'},
     {'Microsoft To Do', '3', 'a2'},
@@ -408,7 +408,7 @@ In case you would also like to pre-define the position of the window on the mSpa
 ### Custom Wallpapers
 For enabling the feature that each mSpace can have an individual wallpaper, add the following to your `init.lua`: 
 
-```lua
+``` lua
   -- individual wallpaper for each mSpace
   customWallpaper = true, -- default: false
 ```
@@ -419,7 +419,7 @@ Add the wallpapers you would like to use in the format `jpg` to the folder `~/.h
 ### Padding
 In case you would like to change the gap in between the windows and/or between the windows and the screen border, add the following lines with values to your liking to your `init.lua`:
 
-```lua
+``` lua
   -- padding between window borders and screen borders
   outerPadding = 5, -- default: 5
   -- padding between window borders
@@ -430,7 +430,7 @@ In case you would like to change the gap in between the windows and/or between t
 
 In case you would like to change the size, color and/or opacity of the grid indicators, add the following line to your `init.lua`, and alter the values according to your liking. The values, in the same order, stand for: width, red, green, blue, opacity. Apart from the width, values between 0 and 1 are possible:
 
-```lua
+``` lua
   -- change grid indicators:
     gridIndicator = { 20, 1, 0, 0, 0.33 }, -- default: { 20, 1, 0, 0, 0.33 }, 
 ```
@@ -438,7 +438,7 @@ In case you would like to change the size, color and/or opacity of the grid indi
 ### Popup Menus
 Optionally, you can open a popup menu at the position of your pointing device; this can be enabled by adding the following lines to `init.lua` (as popup menus are not enabled by default in EnhancedSpaces, these lines always need to be added in case you want to use a popup menu in EnhancedSpaces, not only if you would like to make changes to the keyboard shortcuts):
 
-```lua
+``` lua
   -- popup menu
   popupModifier = { 'cmd', 'alt', 'ctrl' }, -- default: nil
   mbMainPopupKey = 'e', -- default: nil
@@ -474,7 +474,7 @@ If you set any of the four keys for the according popup menus to `nil` (or don't
 ## Advanced Menu Features
 For advanced users it is possible to use modifier keys to unlock additional menu features. Below you can see the default modifiers and their functions; as usual you don't need to add these lines to your `init.lua` unless you want to make changes:
 
-```lua
+``` lua
   -- menu: modifier keys to unlock additional features
   menuModifier1 = { 'alt' }, -- default: { 'alt' }
   menuModifier2 = { 'ctrl' }, -- default: { 'ctrl' }
@@ -511,7 +511,7 @@ Below you can see what effect the modifier keys have; the first menu entry, 'mSp
 ### Changing Menu Titles
 For changing the menu titles, for example, to have them in your preferred language, you can add the following line to your `init.lua`; this is an example for changing the menu tiles to German:
 
-```lua
+``` lua
 menuTitles = { swap = 'Vertauschen', send = 'Senden', get = 'Holen', help = 'Hilfe', about = 'Über' }, -- default: { swap = 'Swap', send = 'Send Window', get = 'Get Window', help = 'Help', about = 'About' }
 ```
 
@@ -523,7 +523,7 @@ With the entries above, you get the following menu:
 ### Including Hammerspoon's Menu in EnhancedSpaces'
 For including Hammerspoon's menu in EnhancedSpaces', add the following to your `init.lua`: 
 
-```lua
+``` lua
   -- enable Hammerspoon's menu in EnhancedSpaces'
   hammerspoonMenu = true, -- default: false
 ```
@@ -538,7 +538,7 @@ This also means that Hammerspoon's menu icon in the menu bar becomes redundant a
 #### Changing Hammerspoon's Menu Titles
 For changing the menu titles regarding Hammerspoon, for example, to show them in your preferred language, you can add the following to your `init.lua`; this is an example for displaying the menu in German:
 
-```lua
+``` lua
   hammerspoonMenuItems = { reload = 'Konfiguration neu laden', open = 'Konfiguration öffnen', console = 'Konsole', preferences = 'Einstellungen', about = 'Über Hammerspoon', update = 'Nach Updates suchen', relaunch = 'Hammerspoon neu starten', quit = 'Hammerspoon beenden' }, -- default: { reload = 'Reload Config', open = 'Open Config', console = 'Console', preferences = 'Preferences', about = 'About Hammerspoon', update = 'Check for Updates...', relaunch = 'Relaunch Hammerspoon', quit = 'Quit Hammerspoon' }
 ```
 
@@ -552,7 +552,7 @@ This is the resulting menu:
 
 Pressing `Ctrl` and `Escape`, your active window swaps places with another window of your choice. In case you'd like to change the keys, add the following lines to your `init.lua` and adjust them to your liking:
 
-```lua
+``` lua
   swapModifier = { 'ctrl' }, -- default: { 'ctrl' }
   swapKey = 'escape', -- default: 'escape'
 ```
@@ -560,7 +560,7 @@ Pressing `Ctrl` and `Escape`, your active window swaps places with another windo
 ### Startup Commands
 In case you would like EnhancedSpaces to execute commands at startup, you can add those commands do your `init.lua`:
 
-```lua
+``` lua
   startupCommands = {
     'command 1',
     'command 2',
@@ -569,7 +569,7 @@ In case you would like EnhancedSpaces to execute commands at startup, you can ad
 ```
 Below is an example for starting [JankyBorders](https://github.com/FelixKratz/JankyBorders):
 
-```lua
+``` lua
   startupCommands = {
     '/opt/homebrew/bin/borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0 &',
   }
@@ -580,7 +580,7 @@ Similar to manual moving, manual resizing of windows can be initiated by positio
 
 In order to enable manual resizing, add the following to your `init.lua`:
 
-```lua
+``` lua
   -- enable resizing:
   resize = true, -- default: false
 ```
@@ -600,7 +600,7 @@ At the center of the window there is an area (M) where you can also move the win
 
 You can change the size of the area of the window where the vertical-only and horizontal-only resizing applies by adjusting the option `margin`. The standard value is 0.3, which corresponds to 30 percent. Changing it to 0 would result in deactivating this option, changing it to 1 would result in making resizing this way impossible.
 
-```lua
+``` lua
   -- adjust the size of the area with vertical-only and horizontal-only resizing:
   margin = 0.2, -- default: 0.3
 ```
@@ -656,7 +656,7 @@ For this modification, go to 'Settings - Complex Modifications', click 'Add your
 Now you can assign your newly created `hyper key` to any modifiers in EnhancedSpaces, for example, `modifierMS`:
 
 
-```lua
+``` lua
   modifierMS = { 'cmd', 'alt', 'ctrl', 'shift' }, -- default: { 'ctrl' }
 ```
 Now, pressing `Caps Lock` and `a`, for instance, switches to the mSpace on the left.
@@ -666,7 +666,7 @@ Now, pressing `Caps Lock` and `a`, for instance, switches to the mSpace on the l
 
 In case you have used the option `openAppMSpace`, disable or remove that section from your `init.lua` and (re)start EnhancedSpaces to move all open windows to your main mSpace, which after disabling or uninstalling EnhancedSpaces will automatically become your default space.
 
-```lua
+``` lua
   --[[
   openAppMSpace = {
     {'Google Chrome', '2', 'a1'},

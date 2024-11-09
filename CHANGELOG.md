@@ -1,3 +1,7 @@
+# v0.9.30
+
+* added possibility to change key for dereferencing windows (var 'deReferenceKey'); additional improvements
+
 # v0.9.29
 
 * additional features for swap menu via modifiers; other improvements

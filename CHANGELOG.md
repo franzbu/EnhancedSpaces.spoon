@@ -1,3 +1,7 @@
+# v0.9.29
+
+* additional features for swap menu via modifiers; other improvements
+
 # v0.9.28
 
 * swapping of windows enabled (see documentation); bug fixes

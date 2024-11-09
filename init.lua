@@ -253,7 +253,7 @@ function EnhancedSpaces:new(options)
   hs.hotkey.bind({modifierSwitchWin[1], 'shift' }, modifierSwitchWinKeys[1], function()
     switcher:previous(windowsOnCurrentMS) --reverse order
   end)
-  -- cycle through windows of current mSpace except active one, then and swap
+  -- cycle through windows of current mSpace except active one, then swap
   hs.hotkey.bind(swapModifier, swapKey, function()
     win1 = windowsOnCurrentMS[1]
     swapWindows = true

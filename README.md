@@ -181,9 +181,9 @@ As before, the following line represents the default modifier keys, and you don'
   modifierReference = { 'ctrl', 'shift' }, -- default: { 'ctrl', 'shift' }
 ```
 
-To delete a reference, press `modifierReference` and `0`. In case you're 'de-referencing' the last representation of a window on your mSpaces, the window gets minimized.
+To delete a reference, press `modifierReference` and `0`. In case you're dereferencing, i.e., delete the reference of, the last representation of a window on your mSpaces, the window gets minimized.
 
-In case you'd like to change the key for de-referencing a window, for example, if you want to add an mSpace entitled '0', you can add the following line to your `init.lua` and change it to your liking:
+In case you'd like to change the key for dereferencing a window, for example, if you want to add an mSpace entitled '0', you can add the following line to your `init.lua` and change it to your liking:
 
 ``` lua
   deReferenceKey = '0', -- default: '0'

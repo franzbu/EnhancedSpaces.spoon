@@ -1,3 +1,7 @@
+# v0.9.28
+
+* swapping of windows enabled (see documentation); bug fixes
+
 # v0.9.27.1
 
 * bug fix: menu item 'Get Window' works as expected

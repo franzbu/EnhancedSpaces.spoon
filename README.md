@@ -198,7 +198,7 @@ As before, the below lines represent the default setup, and you don't need to ad
 
 For cycling through the windows of your current mSpace in reverse order, additionally press `shift`.
 
-You can also swap the sizes and positions of two windows; more about this feature in the section [Swapping Windows](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#swapping-windows).
+You can also swap the sizes and positions of two windows using keyboard shortcuts; more about this feature in the section [Swapping Windows](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#swapping-windows).
 
 
 #### Switching between References of Windows

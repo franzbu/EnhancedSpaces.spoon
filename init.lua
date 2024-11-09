@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.29"
+EnhancedSpaces.version = "0.9.30"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -62,8 +62,10 @@ function EnhancedSpaces:new(options)
 
   modifier1 = options.modifier1 or { 'alt' } 
   modifier2 = options.modifier2 or { 'ctrl' } 
-  modifier1_2 = mergeModifiers(modifier1, modifier2) 
-  modifierReference = options.modifierReference or { 'ctrl', 'shift' } 
+  modifier1_2 = mergeModifiers(modifier1, modifier2)
+
+  modifierReference = options.modifierReference or { 'ctrl', 'shift' }
+  deReferenceKey = options.deReferenceKey or '0'
     
   modifierMS = options.modifierMS or modifier2
   modifierMSKeys = options.modifierMSKeys or { 'a', 's', 'd', 'f', 'q', 'w' }
@@ -251,8 +253,7 @@ function EnhancedSpaces:new(options)
   hs.hotkey.bind({modifierSwitchWin[1], 'shift' }, modifierSwitchWinKeys[1], function()
     switcher:previous(windowsOnCurrentMS) --reverse order
   end)
-
-  -- cycle and swap
+  -- cycle through windows of current mSpace except active one, then and swap
   hs.hotkey.bind(swapModifier, swapKey, function()
     win1 = windowsOnCurrentMS[1]
     swapWindows = true
@@ -263,39 +264,37 @@ function EnhancedSpaces:new(options)
     swapWindows = true
     switcher:previous(_windowsOnCurrentMS) --reverse order
   end)
-    -- 'subscribe', watchdog for one of modifier keys pressed
-    local cycleModCounter = 0
-    local events = hs.eventtap.event.types
-    local prevModifier = { '' }
-    swapWindows = false
-    keyboardTracker = hs.eventtap.new({ events.flagsChanged }, function(e)
-      local flags = eventToArray(e:getFlags())
-      -- since on modifier release the flag is 'nil', prevModifier is used
-      if modifiersEqual(flags, swapModifier) or modifiersEqual(prevModifier, swapModifier) then
-        cycleModCounter = cycleModCounter + 1
-        if cycleModCounter % 2 == 0 then -- only when released (and not when pressed)
-          cycleModCounter = 0
-          if swapWindows then
-            hs.timer.doAfter(0.01, function()
-              local win2 = hs.window.focusedWindow()
-              if win1 ~= nil then
-                local frameWin1 = winMSpaces[getWinMSpacesPos(win1)].frame[currentMSpace]
-                winMSpaces[getWinMSpacesPos(win1)].frame[currentMSpace] = winMSpaces[getWinMSpacesPos(win2)].frame[currentMSpace]
-                winMSpaces[getWinMSpacesPos(win2)].frame[currentMSpace] = frameWin1
-                --winMSpaces[getWinMSpacesPos(win2)].win:focus()
-                goToSpace(currentMSpace) -- refresh screen
-                win1:focus()
-              end
-            end)
-          end
-          swapWindows = false
+  -- 'subscribe', watchdog for releasing swapModifier
+  local cycleModCounter = 0
+  local events = hs.eventtap.event.types
+  local prevModifier = { '' }
+  swapWindows = false
+  keyboardTracker = hs.eventtap.new({ events.flagsChanged }, function(e)
+    local flags = eventToArray(e:getFlags())
+    -- since on swapModifier release the flag is 'nil', var 'prevModifier' is used
+    if modifiersEqual(flags, swapModifier) or modifiersEqual(prevModifier, swapModifier) then
+      cycleModCounter = cycleModCounter + 1
+      if cycleModCounter % 2 == 0 then -- only when released (not when pressed)
+        cycleModCounter = 0
+        if swapWindows then
+          hs.timer.doAfter(0.01, function()
+            local win2 = hs.window.focusedWindow()
+            if win1 ~= nil then
+              local frameWin1 = winMSpaces[getWinMSpacesPos(win1)].frame[currentMSpace]
+              winMSpaces[getWinMSpacesPos(win1)].frame[currentMSpace] = winMSpaces[getWinMSpacesPos(win2)].frame
+              [currentMSpace]
+              winMSpaces[getWinMSpacesPos(win2)].frame[currentMSpace] = frameWin1
+              goToSpace(currentMSpace)   -- refresh screen
+              win1:focus()
+            end
+          end)
         end
+        swapWindows = false
       end
-      prevModifier = flags
-    end)
-    keyboardTracker:start()
-
-
+    end
+    prevModifier = flags
+  end)
+  keyboardTracker:start()
 
 
   -- cycle through references of one window
@@ -320,7 +319,7 @@ function EnhancedSpaces:new(options)
     end)
   end
   -- de-reference
-  hs.hotkey.bind(modifierReference, "0", function()
+  hs.hotkey.bind(modifierReference, deReferenceKey, function()
     derefWinMSpace()
   end)
 
@@ -454,7 +453,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.29\n\n\nIncreases your productivity so you have more time for what really matters in life.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.30\n\n\nIncreases your productivity so you have more time for what really matters in life.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),
@@ -1533,7 +1532,7 @@ function refreshWinMSpaces()
   table.remove(_windowsOnCurrentMS, #_windowsOnCurrentMS)
 
   --hs.timer.doAfter(0.5, function()
-    refreshMenu()
+  refreshMenu()
   --end)
 end
 
@@ -1569,14 +1568,13 @@ end
 
 
 function getWinMSpacesPos(w)
-  if w ~= nil and winMSpaces ~= nil then
-    for i = 1, #winMSpaces do
-      if w:id() == winMSpaces[i].win:id() then
-        return i
-      end
+  if w == nil or winMSpaces == nil then return nil end
+  for i = 1, #winMSpaces do
+    if w:id() == winMSpaces[i].win:id() then
+      return i
     end
-    return nil
   end
+  return nil
 end
 
 

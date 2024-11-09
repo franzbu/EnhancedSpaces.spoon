@@ -479,7 +479,7 @@ For advanced users it is possible to use modifier keys to unlock additional menu
 Below you can see what effect the modifier keys have; the first menu entry, 'mSpaces', reveals its whole potential without any additional modifier keys and is therefore not listed:
 
 #### Menu - 'Swap'
-- no modifier: swap windows, which includes swapping both sizes and positions
+- no modifier: swap windows, which includes swapping sizes and positions
 - menuModifier1: window chosen first snaps into position 'a1' (left half of screen), second window snaps into 'a2'; focus on first window
 - menuModifier2: window chosen first snaps into position `a3` (left half of screen), second window snaps into 'a4'; focus on first window
 - menuModifier3: window chosen first snaps into position 'a5' (left half of screen), second window snaps into 'a6'; focus on first window

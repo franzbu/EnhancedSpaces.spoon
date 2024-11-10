@@ -645,7 +645,8 @@ function getToogleRefWindow()
   end
 end
 function createToggleRefMenu()
-  posWin = getWinMSpacesPos(hs.window.focusedWindow())
+  posWin = getWinMSpacesPos(hs.window.focusedWindow()) --or false
+  if posWin == nil then return end -- if window has just been minimized/closed, it is irrelevant for toggling references (focus is about to move to other window))
   winMenu = {}
   for i = 1, #mspaces do
     table.insert(winMenu, {

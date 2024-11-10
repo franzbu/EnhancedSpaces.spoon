@@ -1,5 +1,15 @@
 # v0.9.30
 
+* in case you’re using a previous version if EnhancedSpaces, make sure to also update the folder ‘lib’ in `~/.hammerspoon/Spoons/EnhancedSpaces.spoon/`
+  
+* modified version of hs.window.switcher is used in order to remove delays with filters at start and to remove giving focus to selected window; it returns window instead for more flexibility
+  
+* modified version of hs.window.filter is used in order to fix delays, among others, at startup (https://github.com/Hammerspoon/hammerspoon/issues/3712)
+  
+* other fixes
+
+# v0.9.30
+
 * added possibility to change key for dereferencing windows (var 'deReferenceKey'); additional improvements
 
 # v0.9.29

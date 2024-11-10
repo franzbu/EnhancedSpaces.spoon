@@ -2,7 +2,7 @@
 
 * in case you’re using a previous version of EnhancedSpaces, make sure to also update the folder ‘lib’ in `~/.hammerspoon/Spoons/EnhancedSpaces.spoon/`
   
-* modified version of hs.window.switcher is used in order to remove delays at start and to remove giving focus to selected window; switcher returns window instead for more flexibility
+* modified version of hs.window.switcher is used in order to remove delays at the start of EnhancedSpaces and to remove giving focus to selected window; switcher returns window instead for more flexibility
   
 * modified version of hs.window.filter is used in order to fix delays, among others, at startup (https://github.com/Hammerspoon/hammerspoon/issues/3712)
   

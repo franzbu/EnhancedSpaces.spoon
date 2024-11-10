@@ -73,9 +73,7 @@ If you'd just like to go ahead without delay, the following terminal command can
 echo -e "local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')\nEnhancedSpaces:new({\nmSpaces = { '1', '2', '3' }, -- default: { '1', '2', '3' }\nstartmSpace = '2', -- default: 2\n})" >> ~/.hammerspoon/init.lua
 ```
 
-Reload Hammerspoon's configuration (menu bar icon - 'Reload Config') and you're ready to go; it is normal that the start of EnhancedSpaces takes a couple of seconds. 
-
-All you will see for now is a new icon in your menu bar indicating your current mSpace, so let's find out what you can do with your new mSpaces.
+Reload Hammerspoon's configuration (menu bar icon - 'Reload Config') and you're ready to go. All you see for now is a new icon in your menu bar indicating your current mSpace, so let's find out what you can do with your new mSpaces.
 
 ## Menu
 EnhancedSpaces provides keyboard shortcuts for handling windows and mSpaces; however, sometimes it is convenient to do whatever you want to do by means of a menu - even more so at the beginning when your muscle memory regarding the new hotkeys might not yet be at full steam.
@@ -555,6 +553,13 @@ Pressing `Ctrl` and `Escape`, your active window swaps places with another windo
 ``` lua
   swapModifier = { 'ctrl' }, -- default: { 'ctrl' }
   swapKey = 'escape', -- default: 'escape'
+```
+
+By default the focus stays with the same window; in case you'd prefer the focus to switch to the other window (and thus stay with the window in the same position on the screen), add the following line to your `init.lua`:
+
+``` lua
+  --swapSwitchFocus = true, -- default: false
+
 ```
 
 ### Startup Commands

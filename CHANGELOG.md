@@ -1,4 +1,4 @@
-# v0.9.30
+# v0.9.31
 
 * in case you’re using a previous version if EnhancedSpaces, make sure to also update the folder ‘lib’ in `~/.hammerspoon/Spoons/EnhancedSpaces.spoon/`
   

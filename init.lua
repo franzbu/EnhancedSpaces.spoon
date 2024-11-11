@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.31"
+EnhancedSpaces.version = "0.9.31.1"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -465,7 +465,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.31\n\n\nIncreases your productivity so you have more time for what really matters in life.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.31.1\n\n\nIncreases your productivity so you have more time for what really matters in life.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),
@@ -593,43 +593,44 @@ end
 function createSwapWindowMenuItems(w)
   swapWindowMenuItems = {}
   for i = 1, #windowsOnCurrentMS do
-    --winMSpaces[getWinMSpacesPos(_windowsOnCurrentMS[i])
-    if w:id() ~= windowsOnCurrentMS[i]:id() then
-      table.insert(swapWindowMenuItems, {
-        title = windowsOnCurrentMS[i]:application():name(),
-        checked = false,
-        disabled = false,
-        fn = function(mods)
-          if w ~= nil then
-            if modifiersEqual(getModifiersMods(mods), menuModifier3) then -- menuModifier3: move windows to a5/a6
-              winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = snap('a5')
-              winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].frame[currentMSpace] = snap('a6')
-              goToSpace(currentMSpace) -- refresh screen
-              winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].win:focus()
-              winMSpaces[getWinMSpacesPos(w)].win:focus()
-            elseif modifiersEqual(getModifiersMods(mods), menuModifier2) then -- menuModifier2: move windows to a3/a4
-              winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = snap('a3')
-              winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].frame[currentMSpace] = snap('a4')
-              goToSpace(currentMSpace) -- refresh screen
-              winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].win:focus()
-              winMSpaces[getWinMSpacesPos(w)].win:focus()
-            elseif modifiersEqual(getModifiersMods(mods), menuModifier1) then -- menuModifier1: move windows to a1/a2
-              winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = snap('a1')
-              winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].frame[currentMSpace] = snap('a2')
-              goToSpace(currentMSpace) -- refresh screen
-              winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].win:focus()
-              winMSpaces[getWinMSpacesPos(w)].win:focus()
-            else
-              local frameWin1 = winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace]
-              winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].frame[currentMSpace]
-              winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].frame[currentMSpace] = frameWin1
-              goToSpace(currentMSpace) -- refresh screen
-              winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].win:focus()
-              winMSpaces[getWinMSpacesPos(w)].win:focus()
+    if w ~= nil and windowsOnCurrentMS[i] ~= nil then
+      if w:id() ~= windowsOnCurrentMS[i]:id() then
+        table.insert(swapWindowMenuItems, {
+          title = windowsOnCurrentMS[i]:application():name(),
+          checked = false,
+          disabled = false,
+          fn = function(mods)
+            if w ~= nil then
+              if modifiersEqual(getModifiersMods(mods), menuModifier3) then -- menuModifier3: move windows to a5/a6
+                winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = snap('a5')
+                winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].frame[currentMSpace] = snap('a6')
+                goToSpace(currentMSpace) -- refresh screen
+                winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].win:focus()
+                winMSpaces[getWinMSpacesPos(w)].win:focus()
+              elseif modifiersEqual(getModifiersMods(mods), menuModifier2) then -- menuModifier2: move windows to a3/a4
+                winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = snap('a3')
+                winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].frame[currentMSpace] = snap('a4')
+                goToSpace(currentMSpace) -- refresh screen
+                winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].win:focus()
+                winMSpaces[getWinMSpacesPos(w)].win:focus()
+              elseif modifiersEqual(getModifiersMods(mods), menuModifier1) then -- menuModifier1: move windows to a1/a2
+                winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = snap('a1')
+                winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].frame[currentMSpace] = snap('a2')
+                goToSpace(currentMSpace) -- refresh screen
+                winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].win:focus()
+                winMSpaces[getWinMSpacesPos(w)].win:focus()
+              else
+                local frameWin1 = winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace]
+                winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].frame[currentMSpace]
+                winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].frame[currentMSpace] = frameWin1
+                goToSpace(currentMSpace) -- refresh screen
+                winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].win:focus()
+                winMSpaces[getWinMSpacesPos(w)].win:focus()
+              end
             end
           end
-        end
-      })
+        })
+      end
     end
   end
   return swapWindowMenuItems

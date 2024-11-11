@@ -1,3 +1,7 @@
+# v0.9.32
+
+* fixed error when force-closing apps
+
 # v0.9.31.1
 
 * fixed issue with incorrect focus when swapping Terminal windows. In case you're running a previous version of EnhancedSpaces, make sure to update 'lib/window_switcher.lua'

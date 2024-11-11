@@ -80,7 +80,7 @@ EnhancedSpaces provides keyboard shortcuts for handling windows and mSpaces; how
 
 EnhancedSpaces' menu can be used to switch to another mSpace with or without moving a window along, to swap windows, to get a window from another mSpace, and to create references of windows, i.e., the already mentioned 'sticky windows', which means that the same window can be shown on more than one mSpace - more about references of windows in the section [Same Window on More Than One mSpace](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#same-window-on-more-than-one-mspace).
 
-Clicking EnhancedSpaces' icon in the menu bar, a menu like this appears; it indicates the current mSpace:
+Clicking EnhancedSpaces' icon in the menu bar, a menu like this appears:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu1.png' width='200'>
 

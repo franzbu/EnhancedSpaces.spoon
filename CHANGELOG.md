@@ -1,3 +1,7 @@
+# v0.9.31.1
+
+* fixed issue with incorrect focus when swapping Terminal windows (lib/window_switcher.lua)
+
 # v0.9.31
 
 * in case you’re using a previous version of EnhancedSpaces, make sure to also update the folder ‘lib’ in `~/.hammerspoon/Spoons/EnhancedSpaces.spoon/`

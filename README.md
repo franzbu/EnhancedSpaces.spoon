@@ -134,11 +134,14 @@ Just in case it is not entirely clear where to add these lines or future modific
 ``` lua
 local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')
 EnhancedSpaces:new({
+  --  ______________ modifications to EnhancedSpaces below this line ______________
+
   mSpaces = { '1', '2', '3', 'E', 'T' }, -- default: { '1', '2', '3' }
   startmSpace = 'E', -- default: 2
 
   modifierMS = { 'ctrl' }, -- default: { 'ctrl' }
   modifierMSKeys = { 'a', 's', 'd', 'f', 'q', 'w' }, -- default: { 'a', 's', 'd', 'f', 'q', 'w' }
+
 
   --  ______________ modifications to EnhancedSpaces above this line ______________
 })

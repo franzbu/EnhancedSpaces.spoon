@@ -37,7 +37,7 @@ hs.hotkey.bind({ 'cmd', 'shift' }, 'd', function()
 end)
 ```
 
-These few lines of code enable you to connect to one of PIA's VPN servers using the keyboard shortcut `Command-Shift-s`, while `Command-Shift-d` disconnects from the VPN server. 
+These few lines of Hammerspoon code enable you to connect to one of PIA's VPN servers using the keyboard shortcut `Command-Shift-s`, while `Command-Shift-d` disconnects from the VPN server. 
 
 Even if you're not familiar with writing code, there are countless ready-made examples available, and even without having ever written any code, it's easy to adjust the above lines to, for instance, connecting to your VPN server using `c` in your hotkey instead of `s`, right?
 

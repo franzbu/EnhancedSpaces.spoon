@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.31.1"
+EnhancedSpaces.version = "0.9.32"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -188,8 +188,8 @@ function EnhancedSpaces:new(options)
   end
 
   -- watchdogs
-  filter.default:subscribe(filter.windowNotOnScreen, function()
-    --print('____________ windowNotOnScreen ____________' )--.. w:application():name())
+  filter.default:subscribe(filter.windowNotOnScreen, function(w)
+    --print('____________ windowNotOnScreen ____________' .. w:application():name() )--.. w:application():name())
     hs.timer.doAfter(0.000000001, function() --delay, otherwise 'filter_all = hs.window.filter.new()' not ready after closing of windows (in certain situations)
       refreshWinMSpaces()
       if windowsOnCurrentMS ~= nil and #windowsOnCurrentMS >= 1 then
@@ -199,7 +199,7 @@ function EnhancedSpaces:new(options)
     end)
   end)
   filter.default:subscribe(filter.windowOnScreen, function(w)
-    if w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' then
+    if w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' and w:application():name() ~= 'DockHelper' then
       --print('____________ windowOnScreen ____________' .. w:application():name())
       if not enteredFullscreen then
         refreshWinMSpaces()
@@ -212,7 +212,7 @@ function EnhancedSpaces:new(options)
   filter.default:subscribe(filter.windowFocused, function(w)
     if w ~= nil then
       if w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' then
-        --print('____________ windowFocused ____________')
+        --print('____________ windowFocused ____________ ' .. w:application():name())
         refreshWinMSpaces()
         cmdTabFocus()
       end
@@ -250,10 +250,12 @@ function EnhancedSpaces:new(options)
 
   -- cycle through windows of current mSpace
   hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[1], function()
+    refreshWinMSpaces() -- for using up-to-date window tables (after force-closing apps this could be an issue otherwiese)
     switcherChangeFocus = true
     winGiveFocus = switcher:next(windowsOnCurrentMS)
   end)
   hs.hotkey.bind({modifierSwitchWin[1], 'shift' }, modifierSwitchWinKeys[1], function()
+    refreshWinMSpaces() -- for using up-to-date window tables (after force-closing apps this could be an issue otherwiese)
     switcherChangeFocus = true
     winGiveFocus = switcher:previous(windowsOnCurrentMS) --reverse order
   end)
@@ -274,11 +276,13 @@ function EnhancedSpaces:new(options)
   -- cycle through windows of current mSpace except active one, then swap
   switcherSwapWindows = false
   hs.hotkey.bind(swapModifier, swapKey, function()
+    refreshWinMSpaces() -- for using up-to-date window tables (after force-closing apps this could be an issue otherwiese)
     win1 = winAll[1]
     switcherSwapWindows = true
     win2 = switcher:next(_windowsOnCurrentMS)
   end)
   hs.hotkey.bind({swapModifier[1], 'shift' }, swapKey, function()
+    refreshWinMSpaces() -- for using up-to-date window tables (after force-closing apps this could be an issue otherwiese)
     win1 = winAll[1]
     switcherSwapWindows = true
     win2 = switcher:previous(_windowsOnCurrentMS) --reverse order
@@ -298,7 +302,7 @@ function EnhancedSpaces:new(options)
           win2:focus()
         end)
       else -- focus stays with app in new place - still, focus needs to shift back and forth for window tables such as windowsOnCurrentMS to move a window also up the ranking order if it has been 'passively' chosen (when switching places)
-        win2:focus() 
+        win2:focus()
         win1:focus()
       end
       goToSpace(currentMSpace) -- refresh screen
@@ -465,7 +469,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.31.1\n\n\nIncreases your productivity so you have more time for what really matters in life.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.32\n\n\nIncreases your productivity so you have more time for what really matters in life.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),

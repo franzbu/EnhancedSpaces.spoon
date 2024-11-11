@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.32"
+EnhancedSpaces.version = "0.9.33"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -195,27 +195,26 @@ function EnhancedSpaces:new(options)
       if windowsOnCurrentMS ~= nil and #windowsOnCurrentMS >= 1 then
         windowsOnCurrentMS[1]:focus() -- activate last active window on current mSpace when closing/minimizing one
       end
-      --refreshWinMSpaces()
     end)
   end)
   filter.default:subscribe(filter.windowOnScreen, function(w)
-    if w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' and w:application():name() ~= 'DockHelper' then
-      --print('____________ windowOnScreen ____________' .. w:application():name())
-      if not enteredFullscreen then
+    --if w:application():name() ~= 'Telegram' and w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' and w:application():name() ~= 'DockHelper' then
+    if not enteredFullscreen then
+      if indexOpenAppMSpace(w) ~= nil  then
+      --print('____________ windowOnScreen ____________' .. w:application():name())   
         refreshWinMSpaces()
         moveMiddleAfterMouseMinimized(w)
         assignMS(w, true)
-        w:focus()
       end
+      refreshWinMSpaces()
+      w:focus()
     end
   end)
   filter.default:subscribe(filter.windowFocused, function(w)
-    if w ~= nil then
-      if w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' then
-        --print('____________ windowFocused ____________ ' .. w:application():name())
-        refreshWinMSpaces()
-        cmdTabFocus()
-      end
+    if w ~= nil and w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' then
+      --print('____________ windowFocused ____________ ' .. w:application():name())
+      refreshWinMSpaces()
+      cmdTabFocus()
     end
   end)
   -- 'window_filter.lua' has been adjusted: 'local WINDOWMOVED_DELAY=0.01' instead of '0.5' to get rid of delay
@@ -239,6 +238,7 @@ function EnhancedSpaces:new(options)
     end)
   end)
 
+  ---[[
   --switcher = switcher.new(hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)}))switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
   switcher = dofile(hs.spoons.resourcePath('lib/window_switcher.lua'))
   switcher = switcher.new()
@@ -287,6 +287,7 @@ function EnhancedSpaces:new(options)
     switcherSwapWindows = true
     win2 = switcher:previous(_windowsOnCurrentMS) --reverse order
   end)
+  
   -- 'subscribe', watchdog for releasing swapModifier
   prevModifierSwap = nil
   keyboardTrackerSwapWin = hs.eventtap.new({ hs.eventtap.event.types.flagsChanged }, function(e)
@@ -311,7 +312,7 @@ function EnhancedSpaces:new(options)
     prevModifierSwap = flags
   end)
   keyboardTrackerSwapWin:start()
-
+--]]
 
   -- cycle through references of one window
   hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[2], function()
@@ -469,7 +470,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.32\n\n\nManages your windows and mSpaces for increased productivity. Gives you time for what really matters in life.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.33\n\n\nManages your windows and mSpaces for increased productivity. Gives you time for what really matters in life.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),

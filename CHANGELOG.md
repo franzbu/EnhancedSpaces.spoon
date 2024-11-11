@@ -1,3 +1,7 @@
+# v0.9.33
+
+* fullscreen-related bug fixed
+
 # v0.9.32
 
 * fixed error when force-closing apps

@@ -1,6 +1,6 @@
 # v0.9.31.1
 
-* fixed issue with incorrect focus when swapping Terminal windows (lib/window_switcher.lua)
+* fixed issue with incorrect focus when swapping Terminal windows. In case you're running a previous version of EnhancedSpaces, make sure to update 'lib/window_switcher.lua'
 
 # v0.9.31
 

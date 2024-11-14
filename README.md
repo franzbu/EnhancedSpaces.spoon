@@ -577,7 +577,7 @@ Hammerspoon has a list of windows that are to be disregarded, such as Spotlight 
     'PopClip','Isolator', 'CheatSheet', 'CornerClickBG', 'Moom', 'CursorSense Manager',
     'Music Manager', 'Google Drive', 'Dropbox', '1Password mini', 'Colors for Hue', 'MacID',
     'CrashPlan menu bar', 'Flux', 'Jettison', 'Bartender', 'SystemPal', 'BetterSnapTool', 'Grandview', 'Radium',
-    'MenuMetersApp', 'DemoPro', 'DockHelper', 'Maccy', 'Alfred',
+    'MenuMetersApp', 'DemoPro', 'DockHelper', 'Maccy', 'Albert', 'Alfred',
   },
 ```
 As has been hinted at, the above list is Hammerspoon's, extended with a few others that have been reported; they are 'DockHelper', 'Maccy', and 'Alfred'.

@@ -11,11 +11,11 @@ So I decided to develop an application that manages virtual screens and windows 
 
 One of the main goals has been to make managing mSpaces and windows straightforward, intuitive, and efficient. EnhancedSpaces' features include switching and moving windows between mSpaces, using sticky windows, swapping windows, and automatically opening windows on predefined mSpaces in predefined sizes and positions. Using EnhancedSpaces' window manager, you can resize and rearrange your windows with keyboard shortcuts or with your mouse or trackpad. Additionally, the most common features are also available via menu and popup menu.
 
-Focus has also been given to making EnhancedSpaces enjoyable to use. You can customize EnhancedSpaces' menus to your needs, for example change them to your preferred language, and set individual wallpapers for your mSpaces.
+Focus has also been given to making EnhancedSpaces enjoyable to use. You can customize EnhancedSpaces' menus to your needs, for example change them to your preferred language, and set individual wallpapers for each of your mSpaces.
 
-So who is EnhancedSpaces for? It is made for power users who like working on multiple screens and want something more efficient and customizable than Apple's Spaces and at the same time prefer more flexibility than tiling window managers such as AeroSpace can offer. 
+So who is EnhancedSpaces for? It has been made for power users who like working on multiple screens and want something more efficient and customizable than Apple's Spaces and at the same time prefer more flexibility than tiling window managers such as AeroSpace can offer. 
 
-EnhancedSpaces has increased my productivity and has at the same time simplified my life with macOS. May it do the same for you.
+EnhancedSpaces has increased my productivity and simplified my life with macOS. May it do the same for you.
 
 
 ## Introduction
@@ -69,7 +69,7 @@ EnhancedSpaces:new({
 })
 ```
 
-If you'd just like to go ahead without delay, the following terminal command can be used as an alternative to manually editing `init.lua`. In this case the default options are used, which means that the mSpaces `1`, `2`, and `3`are created, with `2` as default mSpace:
+If you'd like to go ahead without delay, the following terminal command can be used as an alternative to manually editing `init.lua`. In this case the default options are used, which means that the mSpaces `1`, `2`, and `3`are created, with `2` as default mSpace:
 
 ```bash
 echo -e "local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')\nEnhancedSpaces:new({\nmSpaces = { '1', '2', '3' }, -- default: { '1', '2', '3' }\nstartmSpace = '2', -- default: 2\n})" >> ~/.hammerspoon/init.lua
@@ -116,7 +116,7 @@ It is also possible to use popup menus; more about that feature in the section [
 
 For additional functionality there is the possibility of using modifier keys with your menus, for example, for creating references of a window on all mSpaces at once, or for tagging along with a window while sending it to another mSpace; more about that in section [Advanced Menu Features](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#advanced-menu-features).
 
-There you can also learn how to change the menu entries, for example, to your preferred language. Additionally, you are shown how to include Hammerspoon's menu into EnhancedSpaces', which has the additional benefit of making Hammerspoon's menu redundant, i.e., you can then remove it from the menu bar.
+There you can also learn how to change the menu entries, for example, to your preferred language. Additionally, you are shown how to include Hammerspoon's menu into EnhancedSpaces', which has the additional benefit of making Hammerspoon's menu redundant, i.e., you can then remove it from your menu bar.
 
 
 ## Keyboard Shortcuts

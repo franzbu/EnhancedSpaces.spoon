@@ -567,6 +567,27 @@ By default the focus stays with the same window; in case you'd prefer the focus 
 
 ```
 
+### Windows To Be Disregarded by EnhancedSpaces
+Hammerspoon has a list of windows that are to be disregarded, such as Spotlight or Alfred. This list is not comprehensive, and if you encounter windows that should not claim focus where it is not intended, or dialogs that are wrongly treated as windows by Hammerspoon, you can add those applications to Hammerspoon's list by adding the following lines to the configuration of EnhancedSpaces in your `init.lua`:
+
+``` lua
+  -- window_filter.lua: windows to disregard
+  SKIP_APPS_TRANSIENT_WINDOWS = {
+    'Spotlight', 'Notification Center', 'loginwindow', 'ScreenSaverEngine', 'PressAndHold',
+    'PopClip','Isolator', 'CheatSheet', 'CornerClickBG', 'Moom', 'CursorSense Manager',
+    'Music Manager', 'Google Drive', 'Dropbox', '1Password mini', 'Colors for Hue', 'MacID',
+    'CrashPlan menu bar', 'Flux', 'Jettison', 'Bartender', 'SystemPal', 'BetterSnapTool', 'Grandview', 'Radium',
+    'MenuMetersApp', 'DemoPro', 'DockHelper', 'Maccy', 'Alfred',
+  },
+```
+As has been hinted at, the above list is Hammerspoon's, extended with a few others that have been reported to me as needing being added to work correctly with EnhancedSpaces; they are 'DockHelper', 'Maccy', and 'Alfred'.
+
+Adding your own exceptions is as easy as adding the name of the application you want Hammerspoon to disregard in accordance with the given formatting ('application name' followed by a comma).
+
+To get the names of open applications, you can use the method referred to in [Additional Features -
+Open Windows in Pre-Arranged mSpaces](https://github.com/franzbu/EnhancedSpaces.spoon#open-windows-in-pre-arranged-mspaces)
+
+
 ### Startup Commands
 In case you would like EnhancedSpaces to execute commands at startup, you can add those commands do your `init.lua`:
 

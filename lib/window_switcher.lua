@@ -1,30 +1,65 @@
 --[[
-  Franz <csaa6335@gmail.com>:
-  - altered that, instead of filter, constructor is handed table with windows to cycle through.
-  - selected window is not given focus, but is returned (can be given focus then, 
-  or, when used for switching windows, not at all)
+  <csaa6335@gmail.com>
 
-  - example:
+  - modified window_switcher.lua: instead of filter, constructor is handed table with windows to cycle through, which makes it faster and more flexible
+
+  - selected window is not given focus, but is returned, which makes it more flexible: window can be given focus, or, when used for, e.g., swapping windows, focus can be left on original window.
+
+  - for code to be executed only after final selection (and not for each switching), a 'keyboardTracker' is
+  necessary, so specific code is only executed after release of modifier key -> see example code below:
+
   hs.hotkey.bind({ 'alt' }, 'tab', function()
     switcherChangeFocus = true
-    winGiveFocus = switcher:next(<table (array) containing windows>)
+    selectedWindow = switcher:next(<table (array) containing windows>)
   end)
+
+  -- cycling in reverse order
   hs.hotkey.bind({ 'alt' , 'shift' }, 'tab', function()
     switcherChangeFocus = true
-    winGiveFocus = switcher:previous(<table (array) containing windows>) --reverse order
+    selectedWindow = switcher:previous(<table (array) containing windows>) --reverse order
   end)
-  -- 'subscribe', watchdog for releasing { 'alt' } -> to give focus to selected window (without all windows along the way would be given focus, which would falsify tables containing windows in order of "FocusedLast"
+
+  -- watchdog for releasing, for example, modifier { 'alt' }
   prevModifier = nil
   keyboardTracker = hs.eventtap.new({ hs.eventtap.event.types.flagsChanged }, function(e)
     local flags = eventToArray(e:getFlags())
-    -- since on { 'alt' } release the flag is 'nil', var 'prevModifier' is used
-    if switcherChangeFocus and modifiersEqual(prev{ 'alt' }, { 'alt' }) and winGiveFocus ~= nil then
-      winGiveFocus:focus()
+    -- var 'prevModifier' is used because on release of { 'alt' } flag is 'nil', 
+    if switcherChangeFocus and modifiersEqual(prevModifier, { 'alt' }) and selectedWindow ~= nil then
+      selectedWindow:focus()
       switcherChangeFocus = false
     end
     prevModifier = flags
   end)
   keyboardTracker:start()
+
+
+-- event looks like this: {'alt' 'true'} -> function turns table into an 'array' to make it comparable
+function eventToArray(a) -- maybe extend to work with more than one modifier at at time
+  local k = 1
+  local b = {}
+  for i,_ in pairs(a) do
+    if i == "cmd" or i == "alt" or i == "ctrl" or i == "shift" then -- or i == "fn" then
+      b[k] = i
+      k = k + 1
+    end
+  end
+  return b
+end
+
+
+-- check whether modifiers are the same (necessary if more than one and, e.g., one in different order)
+function modifiersEqual(a, b)
+  if a == nil or b == nil then return false end
+  if #a ~= #b then return false end 
+  table.sort(a)
+  table.sort(b)
+  for i = 1, #a do
+    if a[i] ~= b[i] then
+      return false
+    end
+  end
+  return true
+end
 ]]
 
 --- === hs.window.switcher ===
@@ -309,7 +344,7 @@ local function show(self,dir,windowsOnCurrentMSpace) -- original: without 'windo
   self.log.vf('window #%d selected',selected)
   self.selected=selected
   showSelected(selected,windows,drawings,ui)
-  return windowsOnCurrentMSpace[selected] -- original: line added -> returns the number of the window cycling through
+  return windowsOnCurrentMSpace[selected] -- original: line added -> returns the selected window
 
 end
 

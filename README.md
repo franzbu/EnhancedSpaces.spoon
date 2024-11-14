@@ -567,7 +567,7 @@ By default the focus stays with the same window; in case you'd prefer the focus 
 
 ```
 
-### Windows To Be Disregarded by EnhancedSpaces
+### Applications To Be Disregarded by EnhancedSpaces
 Hammerspoon has a list of windows that are to be disregarded, such as Spotlight or Alfred. This list is not comprehensive, and if you encounter windows that should not claim focus where it is not intended, or dialogs that are wrongly treated as windows by Hammerspoon, you can add those applications to Hammerspoon's list by adding the following lines to the configuration of EnhancedSpaces in your `init.lua`:
 
 ``` lua

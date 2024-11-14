@@ -580,7 +580,7 @@ Hammerspoon has a list of windows that are to be disregarded, such as Spotlight 
     'MenuMetersApp', 'DemoPro', 'DockHelper', 'Maccy', 'Alfred',
   },
 ```
-As has been hinted at, the above list is Hammerspoon's, extended with a few others that have been reported to me as needing being added to work correctly with EnhancedSpaces; they are 'DockHelper', 'Maccy', and 'Alfred'.
+As has been hinted at, the above list is Hammerspoon's, extended with a few others that have been reported; they are 'DockHelper', 'Maccy', and 'Alfred'.
 
 Adding your own exceptions is as easy as adding the name of the application you want Hammerspoon to disregard in accordance with the given formatting ('application name' followed by a comma).
 

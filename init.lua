@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.33"
+EnhancedSpaces.version = "0.9.34"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -112,7 +112,15 @@ function EnhancedSpaces:new(options)
   swapModifier = options.swapModifier or { 'ctrl' }
   swapKey = options.swapKey or 'escape'
   swapSwitchFocus = options.swapSwitchFocus or false
-  
+
+  --window_filter.lua: windows to disregard
+  SKIP_APPS_TRANSIENT_WINDOWS = options.SKIP_APPS_TRANSIENT_WINDOWS or {
+    'Spotlight', 'Notification Center', 'loginwindow', 'ScreenSaverEngine', 'PressAndHold',
+    'PopClip','Isolator', 'CheatSheet', 'CornerClickBG', 'Alfred', 'Moom', 'CursorSense Manager',
+    'Music Manager', 'Google Drive', 'Dropbox', '1Password mini', 'Colors for Hue', 'MacID',
+    'CrashPlan menu bar', 'Flux', 'Jettison', 'Bartender', 'SystemPal', 'BetterSnapTool', 'Grandview', 'Radium',
+    'MenuMetersApp', 'DemoPro', 'DockHelper',
+  }
 
   local moveResize = {
     disabledApps = tableToMap(options.disabledApps or {}),
@@ -149,7 +157,10 @@ function EnhancedSpaces:new(options)
 
   max = hs.screen.mainScreen():frame()
 
+
   filter = dofile(hs.spoons.resourcePath('lib/window_filter.lua'))
+  
+
   filter_all = filter.new()
   winAll = filter_all:getWindows()--hs.window.sortByFocused)
   winMSpaces = {}
@@ -188,34 +199,34 @@ function EnhancedSpaces:new(options)
   end
 
   -- watchdogs
-  filter.default:subscribe(filter.windowNotOnScreen, function(w)
-    --print('____________ windowNotOnScreen ____________' .. w:application():name() )--.. w:application():name())
-    hs.timer.doAfter(0.000000001, function() --delay, otherwise 'filter_all = hs.window.filter.new()' not ready after closing of windows (in certain situations)
-      refreshWinMSpaces()
-      if windowsOnCurrentMS ~= nil and #windowsOnCurrentMS >= 1 then
-        windowsOnCurrentMS[1]:focus() -- activate last active window on current mSpace when closing/minimizing one
-      end
-    end)
+  filter.default:subscribe(filter.windowNotOnScreen, function()
+      --print('____________ windowNotOnScreen ____________')--.. w:application():name()) causes errors that break EnhancedSpaces
+      hs.timer.doAfter(0.000000001, function() --delay, otherwise 'filter_all = hs.window.filter.new()' not ready after closing of windows (in certain situations)
+        refreshWinMSpaces()
+        if windowsOnCurrentMS ~= nil and #windowsOnCurrentMS >= 1 then
+          windowsOnCurrentMS[1]:focus() -- activate last active window on current mSpace when closing/minimizing one
+        end
+      end)
   end)
   filter.default:subscribe(filter.windowOnScreen, function(w)
     --if w:application():name() ~= 'Telegram' and w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' and w:application():name() ~= 'DockHelper' then
-    if not enteredFullscreen then
-      if indexOpenAppMSpace(w) ~= nil  then
+    if not enteredFullscreen then -- 'windowOnScreen' is triggered when leaving fullscreen, which is hereby counteracted
+      if indexOpenAppMSpace(w) ~= nil and not contextMenuTelegram() then
       --print('____________ windowOnScreen ____________' .. w:application():name())   
         refreshWinMSpaces()
         moveMiddleAfterMouseMinimized(w)
         assignMS(w, true)
+        w:focus()
+      else
+        refreshWinMSpaces()
+        w:focus()
       end
-      refreshWinMSpaces()
-      w:focus()
     end
   end)
   filter.default:subscribe(filter.windowFocused, function(w)
-    if w ~= nil and w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' then
-      --print('____________ windowFocused ____________ ' .. w:application():name())
-      refreshWinMSpaces()
-      cmdTabFocus()
-    end
+    print('____________ windowFocused ____________ ' .. w:application():name())
+    refreshWinMSpaces()
+    cmdTabFocus()
   end)
   -- 'window_filter.lua' has been adjusted: 'local WINDOWMOVED_DELAY=0.01' instead of '0.5' to get rid of delay
   filter.default:subscribe(filter.windowMoved, function(w)
@@ -470,7 +481,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.33\n\n\nManages your windows and mSpaces for increased productivity. Gives you time for what really matters in life.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.34\n\n\nManages your windows and mSpaces for increased productivity. Gives you time for what really matters in life.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),
@@ -586,26 +597,27 @@ end
 function createSwapWindowMenu()
   swapWindowMenu = {}
   for i = 1, #windowsOnCurrentMS do
-    if windowsOnCurrentMS[i] ~= nil then
+    --if windowsOnCurrentMS[i] ~= nil then
       table.insert(swapWindowMenu, {
        title = windowsOnCurrentMS[i]:application():name(),
         menu = createSwapWindowMenuItems(windowsOnCurrentMS[i]),
       })
-    end
+    --end
   end
   return swapWindowMenu
 end
 function createSwapWindowMenuItems(w)
+  --if w == nil then return end
   swapWindowMenuItems = {}
   for i = 1, #windowsOnCurrentMS do
-    if w ~= nil and windowsOnCurrentMS[i] ~= nil then
+    --if w ~= nil and windowsOnCurrentMS[i] ~= nil then
       if w:id() ~= windowsOnCurrentMS[i]:id() then
         table.insert(swapWindowMenuItems, {
           title = windowsOnCurrentMS[i]:application():name(),
           checked = false,
           disabled = false,
           fn = function(mods)
-            if w ~= nil then
+            --if w ~= nil then
               if modifiersEqual(getModifiersMods(mods), menuModifier3) then -- menuModifier3: move windows to a5/a6
                 winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = snap('a5')
                 winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].frame[currentMSpace] = snap('a6')
@@ -632,11 +644,11 @@ function createSwapWindowMenuItems(w)
                 winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].win:focus()
                 winMSpaces[getWinMSpacesPos(w)].win:focus()
               end
-            end
+            --end
           end
         })
       end
-    end
+    --end
   end
   return swapWindowMenuItems
 end
@@ -1488,13 +1500,6 @@ end
 
 function refreshWinMSpaces()
   winAll = filter_all:getWindows() --hs.window.sortByFocused)
-  --[[
-  print('=======')
-  for i = 1, #winAll do
-    print(winAll[i]:application():name())
-  end
-  print('______ done _______')
-  --]]
   -- remove minimized/closed windows
   ::again::
   for i = 1, #winMSpaces do
@@ -1550,9 +1555,9 @@ function refreshWinMSpaces()
   table.insert(_windowsOnCurrentMS, 1, _windowsOnCurrentMS[#_windowsOnCurrentMS])
   table.remove(_windowsOnCurrentMS, #_windowsOnCurrentMS)
 
-  --hs.timer.doAfter(0.5, function()
+  hs.timer.doAfter(0.01, function()
   refreshMenu()
-  --end)
+  end)
 end
 
 
@@ -1647,6 +1652,7 @@ function assignMS(w, boolgotoSpace)
   end
 end
 
+
 function indexOpenAppMSpace(w)
   if openAppMSpace ~= nil then
     for i = 1, #openAppMSpace do
@@ -1657,6 +1663,22 @@ function indexOpenAppMSpace(w)
     return nil
   end
   return nil
+end
+
+
+function contextMenuTelegram() -- return 'true' if there are more than one Telegram windows (they are context menus that should not trigger windowOnScreen and consequently assignMS(), which places context menu wrongly)
+  refreshWinMSpaces()
+  k = 0
+  for i = 1, #winAll do
+    if winAll[i]:application():name() == 'Telegram' then
+      k = k + 1
+    end
+  end
+  if k == 1 then
+    return false
+  else 
+    return true
+  end
 end
 
 

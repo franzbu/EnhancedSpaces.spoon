@@ -116,10 +116,10 @@ function EnhancedSpaces:new(options)
   --window_filter.lua: windows to disregard
   SKIP_APPS_TRANSIENT_WINDOWS = options.SKIP_APPS_TRANSIENT_WINDOWS or {
     'Spotlight', 'Notification Center', 'loginwindow', 'ScreenSaverEngine', 'PressAndHold',
-    'PopClip','Isolator', 'CheatSheet', 'CornerClickBG', 'Alfred', 'Moom', 'CursorSense Manager',
+    'PopClip','Isolator', 'CheatSheet', 'CornerClickBG', 'Moom', 'CursorSense Manager',
     'Music Manager', 'Google Drive', 'Dropbox', '1Password mini', 'Colors for Hue', 'MacID',
     'CrashPlan menu bar', 'Flux', 'Jettison', 'Bartender', 'SystemPal', 'BetterSnapTool', 'Grandview', 'Radium',
-    'MenuMetersApp', 'DemoPro', 'DockHelper',
+    'MenuMetersApp', 'DemoPro', 'DockHelper', 'Maccy', 'Alfred',
   }
 
   local moveResize = {

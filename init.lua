@@ -224,7 +224,7 @@ function EnhancedSpaces:new(options)
     end
   end)
   filter.default:subscribe(filter.windowFocused, function(w)
-    print('____________ windowFocused ____________ ' .. w:application():name())
+    --print('____________ windowFocused ____________ ' .. w:application():name())
     refreshWinMSpaces()
     cmdTabFocus()
   end)

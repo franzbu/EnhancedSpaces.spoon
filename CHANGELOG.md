@@ -1,5 +1,9 @@
 # v0.9.34
 
+* Added the launcher Albert to the list of applications to be disregarded.
+  
+# v0.9.34
+
 * Context menus of the application Telegram are correctly handled as dialogs rather than windows
 
 * Added option to add application that are to be disregarded by EnhancedSpaces, e.g., launchers and clipboard managers - see [Windows To Be Disregarded by EnhancedSpaces](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#windows-to-be-disregarded-by-enhancedspaces)

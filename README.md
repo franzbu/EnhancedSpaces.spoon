@@ -9,7 +9,7 @@ I dismissed my multi-monitor arrangement in favor of virtual screens years ago a
 
 So I decided to develop an application that manages virtual screens and windows the way I've always wanted, while remaining independent from Apple's Spaces and as such not being affected by any potential future changes Apple might apply. 
 
-One of the main goals has been to make managing mSpaces and windows straightforward, intuitive, and efficient. EnhancedSpaces' features include switching and moving windows between mSpaces, using sticky windows, swapping windows that take each others' sizes and positions, and automatically opening windows on predefined mSpaces in predefined sizes and positions. Using EnhancedSpaces' window manager, you can resize and rearrange your windows with keyboard shortcuts or with your mouse or trackpad. Additionally, the most common features are also available via menu and popup menu.
+One of the main goals has been to make managing mSpaces and windows straightforward, intuitive, and efficient. EnhancedSpaces' features include switching and moving windows between mSpaces, using sticky windows, swapping windows, and automatically opening windows on predefined mSpaces in predefined sizes and positions. Using EnhancedSpaces' window manager, you can resize and rearrange your windows with keyboard shortcuts or with your mouse or trackpad. Additionally, the most common features are also available via menu and popup menu.
 
 Focus has also been given to making EnhancedSpaces enjoyable to use. You can customize EnhancedSpaces' menus to your needs, for example change them to your preferred language, and set individual wallpapers for your mSpaces.
 

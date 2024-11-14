@@ -3,7 +3,7 @@
   - slow start -> following line added: 
   if app:bundleID() == "com.apple.WebKit.WebContent" then return end -- original: without this line, see also https://github.com/Hammerspoon/hammerspoon/issues/3712
   
-  - changed 'Alfred 2' to 'Alfred'
+  - commented out table 'SKIP_APPS_TRANSIENT_WINDOWS', which is made changeable in EnhancedSpaces
 
   - changed the following line:
   local WINDOWMOVED_DELAY=0.01 -- original: 0.5
@@ -153,17 +153,19 @@ do
     for _,appname in ipairs(list) do windowfilter.ignoreAlways[appname] = true end
   end
 
+  --[[
   local SKIP_APPS_TRANSIENT_WINDOWS = {
     --TODO keep this updated (used in the default filter)
     -- hs.window.filter._showCandidates() -- from the console
     'Spotlight', 'Notification Center', 'loginwindow', 'ScreenSaverEngine', 'PressAndHold',
     -- preferences etc
-    'PopClip','Isolator', 'CheatSheet', 'CornerClickBG', 'Alfred', 'Moom', 'CursorSense Manager', -- original: 'Alfred 2'
+    'PopClip','Isolator', 'CheatSheet', 'CornerClickBG', 'Alfred 2', 'Moom', 'CursorSense Manager',
     -- menulets
     'Music Manager', 'Google Drive', 'Dropbox', '1Password mini', 'Colors for Hue', 'MacID',
     'CrashPlan menu bar', 'Flux', 'Jettison', 'Bartender', 'SystemPal', 'BetterSnapTool', 'Grandview', 'Radium',
     'MenuMetersApp', 'DemoPro',
   }
+  --]]
 
   windowfilter.ignoreInDefaultFilter = {}
   for _,appname in ipairs(SKIP_APPS_TRANSIENT_WINDOWS) do windowfilter.ignoreInDefaultFilter[appname] = true end

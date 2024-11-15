@@ -1,5 +1,9 @@
 # v0.9.35
 
+* fixed bug where windows weren't assigned correct mSpace when opened
+
+# v0.9.35
+
 * added possibilities to (1) [disable switching between the windows of your current mSpace](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#switching-between-windows) and (2) [disable swapping windows](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#swapping-windows)
 
 * added possibility to [change appearance of switcher](https://github.com/franzbu/EnhancedSpaces.spoon#changing-appearance-of-switcher)

@@ -409,7 +409,7 @@ In case you would also like to pre-define the position of the window on the mSpa
 
 
 ### Custom Wallpapers
-For enabling the feature that each mSpace can have an individual wallpaper, add the following to your `init.lua`: 
+For selecting an individual wallpaper for each mSpace, add the following to your `init.lua`: 
 
 ``` lua
   -- individual wallpaper for each mSpace

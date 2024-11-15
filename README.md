@@ -310,7 +310,7 @@ As has been mentioned, these keyboard shortcuts are fully customizable. Let's fi
       { 'a5', '5' }, 
       { 'a6', '6' }, 
       { 'a7', '7' }, 
-      { 'a8', '8' }
+      { 'a8', '8' },
      },
     -- modifierSnapKey2
     { 
@@ -325,7 +325,7 @@ As has been mentioned, these keyboard shortcuts are fully customizable. Let's fi
       { 'b9', '9' }, 
       { 'b10', '0' }, 
       { 'b11', 'o' }, 
-      { 'b12', 'p' }
+      { 'b12', 'p' },
      }, 
     -- modifierSnapKey3
     { 
@@ -340,7 +340,7 @@ As has been mentioned, these keyboard shortcuts are fully customizable. Let's fi
       { 'c9', '9' }, 
       { 'c10', '0' }, 
       { 'c11', 'o' }, 
-      { 'c12', 'p' }
+      { 'c12', 'p' },
      },
    },
 ```
@@ -360,7 +360,8 @@ Let's further assume that you would like to use `modifierSnap1` with the keys `j
     {
       { 'a2', 'j' },
       { 'b11', 'k' },
-      { 'c5', 'l'} },
+      { 'c5', 'l' },
+    },
     -- modifierSnapKey2
     {
     },

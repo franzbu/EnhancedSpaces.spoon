@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.35.1"
+EnhancedSpaces.version = "0.9.35.2"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -259,7 +259,7 @@ function EnhancedSpaces:new(options)
     backgroundColor = { 0.3, 0.3, 0.3, 0.5 },
     onlyActiveApplication = false, -- only show windows of the active application
     showTitles = true, -- show window titles
-    itleBackgroundColor = {0,0,0},
+    titleBackgroundColor = {0,0,0},
     showThumbnails = true, -- show window thumbnails
     selectedThumbnailSize = 284, -- size of window thumbnails in screen points
     showSelectedThumbnail = true, -- show a larger thumbnail for the currently selected window
@@ -512,7 +512,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.35.1\n\n\nManages your windows and mSpaces for increased productivity. Gives you time for what really matters in life.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.35.2\n\n\nManages your windows and mSpaces for increased productivity. Gives you time for what really matters in life.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),

@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.34.1"
+EnhancedSpaces.version = "0.9.35"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -249,81 +249,115 @@ function EnhancedSpaces:new(options)
     end)
   end)
 
-  ---[[
   --switcher = switcher.new(hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)}))switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
   switcher = dofile(hs.spoons.resourcePath('lib/window_switcher.lua'))
+  switcherConfig = options.switcherConfig or { 
+    textColor = {0.9,0.9,0.9},
+    fontName = 'Lucida Grande',
+    textSize = 16, -- in screen points
+    highlightColor = {0.8,0.5,0,0.8}, -- highlight color for the selected window
+    backgroundColor = { 0.3, 0.3, 0.3, 0.5 },
+    onlyActiveApplication = false, -- only show windows of the active application
+    showTitles = true, -- show window titles
+    itleBackgroundColor = {0,0,0},
+    showThumbnails = true, -- show window thumbnails
+    selectedThumbnailSize = 284, -- size of window thumbnails in screen points
+    showSelectedThumbnail = true, -- show a larger thumbnail for the currently selected window
+    thumbnailSize = 112, 
+    showSelectedTitle = false, -- show larger title for the currently selected window
+  }
+
   switcher = switcher.new()
-  switcher.ui.thumbnailSize = 112
-  switcher.ui.selectedThumbnailSize = 284
-  switcher.ui.backgroundColor = { 0.3, 0.3, 0.3, 0.5 }
-  switcher.ui.textSize = 16
-  switcher.ui.showSelectedTitle = false
+
+  switcher.ui.textColor = switcherConfig.textColor or {0.9,0.9,0.9}
+  switcher.ui.fontName = switcherConfig.fontName or 'Lucida Grande'
+  switcher.ui.textSize = switcherConfig.textSize or 16
+  switcher.ui.highlightColor = switcherConfig.highlightColor or {0.8,0.5,0,0.8} 
+  switcher.ui.backgroundColor = switcherConfig.backgroundColor or { 0.3, 0.3, 0.3, 0.5 }
+  switcher.ui.onlyActiveApplication = switcherConfig.onlyActiveApplication or false
+  switcher.ui.showTitles = switcherConfig.showTitles or true
+  switcher.ui.titleBackgroundColor = switcherConfig.titleBackgroundColor or {0,0,0}
+  switcher.ui.showThumbnails = switcherConfig.showThumbnails or true
+  switcher.ui.selectedThumbnailSize = switcherConfig.selectedThumbnailSize or 284
+  switcher.ui.showSelectedThumbnail = switcherConfig.showSelectedThumbnail or true
+  switcher.ui.thumbnailSize = switcherConfig.thumbnailSize or 112
+  switcher.ui.showSelectedTitle = switcherConfig.showSelectedTitle or false
+
+
+
 
   -- cycle through windows of current mSpace
-  hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[1], function()
-    refreshWinMSpaces() -- for using up-to-date window tables (after force-closing apps this could be an issue otherwiese)
-    switcherChangeFocus = true
-    winGiveFocus = switcher:next(windowsOnCurrentMS)
-  end)
-  hs.hotkey.bind({modifierSwitchWin[1], 'shift' }, modifierSwitchWinKeys[1], function()
-    refreshWinMSpaces() -- for using up-to-date window tables (after force-closing apps this could be an issue otherwiese)
-    switcherChangeFocus = true
-    winGiveFocus = switcher:previous(windowsOnCurrentMS) --reverse order
-  end)
-  -- 'subscribe', watchdog for releasing { 'alt' } -> to give focus to selected window (without all windows along the way would be given focus, which would falsify tables containing windows in order of "FocusedLast"
-  prevModifierSwitchWin = nil
-  keyboardTrackerSwitchWin = hs.eventtap.new({ hs.eventtap.event.types.flagsChanged }, function(e)
-    local flags = eventToArray(e:getFlags())
-    -- since on modifierSwitchWin release the flag is 'nil', var 'prevModifierSwitchWin' is used
-    if switcherChangeFocus and modifiersEqual(prevModifierSwitchWin, modifierSwitchWin) and winGiveFocus ~= nil then
-      winGiveFocus:focus()
-      switcherChangeFocus = false
-    end
-    prevModifierSwitchWin = flags
-  end)
-  keyboardTrackerSwitchWin:start()
-
-
-  -- cycle through windows of current mSpace except active one, then swap
-  switcherSwapWindows = false
-  hs.hotkey.bind(swapModifier, swapKey, function()
-    refreshWinMSpaces() -- for using up-to-date window tables (after force-closing apps this could be an issue otherwiese)
-    win1 = winAll[1]
-    switcherSwapWindows = true
-    win2 = switcher:next(_windowsOnCurrentMS)
-  end)
-  hs.hotkey.bind({swapModifier[1], 'shift' }, swapKey, function()
-    refreshWinMSpaces() -- for using up-to-date window tables (after force-closing apps this could be an issue otherwiese)
-    win1 = winAll[1]
-    switcherSwapWindows = true
-    win2 = switcher:previous(_windowsOnCurrentMS) --reverse order
-  end)
-  
-  -- 'subscribe', watchdog for releasing swapModifier
-  prevModifierSwap = nil
-  keyboardTrackerSwapWin = hs.eventtap.new({ hs.eventtap.event.types.flagsChanged }, function(e)
-    local flags = eventToArray(e:getFlags())
-    -- since on swapModifier release the flag is 'nil', var 'prevModifierSwap' is used
-    if switcherSwapWindows and modifiersEqual(prevModifierSwap, swapModifier) and win2 ~= nil then
-      local frameWin1 = winMSpaces[getWinMSpacesPos(win1)].frame[currentMSpace]
-      winMSpaces[getWinMSpacesPos(win1)].frame[currentMSpace] = winMSpaces[getWinMSpacesPos(win2)].frame[currentMSpace]
-      winMSpaces[getWinMSpacesPos(win2)].frame[currentMSpace] = frameWin1
-      
-      if swapSwitchFocus then
-        hs.timer.doAfter(0.001, function()
-          win2:focus()
-        end)
-      else -- focus stays with app in new place - still, focus needs to shift back and forth for window tables such as windowsOnCurrentMS to move a window also up the ranking order if it has been 'passively' chosen (when switching places)
-        win2:focus()
-        win1:focus()
+  if modifierSwitchWin[1] ~= nil then
+    hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[1], function()
+      refreshWinMSpaces() -- for using up-to-date window tables (after force-closing apps this could be an issue otherwiese)
+      switcherChangeFocus = true
+      winGiveFocus = switcher:next(windowsOnCurrentMS)
+    end)
+    hs.hotkey.bind({modifierSwitchWin[1], 'shift' }, modifierSwitchWinKeys[1], function()
+      refreshWinMSpaces() -- for using up-to-date window tables (after force-closing apps this could be an issue otherwiese)
+      switcherChangeFocus = true
+      winGiveFocus = switcher:previous(windowsOnCurrentMS) --reverse order
+    end)
+    -- 'subscribe', watchdog for releasing { 'alt' } -> to give focus to selected window (without all windows along the way would be given focus, which would falsify tables containing windows in order of "FocusedLast"
+    prevModifierSwitchWin = nil
+    keyboardTrackerSwitchWin = hs.eventtap.new({ hs.eventtap.event.types.flagsChanged }, function(e)
+      local flags = eventToArray(e:getFlags())
+      -- since on modifierSwitchWin release the flag is 'nil', var 'prevModifierSwitchWin' is used
+      if switcherChangeFocus and modifiersEqual(prevModifierSwitchWin, modifierSwitchWin) and winGiveFocus ~= nil then
+        winGiveFocus:focus()
+        switcherChangeFocus = false
       end
-      goToSpace(currentMSpace) -- refresh screen
-      switcherSwapWindows = false
+      prevModifierSwitchWin = flags
+    end)
+    keyboardTrackerSwitchWin:start()
+
+    -- cycle through windows of current mSpace except active one, then swap
+    switcherSwapWindows = false
+    if swapModifier[1] ~= '' then
+      hs.hotkey.bind(swapModifier, swapKey, function()
+        refreshWinMSpaces() -- for using up-to-date window tables (after force-closing apps this could be an issue otherwiese)
+        win1 = winAll[1]
+        switcherSwapWindows = true
+        win2 = switcher:next(_windowsOnCurrentMS)
+      end)
+      hs.hotkey.bind({swapModifier[1], 'shift' }, swapKey, function()
+        refreshWinMSpaces() -- for using up-to-date window tables (after force-closing apps this could be an issue otherwiese)
+        win1 = winAll[1]
+        switcherSwapWindows = true
+        win2 = switcher:previous(_windowsOnCurrentMS) --reverse order
+      end)
+    
+    
+      -- 'subscribe', watchdog for releasing swapModifier
+      prevModifierSwap = nil
+      keyboardTrackerSwapWin = hs.eventtap.new({ hs.eventtap.event.types.flagsChanged }, function(e)
+        local flags = eventToArray(e:getFlags())
+        -- since on swapModifier release the flag is 'nil', var 'prevModifierSwap' is used
+        if switcherSwapWindows and modifiersEqual(prevModifierSwap, swapModifier) and win2 ~= nil then
+          local frameWin1 = winMSpaces[getWinMSpacesPos(win1)].frame[currentMSpace]
+          winMSpaces[getWinMSpacesPos(win1)].frame[currentMSpace] = winMSpaces[getWinMSpacesPos(win2)].frame[currentMSpace]
+          winMSpaces[getWinMSpacesPos(win2)].frame[currentMSpace] = frameWin1
+          
+          if swapSwitchFocus then
+            hs.timer.doAfter(0.001, function()
+              win2:focus()
+            end)
+          else -- focus stays with app in new place - still, focus needs to shift back and forth for window tables such as windowsOnCurrentMS to move a window also up the ranking order if it has been 'passively' chosen (when switching places)
+            win2:focus()
+            win1:focus()
+          end
+          goToSpace(currentMSpace) -- refresh screen
+          switcherSwapWindows = false
+        end
+        prevModifierSwap = flags
+      end)
+      keyboardTrackerSwapWin:start()
     end
-    prevModifierSwap = flags
-  end)
-  keyboardTrackerSwapWin:start()
---]]
+  end
+
+
+
+
 
   -- cycle through references of one window
   hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[2], function()
@@ -481,7 +515,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.34.1\n\n\nManages your windows and mSpaces for increased productivity. Gives you time for what really matters in life.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.35\n\n\nManages your windows and mSpaces for increased productivity. Gives you time for what really matters in life.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),
@@ -710,7 +744,7 @@ function createSendWindowMenu()
   for i = 1, #windowsOnCurrentMS do
     if windowsOnCurrentMS[i] ~= nil then
       table.insert(moveWindowMenu, {
-       title = windowsOnCurrentMS[i]:application():name(),
+        title = windowsOnCurrentMS[i]:application():name(),
         menu = createSendWindowMenuItems(windowsOnCurrentMS[i]),
       })
     end

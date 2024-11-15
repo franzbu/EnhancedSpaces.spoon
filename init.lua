@@ -248,30 +248,30 @@ function EnhancedSpaces:new(options)
   --switcher = switcher.new(hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)}))switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
   switcher = dofile(hs.spoons.resourcePath('lib/window_switcher.lua'))
   switcherConfig = options.switcherConfig or {
-    textColor = {0.9,0.9,0.9},
+    textColor = { 0.9, 0.9, 0.9 },
     fontName = 'Lucida Grande',
     textSize = 16, -- in screen points
-    highlightColor = {0.8,0.5,0,0.8}, -- highlight color for the selected window
+    highlightColor = { 0.8, 0.5, 0, 0.8 }, -- highlight color for the selected window
     backgroundColor = { 0.3, 0.3, 0.3, 0.5 },
     onlyActiveApplication = false, -- only show windows of the active application
     showTitles = true, -- show window titles
-    titleBackgroundColor = {0,0,0},
+    titleBackgroundColor = { 0, 0, 0 },
     showThumbnails = true, -- show window thumbnails
     selectedThumbnailSize = 284, -- size of window thumbnails in screen points
     showSelectedThumbnail = true, -- show a larger thumbnail for the currently selected window
-    thumbnailSize = 112, 
+    thumbnailSize = 112,
     showSelectedTitle = false, -- show larger title for the currently selected window
   }
 
   switcher = switcher.new()
-  switcher.ui.textColor = switcherConfig.textColor or {0.9,0.9,0.9}
+  switcher.ui.textColor = switcherConfig.textColor or { 0.9, 0.9, 0.9 }
   switcher.ui.fontName = switcherConfig.fontName or 'Lucida Grande'
   switcher.ui.textSize = switcherConfig.textSize or 16
-  switcher.ui.highlightColor = switcherConfig.highlightColor or {0.8,0.5,0,0.8} 
+  switcher.ui.highlightColor = switcherConfig.highlightColor or { 0.8, 0.5, 0, 0.8 } 
   switcher.ui.backgroundColor = switcherConfig.backgroundColor or { 0.3, 0.3, 0.3, 0.5 }
   switcher.ui.onlyActiveApplication = switcherConfig.onlyActiveApplication or false
   switcher.ui.showTitles = switcherConfig.showTitles or true
-  switcher.ui.titleBackgroundColor = switcherConfig.titleBackgroundColor or {0,0,0}
+  switcher.ui.titleBackgroundColor = switcherConfig.titleBackgroundColor or { 0, 0, 0 }
   switcher.ui.showThumbnails = switcherConfig.showThumbnails or true
   switcher.ui.selectedThumbnailSize = switcherConfig.selectedThumbnailSize or 284
   switcher.ui.showSelectedThumbnail = switcherConfig.showSelectedThumbnail or true
@@ -346,10 +346,6 @@ function EnhancedSpaces:new(options)
       keyboardTrackerSwapWin:start()
     end
   end
-
-
-
-
 
   -- cycle through references of one window
   hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[2], function()

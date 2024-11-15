@@ -426,7 +426,7 @@ For changing the appearance of the switcher for cycling through the windows of t
     backgroundColor = { 0.3, 0.3, 0.3, 0.5 }, -- default: { 0.3, 0.3, 0.3, 0.5 }
     onlyActiveApplication = false, -- only show windows of the active application; default: false
     showTitles = true, -- show window titles; default: true
-    itleBackgroundColor = { 0, 0, 0 }, -- default: { 0, 0, 0 }
+    titleBackgroundColor = { 0, 0, 0 }, -- default: { 0, 0, 0 }
     showThumbnails = true, -- show window thumbnails; default: true
     selectedThumbnailSize = 284, -- size of window thumbnails in screen points; default: 284
     showSelectedThumbnail = true, -- show a larger thumbnail for the currently selected window; default: true

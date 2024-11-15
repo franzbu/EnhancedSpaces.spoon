@@ -1,3 +1,7 @@
+# v0.9.35.4
+
+* corrected issue with switcher configuration (v0.9.35)
+
 # v0.9.35.3
 
 * added feature to change text for 'Hammerspoon' entry in main menu

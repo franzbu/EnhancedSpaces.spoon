@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.35.2"
+EnhancedSpaces.version = "0.9.35.3"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -29,12 +29,8 @@ local function getWindowUnderMouse()
 end
 
 local function buttonNameToEventType(name, optionName)
-  if name == 'left' then
-    return hs.eventtap.event.types.leftMouseDown
-  end
-  if name == 'right' then
-    return hs.eventtap.event.types.rightMouseDown
-  end
+  if name == 'left' then return hs.eventtap.event.types.leftMouseDown end
+  if name == 'right' then return hs.eventtap.event.types.rightMouseDown end
   error(optionName .. ': only "left" and "right" mouse button supported, got ' .. name)
 end
 
@@ -49,7 +45,7 @@ function EnhancedSpaces:new(options)
   menuModifier1 = options.menuModifier1 or { 'alt' }
   menuModifier2 = options.menuModifier2 or { 'ctrl' }
   menuModifier3 = options.menuModifier3 or mergeModifiers(menuModifier1, menuModifier2)
-  menuTitles = options.menuTitles or { swap = 'Swap', send = "Send Window", get = "Get Window", help = 'Help', about = 'About' }
+  menuTitles = options.menuTitles or { swap = 'Swap', send = "Send Window", get = "Get Window", help = 'Help', about = 'About', hammerspoon = 'Hammerspoon' }
   
   hammerspoonMenu = options.hammerspoonMenu or false
   hammerspoonMenuItems = options.hammerspoonMenuItems or { reload = "Reload Config", open = "Open Config", console = 'Console', preferences = 'Preferences', about = 'About Hammerspoon', update = 'Check for Updates...', relaunch = 'Relaunch Hammerspoon', quit = 'Quit Hammerspoon' }
@@ -268,7 +264,6 @@ function EnhancedSpaces:new(options)
   }
 
   switcher = switcher.new()
-
   switcher.ui.textColor = switcherConfig.textColor or {0.9,0.9,0.9}
   switcher.ui.fontName = switcherConfig.fontName or 'Lucida Grande'
   switcher.ui.textSize = switcherConfig.textSize or 16
@@ -496,7 +491,7 @@ function refreshMenu()
       menu = createMSpaceMenu(),
     },
     { title = "-" },
-    { title = menuTitles.swap, disabled = returnTrueIfZero(_windowsOnCurrentMS),
+    { title = menuTitles.swap, disabled = trueIfZero(_windowsOnCurrentMS),
       menu = createSwapWindowMenu(),
     },
     { title = "-" },
@@ -504,15 +499,15 @@ function refreshMenu()
       menu = createToggleRefMenu(),
     },
     { title = "-" },
-    { title = menuTitles.send, disabled = returnTrueIfZero(windowsOnCurrentMS),
+    { title = menuTitles.send, disabled = trueIfZero(windowsOnCurrentMS),
       menu = createSendWindowMenu(),
     },
-    { title = menuTitles.get, disabled = returnTrueIfZero(windowsNotOnCurrentMS),
+    { title = menuTitles.get, disabled = trueIfZero(windowsNotOnCurrentMS),
       menu = createGetWindowMenu(),
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.35.2\n\n\nManages your windows and mSpaces for increased productivity. Gives you time for what really matters in life.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.35.3\n\n\nManages your windows and mSpaces for increased productivity. Gives you time for what really matters in life.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),
@@ -526,7 +521,7 @@ function refreshMenu()
       menu = createMSpaceMenu(),
     },
     { title = "-" },
-    { title = menuTitles.swap, disabled = returnTrueIfZero(_windowsOnCurrentMS),
+    { title = menuTitles.swap, disabled = trueIfZero(_windowsOnCurrentMS),
       menu = createSwapWindowMenu(),
     },
     { title = "-" },
@@ -534,10 +529,10 @@ function refreshMenu()
       menu = createToggleRefMenu(),
     },
     { title = "-" },
-    { title = menuTitles.send, disabled = returnTrueIfZero(windowsOnCurrentMS),
+    { title = menuTitles.send, disabled = trueIfZero(windowsOnCurrentMS),
       menu = createSendWindowMenu(),
     },
-    { title = menuTitles.get, disabled = returnTrueIfZero(windowsNotOnCurrentMS),
+    { title = menuTitles.get, disabled = trueIfZero(windowsNotOnCurrentMS),
       menu = createGetWindowMenu(),
     },
   }
@@ -545,7 +540,7 @@ function refreshMenu()
 
   mbSwapPopup = hs.menubar.new(false)
   swapWindowMenu = {
-    { title = menuTitles.swap, disabled = returnTrueIfZero(_windowsOnCurrentMS),
+    { title = menuTitles.swap, disabled = trueIfZero(_windowsOnCurrentMS),
       menu = createSwapWindowMenu(),
     },
   }
@@ -554,7 +549,7 @@ function refreshMenu()
   mbSendPopup = hs.menubar.new(false)
   sendWindowMenu = {
     { title = "-" },
-    { title = menuTitles.send, disabled = returnTrueIfZero(windowsOnCurrentMS),
+    { title = menuTitles.send, disabled = trueIfZero(windowsOnCurrentMS),
       menu = createSendWindowMenu(),
     },
   }
@@ -562,21 +557,19 @@ function refreshMenu()
 
   mbGetPopup = hs.menubar.new(false)
   getWindowMenu = {
-    { title = menuTitles.get, disabled = returnTrueIfZero(windowsNotOnCurrentMS),
+    { title = menuTitles.get, disabled = trueIfZero(windowsNotOnCurrentMS),
       menu = createGetWindowMenu(),
     },
   }
   mbGetPopup:setMenu(getWindowMenu)
 end
-function returnTrueIfZero(t) -- disable send/get titles in menu in case windowsOnCurrentMS/windowsNotOnCurrentMS is empty
-  if #t == 0 then
-    return true
-  end
+function trueIfZero(t) -- disable send/get titles in menu in case windowsOnCurrentMS/windowsNotOnCurrentMS is empty
+  if #t == 0 then return true end
   return false
 end
 function hsTitle()
   if not hammerspoonMenu then return nil end
-  return 'Hammerspoon'
+  return menuTitles.hammerspoon
 end
 function hsMenu()
   if not hammerspoonMenu then return nil end
@@ -606,11 +599,8 @@ function createMSpaceMenu()
   return mSpaceMenu
 end
 function mSpaceMenuItemChecked(j)
-  if j == currentMSpace then
-    return true
-  else
-    return false
-  end
+  if j == currentMSpace then return true end
+  return false
 end
 -- menu returns table with modifers pressed in this format: '{ alt = true, cmd = false, ctrl = false, fn = false, shift = false } -> turned into array of modifiers used
 function getModifiersMods(mods)
@@ -1464,20 +1454,14 @@ end
 
 
 function getprevMSpaceNumber(cS)
-  if cS == 1 then
-    return #mspaces
-  else
-    return cS - 1
-  end
+  if cS == 1 then return #mspaces end
+  return cS - 1
 end
 
 
 function getnextMSpaceNumber(cS)
-  if cS == #mspaces then
-    return 1
-  else
-    return cS + 1
-  end
+  if cS == #mspaces then return 1 end
+  return cS + 1
 end
 
 
@@ -1701,13 +1685,10 @@ function contextMenuTelegram() -- return 'true' if there are more than one Teleg
   for i = 1, #winAll do
     if winAll[i]:application():name() == 'Telegram' then
       k = k + 1
+      if k > 1 then return true end
     end
   end
-  if k <= 1 then
-    return false
-  else 
-    return true
-  end
+  return false
 end
 
 

@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.35.3"
+EnhancedSpaces.version = "0.9.35.4"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -247,7 +247,7 @@ function EnhancedSpaces:new(options)
 
   --switcher = switcher.new(hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)}))switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
   switcher = dofile(hs.spoons.resourcePath('lib/window_switcher.lua'))
-  switcherConfig = { 
+  switcherConfig = options.switcherConfig or {
     textColor = {0.9,0.9,0.9},
     fontName = 'Lucida Grande',
     textSize = 16, -- in screen points
@@ -507,7 +507,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.35.3\n\n\nManages your windows and mSpaces for increased productivity. Gives you time for what really matters in life.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.35.4\n\n\nManages your windows and mSpaces for increased productivity. Gives you time for what really matters in life.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),

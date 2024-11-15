@@ -563,12 +563,14 @@ Pressing `Ctrl` and `Escape`, your active window swaps places with another windo
 By default the focus stays with the same window; in case you'd prefer the focus to switch to the other window (and thus stay with the window in the same position on the screen), add the following line to your `init.lua`:
 
 ``` lua
-  --swapSwitchFocus = true, -- default: false
+  swapSwitchFocus = true, -- default: false
 
 ```
 
-### Applications To Be Disregarded by EnhancedSpaces
-Hammerspoon has a list of windows that are to be disregarded, such as Spotlight or Alfred. This list is not comprehensive, and if you encounter windows that should not claim focus where it is not intended, or dialogs that are wrongly treated as windows by Hammerspoon, you can add those applications to Hammerspoon's list by adding the following lines to the configuration of EnhancedSpaces in your `init.lua`:
+### Applications To Be Left Alone by EnhancedSpaces
+Any operating system has dialogs and windows of a more temporary nature, such as Spotlight or Alfred, that are dealt with differently than standard 'persistent' application windows. Hammerspoon's list of such windows and dialogs by its very nature cannot be comprehensive, as new applications are continually being developed. 
+
+Whenever using EnhancedSpaces you encounter windows that behave erratically such as claiming focus when they shouldn't, you can add these applications to the list of windows to be left alone by adding the following lines to the configuration of EnhancedSpaces in your `init.lua`:
 
 ``` lua
   -- window_filter.lua: windows to disregard
@@ -580,13 +582,14 @@ Hammerspoon has a list of windows that are to be disregarded, such as Spotlight 
     'MenuMetersApp', 'DemoPro', 'DockHelper', 'Maccy', 'Albert', 'Alfred',
   },
 ```
-As has been hinted at, the above list is Hammerspoon's, extended with a few others that have been reported; they are 'DockHelper', 'Maccy', and 'Alfred'.
+As has been hinted at, the above list is Hammerspoon's, extended with a few others that have been reported; they are 'DockHelper', 'Maccy', 'Albert', and 'Alfred'.
 
-Adding your own exceptions is as easy as adding the name of the application you want Hammerspoon to disregard in accordance with the given formatting ('application name' followed by a comma).
+Adding your own applications is as easy as adding its name to the list ('application name' followed by a comma). Also you might be well advised not to change the default entries.
 
 To get the names of open applications, you can use the method referred to in [Additional Features -
 Open Windows in Pre-Arranged mSpaces](https://github.com/franzbu/EnhancedSpaces.spoon#open-windows-in-pre-arranged-mspaces)
 
+The list above represents the default setup, and you only need to add it to your `init.lua` on case you want to extend it. 
 
 ### Startup Commands
 In case you would like EnhancedSpaces to execute commands at startup, you can add those commands do your `init.lua`:

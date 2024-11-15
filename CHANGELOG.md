@@ -1,4 +1,4 @@
-# v0.9.34
+# v0.9.35
 
 * added possibilities to (1) [disable switching between the windows of your current mSpace](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#switching-between-windows) and (2) [disable swapping windows](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#swapping-windows)
 

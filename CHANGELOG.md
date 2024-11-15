@@ -1,3 +1,11 @@
+# v0.9.35.3
+
+* added feature to change text for 'Hammerspoon' entry in main menu
+
+# v0.9.35.2
+
+* corrected typo
+
 # v0.9.35.1
 
 * fixed bug where windows weren't assigned correct mSpace when opened

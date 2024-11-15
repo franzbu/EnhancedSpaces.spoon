@@ -59,7 +59,7 @@ Configuring EnhancedSpaces involves rolling up your sleeves and grabbing your ke
 
 One of these advantages is that once you've got the knack of it, making changes to your setup is straightforward and quick, which are reasons you have become interested in EnhancedSpaces in the first place, right?
 
-So once you've installed EnhancedSpaces, add the following lines to the file `~/.hammerspoon/init.lua` (you can edit that file by clicking the Hammerspoon icon in your menu bar and choosing 'Open Config'). You might want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you will be greeted with:
+Once you've installed EnhancedSpaces, add the following lines to the file `~/.hammerspoon/init.lua` (you can edit that file by clicking the Hammerspoon icon in your menu bar and choosing 'Open Config'). You might want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you will be greeted with:
 
 ``` lua
 local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')

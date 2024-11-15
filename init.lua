@@ -282,9 +282,6 @@ function EnhancedSpaces:new(options)
   switcher.ui.showSelectedThumbnail = switcherConfig.showSelectedThumbnail or true
   switcher.ui.thumbnailSize = switcherConfig.thumbnailSize or 112
   switcher.ui.showSelectedTitle = switcherConfig.showSelectedTitle or false
-  switcher.ui.closeModeModifier = 'cmd'
-  switcher.ui.minimizeModeModifier = 'shift'
-
 
   -- cycle through windows of current mSpace
   if modifierSwitchWin[1] ~= nil then

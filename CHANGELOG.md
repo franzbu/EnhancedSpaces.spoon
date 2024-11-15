@@ -1,4 +1,4 @@
-# v0.9.35
+# v0.9.35.1
 
 * fixed bug where windows weren't assigned correct mSpace when opened
 

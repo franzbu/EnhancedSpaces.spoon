@@ -415,6 +415,7 @@ In case you would also like to pre-define the position of the window on the mSpa
 
 
 ### Changing Appearance of Switcher
+For changing the appearance of the switcher for cycling through the apps of the current mSpace when either switching or swapping windows, add the following lines to your `init.lua` and adjust the values to your liking:
 
 ``` lua
   switcherConfig = { 

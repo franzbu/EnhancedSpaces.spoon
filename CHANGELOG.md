@@ -1,5 +1,11 @@
 # v0.9.34
 
+* added possibilities to (1) [disable switching between the windows of your current mSpace](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#switching-between-windows) and (2) [disable swapping windows](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#swapping-windows)
+
+* added possibility to [change appearance of switcher](https://github.com/franzbu/EnhancedSpaces.spoon#changing-appearance-of-switcher)
+  
+# v0.9.34
+
 * Added the launcher Albert to the list of applications to be disregarded.
   
 # v0.9.34

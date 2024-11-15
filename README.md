@@ -210,6 +210,12 @@ As before, the lines below represent the default setup, and you don't need to ad
 
 For cycling through the windows of your current mSpace in reverse order, additionally press `shift`.
 
+For disabling this feature of switching between the windows of your current screen altogether, add the following line to your `init.lua`:
+
+``` lua
+  modifierSwitchWin = { '' }, -- default: { 'alt' }
+```
+
 You can also make two windows swap places using keyboard shortcuts; more about this feature in the section [Swapping Windows](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#swapping-windows).
 
 
@@ -408,6 +414,26 @@ In case you would also like to pre-define the position of the window on the mSpa
 'a1', for example, represents the left half of your screen, 'a2' the right half of your screen. To get the entire list of possible scenarios, see section [Automatic Resizing and Positioning - Keyboard](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#automatic-resizing-and-positioning---keyboard).
 
 
+### Changing Appearance of Switcher
+
+``` lua
+  switcherConfig = { 
+    textColor = { 0.9, 0.9, 0.9 }, -- default: { 0.9, 0.9, 0.9 }
+    fontName = 'Lucida Grande', -- default: 'Lucida Grande'
+    textSize = 16, -- in screen points; default: 16
+    highlightColor = { 0.8, 0.5, 0, 0.8 }, -- highlight color for the selected window; default: { 0.8, 0.5, 0, 0.8 }
+    backgroundColor = { 0.3, 0.3, 0.3, 0.5 }, -- default: { 0.3, 0.3, 0.3, 0.5 }
+    onlyActiveApplication = false, -- only show windows of the active application; default: false
+    showTitles = true, -- show window titles; default: true
+    itleBackgroundColor = { 0, 0, 0 }, -- default: { 0, 0, 0 }
+    showThumbnails = true, -- show window thumbnails; default: true
+    selectedThumbnailSize = 284, -- size of window thumbnails in screen points; default: 284
+    showSelectedThumbnail = true, -- show a larger thumbnail for the currently selected window; default: true
+    thumbnailSize = 112, -- default: 112
+    showSelectedTitle = false, -- show larger title for the currently selected window; default: false
+  },
+```
+
 ### Custom Wallpapers
 For selecting an individual wallpaper for each mSpace, add the following to your `init.lua`: 
 
@@ -565,6 +591,12 @@ By default the focus stays with the same window; in case you'd prefer the focus 
 ``` lua
   swapSwitchFocus = true, -- default: false
 
+```
+
+For disabling this feature of swapping windows, add the following line to your `init.lua`:
+
+``` lua
+  swapModifier = { '' },  -- default: { 'ctrl' }
 ```
 
 ### Applications To Be Left Alone by EnhancedSpaces

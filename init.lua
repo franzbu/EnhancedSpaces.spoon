@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.35"
+EnhancedSpaces.version = "0.9.35.1"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -212,7 +212,7 @@ function EnhancedSpaces:new(options)
     --if w:application():name() ~= 'Telegram' and w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' and w:application():name() ~= 'DockHelper' then
     if not enteredFullscreen then -- 'windowOnScreen' is triggered when leaving fullscreen, which is hereby counteracted
       if indexOpenAppMSpace(w) ~= nil and not contextMenuTelegram() then
-      --print('____________ windowOnScreen ____________' .. w:application():name())   
+        --print('____________ windowOnScreen ____________' .. w:application():name())   
         refreshWinMSpaces()
         moveMiddleAfterMouseMinimized(w)
         assignMS(w, true)
@@ -251,7 +251,7 @@ function EnhancedSpaces:new(options)
 
   --switcher = switcher.new(hs.window.filter.new():setRegions({hs.geometry.new(0, 0, max.w - 1, max.h)}))switcher.ui.highlightColor = { 0.4, 0.4, 0.5, 0.8 }
   switcher = dofile(hs.spoons.resourcePath('lib/window_switcher.lua'))
-  switcherConfig = options.switcherConfig or { 
+  switcherConfig = { 
     textColor = {0.9,0.9,0.9},
     fontName = 'Lucida Grande',
     textSize = 16, -- in screen points
@@ -282,8 +282,8 @@ function EnhancedSpaces:new(options)
   switcher.ui.showSelectedThumbnail = switcherConfig.showSelectedThumbnail or true
   switcher.ui.thumbnailSize = switcherConfig.thumbnailSize or 112
   switcher.ui.showSelectedTitle = switcherConfig.showSelectedTitle or false
-
-
+  switcher.ui.closeModeModifier = 'cmd'
+  switcher.ui.minimizeModeModifier = 'shift'
 
 
   -- cycle through windows of current mSpace
@@ -515,7 +515,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.35\n\n\nManages your windows and mSpaces for increased productivity. Gives you time for what really matters in life.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.35.1\n\n\nManages your windows and mSpaces for increased productivity. Gives you time for what really matters in life.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),
@@ -1688,13 +1688,11 @@ end
 
 
 function indexOpenAppMSpace(w)
-  if openAppMSpace ~= nil then
-    for i = 1, #openAppMSpace do
-      if w:application():name():gsub('%W', '') == openAppMSpace[i][1]:gsub('%W', '') then
-        return i
-      end
+  if openAppMSpace == nil then return nil end
+  for i = 1, #openAppMSpace do
+    if w:application():name():gsub('%W', '') == openAppMSpace[i][1]:gsub('%W', '') then
+      return i
     end
-    return nil
   end
   return nil
 end
@@ -1708,7 +1706,7 @@ function contextMenuTelegram() -- return 'true' if there are more than one Teleg
       k = k + 1
     end
   end
-  if k == 1 then
+  if k <= 1 then
     return false
   else 
     return true

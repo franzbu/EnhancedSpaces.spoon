@@ -2,7 +2,7 @@
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/demo2.gif' />
 
-This animated GIF doesn't show what EnhancedSpaces is mainly about, i.e., managing spaces, which is better experienced first-hand. Nevertheless, you still get a glimpse of one of its strengths as a window manager, namely using a pointing device to automatically resize and position windows, which can also be achieved using [keyboard shortcuts](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#automatic-resizing-and-positioning---keyboard) or [automations](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#open-windows-in-pre-arranged-mspaces).
+This animated GIF doesn't show what EnhancedSpaces is mainly about, i.e., managing spaces, which is better experienced first-hand. Nevertheless, you still get a glimpse of one of its strengths as window manager, namely using a pointing device to automatically resize and position windows, which can also be achieved using [keyboard shortcuts](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#automatic-resizing-and-positioning---keyboard) or [automations](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#open-windows-in-pre-arranged-mspaces).
 
 ## First Things First: Who Is This For? 
 Every power user sooner or later feels restricted by the confinements of a single screen; there simply is no such thing as too much space. While a multi-monitor arrangement is the obvious remedy, there is a lesser-known solution that enables the user to have more than one screen on a single display: virtual screens or, as they are called in EnhancedSpaces, mSpaces.

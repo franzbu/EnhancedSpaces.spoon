@@ -416,7 +416,7 @@ As per default, `modifier1` uses the same modifier key as `modifierMS` and `modi
 To make the process of moving windows easier than the usual clicking the title bar (which you're still free to do), hold down `modifier1` or `modifier2`, position your cursor in any area within the window, click the left mouse button, and drag the window. If a window is dragged up to 10 percent of its width (left and right borders of screen) or its height (bottom border) outside the screen borders, it will automatically snap back within the borders of the screen. If the window is dragged beyond this 10-percent-limit, things are getting interesting because then window management with automatic resizing and positioning comes into play.
 
 #### Automatic Resizing and Positioning - Mouse or Trackpad
-For automatic resizing and positioning of a window, you simply move between 10 and 80 percent of the window beyond the left, right, or bottom borders of your screen using while pressing `alt` or `ctrl`. 
+For automatic resizing and positioning of a window, you simply move between 10 and 80 percent of the window beyond the left, right, or bottom borders of your screen while pressing `alt` or `ctrl`. 
 
 As long as windows are resized - or moved within the borders of the screen -, it makes no difference whether you use `modifier1` or `modifier2`. However, once a window is moved beyond the screen borders, different positioning and resizing scenarios are called into action; they are as follows:
 

@@ -131,6 +131,11 @@ The lines below represent the default setup, and you don't need to add them to y
 
 When applying changes to the modifiers, always make sure that you substitute them with other modifiers, i.e., { 'cmd' }, { 'alt' }, { 'ctrl' }, { 'shift' } or combinations of modifiers, e.g., { 'alt', 'ctrl' }.
 
+In case you want to disable this keyboard shortcut, change the line above as follows:
+``` lua
+  modifierMS = { '' }, -- default: { 'ctrl' }
+```
+
 Just in case it is not entirely clear where to add these lines or future modifications in your file `init.lua`:
 
 ``` lua
@@ -160,6 +165,11 @@ As before, the line below represents the default setup, and you don't need to ad
   modifierSwitchMS = { 'alt' }, -- default: { 'alt' }
 ```
 
+In case you want to disable this keyboard shortcut, change the line above as follows:
+``` lua
+  modifierSwitchMS = { '' }, -- default: { 'alt' }
+```
+
 ### Move Windows Directly to Any mSpace
 For moving a window to another mSpace, press `alt-ctrl` and the key for the target mSpace.
 
@@ -167,6 +177,11 @@ As before, the line below represents the default setup, and you don't need to ad
 
 ``` lua
   modifierMoveWinMSpace = { 'alt', 'ctrl' }, -- default: { 'alt', 'ctrl' }
+```
+
+In case you want to disable this keyboard shortcut, change the line above as follows:
+``` lua
+  modifierMoveWinMSpace = { '' }, -- default: { 'alt', 'ctrl' }
 ```
 
 ### Same Window on More Than One mSpace
@@ -182,6 +197,12 @@ As before, the following line represents the default modifier keys, and you don'
 
 ``` lua
   modifierReference = { 'ctrl', 'shift' }, -- default: { 'ctrl', 'shift' }
+```
+
+
+In case you want to disable this keyboard shortcut, change the line above as follows:
+``` lua
+  modifierReference = { '' }, -- default: { 'ctrl', 'shift' }
 ```
 
 To delete a reference, press `modifierReference` and `0`. In case you're dereferencing, i.e., delete the reference of, the last representation of a window on your mSpaces, the window gets minimized.
@@ -210,11 +231,11 @@ As before, the lines below represent the default setup, and you don't need to ad
 
 For cycling through the windows of your current mSpace in reverse order, additionally press `shift`.
 
-For disabling this feature of switching between the windows of your current screen altogether, add the following line to your `init.lua`:
-
+In case you want to disable this keyboard shortcut, change the line above as follows:
 ``` lua
   modifierSwitchWin = { '' }, -- default: { 'alt' }
 ```
+
 
 You can also make two windows swap places using keyboard shortcuts; more about this feature in the section [Swapping Windows](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#swapping-windows).
 

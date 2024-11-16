@@ -626,6 +626,7 @@ With the entries above, you get the following menu:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu6.png' width='200'>
 
+As you can see, the last entry of the list above, `hammerspoon = 'Hammerspoon'`, doesn't show in the actual menu; that actually only happens if the integration of Hammerspoon's menu into EnhancedSpaces' is enabled - see directly below.
 
 ### Including Hammerspoon's Menu in EnhancedSpaces'
 For including Hammerspoon's menu in EnhancedSpaces', add the following to your `init.lua`: 

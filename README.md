@@ -2,6 +2,7 @@
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/demo2.gif' />
 
+This animated GIF doesn't show what EnhancedSpaces is mainly about, namely managing spaces; nevertheless you get a glimpse into one of its features as window manager: using a pointing device to automatically resize and position windows, which can also be achieved using [keyboard shortcuts](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#automatic-resizing-and-positioning---keyboard) or [automations](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#open-windows-in-pre-arranged-mspaces).
 
 ## First Things First: Who Is This For? 
 Every power user sooner or later feels restricted by the confinements of a single screen; there simply is no such thing as too much space. While a multi-monitor arrangement is the obvious remedy, there is a lesser-known solution that enables the user to have more than one screen on a single display: virtual screens or, as they are called in EnhancedSpaces, mSpaces.
@@ -438,7 +439,7 @@ As long as windows are resized - or moved within the borders of the screen -, it
 
 ## Additional Features
 ### Open Windows in Pre-Arranged mSpaces
-If you want EnhancedSpaces to automatically move windows to specific mSpaces when the windows are opened, add the following to your `init.lua`: 
+If you want EnhancedSpaces to automatically move a window to a specific mSpaces when it is opened, add the following to your `init.lua`: 
 
 ``` lua
   openAppMSpace = {

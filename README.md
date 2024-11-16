@@ -2,7 +2,7 @@
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/demo2.gif' />
 
-This animated GIF doesn't show what EnhancedSpaces is mainly about, which is enabling you to organize your windows on more than one virtual screen (called mSpace in EnhancedSpaces), as that is better experienced first-hand. 
+This animated GIF doesn't show what EnhancedSpaces is mainly about, which is organizing windows on more than one virtual screen (called mSpace in EnhancedSpaces), as that is better experienced first-hand. 
 
 Nevertheless, you still get a glimpse of one of EnhancedSpaces' strengths as window manager, namely automatically resizing and positioning your windows by a flick of your pointing device. Using your pointing device, BTW, is just one of more options to resizing and positioning your windows; you can also do that using [keyboard shortcuts](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#automatic-resizing-and-positioning---keyboard) or [automations](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#open-windows-in-pre-arranged-mspaces).
 

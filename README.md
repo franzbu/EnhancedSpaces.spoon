@@ -417,7 +417,7 @@ To make the process of moving windows easier than the usual clicking the title b
 
 #### Automatic Resizing and Positioning - Mouse or Trackpad
 
-<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/demo1.gif' />
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/demo2.gif' />
 
 For automatic resizing and positioning of a window, you simply move between 10 and 80 percent of the window beyond the left, right, or bottom borders of your screen while pressing `alt` or `ctrl`. 
 

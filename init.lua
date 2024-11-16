@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.35.5"
+EnhancedSpaces.version = "0.9.35.6"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -422,21 +422,21 @@ function EnhancedSpaces:new(options)
   end
 
   -- keyboard shortcuts - snapping windows into grid postions
-  if modifierSnap1 ~= { '' } then
+  if modifierSnap1[1] ~= '' then
     for i = 1, #modifierSnapKeys[1] do
       hs.hotkey.bind(modifierSnap1, modifierSnapKeys[1][i][2], function()
         hs.window.focusedWindow():move(snap(modifierSnapKeys[1][i][1]), nil, false, 0)
       end)
     end
   end
-  if modifierSnap2 ~= { '' } then
+  if modifierSnap2[1] ~= '' then
     for i = 1, #modifierSnapKeys[2] do
       hs.hotkey.bind(modifierSnap2, modifierSnapKeys[2][i][2], function()
         hs.window.focusedWindow():move(snap(modifierSnapKeys[2][i][1]), nil, false, 0)
       end)
     end
   end
-  if modifierSnap3 ~= { '' } then
+  if modifierSnap3[1] ~= '' then
     for i = 1, #modifierSnapKeys[3] do
       hs.hotkey.bind(modifierSnap3, modifierSnapKeys[3][i][2], function()
         hs.window.focusedWindow():move(snap(modifierSnapKeys[3][i][1]), nil, false, 0)
@@ -503,7 +503,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.35.5\n\n\nManages your windows and mSpaces for increased productivity. Gives you time for what really matters in life.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.35.6\n\n\nManages your windows and mSpaces for increased productivity. Gives you time for what really matters in life.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),

@@ -1,3 +1,7 @@
+# v0.9.36
+
+* keyboard shortcuts can be disabled
+
 # v0.9.35.4
 
 * corrected issue with switcher configuration (v0.9.35)

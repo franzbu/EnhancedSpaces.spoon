@@ -492,17 +492,17 @@ Pressing `Ctrl` and `Escape`, your active window swaps places with another windo
   swapKey = 'escape', -- default: 'escape'
 ```
 
+For disabling this feature of swapping windows, add the following line to your `init.lua`:
+
+``` lua
+  swapModifier = { '' },  -- default: { 'ctrl' }
+```
+
 By default the focus stays with the same window; in case you'd prefer the focus to switch to the other window (and thus stay with the window in the same position on the screen), add the following line to your `init.lua`:
 
 ``` lua
   swapSwitchFocus = true, -- default: false
 
-```
-
-For disabling this feature of swapping windows, add the following line to your `init.lua`:
-
-``` lua
-  swapModifier = { '' },  -- default: { 'ctrl' }
 ```
 
 ### Changing Appearance of Switcher

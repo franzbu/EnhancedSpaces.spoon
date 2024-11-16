@@ -626,7 +626,7 @@ With the entries above, you get the following menu:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu6.png' width='200'>
 
-As you can see, the last entry of the list above, `hammerspoon = 'Hammerspoon'`, doesn't show in the actual menu; that actually only happens if the integration of Hammerspoon's menu into EnhancedSpaces' is enabled - see directly below.
+As you can see, the last entry from the list above, `hammerspoon = 'Hammerspoon'`, doesn't show in the actual menu; that only happens if the integration of Hammerspoon's menu into EnhancedSpaces' is enabled - see directly below.
 
 ### Including Hammerspoon's Menu in EnhancedSpaces'
 For including Hammerspoon's menu in EnhancedSpaces', add the following to your `init.lua`: 
@@ -647,7 +647,7 @@ This also means that Hammerspoon's menu icon in the menu bar becomes redundant a
 For changing the menu titles regarding Hammerspoon, for example, to show them in your preferred language, you can add the following to your `init.lua`; this is an example for displaying the menu in German:
 
 ``` lua
-  -- default: { reload = 'Reload Config', config = 'Open Config', console = 'Console', preferences = 'Preferences', about = 'About Hammerspoon', update = 'Check for Updates...', relaunch = 'Relaunch Hammerspoon', quit = 'Quit Hammerspoon' }
+-- default: { reload = 'Reload Config', config = 'Open Config', console = 'Console', preferences = 'Preferences', about = 'About Hammerspoon', update = 'Check for Updates...', relaunch = 'Relaunch Hammerspoon', quit = 'Quit Hammerspoon' }
 hammerspoonMenuItems = {
   reload = 'Konfiguration neu laden',
   config = 'Konfiguration öffnen',
@@ -658,7 +658,7 @@ hammerspoonMenuItems = {
   relaunch = 'Hammerspoon neu starten',
   quit = 'Hammerspoon beenden'
 },
- ```
+```
 
 This is the resulting menu:
 

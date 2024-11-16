@@ -14,7 +14,7 @@ Focus has also been given to making EnhancedSpaces enjoyable to use. You can cus
 
 One of the appeals of EnhancedSpaces is that managing both virtual screens and windows results in synergies that are impossible when having seperate applications, for example, you can drag a window - by clicking any area of it, not only the title bar - beyond the borders of the screen and have it reemerge on another mSpace.
 
-So who is EnhancedSpaces for? It has been made for power users who like working on multiple screens and want something more efficient and customizable than Apple's Spaces and at the same time prefer more flexibility than tiling window managers can offer. 
+So who is EnhancedSpaces for? It has been made for power users who like working on multiple screens and want something more efficient and customizable than Apple's Spaces and at the same time prefer more flexibility than tiling window managers can offer. Power users might also appreciate EnhancedSpaces on a single space for its features regarding managing windows and moving or resizing windows by clicking any area of them, with resizing being possible in all directions and, if one so decides while of resizing, restricting resizing to one direction only, for example, the size of a window can be increased upwards without changing its horizontal size and position - more about that [here](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#manual-resizing).
 
 EnhancedSpaces has increased my productivity and simplified my life with macOS. May it do the same for you.
 

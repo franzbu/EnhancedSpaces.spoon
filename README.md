@@ -1,5 +1,4 @@
 # EnhancedSpaces
-
 ## First Things First: Who Is This For? 
 Every power user sooner or later feels restricted by the confinements of a single screen; there simply is no such thing as too much space. While a multi-monitor arrangement is the obvious remedy, there is a lesser-known solution that enables the user to have more than one screen on a single display: virtual screens or, as they are called in EnhancedSpaces, mSpaces.
 
@@ -12,6 +11,8 @@ So I decided to develop an application that manages virtual screens and windows 
 One of the main goals has been to make managing mSpaces and windows straightforward, intuitive, and efficient. EnhancedSpaces' features include switching and moving windows between mSpaces, using sticky windows, swapping windows, and automatically opening windows on predefined mSpaces in predefined sizes and positions. Using EnhancedSpaces' window manager, you can resize and rearrange your windows with keyboard shortcuts or with your mouse or trackpad. Additionally, the most common features are also available via menu and popup menu.
 
 Focus has also been given to making EnhancedSpaces enjoyable to use. You can customize EnhancedSpaces' menus to your needs, for example change them to your preferred language, set individual wallpapers for each of your mSpaces, and change the appearance of the window switcher.
+
+One of the appeals of EnhancedSpaces is that managing both virtual screens and windows results in synergies that are impossible when having seperate applications, for example, you can drag a window - by clicking any area of it, not only the title bar - beyond the borders of the screen and have it reemerge on another mSpace.
 
 So who is EnhancedSpaces for? It has been made for power users who like working on multiple screens and want something more efficient and customizable than Apple's Spaces and at the same time prefer more flexibility than tiling window managers can offer. 
 

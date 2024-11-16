@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.35.6"
+EnhancedSpaces.version = "0.9.35.7"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -207,7 +207,7 @@ function EnhancedSpaces:new(options)
   filter.default:subscribe(filter.windowOnScreen, function(w)
     --if w:application():name() ~= 'Telegram' and w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' and w:application():name() ~= 'DockHelper' then
     if not enteredFullscreen then -- 'windowOnScreen' is triggered when leaving fullscreen, which is hereby counteracted
-      if indexOpenAppMSpace(w) ~= nil and not contextMenuTelegram() then
+      if indexOpenAppMSpace(w) ~= nil and not contextMenuTelegram() then 
         --print('____________ windowOnScreen ____________' .. w:application():name())   
         refreshWinMSpaces()
         moveMiddleAfterMouseMinimized(w)
@@ -279,7 +279,7 @@ function EnhancedSpaces:new(options)
   switcher.ui.showSelectedTitle = switcherConfig.showSelectedTitle or false
 
   -- cycle through windows of current mSpace
-  if modifierSwitchWin[1] ~= nil then
+  if modifierSwitchWin[1] ~= '' then
     hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[1], function()
       refreshWinMSpaces() -- for using up-to-date window tables (after force-closing apps this could be an issue otherwiese)
       switcherChangeFocus = true
@@ -347,64 +347,71 @@ function EnhancedSpaces:new(options)
     end
   end
 
-  -- cycle through references of one window
-  hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[2], function()
-    pos = getWinMSpacesPos(hs.window.focusedWindow())
-    local nextFR = getnextMSpaceNumber(currentMSpace)
-    while not winMSpaces[pos].mspace[nextFR] do
-      if nextFR == #mspaces then
-        nextFR = 1
-      else
-        nextFR = nextFR + 1
+  if modifierSwitchWin[1] ~= '' then
+    -- cycle through references of one window
+    hs.hotkey.bind(modifierSwitchWin, modifierSwitchWinKeys[2], function()
+      pos = getWinMSpacesPos(hs.window.focusedWindow())
+      local nextFR = getnextMSpaceNumber(currentMSpace)
+      while not winMSpaces[pos].mspace[nextFR] do
+        if nextFR == #mspaces then
+          nextFR = 1
+        else
+          nextFR = nextFR + 1
+        end
       end
-    end
-    goToSpace(nextFR)
-    winMSpaces[pos].win:focus()
-  end)
-
-  -- reference/dereference windows to/from mspaces, goto mspaces
-  for i = 1, #mspaces do
-    hs.hotkey.bind(modifierReference, mspaces[i], function()
-      refWinMSpace(i)
+      goToSpace(nextFR)
+      winMSpaces[pos].win:focus()
     end)
   end
-  -- de-reference
-  hs.hotkey.bind(modifierReference, deReferenceKey, function()
-    derefWinMSpace()
-  end)
 
-  -- switching spaces/moving windows
-  hs.hotkey.bind(modifierMS, modifierMSKeys[1], function() -- previous space (incl. cycle)
-    currentMSpace = getprevMSpaceNumber(currentMSpace)
-    goToSpace(currentMSpace)
-  end)
-  hs.hotkey.bind(modifierMS, modifierMSKeys[2], function() -- next space (incl. cycle)
-    currentMSpace = getnextMSpaceNumber(currentMSpace)
-    goToSpace(currentMSpace)
-  end)
-  hs.hotkey.bind(modifierMS, modifierMSKeys[5], function() -- move active window to previous space and switch there (incl. cycle)
-    -- move window to prev space and switch there
-    moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace, true)
-    currentMSpace = getprevMSpaceNumber(currentMSpace)
-    goToSpace(currentMSpace)
-  end)
-  hs.hotkey.bind(modifierMS, modifierMSKeys[6], function() -- move active window to next space and switch there (incl. cycle)
-    -- move window to next space and switch there
-      moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace, true)
+  if modifierReference[1] ~= '' then
+    -- reference/dereference windows to/from mspaces, goto mspaces
+    for i = 1, #mspaces do
+      hs.hotkey.bind(modifierReference, mspaces[i], function()
+        refWinMSpace(i)
+      end)
+    end
+    -- de-reference
+    hs.hotkey.bind(modifierReference, deReferenceKey, function()
+      derefWinMSpace()
+    end)
+  end
+
+  if modifierMS[1] ~= '' then
+    -- switching spaces/moving windows
+    hs.hotkey.bind(modifierMS, modifierMSKeys[1], function() -- previous space (incl. cycle)
+      currentMSpace = getprevMSpaceNumber(currentMSpace)
+      goToSpace(currentMSpace)
+    end)
+    hs.hotkey.bind(modifierMS, modifierMSKeys[2], function() -- next space (incl. cycle)
       currentMSpace = getnextMSpaceNumber(currentMSpace)
       goToSpace(currentMSpace)
-  end)
-  hs.hotkey.bind(modifierMS, modifierMSKeys[3], function() -- move active window to previous space (incl. cycle)
-    -- move window to prev space
-    moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace, true)
-  end)
-  hs.hotkey.bind(modifierMS, modifierMSKeys[4], function() -- move active window to next space (incl. cycle)
-    -- move window to next space
-    moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace, true)
-  end)
+    end)
+    hs.hotkey.bind(modifierMS, modifierMSKeys[5], function() -- move active window to previous space and switch there (incl. cycle)
+      -- move window to prev space and switch there
+      moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace, true)
+      currentMSpace = getprevMSpaceNumber(currentMSpace)
+      goToSpace(currentMSpace)
+    end)
+    hs.hotkey.bind(modifierMS, modifierMSKeys[6], function() -- move active window to next space and switch there (incl. cycle)
+      -- move window to next space and switch there
+        moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace, true)
+        currentMSpace = getnextMSpaceNumber(currentMSpace)
+        goToSpace(currentMSpace)
+    end)
+    hs.hotkey.bind(modifierMS, modifierMSKeys[3], function() -- move active window to previous space (incl. cycle)
+      -- move window to prev space
+      moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace, true)
+    end)
+    hs.hotkey.bind(modifierMS, modifierMSKeys[4], function() -- move active window to next space (incl. cycle)
+      -- move window to next space
+      moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace, true)
+    end)
+  end
 
-  -- goto mspaces directly with 'modifierMoveWinMSpace-<name of mspace>'
-  if modifierMoveWinMSpace ~= nil then
+
+  -- goto mspaces directly with 'modifierSwitchMS-<name of mspace>'
+  if modifierSwitchMS[1] ~= '' then
     for i = 1, #mspaces do
       hs.hotkey.bind(modifierSwitchMS, mspaces[i], function()
         goToSpace(i)
@@ -412,14 +419,15 @@ function EnhancedSpaces:new(options)
     end
   end
 
-  -- moving window to specific mSpace
-  if modifierMoveWinMSpace ~= nil then
+  -- move window to specific mSpace
+  if modifierMoveWinMSpace[1] ~= '' then
     for i = 1, #mspaces do
       hs.hotkey.bind(modifierMoveWinMSpace, mspaces[i], function() -- move active window to next space and switch there (incl. cycle)
        moveToSpace(i, currentMSpace, true)
       end)
     end
   end
+  
 
   -- keyboard shortcuts - snapping windows into grid postions
   if modifierSnap1[1] ~= '' then
@@ -444,6 +452,8 @@ function EnhancedSpaces:new(options)
     end
   end
 
+
+  
   -- popup menus
   if popupModifier ~= nil and mbMainPopupKey ~= nil then
     hs.hotkey.bind(popupModifier, mbMainPopupKey, function()
@@ -466,7 +476,7 @@ function EnhancedSpaces:new(options)
       mbSwapPopup:popupMenu(hs.mouse.absolutePosition() )
     end)
   end
-
+  
   -- startup commands
   if startupCommands ~= nil then
     for i = 1, #startupCommands do
@@ -503,7 +513,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.35.6\n\n\nManages your windows and mSpaces for increased productivity. Gives you time for what really matters in life.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.35.7\n\n\nManages your windows and mSpaces for increased productivity. Gives you time for what really matters in life.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),

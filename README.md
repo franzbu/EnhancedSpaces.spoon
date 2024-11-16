@@ -482,6 +482,27 @@ In case you would also like to pre-define the position of the window on the mSpa
 'a1', for example, represents the left half of your screen, 'a2' the right half of your screen. To get the entire list of possible scenarios, see section [Automatic Resizing and Positioning - Keyboard](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#automatic-resizing-and-positioning---keyboard).
 
 
+### Swapping Windows
+Pressing `Ctrl` and `Escape`, your active window swaps places with another window of your choice. In case you'd like to change the keys, add the following lines to your `init.lua` and adjust them to your liking:
+
+``` lua
+  swapModifier = { 'ctrl' }, -- default: { 'ctrl' }
+  swapKey = 'escape', -- default: 'escape'
+```
+
+By default the focus stays with the same window; in case you'd prefer the focus to switch to the other window (and thus stay with the window in the same position on the screen), add the following line to your `init.lua`:
+
+``` lua
+  swapSwitchFocus = true, -- default: false
+
+```
+
+For disabling this feature of swapping windows, add the following line to your `init.lua`:
+
+``` lua
+  swapModifier = { '' },  -- default: { 'ctrl' }
+```
+
 ### Changing Appearance of Switcher
 For changing the appearance of the switcher for cycling through the windows of the current mSpace when either switching or swapping windows, add the following lines to your `init.lua` and adjust the values to your liking:
 
@@ -666,28 +687,6 @@ This is the resulting menu:
 
 
 ## Experimental Features
-### Swapping Windows
-
-Pressing `Ctrl` and `Escape`, your active window swaps places with another window of your choice. In case you'd like to change the keys, add the following lines to your `init.lua` and adjust them to your liking:
-
-``` lua
-  swapModifier = { 'ctrl' }, -- default: { 'ctrl' }
-  swapKey = 'escape', -- default: 'escape'
-```
-
-By default the focus stays with the same window; in case you'd prefer the focus to switch to the other window (and thus stay with the window in the same position on the screen), add the following line to your `init.lua`:
-
-``` lua
-  swapSwitchFocus = true, -- default: false
-
-```
-
-For disabling this feature of swapping windows, add the following line to your `init.lua`:
-
-``` lua
-  swapModifier = { '' },  -- default: { 'ctrl' }
-```
-
 ### Applications To Be Left Alone by EnhancedSpaces
 Any operating system has dialogs and windows of a more temporary nature, such as Spotlight or Alfred, that are dealt with differently than standard 'persistent' application windows. Hammerspoon's list of such windows and dialogs by its very nature cannot be comprehensive, as new applications are continually being developed. 
 

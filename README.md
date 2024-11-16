@@ -157,7 +157,7 @@ For switching directly to any mSpace, press the Option key (`alt`) and the key f
 As before, the line below represents the default setup, and you don't need to add it to your `init.lua` unless you want to make changes:
 
 ``` lua
-  modifierMoveWinMSpace = { 'alt' }, -- default: { 'alt' }
+  modifierSwitchMS = { 'alt' }, -- default: { 'alt' }
 ```
 
 ### Move Windows Directly to Any mSpace
@@ -166,7 +166,7 @@ For moving a window to another mSpace, press `alt-ctrl` and the key for the targ
 As before, the line below represents the default setup, and you don't need to add it to your `init.lua` unless you want to make changes:
 
 ``` lua
-  modifierSwitchMS = { 'alt', 'ctrl' }, -- default: { 'alt', 'ctrl' }
+  modifierMoveWinMSpace = { 'alt', 'ctrl' }, -- default: { 'alt', 'ctrl' }
 ```
 
 ### Same Window on More Than One mSpace

@@ -1,6 +1,7 @@
 # v0.9.36
 
 * keyboard shortcuts can be disabled
+* in 'hammerspoonMenuItems', 'open' has been changed to 'config'
 
 # v0.9.35.4
 

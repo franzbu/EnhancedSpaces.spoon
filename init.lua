@@ -48,7 +48,7 @@ function EnhancedSpaces:new(options)
   menuTitles = options.menuTitles or { swap = 'Swap', send = "Send Window", get = "Get Window", help = 'Help', about = 'About', hammerspoon = 'Hammerspoon' }
   
   hammerspoonMenu = options.hammerspoonMenu or false
-  hammerspoonMenuItems = options.hammerspoonMenuItems or { reload = "Reload Config", open = "Open Config", console = 'Console', preferences = 'Preferences', about = 'About Hammerspoon', update = 'Check for Updates...', relaunch = 'Relaunch Hammerspoon', quit = 'Quit Hammerspoon' }
+  hammerspoonMenuItems = options.hammerspoonMenuItems or { reload = "Reload Config", config = "Open Config", console = 'Console', preferences = 'Preferences', about = 'About Hammerspoon', update = 'Check for Updates...', relaunch = 'Relaunch Hammerspoon', quit = 'Quit Hammerspoon' }
 
   popupModifier = options.popupModifier or nil
   mbMainPopupKey = options.mbMainPopupKey or nil
@@ -581,7 +581,7 @@ function hsMenu()
   if not hammerspoonMenu then return nil end
   return {
     { title = hammerspoonMenuItems.reload, fn = function() hs.reload() end },
-    { title = hammerspoonMenuItems.open, fn = function() os.execute('/usr/bin/open ~/.hammerspoon/init.lua') end },
+    { title = hammerspoonMenuItems.config, fn = function() os.execute('/usr/bin/open ~/.hammerspoon/init.lua') end },
     { title = "-" },
     { title = hammerspoonMenuItems.console, fn = function() hs.toggleConsole() end },
     { title = hammerspoonMenuItems.preferences, fn = function() hs.openPreferences() end },

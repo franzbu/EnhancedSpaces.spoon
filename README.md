@@ -241,9 +241,9 @@ As before, you don't need to add these lines to your `init.lua` unless you want 
 In case you would like to disable EnhancedSpaces' window manager because you manage your windows manually or prefer using another window manager, change the lines as follows:
 
 ``` lua
-  modifierSnap1 = '', -- default: { 'cmd', 'alt' }
-  modifierSnap2 = '', -- default: { 'cmd', 'ctrl' }
-  modifierSnap3 = '', -- default: { 'cmd', 'shift' }
+  modifierSnap1 = { '' }, -- default: { 'cmd', 'alt' }
+  modifierSnap2 = { '' }, -- default: { 'cmd', 'ctrl' }
+  modifierSnap3 = { '' }, -- default: { 'cmd', 'shift' }
 ```
 
 To resize and move the active window into a 2x2 grid position, use `modifierSnap1` (default the Command and Option keys) and numbers `1-8`. 

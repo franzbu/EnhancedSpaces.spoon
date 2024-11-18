@@ -529,7 +529,7 @@ For changing the appearance of the switcher for cycling through the windows of t
 ```
 
 ### Custom Wallpapers
-For selecting an individual wallpapers for each mSpace, add the following to your `init.lua`: 
+For selecting individual wallpapers for each mSpace, add the following to your `init.lua`: 
 
 ``` lua
   -- individual wallpaper for each mSpace

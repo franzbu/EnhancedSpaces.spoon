@@ -137,7 +137,7 @@ The lines below represent the default setup, and you don't need to add them to y
 
 When applying changes to the modifiers, always make sure that you substitute them with other modifiers, i.e., { 'cmd' }, { 'alt' }, { 'ctrl' }, { 'shift' } or combinations of modifiers, e.g., { 'alt', 'ctrl' }.
 
-In case you want to disable this keyboard shortcut, change the line above as follows:
+In case you want to disable this feature, change the line above as follows:
 ``` lua
   modifierMS = { '' }, -- default: { 'ctrl' }
 ```
@@ -171,7 +171,7 @@ As before, the line below represents the default setup, and you don't need to ad
   modifierSwitchMS = { 'alt' }, -- default: { 'alt' }
 ```
 
-In case you want to disable this keyboard shortcut, change the line above as follows:
+In case you want to disable this feature, change the line above as follows:
 ``` lua
   modifierSwitchMS = { '' }, -- default: { 'alt' }
 ```
@@ -185,7 +185,7 @@ As before, the line below represents the default setup, and you don't need to ad
   modifierMoveWinMSpace = { 'alt', 'ctrl' }, -- default: { 'alt', 'ctrl' }
 ```
 
-In case you want to disable this keyboard shortcut, change the line above as follows:
+In case you want to disable this feature, change the line above as follows:
 ``` lua
   modifierMoveWinMSpace = { '' }, -- default: { 'alt', 'ctrl' }
 ```
@@ -206,7 +206,7 @@ As before, the following line represents the default modifier keys, and you don'
 ```
 
 
-In case you want to disable this keyboard shortcut, change the line above as follows:
+In case you want to disable this feature, change the line above as follows:
 ``` lua
   modifierReference = { '' }, -- default: { 'ctrl', 'shift' }
 ```
@@ -237,7 +237,7 @@ As before, the lines below represent the default setup, and you don't need to ad
 
 For cycling through the windows of your current mSpace in reverse order, additionally press `shift`.
 
-In case you want to disable this keyboard shortcut, change the line above as follows:
+In case you want to disable this feature, change the line above as follows:
 ``` lua
   modifierSwitchWin = { '' }, -- default: { 'alt' }
 ```

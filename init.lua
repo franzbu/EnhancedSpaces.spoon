@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.37.1"
+EnhancedSpaces.version = "0.9.37.2"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -215,7 +215,7 @@ function EnhancedSpaces:new(options)
   end)
   filter.default:subscribe(filter.windowOnScreen, function(w)
     if not enteredFullscreen then -- 'windowOnScreen' is triggered when leaving fullscreen, which is hereby counteracted
-      if indexOpenAppMSpace(w) ~= nil and not contextMenuTelegram() then
+      if indexOpenAppMSpace(w) ~= nil and not contextMenuTelegram() then 
         --print('____________ windowOnScreen ____________' .. winMSpaces[getWinMSpacesPos(w)].winAppName)   
         refreshWinMSpaces()
         moveMiddleAfterMouseMinimized(w)
@@ -592,7 +592,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.37.1\n\n\nMakes you more productive.\nGives you time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.37.2\n\n\nMakes you more productive.\nGives you time for what really matters.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),
@@ -872,7 +872,7 @@ function createGetWindowMenu()
     for i = 1, #windowsNotOnCurrentMS do
       table.insert(getWindowMenu, { 
         --title = windowsNotOnCurrentMS[i]:application():name(),
-        title = winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].winAppName,
+        title = winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].winAppName,
         fn = function(mods) 
           local w = winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].win
           local indexTrue -- get index of mSpace where window is currently active to set frame accordingly

@@ -1,6 +1,6 @@
 # v0.9.37
 
-* fixed issue that after force-closing fullscreen window newly opened windows would not open on pre-arranged mSpaces anymore
+* fixed issue that after force-closing a fullscreen window, newly opened windows would not open on pre-arranged mSpaces
 * fixed error messages after force-closing windows
 
 # v0.9.36

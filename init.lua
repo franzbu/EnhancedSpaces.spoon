@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.37"
+EnhancedSpaces.version = "0.9.37.1"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -163,7 +163,7 @@ function EnhancedSpaces:new(options)
   for i = 1, #winAll do
     winMSpaces[i] = {}
     winMSpaces[i].win = winAll[i]
-    winMSpaces[i].winAppName = winAll[i]:application():name() -- ':application():name()' causes errors, mostly when creating menu
+    winMSpaces[i].winAppName = winAll[i]:application():name() -- ':application():name()' causes errors if used 'later', mostly when creating menu
     winMSpaces[i].mspace = {}
     winMSpaces[i].frame = {}
     for k = 1, #mspaces do
@@ -197,6 +197,13 @@ function EnhancedSpaces:new(options)
 
   -- watchdogs
   filter.default:subscribe(filter.windowNotOnScreen, function(w)
+    -- if fullscreened window has been force-closed, 'enteredFullscreen' needs to be set to 'false'
+    hs.timer.doAfter(2, function()
+      if w:id() == fullscreenedWindowID then
+        enteredFullscreen = false
+      end
+    end)
+
     --print('____________ windowNotOnScreen ____________' .. winMSpaces[getWinMSpacesPos(w)].winAppName)--.. w:application():name()) causes errors that break EnhancedSpaces
     hs.timer.doAfter(0.000000001, function() --delay, otherwise 'filter_all = hs.window.filter.new()' not ready after closing of windows (in certain situations)
       refreshWinMSpaces()
@@ -204,15 +211,9 @@ function EnhancedSpaces:new(options)
         windowsOnCurrentMS[1]:focus() -- activate last active window on current mSpace when closing/minimizing one
       end
     end)
-    -- if fullscreened window has been force-closed, 'enteredFullscreen' needs to be set to 'false'
-    hs.timer.doAfter(0.5, function()
-      if w:id() == fullscreenedWindowID then
-        enteredFullscreen = false
-      end
-    end)
+
   end)
   filter.default:subscribe(filter.windowOnScreen, function(w)
-    --if w:application():name() ~= 'Telegram' and w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' and w:application():name() ~= 'DockHelper' then
     if not enteredFullscreen then -- 'windowOnScreen' is triggered when leaving fullscreen, which is hereby counteracted
       if indexOpenAppMSpace(w) ~= nil and not contextMenuTelegram() then
         --print('____________ windowOnScreen ____________' .. winMSpaces[getWinMSpacesPos(w)].winAppName)   
@@ -591,7 +592,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.37\n\n\nMakes you more productive.\nGives you time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.37.1\n\n\nMakes you more productive.\nGives you time for what really matters.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),
@@ -765,7 +766,8 @@ end
 -- references: toggle (no modifier); menuModifier1: remove all references but the one clicked; menuModifier2: reference all but the one clicked; menuModifier3: reference all
 function getToogleRefWindow()
   if windowsOnCurrentMS ~= nil and #windowsOnCurrentMS > 0 then
-    return { windowsOnCurrentMS[1]:application():name(), false }
+    --return { windowsOnCurrentMS[1]:application():name(), false }
+    return { winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[1])].winAppName, false }
   else
     return { '', true }
   end
@@ -1018,7 +1020,8 @@ function EnhancedSpaces:handleClick()
     end
 
     -- if menu is open, handleClick() needs to be stopped (it still reacts on mouse button release, which is fine)
-    if hs.window.focusedWindow() == nil or hs.window.focusedWindow():application():name() == 'Hammerspoon' then
+    --if hs.window.focusedWindow() == nil or hs.window.focusedWindow():application():name() == 'Hammerspoon' then
+    if hs.window.focusedWindow() == nil or winMSpaces[getWinMSpacesPos(hs.window.focusedWindow())].winAppName == 'Hammerspoon' then
       isResizing = false
       isMoving = false
     end
@@ -1771,7 +1774,9 @@ function contextMenuTelegram() -- return 'true' if there are more than one Teleg
   refreshWinMSpaces()
   k = 0
   for i = 1, #winAll do
-    if winAll[i]:application():name() == 'Telegram' then
+    
+    --if winAll[i]:application():name() == 'Telegram' then
+    if winMSpaces[getWinMSpacesPos(winAll[i])].winAppName == 'Telegram' then
       k = k + 1
       if k > 1 then return true end
     end

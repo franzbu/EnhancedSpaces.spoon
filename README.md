@@ -443,7 +443,7 @@ As long as windows are resized - or moved within the borders of the screen -, it
 
 ## Additional Features
 ### Open Windows in Pre-Arranged mSpaces
-If you want EnhancedSpaces to automatically move a window to a specific mSpaces when it is opened, add the following to your `init.lua`: 
+If you want EnhancedSpaces to automatically move windows to specific mSpaces when they are opened, add the following to your `init.lua`: 
 
 ``` lua
   openAppMSpace = {
@@ -454,7 +454,7 @@ If you want EnhancedSpaces to automatically move a window to a specific mSpaces 
   }, -- default: nil
 ```
 
-The way applications are assigned to certain mSpaces should be self-explanatory. To get the names of the applications of currently open windows, you can run the following command in Hammerspoon's Console:
+The way applications are assigned to certain mSpaces is self-explanatory. To get the names of the applications of currently open windows, you can run the following command in Hammerspoon's Console:
 
 ``` lua
 for _, v in pairs(hs.window.filter.default:getWindows()) do print(v:application():name()) end
@@ -472,7 +472,7 @@ You will get an output like this:
 2024-10-20 07:38:13: Finder
 ```
 
-In case you would also like to pre-define the position of the window on the mSpace, you can add that information as follows:
+In case you would also like to pre-define the position of the window, you can add that information as follows:
 
 ``` lua
   openAppMSpace = {
@@ -494,13 +494,13 @@ Pressing `Ctrl` and `Escape`, your active window swaps places with another windo
   swapKey = 'escape', -- default: 'escape'
 ```
 
-For disabling this feature of swapping windows, add the following line to your `init.lua`:
+For disabling this feature, add the following line to your `init.lua`:
 
 ``` lua
   swapModifier = { '' },  -- default: { 'ctrl' }
 ```
 
-By default the focus stays with the same window; in case you'd prefer the focus to switch to the other window (and thus stay with the window in the same position on the screen), add the following line to your `init.lua`:
+By default, the focus stays with the same window; in case you'd prefer the focus to switch to the other window (and thus stay in the same position), add the following line to your `init.lua`:
 
 ``` lua
   swapSwitchFocus = true, -- default: false
@@ -508,7 +508,7 @@ By default the focus stays with the same window; in case you'd prefer the focus 
 ```
 
 ### Changing Appearance of Switcher
-For changing the appearance of the switcher for cycling through the windows of the current mSpace when either switching or swapping windows, add the following lines to your `init.lua` and adjust the values to your liking:
+For changing the appearance of the switcher for cycling through the windows of the current mSpace when either switching or swapping windows, add the following lines to your `init.lua` and adjust the values according to your preferences:
 
 ``` lua
   switcherConfig = { 
@@ -529,7 +529,7 @@ For changing the appearance of the switcher for cycling through the windows of t
 ```
 
 ### Custom Wallpapers
-For selecting individual wallpapers for each mSpace, add the following to your `init.lua`: 
+For selecting an individual wallpaper for each mSpace, add the following to your `init.lua`: 
 
 ``` lua
   -- individual wallpaper for each mSpace
@@ -595,7 +595,7 @@ If you set any of the four keys for the according popup menus to `nil` (or don't
 
 
 ## Advanced Menu Features
-For advanced users it is possible to use modifier keys to unlock additional menu features. Below you can see the default modifiers and their functions; as usual you don't need to add these lines to your `init.lua` unless you want to make changes:
+It is possible to use modifier keys to access additional features. Below you can see the default modifiers and their functions; you don't need to add these lines to your `init.lua` unless you want to make changes:
 
 ``` lua
   -- menu: modifier keys to unlock additional features
@@ -610,9 +610,9 @@ Below you can see what effect the modifier keys have; the first menu entry, 'mSp
 
 #### Menu - 'Swap'
 - no modifier: swap windows, which includes swapping sizes and positions
-- menuModifier1: window chosen first snaps into position 'a1' (left half of screen), second window snaps into 'a2'; focus on first window
-- menuModifier2: window chosen first snaps into position 'a3' (left half of screen), second window snaps into 'a4'; focus on first window
-- menuModifier3: window chosen first snaps into position 'a5' (left half of screen), second window snaps into 'a6'; focus on first window
+- menuModifier1: window chosen first snaps into position 'a1' (left half of screen), second window snaps into 'a2'
+- menuModifier2: window chosen first snaps into position 'a3', second window snaps into 'a4'
+- menuModifier3: window chosen first snaps into position 'a5', second window snaps into 'a6'
 
 #### Menu - 'active window'
 - no modifier: toggle reference of active window on selected mSpace; if all mSpaces end up unchecked, the window is minimized
@@ -651,7 +651,7 @@ With the entries above, you get the following menu:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu6.png' width='200'>
 
-As you can see, the last entry from the list above, `hammerspoon = 'Hammerspoon'`, doesn't show in the actual menu; that only happens if the integration of Hammerspoon's menu into EnhancedSpaces' is enabled - see directly below.
+As you can see, the last entry from the list above, `hammerspoon = 'Hammerspoon' isn't visible in the menu; that only happens if the integration of Hammerspoon's menu into EnhancedSpaces' is enabled; find out directly below how to do that.
 
 ### Including Hammerspoon's Menu in EnhancedSpaces'
 For including Hammerspoon's menu in EnhancedSpaces', add the following to your `init.lua`: 
@@ -692,9 +692,9 @@ This is the resulting menu:
 
 ## Experimental Features
 ### Applications To Be Left Alone by EnhancedSpaces
-Any operating system has dialogs and windows of a more temporary nature, such as Spotlight or Alfred, that are dealt with differently than standard 'persistent' application windows. Hammerspoon's list of such windows and dialogs by its very nature cannot be comprehensive, as new applications are continually being developed. 
+Any operating system has dialogs and windows of a more temporary nature, such as Spotlight or Alfred, that are dealt with differently than standard 'persistent' application windows. Hammerspoon's list of such windows and dialogs by its very nature cannot be comprehensive, as new applications are being developed. 
 
-Whenever using EnhancedSpaces you encounter windows that behave erratically such as claiming focus when they shouldn't, you can add these applications to the list of windows to be left alone by adding the following lines to the configuration of EnhancedSpaces in your `init.lua`:
+Should you encounter windows that behave erratically such as claiming focus when they shouldn't, you can add these applications to the list of windows to be left alone by adding the following lines to the configuration of EnhancedSpaces in your `init.lua`:
 
 ``` lua
   -- window_filter.lua: windows to disregard
@@ -706,9 +706,9 @@ Whenever using EnhancedSpaces you encounter windows that behave erratically such
     'MenuMetersApp', 'DemoPro', 'DockHelper', 'Maccy', 'Albert', 'Alfred',
   },
 ```
-As has been hinted at, the above list is Hammerspoon's, extended with a few others that have been reported; they are 'DockHelper', 'Maccy', 'Albert', and 'Alfred'.
+As has been hinted at, the above list is Hammerspoon's, extended with a few others; they are 'DockHelper', 'Maccy', 'Albert', and 'Alfred'.
 
-Adding your own applications is as easy as adding its name to the list ('application name' followed by a comma). Also you might be well advised not to change the default entries.
+Adding your own applications is as easy as adding their names to the list ('application name' followed by a comma). You are advised to keep the default entries.
 
 To get the names of open applications, you can use the method referred to in [Additional Features -
 Open Windows in Pre-Arranged mSpaces](https://github.com/franzbu/EnhancedSpaces.spoon#open-windows-in-pre-arranged-mspaces)

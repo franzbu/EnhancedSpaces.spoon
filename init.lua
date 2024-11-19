@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.36.1"
+EnhancedSpaces.version = "0.9.37"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -163,6 +163,7 @@ function EnhancedSpaces:new(options)
   for i = 1, #winAll do
     winMSpaces[i] = {}
     winMSpaces[i].win = winAll[i]
+    winMSpaces[i].winAppName = winAll[i]:application():name() -- ':application():name()' causes errors, mostly when creating menu
     winMSpaces[i].mspace = {}
     winMSpaces[i].frame = {}
     for k = 1, #mspaces do
@@ -195,20 +196,26 @@ function EnhancedSpaces:new(options)
   end
 
   -- watchdogs
-  filter.default:subscribe(filter.windowNotOnScreen, function()
-      --print('____________ windowNotOnScreen ____________')--.. w:application():name()) causes errors that break EnhancedSpaces
-      hs.timer.doAfter(0.000000001, function() --delay, otherwise 'filter_all = hs.window.filter.new()' not ready after closing of windows (in certain situations)
-        refreshWinMSpaces()
-        if windowsOnCurrentMS ~= nil and #windowsOnCurrentMS >= 1 then
-          windowsOnCurrentMS[1]:focus() -- activate last active window on current mSpace when closing/minimizing one
-        end
-      end)
+  filter.default:subscribe(filter.windowNotOnScreen, function(w)
+    --print('____________ windowNotOnScreen ____________' .. winMSpaces[getWinMSpacesPos(w)].winAppName)--.. w:application():name()) causes errors that break EnhancedSpaces
+    hs.timer.doAfter(0.000000001, function() --delay, otherwise 'filter_all = hs.window.filter.new()' not ready after closing of windows (in certain situations)
+      refreshWinMSpaces()
+      if windowsOnCurrentMS ~= nil and #windowsOnCurrentMS >= 1 then
+        windowsOnCurrentMS[1]:focus() -- activate last active window on current mSpace when closing/minimizing one
+      end
+    end)
+    -- if fullscreened window has been force-closed, 'enteredFullscreen' needs to be set to 'false'
+    hs.timer.doAfter(0.5, function()
+      if w:id() == fullscreenedWindowID then
+        enteredFullscreen = false
+      end
+    end)
   end)
   filter.default:subscribe(filter.windowOnScreen, function(w)
     --if w:application():name() ~= 'Telegram' and w:application():name() ~= 'Alfred' and w:application():name() ~= 'DockHelper' and w:application():name() ~= 'DockHelper' then
     if not enteredFullscreen then -- 'windowOnScreen' is triggered when leaving fullscreen, which is hereby counteracted
-      if indexOpenAppMSpace(w) ~= nil and not contextMenuTelegram() then 
-        --print('____________ windowOnScreen ____________' .. w:application():name())   
+      if indexOpenAppMSpace(w) ~= nil and not contextMenuTelegram() then
+        --print('____________ windowOnScreen ____________' .. winMSpaces[getWinMSpacesPos(w)].winAppName)   
         refreshWinMSpaces()
         moveMiddleAfterMouseMinimized(w)
         assignMS(w, true)
@@ -220,24 +227,26 @@ function EnhancedSpaces:new(options)
     end
   end)
   filter.default:subscribe(filter.windowFocused, function(w)
-    --print('____________ windowFocused ____________ ' .. w:application():name())
+    --print('____________ windowFocused ____________ ' .. winMSpaces[getWinMSpacesPos(w)].winAppName)
     refreshWinMSpaces()
     cmdTabFocus()
   end)
   -- 'window_filter.lua' has been adjusted: 'local WINDOWMOVED_DELAY=0.01' instead of '0.5' to get rid of delay
   filter.default:subscribe(filter.windowMoved, function(w)
-    --print('____________ windowMoved ____________')
+    --print('____________ windowMoved ____________' .. winMSpaces[getWinMSpacesPos(w)].winAppName)
     adjustWinFrame(w)
     refreshWinMSpaces()
   end)
   -- next 2 filters are for avoiding calling assignMS(_, true) after unfullscreening a window ('windowOnScreen' is called for each window after a window gets unfullscreened)
   enteredFullscreen = false
-  filter.default:subscribe(filter.windowFullscreened, function()
-    --print('____________ windowFullscreened ____________')
+  fullscreenedWindowID = 0
+  filter.default:subscribe(filter.windowFullscreened, function(w)
+    --print('____________ windowFullscreened ____________' .. winMSpaces[getWinMSpacesPos(w)].winAppName)
     enteredFullscreen = true
+    fullscreenedWindowID = w:id()
   end)
   filter.default:subscribe(filter.windowUnfullscreened, function(w)
-    --print('____________ windowUnfullscreened ____________')
+    --print('____________ windowUnfullscreened ____________' .. winMSpaces[getWinMSpacesPos(w)].winAppName)
     hs.timer.doAfter(0.5, function() -- not necessary with 'hs.window.filter.default:subscribe...'
       w:focus()
       enteredFullscreen = false
@@ -476,7 +485,7 @@ function EnhancedSpaces:new(options)
       mbSwapPopup:popupMenu(hs.mouse.absolutePosition() )
     end)
   end
-  
+
   -- startup commands
   if startupCommands ~= nil then
     for i = 1, #startupCommands do
@@ -488,6 +497,75 @@ function EnhancedSpaces:new(options)
   goToSpace(currentMSpace) -- refresh screen
   moveResize.clickHandler:start()
   return moveResize
+end
+
+
+mSpacesOverview = { '1', '2', '3', 'E' }
+winMSpacesFramesOrg = {}
+imgWinMSpaces = {}
+function overview()
+  -- backup
+  for i = 1, #winMSpaces do 
+    winMSpacesFramesOrg[i] = {}
+    for j = 1, #winMSpaces do
+      winMSpacesFramesOrg[i][j] = winMSpaces[i].frame[j]
+    end
+  end
+
+  -- hide windows on current mSpace
+  for i = 1, #winMSpaces do
+    if winMSpaces[i].mspace[currentMSpace] then
+      winMSpaces[i].win:setTopLeft(hs.geometry.point(max.w - 1, max.h))
+    end
+  end
+
+  max = hs.screen.mainScreen():frame()
+
+  for i = 1, #winMSpaces do
+    local q1 = indexOf(mspaces, mSpacesOverview[1])
+    local q2 = indexOf(mspaces, mSpacesOverview[2])
+    local q3 = indexOf(mspaces, mSpacesOverview[3])
+    local q4 = indexOf(mspaces, mSpacesOverview[4])
+    if winMSpaces[i].mspace[q1] then
+
+
+
+      local x = winMSpaces[i].frame[q1].x / 2
+      local y = winMSpaces[i].frame[q1].y / 2
+      local w = winMSpaces[i].frame[q1].w / 2
+      local h = winMSpaces[i].frame[q1].h / 2
+      winMSpaces[i].win:move(hs.geometry.new(x, y, w, h), nil, false, 0)
+    elseif winMSpaces[i].mspace[q2] then
+      local x = max.w / 2 + winMSpaces[i].frame[q2].x / 2
+      local y = winMSpaces[i].frame[q2].y / 2
+      local w = winMSpaces[i].frame[q2].w / 2
+      local h = winMSpaces[i].frame[q2].h / 2
+      winMSpaces[i].win:move(hs.geometry.new(x, y, w, h), nil, false, 0)
+    elseif winMSpaces[i].mspace[q3] then
+      local x = winMSpaces[i].frame[q3].x / 2
+      local y = max.h / 2 + winMSpaces[i].frame[q3].y / 2
+      local w = winMSpaces[i].frame[q3].w / 2
+      local h = winMSpaces[i].frame[q3].h / 2
+      winMSpaces[i].win:move(hs.geometry.new(x, y, w, h), nil, false, 0)
+    elseif winMSpaces[i].mspace[q4] then
+      local x = max.w / 2 + winMSpaces[i].frame[q4].x / 2
+      local y = max.h / 2 + winMSpaces[i].frame[q4].y / 2
+      local w = winMSpaces[i].frame[q4].w / 2
+      local h = winMSpaces[i].frame[q4].h / 2
+      winMSpaces[i].win:move(hs.geometry.new(x, y, w, h), nil, false, 0)
+    end
+
+  end
+end
+
+-- restore after overview
+function endOverview()
+  for i = 1, #winMSpaces do
+    for j = 1, #winMSpaces do
+      winMSpaces[i].frame[j] = winMSpacesFramesOrg[i][j]
+    end
+  end
+  goToSpace(currentMSpace)
 end
 
 
@@ -513,7 +591,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.36.1\n\n\nMakes you more productive.\nGives you time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.37\n\n\nMakes you more productive.\nGives you time for what really matters.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),
@@ -620,13 +698,15 @@ function getModifiersMods(mods)
 end
 
 
+
 -- swap windows on current mSpace
 function createSwapWindowMenu()
   swapWindowMenu = {}
   for i = 1, #windowsOnCurrentMS do
     --if windowsOnCurrentMS[i] ~= nil then
       table.insert(swapWindowMenu, {
-       title = windowsOnCurrentMS[i]:application():name(),
+        --title = windowsOnCurrentMS[i]:application():name(),
+        title = winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].winAppName,
         menu = createSwapWindowMenuItems(windowsOnCurrentMS[i]),
       })
     --end
@@ -640,7 +720,8 @@ function createSwapWindowMenuItems(w)
     --if w ~= nil and windowsOnCurrentMS[i] ~= nil then
       if w:id() ~= windowsOnCurrentMS[i]:id() then
         table.insert(swapWindowMenuItems, {
-          title = windowsOnCurrentMS[i]:application():name(),
+          --title = windowsOnCurrentMS[i]:application():name(),
+          title = winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].winAppName,
           checked = false,
           disabled = false,
           fn = function(mods)
@@ -737,7 +818,8 @@ function createSendWindowMenu()
   for i = 1, #windowsOnCurrentMS do
     if windowsOnCurrentMS[i] ~= nil then
       table.insert(moveWindowMenu, {
-        title = windowsOnCurrentMS[i]:application():name(),
+        --title = windowsOnCurrentMS[i]:application():name(),
+        title = winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].winAppName,
         menu = createSendWindowMenuItems(windowsOnCurrentMS[i]),
       })
     end
@@ -787,7 +869,8 @@ function createGetWindowMenu()
   if windowsNotOnCurrentMS ~= nil then
     for i = 1, #windowsNotOnCurrentMS do
       table.insert(getWindowMenu, { 
-        title = windowsNotOnCurrentMS[i]:application():name(),
+        --title = windowsNotOnCurrentMS[i]:application():name(),
+        title = winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].winAppName,
         fn = function(mods) 
           local w = winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].win
           local indexTrue -- get index of mSpace where window is currently active to set frame accordingly
@@ -1543,6 +1626,7 @@ function refreshWinMSpaces()
     if not there then
       table.insert(winMSpaces, {})
       winMSpaces[#winMSpaces].win = winAll[i]
+      winMSpaces[#winMSpaces].winAppName = winAll[i]:application():name()
       winMSpaces[#winMSpaces].mspace = {}
       winMSpaces[#winMSpaces].frame = {}
       for k = 1, #mspaces do
@@ -1576,9 +1660,7 @@ function refreshWinMSpaces()
   table.insert(_windowsOnCurrentMS, 1, _windowsOnCurrentMS[#_windowsOnCurrentMS])
   table.remove(_windowsOnCurrentMS, #_windowsOnCurrentMS)
 
-  --hs.timer.doAfter(0.01, function()
   refreshMenu()
-  --end)
 end
 
 

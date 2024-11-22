@@ -1,3 +1,7 @@
+# v0.9.38
+
+* Windows that are pre-assigned mSpaces and positions (openAppMSpace) can now have different paddings, i.e. gaps, than the standard
+
 # v0.9.37
 
 * fixed issue that after force-closing a fullscreen window, newly opened windows would not open on pre-arranged mSpaces

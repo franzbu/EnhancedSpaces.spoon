@@ -497,7 +497,7 @@ You have the further option to set a different than the standard padding between
   }, -- default: nil
 ```
 
-In the scenario above, Google Chrome and Safari would be placed with a gap of 30 to the screen borders and of 20 between the two windows.
+In the scenario above, Google Chrome and Safari are placed in the left and right halves of mSpace `2` with a gap of 30 to the screen borders and of 20 between the two windows.
 
 
 ### Swapping Windows

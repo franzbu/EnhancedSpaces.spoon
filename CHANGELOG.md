@@ -1,6 +1,6 @@
 # v0.9.38
 
-* Windows that are pre-assigned mSpaces and positions (openAppMSpace) can now have different paddings, i.e. gaps, than the standard
+* Windows that are pre-assigned mSpaces and positions (openAppMSpace) can now have different paddings, i.e. gaps, than the standard ones
 
 # v0.9.37
 

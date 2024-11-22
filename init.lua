@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.37.2"
+EnhancedSpaces.version = "0.9.38"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -163,7 +163,7 @@ function EnhancedSpaces:new(options)
   for i = 1, #winAll do
     winMSpaces[i] = {}
     winMSpaces[i].win = winAll[i]
-    winMSpaces[i].winAppName = winAll[i]:application():name() -- ':application():name()' causes errors if used 'later', mostly when creating menu
+    winMSpaces[i].appName = winAll[i]:application():name() -- ':application():name()' causes errors if used 'later', mostly when creating menu
     winMSpaces[i].mspace = {}
     winMSpaces[i].frame = {}
     for k = 1, #mspaces do
@@ -203,8 +203,7 @@ function EnhancedSpaces:new(options)
         enteredFullscreen = false
       end
     end)
-
-    --print('____________ windowNotOnScreen ____________' .. winMSpaces[getWinMSpacesPos(w)].winAppName)--.. w:application():name()) causes errors that break EnhancedSpaces
+    --print('____________ windowNotOnScreen ____________' .. winMSpaces[getWinMSpacesPos(w)].appName)--.. w:application():name()) causes errors that break EnhancedSpaces
     hs.timer.doAfter(0.000000001, function() --delay, otherwise 'filter_all = hs.window.filter.new()' not ready after closing of windows (in certain situations)
       refreshWinMSpaces()
       if windowsOnCurrentMS ~= nil and #windowsOnCurrentMS >= 1 then
@@ -215,8 +214,8 @@ function EnhancedSpaces:new(options)
   end)
   filter.default:subscribe(filter.windowOnScreen, function(w)
     if not enteredFullscreen then -- 'windowOnScreen' is triggered when leaving fullscreen, which is hereby counteracted
-      if indexOpenAppMSpace(w) ~= nil and not contextMenuTelegram() then 
-        --print('____________ windowOnScreen ____________' .. winMSpaces[getWinMSpacesPos(w)].winAppName)   
+      if indexOpenAppMSpace(w) ~= nil and not contextMenuTelegram() then -- fb: with Telegram context menu open, other windows aren't assigned mSpaces when opened
+        --print('____________ windowOnScreen ____________' .. winMSpaces[getWinMSpacesPos(w)].appName)   
         refreshWinMSpaces()
         moveMiddleAfterMouseMinimized(w)
         assignMS(w, true)
@@ -228,13 +227,13 @@ function EnhancedSpaces:new(options)
     end
   end)
   filter.default:subscribe(filter.windowFocused, function(w)
-    --print('____________ windowFocused ____________ ' .. winMSpaces[getWinMSpacesPos(w)].winAppName)
+    --print('____________ windowFocused ____________ ' .. winMSpaces[getWinMSpacesPos(w)].appName)
     refreshWinMSpaces()
     cmdTabFocus()
   end)
   -- 'window_filter.lua' has been adjusted: 'local WINDOWMOVED_DELAY=0.01' instead of '0.5' to get rid of delay
   filter.default:subscribe(filter.windowMoved, function(w)
-    --print('____________ windowMoved ____________' .. winMSpaces[getWinMSpacesPos(w)].winAppName)
+    --print('____________ windowMoved ____________' .. winMSpaces[getWinMSpacesPos(w)].appName)
     adjustWinFrame(w)
     refreshWinMSpaces()
   end)
@@ -242,12 +241,12 @@ function EnhancedSpaces:new(options)
   enteredFullscreen = false
   fullscreenedWindowID = 0
   filter.default:subscribe(filter.windowFullscreened, function(w)
-    --print('____________ windowFullscreened ____________' .. winMSpaces[getWinMSpacesPos(w)].winAppName)
+    --print('____________ windowFullscreened ____________' .. winMSpaces[getWinMSpacesPos(w)].appName)
     enteredFullscreen = true
     fullscreenedWindowID = w:id()
   end)
   filter.default:subscribe(filter.windowUnfullscreened, function(w)
-    --print('____________ windowUnfullscreened ____________' .. winMSpaces[getWinMSpacesPos(w)].winAppName)
+    --print('____________ windowUnfullscreened ____________' .. winMSpaces[getWinMSpacesPos(w)].appName)
     hs.timer.doAfter(0.5, function() -- not necessary with 'hs.window.filter.default:subscribe...'
       w:focus()
       enteredFullscreen = false
@@ -274,19 +273,19 @@ function EnhancedSpaces:new(options)
   }
 
   switcher = switcher.new()
-  switcher.ui.textColor = switcherConfig.textColor or { 0.9, 0.9, 0.9 }
-  switcher.ui.fontName = switcherConfig.fontName or 'Lucida Grande'
-  switcher.ui.textSize = switcherConfig.textSize or 16
-  switcher.ui.highlightColor = switcherConfig.highlightColor or { 0.8, 0.5, 0, 0.8 } 
-  switcher.ui.backgroundColor = switcherConfig.backgroundColor or { 0.3, 0.3, 0.3, 0.5 }
-  switcher.ui.onlyActiveApplication = switcherConfig.onlyActiveApplication or false
-  switcher.ui.showTitles = switcherConfig.showTitles or true
-  switcher.ui.titleBackgroundColor = switcherConfig.titleBackgroundColor or { 0, 0, 0 }
-  switcher.ui.showThumbnails = switcherConfig.showThumbnails or true
-  switcher.ui.selectedThumbnailSize = switcherConfig.selectedThumbnailSize or 284
-  switcher.ui.showSelectedThumbnail = switcherConfig.showSelectedThumbnail or true
-  switcher.ui.thumbnailSize = switcherConfig.thumbnailSize or 112
-  switcher.ui.showSelectedTitle = switcherConfig.showSelectedTitle or false
+  switcher.ui.textColor = switcherConfig.textColor
+  switcher.ui.fontName = switcherConfig.fontName
+  switcher.ui.textSize = switcherConfig.textSize
+  switcher.ui.highlightColor = switcherConfig.highlightColor
+  switcher.ui.backgroundColor = switcherConfig.backgroundColor
+  switcher.ui.onlyActiveApplication = switcherConfig.onlyActiveApplication
+  switcher.ui.showTitles = switcherConfig.showTitles
+  switcher.ui.titleBackgroundColor = switcherConfig.titleBackgroundColor
+  switcher.ui.showThumbnails = switcherConfig.showThumbnails
+  switcher.ui.selectedThumbnailSize = switcherConfig.selectedThumbnailSize
+  switcher.ui.showSelectedThumbnail = switcherConfig.showSelectedThumbnail
+  switcher.ui.thumbnailSize = switcherConfig.thumbnailSize
+  switcher.ui.showSelectedTitle = switcherConfig.showSelectedTitle
 
   -- cycle through windows of current mSpace
   if modifierSwitchWin[1] ~= '' then
@@ -328,8 +327,7 @@ function EnhancedSpaces:new(options)
         switcherSwapWindows = true
         win2 = switcher:previous(_windowsOnCurrentMS) --reverse order
       end)
-    
-    
+
       -- 'subscribe', watchdog for releasing swapModifier
       prevModifierSwap = nil
       keyboardTrackerSwapWin = hs.eventtap.new({ hs.eventtap.event.types.flagsChanged }, function(e)
@@ -419,7 +417,6 @@ function EnhancedSpaces:new(options)
     end)
   end
 
-
   -- goto mspaces directly with 'modifierSwitchMS-<name of mspace>'
   if modifierSwitchMS[1] ~= '' then
     for i = 1, #mspaces do
@@ -437,7 +434,6 @@ function EnhancedSpaces:new(options)
       end)
     end
   end
-  
 
   -- keyboard shortcuts - snapping windows into grid postions
   if modifierSnap1[1] ~= '' then
@@ -462,8 +458,6 @@ function EnhancedSpaces:new(options)
     end
   end
 
-
-  
   -- popup menus
   if popupModifier ~= nil and mbMainPopupKey ~= nil then
     hs.hotkey.bind(popupModifier, mbMainPopupKey, function()
@@ -501,6 +495,7 @@ function EnhancedSpaces:new(options)
 end
 
 
+--[[
 mSpacesOverview = { '1', '2', '3', 'E' }
 winMSpacesFramesOrg = {}
 imgWinMSpaces = {}
@@ -558,7 +553,6 @@ function overview()
 
   end
 end
-
 -- restore after overview
 function endOverview()
   for i = 1, #winMSpaces do
@@ -568,6 +562,7 @@ function endOverview()
   end
   goToSpace(currentMSpace)
 end
+--]]
 
 
 function refreshMenu()
@@ -592,7 +587,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.37.2\n\n\nMakes you more productive.\nGives you time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.38\n\n\nMakes you more productive.\nGives you time for what really matters.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),
@@ -707,7 +702,7 @@ function createSwapWindowMenu()
     --if windowsOnCurrentMS[i] ~= nil then
       table.insert(swapWindowMenu, {
         --title = windowsOnCurrentMS[i]:application():name(),
-        title = winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].winAppName,
+        title = winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].appName,
         menu = createSwapWindowMenuItems(windowsOnCurrentMS[i]),
       })
     --end
@@ -722,7 +717,7 @@ function createSwapWindowMenuItems(w)
       if w:id() ~= windowsOnCurrentMS[i]:id() then
         table.insert(swapWindowMenuItems, {
           --title = windowsOnCurrentMS[i]:application():name(),
-          title = winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].winAppName,
+          title = winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].appName,
           checked = false,
           disabled = false,
           fn = function(mods)
@@ -767,7 +762,7 @@ end
 function getToogleRefWindow()
   if windowsOnCurrentMS ~= nil and #windowsOnCurrentMS > 0 then
     --return { windowsOnCurrentMS[1]:application():name(), false }
-    return { winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[1])].winAppName, false }
+    return { winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[1])].appName, false }
   else
     return { '', true }
   end
@@ -821,7 +816,7 @@ function createSendWindowMenu()
     if windowsOnCurrentMS[i] ~= nil then
       table.insert(moveWindowMenu, {
         --title = windowsOnCurrentMS[i]:application():name(),
-        title = winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].winAppName,
+        title = winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].appName,
         menu = createSendWindowMenuItems(windowsOnCurrentMS[i]),
       })
     end
@@ -872,7 +867,7 @@ function createGetWindowMenu()
     for i = 1, #windowsNotOnCurrentMS do
       table.insert(getWindowMenu, { 
         --title = windowsNotOnCurrentMS[i]:application():name(),
-        title = winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].winAppName,
+        title = winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].appName,
         fn = function(mods) 
           local w = winMSpaces[getWinMSpacesPos(windowsNotOnCurrentMS[i])].win
           local indexTrue -- get index of mSpace where window is currently active to set frame accordingly
@@ -1020,8 +1015,8 @@ function EnhancedSpaces:handleClick()
     end
 
     -- if menu is open, handleClick() needs to be stopped (it still reacts on mouse button release, which is fine)
-    --if hs.window.focusedWindow() == nil or hs.window.focusedWindow():application():name() == 'Hammerspoon' then
-    if hs.window.focusedWindow() == nil or winMSpaces[getWinMSpacesPos(hs.window.focusedWindow())].winAppName == 'Hammerspoon' then
+    if hs.window.focusedWindow() == nil or hs.window.focusedWindow():application():name() == 'Hammerspoon' then
+    --if hs.window.focusedWindow() == nil or winMSpaces[getWinMSpacesPos(hs.window.focusedWindow())].appName == 'Hammerspoon' then
       isResizing = false
       isMoving = false
     end
@@ -1563,9 +1558,11 @@ function goToSpace(target)
   heightMB = maxWithMB.h - max.h   -- height menu bar
   for i,v in pairs(winMSpaces) do
     if winMSpaces[i].mspace[target] == true then
-      winMSpaces[i].win:setFrame(winMSpaces[i].frame[target]) -- 'unhide' window
+      --winMSpaces[i].win:setFrame(winMSpaces[i].frame[target]) -- 'unhide' window
+      winMSpaces[i].win:move(winMSpaces[i].frame[target]) -- 'unhide' window
     else
       winMSpaces[i].win:setTopLeft(hs.geometry.point(max.w - 1, max.h))
+      --winMSpaces[i].win:move(hs.geometry.point(max.w - 1, max.h, winMSpaces[i].win:frame().x, winMSpaces[i].win:frame().y)) 
     end
   end
   currentMSpace = target
@@ -1629,7 +1626,7 @@ function refreshWinMSpaces()
     if not there then
       table.insert(winMSpaces, {})
       winMSpaces[#winMSpaces].win = winAll[i]
-      winMSpaces[#winMSpaces].winAppName = winAll[i]:application():name()
+      winMSpaces[#winMSpaces].appName = winAll[i]:application():name()
       winMSpaces[#winMSpaces].mspace = {}
       winMSpaces[#winMSpaces].frame = {}
       for k = 1, #mspaces do
@@ -1743,8 +1740,13 @@ function assignMS(w, boolgotoSpace)
     for j = 1, #mspaces do
       if openAppMSpace[i][2] == mspaces[j] and getWinMSpacesPos(w) ~= nil  then
         winMSpaces[getWinMSpacesPos(w)].mspace[j] = true
-        if openAppMSpace[i][3] ~= nil then
+        -- in case position is given and also outer and inner padding are given
+        if openAppMSpace[i][3] ~= nil and openAppMSpace[i][4] ~= nil and openAppMSpace[i][5] ~= nil then
+          winMSpaces[getWinMSpacesPos(w)].frame[j] = snap(openAppMSpace[i][3], openAppMSpace[i][4], openAppMSpace[i][5])
+        -- in case position is given without outer/inner padding
+        elseif openAppMSpace[i][3] ~= nil then
           winMSpaces[getWinMSpacesPos(w)].frame[j] = snap(openAppMSpace[i][3])
+        -- app given without additional parameters
         else
           winMSpaces[getWinMSpacesPos(w)].frame[indexOf(mspaces, openAppMSpace[i][2])] = hs.geometry.point(max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h)                                                                                                      -- put window in middle of screen
         end
@@ -1776,7 +1778,7 @@ function contextMenuTelegram() -- return 'true' if there are more than one Teleg
   for i = 1, #winAll do
     
     --if winAll[i]:application():name() == 'Telegram' then
-    if winMSpaces[getWinMSpacesPos(winAll[i])].winAppName == 'Telegram' then
+    if winMSpaces[getWinMSpacesPos(winAll[i])].appName == 'Telegram' then
       k = k + 1
       if k > 1 then return true end
     end
@@ -1795,7 +1797,13 @@ end
 
 
 -- determine hs.geometry object for grid positons
-function snap(scenario)
+function snap(scenario, pMl, pIl)
+  pMOrg = pM
+  pIOrg = pI
+  if pMl ~= nil and pIl ~= nil then
+    pM = pMl
+    pI = pIl
+  end
   maxWithMB = hs.window.focusedWindow():screen():fullFrame()
   max = hs.window.focusedWindow():screen():frame()
   heightMB = maxWithMB.h - max.h   -- height menu bar
@@ -1981,6 +1989,8 @@ function snap(scenario)
     wNew = (max.w - 2 * pM - pI) / 3 * 2
     hNew = (max.h - 2 * pM - pI) / 3 * 2
   end
+  pM = pMOrg
+  pI = pIOrg 
   return hs.geometry.new(xNew, yNew, wNew, hNew)
 end
 

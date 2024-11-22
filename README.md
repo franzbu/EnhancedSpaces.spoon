@@ -447,10 +447,10 @@ If you want EnhancedSpaces to automatically move windows to specific mSpaces whe
 
 ``` lua
   openAppMSpace = {
-    {'Google Chrome', '2'},
-    {'Microsoft To Do', '3'},
-    {'Safari', '2'},
-    {'Email', 'E'},
+    { 'Google Chrome', '2' },
+    { 'Microsoft To Do', '3' },
+    { 'Safari', '2' },
+    { 'Email', 'E' },
   }, -- default: nil
 ```
 
@@ -476,14 +476,28 @@ In case you would also like to pre-define the position of the window, you can ad
 
 ``` lua
   openAppMSpace = {
-    {'Google Chrome', '2', 'a1'},
-    {'Microsoft To Do', '3', 'a2'},
-    {'Safari', '2', 'a2'},
-    {'Email', 'E'},
-  },
+    { 'Google Chrome', '2', 'a1' },
+    { 'Microsoft To Do', '3', 'a2' },
+    { 'Safari', '2', 'a2' },
+    { 'Email', 'E' },
+  }, -- default: nil
 ```
 
 'a1', for example, represents the left half of your screen, 'a2' the right half of your screen. To get the entire list of possible scenarios, see section [Automatic Resizing and Positioning - Keyboard](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#automatic-resizing-and-positioning---keyboard).
+
+
+You have the further option to set a different than the standard padding between a window and the border or between windows; you can add that information as follows:
+
+``` lua
+  openAppMSpace = {
+    { 'Google Chrome', '2', 'a1', 30, 20 },
+    { 'Microsoft To Do', '3', 'a2' },
+    { 'Safari', '2', 'a2', 30, 20 },
+    { 'Email', 'E' },
+  }, -- default: nil
+```
+
+In the scenario above, Google Chrome and Safari would be placed with a gap of 30 to the screen borders and of 20 between the two windows.
 
 
 ### Swapping Windows

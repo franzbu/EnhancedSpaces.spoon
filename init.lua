@@ -152,6 +152,7 @@ function EnhancedSpaces:new(options)
   )
 
   max = hs.screen.mainScreen():frame()
+  maxWithMB = hs.screen.mainScreen():frame()
 
 
   filter = dofile(hs.spoons.resourcePath('lib/window_filter.lua'))
@@ -197,25 +198,37 @@ function EnhancedSpaces:new(options)
 
   -- watchdogs
   filter.default:subscribe(filter.windowNotOnScreen, function(w)
-    -- if fullscreened window has been force-closed, 'enteredFullscreen' needs to be set to 'false'
-    hs.timer.doAfter(2, function()
-      if w:id() == fullscreenedWindowID then
-        enteredFullscreen = false
-      end
-    end)
-    --print('____________ windowNotOnScreen ____________' .. winMSpaces[getWinMSpacesPos(w)].appName)--.. w:application():name()) causes errors that break EnhancedSpaces
+    --print('____________ windowNotOnScreen ____________')
     hs.timer.doAfter(0.000000001, function() --delay, otherwise 'filter_all = hs.window.filter.new()' not ready after closing of windows (in certain situations)
-      refreshWinMSpaces()
-      if windowsOnCurrentMS ~= nil and #windowsOnCurrentMS >= 1 then
-        windowsOnCurrentMS[1]:focus() -- activate last active window on current mSpace when closing/minimizing one
+      if not enteredFullscreen then
+        if w:frame().h ~= maxWithMB.h then
+          refreshWinMSpaces()
+        end
       end
     end)
-
+    hs.timer.doAfter(1, function()
+      if not enteredFullscreen then
+        if windowsOnCurrentMS ~= nil and #windowsOnCurrentMS >= 1 then
+          windowsOnCurrentMS[1]:focus() -- activate last active window on current mSpace when closing/minimizing one
+        end
+      end
+    end)
+    
+    goToSpace(currentMSpace) -- refresh
+    -- for avoiding switching of focus after force-closing a window in fullscreen-mode: set 'enteredFullscreen' to false if fullscreen window has been force-closed (then 'fullscreenedWindowID' is not present)
+    -- when force-closing window, 'enteredFullscreen' needs to be set to 'false'
+    if w:id() == fullscreenedWindowID then
+      hs.timer.doAfter(3, function()
+        enteredFullscreen = false
+        goToSpace(currentMSpace)
+      end)
+    end
   end)
+
   filter.default:subscribe(filter.windowOnScreen, function(w)
     if not enteredFullscreen then -- 'windowOnScreen' is triggered when leaving fullscreen, which is hereby counteracted
-      if indexOpenAppMSpace(w) ~= nil and not contextMenuTelegram() then -- fb: with Telegram context menu open, other windows aren't assigned mSpaces when opened
-        --print('____________ windowOnScreen ____________' .. winMSpaces[getWinMSpacesPos(w)].appName)   
+      --print('____________ windowOnScreen ____________')-- .. winMSpaces[getWinMSpacesPos(w)].appName)   
+      if indexOpenAppMSpace(w) ~= nil and not contextMenuTelegram() then
         refreshWinMSpaces()
         moveMiddleAfterMouseMinimized(w)
         assignMS(w, true)
@@ -226,28 +239,47 @@ function EnhancedSpaces:new(options)
       end
     end
   end)
+
   filter.default:subscribe(filter.windowFocused, function(w)
     --print('____________ windowFocused ____________ ' .. winMSpaces[getWinMSpacesPos(w)].appName)
-    refreshWinMSpaces()
-    cmdTabFocus()
+    if w:frame().h == maxWithMB.h then
+      enteredFullscreen = true
+      fullscreenedWindowID = w:id()
+    end
+    --if not enteredFullscreen and w:frame().h ~= maxWithMB.h then
+    if w:frame().h ~= maxWithMB.h then -- and not enteredFullscreen then
+      refreshWinMSpaces()
+      cmdTabFocus()
+    end
   end)
+
   -- 'window_filter.lua' has been adjusted: 'local WINDOWMOVED_DELAY=0.01' instead of '0.5' to get rid of delay
   filter.default:subscribe(filter.windowMoved, function(w)
-    --print('____________ windowMoved ____________' .. winMSpaces[getWinMSpacesPos(w)].appName)
-    adjustWinFrame(w)
-    refreshWinMSpaces()
+    --print('____________ windowMoved ____________' .. winMSpaces[getWinMSpacesPos(w)].appName .. ', ' .. w:frame().h)
+    if w:frame().h == maxWithMB.h then
+      enteredFullscreen = true
+      fullscreenedWindowID = w:id()
+    elseif not enteredFullscreen then
+      adjustWinFrame(w)
+      refreshWinMSpaces()
+    end
+    --refreshWinMSpaces()
   end)
+
   -- next 2 filters are for avoiding calling assignMS(_, true) after unfullscreening a window ('windowOnScreen' is called for each window after a window gets unfullscreened)
   enteredFullscreen = false
   fullscreenedWindowID = 0
+  --[[ -- doesn't be triggered reliably
   filter.default:subscribe(filter.windowFullscreened, function(w)
-    --print('____________ windowFullscreened ____________' .. winMSpaces[getWinMSpacesPos(w)].appName)
+    print('_____!!!_______ windowFullscreened ____________' .. winMSpaces[getWinMSpacesPos(w)].appName)
     enteredFullscreen = true
     fullscreenedWindowID = w:id()
   end)
+  --]]
+
   filter.default:subscribe(filter.windowUnfullscreened, function(w)
     --print('____________ windowUnfullscreened ____________' .. winMSpaces[getWinMSpacesPos(w)].appName)
-    hs.timer.doAfter(0.5, function() -- not necessary with 'hs.window.filter.default:subscribe...'
+    hs.timer.doAfter(1.5, function()
       w:focus()
       enteredFullscreen = false
       refreshWinMSpaces()
@@ -495,76 +527,6 @@ function EnhancedSpaces:new(options)
 end
 
 
---[[
-mSpacesOverview = { '1', '2', '3', 'E' }
-winMSpacesFramesOrg = {}
-imgWinMSpaces = {}
-function overview()
-  -- backup
-  for i = 1, #winMSpaces do 
-    winMSpacesFramesOrg[i] = {}
-    for j = 1, #winMSpaces do
-      winMSpacesFramesOrg[i][j] = winMSpaces[i].frame[j]
-    end
-  end
-
-  -- hide windows on current mSpace
-  for i = 1, #winMSpaces do
-    if winMSpaces[i].mspace[currentMSpace] then
-      winMSpaces[i].win:setTopLeft(hs.geometry.point(max.w - 1, max.h))
-    end
-  end
-
-  max = hs.screen.mainScreen():frame()
-
-  for i = 1, #winMSpaces do
-    local q1 = indexOf(mspaces, mSpacesOverview[1])
-    local q2 = indexOf(mspaces, mSpacesOverview[2])
-    local q3 = indexOf(mspaces, mSpacesOverview[3])
-    local q4 = indexOf(mspaces, mSpacesOverview[4])
-    if winMSpaces[i].mspace[q1] then
-
-
-
-      local x = winMSpaces[i].frame[q1].x / 2
-      local y = winMSpaces[i].frame[q1].y / 2
-      local w = winMSpaces[i].frame[q1].w / 2
-      local h = winMSpaces[i].frame[q1].h / 2
-      winMSpaces[i].win:move(hs.geometry.new(x, y, w, h), nil, false, 0)
-    elseif winMSpaces[i].mspace[q2] then
-      local x = max.w / 2 + winMSpaces[i].frame[q2].x / 2
-      local y = winMSpaces[i].frame[q2].y / 2
-      local w = winMSpaces[i].frame[q2].w / 2
-      local h = winMSpaces[i].frame[q2].h / 2
-      winMSpaces[i].win:move(hs.geometry.new(x, y, w, h), nil, false, 0)
-    elseif winMSpaces[i].mspace[q3] then
-      local x = winMSpaces[i].frame[q3].x / 2
-      local y = max.h / 2 + winMSpaces[i].frame[q3].y / 2
-      local w = winMSpaces[i].frame[q3].w / 2
-      local h = winMSpaces[i].frame[q3].h / 2
-      winMSpaces[i].win:move(hs.geometry.new(x, y, w, h), nil, false, 0)
-    elseif winMSpaces[i].mspace[q4] then
-      local x = max.w / 2 + winMSpaces[i].frame[q4].x / 2
-      local y = max.h / 2 + winMSpaces[i].frame[q4].y / 2
-      local w = winMSpaces[i].frame[q4].w / 2
-      local h = winMSpaces[i].frame[q4].h / 2
-      winMSpaces[i].win:move(hs.geometry.new(x, y, w, h), nil, false, 0)
-    end
-
-  end
-end
--- restore after overview
-function endOverview()
-  for i = 1, #winMSpaces do
-    for j = 1, #winMSpaces do
-      winMSpaces[i].frame[j] = winMSpacesFramesOrg[i][j]
-    end
-  end
-  goToSpace(currentMSpace)
-end
---]]
-
-
 function refreshMenu()
   mainMenu = {
     { title = "mSpaces",
@@ -575,7 +537,7 @@ function refreshMenu()
       menu = createSwapWindowMenu(),
     },
     { title = "-" },
-    { title = getToogleRefWindow()[1], disabled = getToogleRefWindow()[2],
+    { title = getToggleRefWindow()[1], disabled = getToggleRefWindow()[2],
       menu = createToggleRefMenu(),
     },
     { title = "-" },
@@ -605,7 +567,7 @@ function refreshMenu()
       menu = createSwapWindowMenu(),
     },
     { title = "-" },
-    { title = getToogleRefWindow()[1], disabled = getToogleRefWindow()[2],
+    { title = getToggleRefWindow()[1], disabled = getToggleRefWindow()[2],
       menu = createToggleRefMenu(),
     },
     { title = "-" },
@@ -759,7 +721,7 @@ end
 
 
 -- references: toggle (no modifier); menuModifier1: remove all references but the one clicked; menuModifier2: reference all but the one clicked; menuModifier3: reference all
-function getToogleRefWindow()
+function getToggleRefWindow()
   if windowsOnCurrentMS ~= nil and #windowsOnCurrentMS > 0 then
     --return { windowsOnCurrentMS[1]:application():name(), false }
     return { winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[1])].appName, false }
@@ -1710,7 +1672,8 @@ function refWinMSpace(target) -- add 'copy' of window on current mSpace to targe
   winMSpaces[getWinMSpacesPos(fwin)].mspace[target] = true
   -- copy frame from original mSpace
   winMSpaces[getWinMSpacesPos(fwin)].frame[target] = winMSpaces[getWinMSpacesPos(fwin)].frame[currentMSpace]
-  refreshWinMSpaces()
+  goToSpace(currentMSpace) -- refresh screen
+  --refreshWinMSpaces()
 end
 
 
@@ -1729,7 +1692,7 @@ function derefWinMSpace()
     fwin:minimize()
   end
   goToSpace(currentMSpace) -- refresh screen
-  refreshWinMSpaces()
+  --refreshWinMSpaces()
 end
 
 
@@ -1797,8 +1760,8 @@ end
 
 -- determine hs.geometry object for grid positons
 function snap(scenario, pMl, pIl)
-  pMOrg = pM
-  pIOrg = pI
+  local pMOrg = pM
+  local pIOrg = pI
   if pMl ~= nil and pIl ~= nil then
     pM = pMl
     pI = pIl

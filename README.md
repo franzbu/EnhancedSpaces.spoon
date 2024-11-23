@@ -277,7 +277,7 @@ To resize and move the active window into a 2x2 grid position, use `modifierSnap
 
 To resize and move the active window into a 3x3 grid position, use `modifierSnap2` and numbers `1-9`, additionally `0`, `o`, and `p`. 
 
-`modifierSnap3` also uses a 3x3 grid; however, the windows snap into different sizes, see '3x3 Grid - Additional Window Sizes' below.
+`modifierSnap3` also uses a 3x3 grid with different sizes and positions, see '3x3 Grid - Additional Window Sizes' below.
 
 Below you find the pre-assigned keyboard shortcuts.
 
@@ -323,7 +323,7 @@ Here, the pre-defined positions and sizes of the windows are as follows (descrip
 - `modifierSnap3` and `o`: top middle and right thirds: 4 cells -> 'c11'
 - `modifierSnap3` and `p`: bottom middle and right thirds: 4 cells -> 'c12'
 
-As has been mentioned, these keyboard shortcuts are fully customizable. Let's first have a look at the way the keyboard shortcuts have been pre-arranged:
+As has been mentioned, these keyboard shortcuts are fully customizable. Let's first have a look at the default setup:
 
 
 ``` lua

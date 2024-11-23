@@ -183,7 +183,7 @@ function EnhancedSpaces:new(options)
   menubar = hs.menubar.new(true, "A"):setTitle(mspaces[currentMSpace])
   menubar:setTooltip("mSpace")
 
-  -- recover stranded windows at start
+  -- recover windows at start
   for i = 1, #winAll do
     -- in case window is not on current mSpace, move it; i.e., if on current mSpace, don't resize
     if winAll[i]:topLeft().x >= max.w - 1 then -- don't touch windows that are on current screen, even if they are in openAppMSpace

@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.39"
+EnhancedSpaces.version = "0.9.39.1"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -281,7 +281,7 @@ function EnhancedSpaces:new(options)
 
   filter.default:subscribe(filter.windowUnfullscreened, function(w)
     --print('____________ windowUnfullscreened ____________' .. winMSpaces[getWinMSpacesPos(w)].appName)
-    hs.timer.doAfter(1.5, function() -- fb: previously: 0.5
+    hs.timer.doAfter(0.5, function() -- fb: previously: 0.5
       w:focus()
       enteredFullscreen = false
       refreshWinMSpaces()
@@ -552,7 +552,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.39\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.39.1\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),

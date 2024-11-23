@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.38.1"
+EnhancedSpaces.version = "0.9.39"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -214,13 +214,16 @@ function EnhancedSpaces:new(options)
       end
     end)
     
-    goToSpace(currentMSpace) -- refresh
+    --goToSpace(currentMSpace) -- refresh
+    refreshWinMSpaces()
+
     -- for avoiding switching of focus after force-closing a window in fullscreen-mode: set 'enteredFullscreen' to false if fullscreen window has been force-closed (then 'fullscreenedWindowID' is not present)
     -- when force-closing window, 'enteredFullscreen' needs to be set to 'false'
     if w:id() == fullscreenedWindowID then
-      hs.timer.doAfter(3, function()
+      hs.timer.doAfter(3, function() --fb: previously: 3
         enteredFullscreen = false
-        goToSpace(currentMSpace)
+        --goToSpace(currentMSpace)
+        refreshWinMSpaces()
       end)
     end
   end)
@@ -228,7 +231,7 @@ function EnhancedSpaces:new(options)
   filter.default:subscribe(filter.windowOnScreen, function(w)
     if not enteredFullscreen then -- 'windowOnScreen' is triggered when leaving fullscreen, which is hereby counteracted
       --print('____________ windowOnScreen ____________')-- .. winMSpaces[getWinMSpacesPos(w)].appName)   
-      if indexOpenAppMSpace(w) ~= nil and not contextMenuTelegram() then
+      if indexOpenAppMSpace(w) ~= nil and not contextMenuTelegram() then -- fb: with Telegram context menu open, other windows aren't assigned mSpaces when opened
         refreshWinMSpaces()
         moveMiddleAfterMouseMinimized(w)
         assignMS(w, true)
@@ -263,7 +266,6 @@ function EnhancedSpaces:new(options)
       adjustWinFrame(w)
       refreshWinMSpaces()
     end
-    --refreshWinMSpaces()
   end)
 
   -- next 2 filters are for avoiding calling assignMS(_, true) after unfullscreening a window ('windowOnScreen' is called for each window after a window gets unfullscreened)
@@ -279,7 +281,7 @@ function EnhancedSpaces:new(options)
 
   filter.default:subscribe(filter.windowUnfullscreened, function(w)
     --print('____________ windowUnfullscreened ____________' .. winMSpaces[getWinMSpacesPos(w)].appName)
-    hs.timer.doAfter(1.5, function()
+    hs.timer.doAfter(1.5, function() -- fb: previously: 0.5
       w:focus()
       enteredFullscreen = false
       refreshWinMSpaces()
@@ -378,7 +380,8 @@ function EnhancedSpaces:new(options)
             win2:focus()
             win1:focus()
           end
-          goToSpace(currentMSpace) -- refresh screen
+          --goToSpace(currentMSpace) -- refresh screen
+          refreshWinMSpaces()
           switcherSwapWindows = false
         end
         prevModifierSwap = flags
@@ -521,7 +524,7 @@ function EnhancedSpaces:new(options)
   end
 
   refreshWinMSpaces()
-  goToSpace(currentMSpace) -- refresh screen
+  --goToSpace(currentMSpace) -- refresh screen
   moveResize.clickHandler:start()
   return moveResize
 end
@@ -549,7 +552,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.38.1\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.39\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),
@@ -687,26 +690,30 @@ function createSwapWindowMenuItems(w)
               if modifiersEqual(getModifiersMods(mods), menuModifier3) then -- menuModifier3: move windows to a5/a6
                 winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = snap('a5')
                 winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].frame[currentMSpace] = snap('a6')
-                goToSpace(currentMSpace) -- refresh screen
+                --goToSpace(currentMSpace) -- refresh screen
+                refreshWinMSpaces()
                 winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].win:focus()
                 winMSpaces[getWinMSpacesPos(w)].win:focus()
               elseif modifiersEqual(getModifiersMods(mods), menuModifier2) then -- menuModifier2: move windows to a3/a4
                 winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = snap('a3')
                 winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].frame[currentMSpace] = snap('a4')
-                goToSpace(currentMSpace) -- refresh screen
+                --goToSpace(currentMSpace) -- refresh screen
+                refreshWinMSpaces()
                 winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].win:focus()
                 winMSpaces[getWinMSpacesPos(w)].win:focus()
               elseif modifiersEqual(getModifiersMods(mods), menuModifier1) then -- menuModifier1: move windows to a1/a2
                 winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = snap('a1')
                 winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].frame[currentMSpace] = snap('a2')
-                goToSpace(currentMSpace) -- refresh screen
+                --goToSpace(currentMSpace) -- refresh screen
+                refreshWinMSpaces()
                 winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].win:focus()
                 winMSpaces[getWinMSpacesPos(w)].win:focus()
               else
                 local frameWin1 = winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace]
                 winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace] = winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].frame[currentMSpace]
                 winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].frame[currentMSpace] = frameWin1
-                goToSpace(currentMSpace) -- refresh screen
+                --goToSpace(currentMSpace) -- refresh screen
+                refreshWinMSpaces()
                 winMSpaces[getWinMSpacesPos(windowsOnCurrentMS[i])].win:focus()
                 winMSpaces[getWinMSpacesPos(w)].win:focus()
               end
@@ -762,7 +769,8 @@ function createToggleRefMenu()
         else  -- toggle (true and false on current mSpace)
           winMSpaces[posWin].mspace[i] = not winMSpaces[posWin].mspace[i]
         end
-        goToSpace(currentMSpace) -- refresh screen
+        refreshWinMSpaces() --fb
+        --goToSpace(currentMSpace) -- refresh screen
       end,
     })
   end
@@ -793,26 +801,30 @@ function createSendWindowMenuItems(w)
         checked = true, 
         disabled = true,
       })
-    else 
+    else --fb
       table.insert(moveWindowMenuItems, { 
-        title = mspaces[i], 
+        title = mspaces[i],
         checked = winMSpaces[getWinMSpacesPos(w)].mspace[i],
         fn = function(mods)
           if modifiersEqual(getModifiersMods(mods), menuModifier3) then -- menuModifier3: move to new mSpace alongside with window
             winMSpaces[getWinMSpacesPos(w)].mspace[currentMSpace] = false
             winMSpaces[getWinMSpacesPos(w)].mspace[i] = true
+            winMSpaces[getWinMSpacesPos(w)].frame[i] = winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace]
             goToSpace(i)
           elseif modifiersEqual(getModifiersMods(mods), menuModifier1) then -- menuModifier1: keep reference on current mSpace
             winMSpaces[getWinMSpacesPos(w)].mspace[i] = true
           elseif modifiersEqual(getModifiersMods(mods), menuModifier2) then -- menuModifier2: references on all mSpaces
-            for j = 1, #mspaces do
+            for j = 1, #mspaces do -- currentMSpace could be skipped, but it's faster this way
               winMSpaces[getWinMSpacesPos(w)].mspace[j] = true
+              winMSpaces[getWinMSpacesPos(w)].frame[j] = winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace]
             end
           else -- no modifier: stay on screen
             winMSpaces[getWinMSpacesPos(w)].mspace[currentMSpace] = false
             winMSpaces[getWinMSpacesPos(w)].mspace[i] = true
+            winMSpaces[getWinMSpacesPos(w)].frame[i] = winMSpaces[getWinMSpacesPos(w)].frame[currentMSpace]
           end
-          goToSpace(currentMSpace) --refresh
+          --goToSpace(currentMSpace) --refresh
+          refreshWinMSpaces()
         end,
       })
     end
@@ -859,7 +871,8 @@ function createGetWindowMenu()
               end
             end
           end
-          goToSpace(currentMSpace)
+          --goToSpace(currentMSpace) -- refresh windows
+          refreshWinMSpaces()
           w:focus()
         end,
       })
@@ -1376,7 +1389,8 @@ function EnhancedSpaces:doMagic() -- automatic positioning and adjustments, for 
     if moveLeftMS then
      moveToSpace(getprevMSpaceNumber(currentMSpace), currentMSpace, false)
       hs.timer.doAfter(0.1, function()
-        goToSpace(currentMSpace) -- refresh screen (otherwise window still visible in former mspace)
+        --goToSpace(currentMSpace) -- refresh screen (otherwise window still visible in former mspace)
+        refreshWinMSpaces()
       end)
       if modifiersEqual(modifierDM, flags) then -- if modifier is still pressed, switch to where window has been moved  
         hs.timer.doAfter(0.02, function()
@@ -1387,7 +1401,8 @@ function EnhancedSpaces:doMagic() -- automatic positioning and adjustments, for 
     elseif moveRightMS then
       moveToSpace(getnextMSpaceNumber(currentMSpace), currentMSpace, false)
       hs.timer.doAfter(0.1, function()
-        goToSpace(currentMSpace) -- refresh screen (otherwise window still visible in former mspace)
+        --goToSpace(currentMSpace) -- refresh screen (otherwise window still visible in former mspace)
+        refreshWinMSpaces()
       end)
       if modifiersEqual(modifierDM, flags) then
         hs.timer.doAfter(0.02, function()
@@ -1566,12 +1581,12 @@ end
 function refreshWinMSpaces()
   winAll = filter_all:getWindows() --hs.window.sortByFocused)
   -- remove minimized/closed windows
-  ::again::
+  --::again::
   for i = 1, #winMSpaces do
     if not isIncludedWinAll(winMSpaces[i].win) then
       table.remove(winMSpaces, i)
-      --break
-      goto again
+      break
+      --goto again
     end
   end
 
@@ -1620,6 +1635,18 @@ function refreshWinMSpaces()
   -- as hs.window.switcher starts with the second window, last one (the one that hasn't been activated the longest) is moved to first place
   table.insert(_windowsOnCurrentMS, 1, _windowsOnCurrentMS[#_windowsOnCurrentMS])
   table.remove(_windowsOnCurrentMS, #_windowsOnCurrentMS)
+
+  -- refresh windows --fb
+  max = hs.screen.mainScreen():frame()
+  for i,v in pairs(winMSpaces) do
+    if winMSpaces[i].mspace[currentMSpace] == true then
+      --winMSpaces[i].win:setFrame(winMSpaces[i].frame[target]) -- 'unhide' window
+      winMSpaces[i].win:move(winMSpaces[i].frame[currentMSpace]) -- 'unhide' window
+    else
+      winMSpaces[i].win:setTopLeft(hs.geometry.point(max.w - 1, max.h))
+      --winMSpaces[i].win:move(hs.geometry.point(max.w - 1, max.h, winMSpaces[i].win:frame().x, winMSpaces[i].win:frame().y)) 
+    end
+  end
 
   refreshMenu()
 end
@@ -1672,8 +1699,8 @@ function refWinMSpace(target) -- add 'copy' of window on current mSpace to targe
   winMSpaces[getWinMSpacesPos(fwin)].mspace[target] = true
   -- copy frame from original mSpace
   winMSpaces[getWinMSpacesPos(fwin)].frame[target] = winMSpaces[getWinMSpacesPos(fwin)].frame[currentMSpace]
-  goToSpace(currentMSpace) -- refresh screen
-  --refreshWinMSpaces()
+  --goToSpace(currentMSpace) -- refresh screen
+  refreshWinMSpaces()
 end
 
 
@@ -1691,8 +1718,8 @@ function derefWinMSpace()
   if all_false then
     fwin:minimize()
   end
-  goToSpace(currentMSpace) -- refresh screen
-  --refreshWinMSpaces()
+  --goToSpace(currentMSpace) -- refresh screen
+  refreshWinMSpaces()
 end
 
 

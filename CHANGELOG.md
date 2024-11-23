@@ -1,3 +1,7 @@
+# v0.9.38.1
+
+* fullscreen-related fixes
+
 # v0.9.38
 
 * Windows that are pre-assigned mSpaces and positions (openAppMSpace) can now have different paddings, i.e. gaps, than the standard ones

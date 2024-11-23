@@ -19,9 +19,9 @@ Focus has also been given to making EnhancedSpaces enjoyable to use. You can cus
 
 Another appeal of EnhancedSpaces is that managing both virtual screens and windows results in synergies that are impossible when having separate applications, for example, you can drag windows - with your pointing device in any area of them, not only the title bar - beyond the borders of the screen and have them reemerge on another mSpace.
 
-So who is EnhancedSpaces for? It has been made for power users who like working on multiple screens and want something more efficient and customizable than Apple's Spaces and at the same time prefer more flexibility than tiling window managers can offer. 
+So who is EnhancedSpaces for? It has been made for power users who like working on multiple screens and want something more efficient and customizable than Apple's Spaces.
 
-EnhancedSpaces has increased my productivity and simplified my life with macOS. May it do the same for you.
+EnhancedSpaces has increased my productivity with macOS. May it do the same for you.
 
 
 ## Introduction

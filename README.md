@@ -486,7 +486,7 @@ In case you would also like to pre-define the position of the window, you can ad
 'a1', for example, represents the left half of your screen, 'a2' the right half of your screen. To get the entire list of possible scenarios, see section [Automatic Resizing and Positioning - Keyboard](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#automatic-resizing-and-positioning---keyboard).
 
 
-You have the further option to set a different than the standard padding between a window and the border or between windows; you can add that information as follows:
+You have the further option to set a different than the standard padding between a window and the border and between windows; you can add that information as follows:
 
 ``` lua
   openAppMSpace = {

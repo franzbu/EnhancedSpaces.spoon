@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.38"
+EnhancedSpaces.version = "0.9.38.1"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -587,7 +587,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.38\n\n\nMakes you more productive.\nGives you time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.38.1\n\n\nMakes you more productive.\nGives you time for what really matters.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),
@@ -800,8 +800,7 @@ function createToggleRefMenu()
         else  -- toggle (true and false on current mSpace)
           winMSpaces[posWin].mspace[i] = not winMSpaces[posWin].mspace[i]
         end
-        refreshWinMSpaces()
-        --goToSpace(currentMSpace) -- refresh screen
+        goToSpace(currentMSpace) -- refresh screen
       end,
     })
   end

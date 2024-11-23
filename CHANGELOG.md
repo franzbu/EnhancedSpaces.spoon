@@ -1,6 +1,6 @@
-# v0.9.38.1
+# v0.9.39
 
-* fullscreen-related fixes
+* fullscreen-related fixes and other bug fixes
 
 # v0.9.38
 

@@ -512,7 +512,7 @@ For disabling this feature, add the following line to your `init.lua`:
   swapModifier = { '' },  -- default: { 'ctrl' }
 ```
 
-By default, the focus stays with the same window; in case you'd prefer the focus to switch to the other window (and thus stay in the same position), add the following line to your `init.lua`:
+By default, the focus stays with the same window; in case you prefer the focus to switch to the other window (and thus remain in the same position), add the following line to your `init.lua`:
 
 ``` lua
   swapSwitchFocus = true, -- default: false

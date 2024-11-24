@@ -620,25 +620,25 @@ It is possible to use modifier keys to access additional features. Below you can
 
 Below you can see what effect the modifier keys have; the first menu entry, 'mSpaces', reveals its whole potential without any additional modifier keys and is therefore not listed:
 
-#### Menu - `Swap`
+#### Menu Item `Swap`
 - no modifier: swap windows, which includes swapping sizes and positions
 - menuModifier1: window chosen first snaps into position 'a1' (left half of screen), second window snaps into 'a2'
 - menuModifier2: window chosen first snaps into position 'a3', second window snaps into 'a4'
 - menuModifier3: window chosen first snaps into position 'a5', second window snaps into 'a6'
 
-#### Menu - `CURRENTLY ACTIVE WINDOW`
+#### Menu Item `CURRENTLY ACTIVE WINDOW`
 - no modifier: toggle reference of active window on selected mSpace; if all mSpaces end up unchecked, the window is minimized
 - menuModifier1: delete all reference except for the selected mSpace
 - menuModifier2: put references of window on all mSpaces
 - menuModifier3: same as `menuModifier1`, additionally tagging along with the window
 
-#### Menu - `Send Window`
+#### Menu Item `Send Window`
 - no modifier: send reference of window to selected mSpace; references on other mSpaces remain unaffected
 - menuModifier1: send window to selected mSpace while keeping a reference of the window on the current mSpace
 - menuModifier2: put references of window on all mSpaces
 - menuModifier3: same as `menuModifier1`, additionally tagging along with the window
 
-#### Menu - `Get Window`
+#### Menu Item `Get Window`
 - no modifier: move selected window to current mSpace
 - menuModifier1: create reference of selected window on current mSpace; references on other mSpaces remain unaffected
 - menuModifier2: create reference of selected window on all mSpaces

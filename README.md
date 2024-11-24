@@ -25,9 +25,9 @@ EnhancedSpaces has increased my productivity with macOS. May it do the same for 
 ## Introduction
 EnhancedSpaces requires [Hammerspoon](https://www.hammerspoon.org/), so if you haven't used the latter yet, go ahead with its installation.
 
-A few words about Hammerspoon: When it comes to macOS, the obvious choice for developing an application like this is Swift; however, I discovered Hammerspoon with its Lua-based approach some time ago and have fallen in love with it. Thus I wanted to see how far it can carry me in regard to a project like this, and my love for Hammerspoon has only deepened. 
+A few words about Hammerspoon: When it comes to macOS, the obvious choice for developing an application like EnhancedSpaces is Swift; however, I discovered Hammerspoon with its Lua-based approach some time ago and have fallen in love with it.
 
-I can recommend Hammerspoon beyond it being a requirement for EnhancedSpaces; it's one of the most powerful and flexible ways for adding value to your macOS in virtually any respect. Care for an example?
+I can recommend Hammerspoon beyond it being a requirement for EnhancedSpaces; it's a powerful and flexible way for adding value to your macOS in virtually any respect. Care for an example?
 
 ``` lua
 -- connect to VPN
@@ -43,9 +43,9 @@ end)
 
 These few lines of Hammerspoon code enable you to connect to one of PIA's VPN servers using the keyboard shortcut `Command-Shift-s`, while `Command-Shift-d` disconnects from the VPN server. 
 
-Even if you're not familiar with writing code, there are countless ready-made examples available, and even without having ever written any code, it's easy to adjust the above lines to, for instance, connecting to your VPN server using `c` in your hotkey instead of `s`, right?
+Even if you're unfamiliar with writing code, there is a plethora of ready-made examples out there, and even without having ever written any code, it's easy to adjust the above lines to, for instance, connecting to your VPN server using `c` in your hotkey instead of `s`, right?
 
-But let's move our focus back to EnhancedSpaces.
+But let's move our focus back to EnhancedSpaces for now.
 
 ## Installation
 Download EnhancedSpaces and move the folder to `~/.hammerspoon/Spoons`. Make sure the name of the folder is `EnhancedSpaces.spoon`. 
@@ -61,9 +61,9 @@ mkdir -p ~/.hammerspoon/Spoons && git clone https://github.com/franzbu/EnhancedS
 ## Setting up EnhancedSpaces
 Configuring EnhancedSpaces involves rolling up your sleeves and grabbing your keyboard. While it is understandable that even some power users prefer a graphical user interface for adjusting the preferences of their applications, there are substantial advantages to text based configuration that are easily missed unless experienced first-hand. 
 
-One of these advantages is that once you've got the knack of it, making changes to your setup is straightforward and quick, which are reasons you have become interested in EnhancedSpaces in the first place, right?
+One such benefit is that once you've got the knack of it, making changes to your setup is straightforward and quick, which are reasons you have become interested in EnhancedSpaces in the first place, right?
 
-Once you've installed EnhancedSpaces, add the following lines to the file `~/.hammerspoon/init.lua` (you can edit that file by clicking the Hammerspoon icon in your menu bar and choosing 'Open Config'). You might want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you will be greeted with:
+Once you've installed EnhancedSpaces, add the following lines to the file `~/.hammerspoon/init.lua` (you can edit that file by clicking the Hammerspoon icon in your menu bar and choosing 'Open Config'). You might also want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you will be greeted with:
 
 ``` lua
 local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')
@@ -73,30 +73,30 @@ EnhancedSpaces:new({
 })
 ```
 
-If you'd like to go ahead without delay, the following terminal command can be used as an alternative to manually editing `init.lua`. In this case the default options are used, which means that the mSpaces `1`, `2`, and `3`are created, with `2` as default mSpace:
+If you'd like to go ahead without delay, the following terminal command can be used as an alternative to manually editing `init.lua`. In this case the default options are used, which means that the mSpaces `1`, `2`, and `3`are created, with `2` as the default mSpace:
 
 ```bash
 echo -e "local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')\nEnhancedSpaces:new({\nmSpaces = { '1', '2', '3' }, -- default: { '1', '2', '3' }\nstartmSpace = '2', -- default: 2\n})" >> ~/.hammerspoon/init.lua
 ```
 
-Reload Hammerspoon's configuration (menu bar icon - 'Reload Config') and you're ready to go. All you see for now is a new icon in your menu bar indicating your current mSpace, so let's find out what you can do with your new mSpaces.
+Reload Hammerspoon's configuration (menu bar icon - 'Reload Config') and you're ready to go. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let's find out what you can do with your new mSpaces.
 
 ## Menu
-With EnhancedSpaces you can use keyboard shortcuts for handling windows and mSpaces; however, sometimes it is convenient to do whatever you want to do by means of a menu - even more so at the beginning when your muscle memory regarding the new hotkeys might not yet be at full steam.
+You can use keyboard shortcuts for handling windows and mSpaces; however, sometimes it can be convenient to do whatever you want to do by means of a menu - even more so at the beginning when your muscle memory regarding the new hotkeys might not be at full steam yet.
 
 EnhancedSpaces' menu can be used to switch to another mSpace with or without moving a window along, to swap windows, to get a window from another mSpace, and to create references of windows, i.e., the already mentioned 'sticky windows', which means that the same window can be shown on more than one mSpace - more about references of windows in the section [Same Window on More Than One mSpace](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#same-window-on-more-than-one-mspace).
 
-Clicking EnhancedSpaces' icon in the menu bar, a menu like this appears:
+Clicking EnhancedSpaces' icon in the menu bar, a menu like this is shown:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu1.png' width='200'>
 
 
-`mSpaces` lets you switch to another mSpace:
+`mSpaces` is for switching to another mSpace:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu2.png' width='200'>
 
 
-`Swap`, as its name implies, lets you swap two windows, which means that they adopt each other's positions and sizes:
+`Swap`, as its name implies, is for swapping two windows, which means that they adopt each other's positions and sizes:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_swap.png' width='380'>
 
@@ -106,12 +106,12 @@ The next entry in the menu shows the currently active window (in case there is n
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu3.png' width='200'>
 
 
-Selecting `Send Window` you get a list of all windows on the current mSpace and the mSpaces you can send each of the windows to:
+Selecting `Send Window` you see a list of all windows on the current mSpace and the mSpaces you can send each of the windows to:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu4.png' width='350'>
 
 
-Selecting `Get Windows` you get a list of all open windows that are not on your current mSpace, and by selecting one, it is moved to the current mSpace.
+Selecting `Get Windows` you see a list of all open windows that are not on your current mSpace, and by selecting one, it is moved to the current mSpace.
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu5.png' width='300'>
 
@@ -120,7 +120,7 @@ It is also possible to use popup menus; more about that feature in the section [
 
 For additional functionality there is the possibility of using modifier keys with your menus, for example, for creating references of a window on all mSpaces at once, or for tagging along with a window while sending it to another mSpace; more about that in section [Advanced Menu Features](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#advanced-menu-features).
 
-There you can also learn how to change the menu entries, for example, to your preferred language. Additionally, you are shown how to include Hammerspoon's menu into EnhancedSpaces', which has the additional benefit of making Hammerspoon's menu redundant, i.e., you can then remove it from your menu bar.
+There you can also see how to change the menu entries, for example, to your preferred language. Additionally, you are shown how to include Hammerspoon's menu into EnhancedSpaces', which has the additional benefit of making Hammerspoon's menu redundant, i.e., you can then remove it from your menu bar.
 
 
 ## Keyboard Shortcuts

@@ -626,7 +626,7 @@ Below you can see what effect the modifier keys have; the first menu entry, 'mSp
 - menuModifier2: window chosen first snaps into position 'a3', second window snaps into 'a4'
 - menuModifier3: window chosen first snaps into position 'a5', second window snaps into 'a6'
 
-#### Menu - `active window`
+#### Menu - `CURRENTLY ACTIVE WINDOW`
 - no modifier: toggle reference of active window on selected mSpace; if all mSpaces end up unchecked, the window is minimized
 - menuModifier1: delete all reference except for the selected mSpace
 - menuModifier2: put references of window on all mSpaces

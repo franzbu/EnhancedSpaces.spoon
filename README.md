@@ -15,7 +15,7 @@ One of EnhancedSpaces' main design goals has been to make managing mSpaces and w
 
 Focus has also been given to making EnhancedSpaces enjoyable to use. You can customize EnhancedSpaces' menus to your needs, for example, change them to your preferred language, set [individual wallpapers for each of your mSpaces](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#custom-wallpapers), change the appearance of the window switcher, or [resize windows into all directions using the whole area of the window rather than just its borders](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#manual-resizing).
 
-Another appeal of EnhancedSpaces is that managing both virtual screens and windows results in synergies that are impossible when having separate applications, for example, you can drag a window - with your pointing device simply placed within its boundaries, not only its title bar - beyond the borders of the screen and have it reemerge on another mSpace.
+Another appeal of EnhancedSpaces is that managing both virtual screens and windows results in synergies that are impossible when having separate applications, for example, you can drag a window - with your pointing device placed within all of its area, not only its title bar - beyond the borders of the screen and have it reemerge on another mSpace.
 
 So who is EnhancedSpaces for? It has been made for power users who like working on multiple screens and want something more efficient and customizable than Apple's Spaces.
 

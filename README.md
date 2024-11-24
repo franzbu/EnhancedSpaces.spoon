@@ -1,6 +1,6 @@
 # EnhancedSpaces
 
-<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/overview.jpg' rotate="270" />
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/overview.jpg' rotate="90" />
 
 ## First Things First: Who Is This For? 
 Every power user sooner or later feels restricted by the confinements of a single screen; there is no such thing as too much space. A multi-monitor arrangement is the obvious remedy; however, there is a lesser-known solution that enables the user to have more than one screen on a single display: virtual screens or, as they are called in EnhancedSpaces, mSpaces.

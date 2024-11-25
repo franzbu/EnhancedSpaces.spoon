@@ -23,7 +23,7 @@ EnhancedSpaces has increased my productivity with macOS. May it do the same for 
 ## Introduction
 EnhancedSpaces requires [Hammerspoon](https://www.hammerspoon.org/), so if you haven't used the latter yet, go ahead with its installation.
 
-A few words about Hammerspoon: When it comes to macOS, the obvious choice for developing an application like EnhancedSpaces is Swift; however, I discovered Hammerspoon with its Lua-based approach some time ago and have fallen in love with it.
+A few words about Hammerspoon: When it comes to macOS, the obvious choice for developing an application like EnhancedSpaces is Swift; however, I discovered Hammerspoon with its Lua-based approach some time ago and have come to appreciate it.
 
 I can recommend Hammerspoon beyond it being a requirement for EnhancedSpaces; it's a powerful and flexible way for adding value to your macOS in virtually any respect. Care for an example?
 
@@ -41,9 +41,9 @@ end)
 
 These few lines of Hammerspoon code enable you to connect to one of PIA's VPN servers using the keyboard shortcut `Command-Shift-s`, while `Command-Shift-d` disconnects from the VPN server. 
 
-Even if you're unfamiliar with writing code, there is a plethora of ready-made examples out there, and even without having ever written any code, it's easy to adjust the above lines to, for instance, connecting to your VPN server using `c` in your hotkey instead of `s`, right?
+Even if you're unfamiliar with writing code, there is a plethora of ready-made examples out there, and even without ever having written any code, it's easy to adjust the above lines to, for instance, connecting to your VPN server using `c` in your hotkey instead of `s`, right?
 
-But let's move our focus back to EnhancedSpaces for now.
+But let's move our focus back to EnhancedSpaces.
 
 ## Installation
 Download EnhancedSpaces and move the folder to `~/.hammerspoon/Spoons`. Make sure the name of the folder is `EnhancedSpaces.spoon`. 
@@ -51,17 +51,15 @@ Download EnhancedSpaces and move the folder to `~/.hammerspoon/Spoons`. Make sur
 As an alternative to manually downloading and installing, you can run the following terminal command:
 
 ```bash
-
 mkdir -p ~/.hammerspoon/Spoons && git clone https://github.com/franzbu/EnhancedSpaces.spoon.git ~/.hammerspoon/Spoons/EnhancedSpaces.spoon
-
 ```
 
 ## Setting up EnhancedSpaces
 Configuring EnhancedSpaces involves rolling up your sleeves and grabbing your keyboard. While it is understandable that even some power users prefer a graphical user interface for adjusting the preferences of their applications, there are substantial advantages to text based configuration that are easily missed unless experienced first-hand. 
 
-One such benefit is that once you've got the knack of it, making changes to your setup is straightforward and quick, which are reasons you have become interested in EnhancedSpaces in the first place, right?
+One such benefit is that once you've got the knack of it, making changes to your setup is straightforward and quick, which are reasons why you have become interested in EnhancedSpaces in the first place, right?
 
-Once you've installed EnhancedSpaces, add the following lines to the file `~/.hammerspoon/init.lua` (you can edit that file by clicking the Hammerspoon icon in your menu bar and choosing 'Open Config'). You might also want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you will be greeted with:
+Once you've installed EnhancedSpaces, add the following lines to the file `~/.hammerspoon/init.lua` (you can edit that file by clicking the Hammerspoon icon in your menu bar and choosing 'Open Config'). You might also want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you are greeted with:
 
 ``` lua
 local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')
@@ -80,7 +78,7 @@ echo -e "local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')\nEnhancedSpaces:n
 Reload Hammerspoon's configuration (menu bar icon - 'Reload Config') and you're ready to go. All you will see for now is a new icon in your menu bar indicating your current mSpace, so let's find out what you can do with your new mSpaces.
 
 ## Menu
-You can use keyboard shortcuts for handling windows and mSpaces; however, sometimes it can be convenient to do whatever you want to do by means of a menu - even more so at the beginning when your muscle memory regarding the new hotkeys might not be at full steam yet.
+You can use keyboard shortcuts for handling windows and mSpaces; however, sometimes it is convenient to do whatever needs to be done by means of a menu - even more so at the beginning when the muscle memory regarding the new hotkeys might not be at full steam yet.
 
 EnhancedSpaces' menu can be used to switch to another mSpace with or without moving a window along, to swap windows, to get a window from another mSpace, and to create references of windows, i.e., the already mentioned 'sticky windows', which means that the same window can be shown on more than one mSpace - more about references of windows in the section [Same Window on More Than One mSpace](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#same-window-on-more-than-one-mspace).
 
@@ -116,9 +114,9 @@ Selecting `Get Windows` you see a list of all open windows that are not on your 
 
 It is also possible to use popup menus; more about that feature in the section [Additional Features - Popup Menus](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#popup-menus)
 
-For additional functionality there is the possibility of using modifier keys with your menus, for example, for creating references of a window on all mSpaces at once, or for tagging along with a window while sending it to another mSpace; more about that in section [Advanced Menu Features](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#advanced-menu-features).
+For additional functionality there is the possibility of using modifier keys with your menus, for example, for creating references of a window on all mSpaces at once, or for tagging along with a window while sending it to another mSpace; more about that feature in section [Advanced Menu Features](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#advanced-menu-features).
 
-There you can also see how to change the menu entries, for example, to your preferred language. Additionally, you are shown how to include Hammerspoon's menu into EnhancedSpaces', which has the additional benefit of making Hammerspoon's menu redundant, i.e., you can then remove it from your menu bar.
+There you can also see how to change the menu entries, for example, to your preferred language. Additionally, you can see how to include Hammerspoon's menu into EnhancedSpaces', which has the additional benefit of making Hammerspoon's menu redundant, i.e., you can then remove it from your menu bar.
 
 
 ## Keyboard Shortcuts
@@ -133,7 +131,7 @@ The lines below represent the default setup, and you don't need to add them to y
 
 When applying changes to the modifiers, always make sure that you substitute them with other modifiers, i.e., { 'cmd' }, { 'alt' }, { 'ctrl' }, { 'shift' } or combinations of modifiers, e.g., { 'alt', 'ctrl' }.
 
-In case you want to disable this feature, change the line above as follows:
+In case you want to disable this hotkey, change the line above as follows:
 ``` lua
   modifierMS = { '' }, -- default: { 'ctrl' }
 ```
@@ -167,7 +165,7 @@ As before, the line below represents the default setup, and you don't need to ad
   modifierSwitchMS = { 'alt' }, -- default: { 'alt' }
 ```
 
-In case you want to disable this feature, change the line above as follows:
+In case you want to disable this hotkey, change the line above as follows:
 ``` lua
   modifierSwitchMS = { '' }, -- default: { 'alt' }
 ```
@@ -181,7 +179,7 @@ As before, the line below represents the default setup, and you don't need to ad
   modifierMoveWinMSpace = { 'alt', 'ctrl' }, -- default: { 'alt', 'ctrl' }
 ```
 
-In case you want to disable this feature, change the line above as follows:
+In case you want to disable this hotkey, change the line above as follows:
 ``` lua
   modifierMoveWinMSpace = { '' }, -- default: { 'alt', 'ctrl' }
 ```
@@ -193,7 +191,7 @@ To unlock the full potential of mSpaces, it is helpful to understand the underly
 
 Due to this approach, you can, for instance, have two mSpaces with the same windows in different sizes and positions, or you can have the same Notes, Calendar, Finder or Safari window on two, three, or all your mSpaces.
   
-To create a reference of a window via keyboard shortcut (you've already learnt how to do this via menu), press the `ctrl-shift` modifiers and additionally press the key corresponding to the target mSpace, for instance, `3`. 
+To create a reference of a window via keyboard shortcut (you've already seen how to do this via menu), press the `ctrl-shift` modifiers and additionally press the key corresponding to the target mSpace, for instance, `3`. 
 
 As before, the following line represents the default modifier keys, and you don't need to add it to your `init.lua` unless you want to apply changes:
 
@@ -202,7 +200,7 @@ As before, the following line represents the default modifier keys, and you don'
 ```
 
 
-In case you want to disable this feature, change the line above as follows:
+In case you want to disable this hotkey, change the line above as follows:
 ``` lua
   modifierReference = { '' }, -- default: { 'ctrl', 'shift' }
 ```
@@ -233,7 +231,7 @@ As before, the lines below represent the default setup, and you don't need to ad
 
 For cycling through the windows of your current mSpace in reverse order, additionally press `shift`.
 
-In case you want to disable this feature, change the line above as follows:
+In case you want to disable this hotkey, change the line above as follows:
 ``` lua
   modifierSwitchWin = { '' }, -- default: { 'alt' }
 ```
@@ -504,7 +502,7 @@ Pressing `Ctrl` and `Escape`, your active window swaps places with another windo
   swapKey = 'escape', -- default: 'escape'
 ```
 
-For disabling this feature, add the following line to your `init.lua`:
+For disabling this hotkey, add the following line to your `init.lua`:
 
 ``` lua
   swapModifier = { '' },  -- default: { 'ctrl' }

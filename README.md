@@ -715,14 +715,14 @@ mSpace Control enables you to see a preview of all your mSpaces or, optionally, 
   mSpaceControlKey = 's', -- default: 's'
 ```
 
-By default, all mSpaces are shown in mSpace Control in their original order. In case you'd like to exclude mSpaces from being shown in mSpace Control or change the order, add the following line to your `init.lua` and adjust it to your liking:
+By default, mSpace Control shows all your mSpaces in their original order. In case you'd like to exclude mSpaces from mSpace Control or change their order, add the following line to your `init.lua` and adjust it to your liking:
 
 ``` lua
   mSpaceControlShow = { 'E', '3', 'T', '2' }, -- default: all mSpaces in original order
 ```
 
 
-In case you would like to change the padding, color and/or opacity of mSpace Control, add the following to your `init.lua`, and alter the values according to your liking. Apart from the padding, values between 0 and 1 are possible:
+In case you would like to change the padding, color and/or opacity of mSpace Control, add the following to your `init.lua`, and adjust the values to your liking. Apart from the padding (be aware that due to the aspect ratio of the previews of the mSpaces, the values of the outer and inner padding are relative rather than absolute), values between 0 and 1 are possible:
 
 ``` lua
   mSpaceControlConfig = { 

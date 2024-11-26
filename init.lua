@@ -628,7 +628,6 @@ function panView()
   local p1 = mSpaceControlConfig[1]
   local p2 = mSpaceControlConfig[2]
   if #mSpaceControlShow <= 4 then mSpaceControlX = 2 mSpaceControlY = 2
-  elseif #mSpaceControlShow <= 4 then mSpaceControlX = 2 mSpaceControlY = 2
   elseif #mSpaceControlShow <= 6 then mSpaceControlX = 2 mSpaceControlY = 3
   elseif #mSpaceControlShow <= 9 then mSpaceControlX = 3 mSpaceControlY = 3
   elseif #mSpaceControlShow <= 12 then mSpaceControlX = 3 mSpaceControlY = 4

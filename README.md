@@ -559,11 +559,16 @@ In case you would like to change the gap in between the windows and/or between t
 
 ### Change Size, Color, and Opacity of Grid Indicators
 
-In case you would like to change the size, color and/or opacity of the grid indicators, add the following line to your `init.lua`, and alter the values according to your liking. The values, in the same order, stand for: width, red, green, blue, opacity. Apart from the width, values between 0 and 1 are possible:
+In case you would like to change the size, color and/or opacity of the grid indicators, add the following line to your `init.lua`, and alter the values according to your liking. Apart from the width, values between 0 and 1 are possible:
 
 ``` lua
   -- change grid indicators:
-    gridIndicator = { 20, 1, 0, 0, 0.33 }, -- default: { 20, 1, 0, 0, 0.33 }, 
+    gridIndicator = { 
+      20, -- width; default: 20
+      1, -- red; default: 1
+      0, -- green; default: 0
+      0, -- blue; default: 0
+      0.33 }, -- opacity; default: 0.33 
 ```
 
 ### Popup Menus
@@ -697,8 +702,41 @@ This is the resulting menu:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs2_ger.png' width='360'>
 
-
 ## Experimental Features
+### mSpace Control
+
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/overview.jpg' class="rotate90" width=500 />
+
+
+mSpace Control enables you to get a preview of your mSpaces or, optionally, a selection of your mSpaces. To enable this feature, add the following lines to your `init.lua`:
+
+``` lua
+  -- mSpace Control
+  mSpaceControlModifier = { 'cmd', 'ctrl' }, -- default: { '' }
+  mSpaceControlKey = 's', -- default: 's'
+```
+
+By default, all mSpaces are shown in mSpace Control in their original order. In case you'd like to exclude mSpaces from being shown in mSpace Control or change the order, add the following line to your `init.lua` and adjust it to your liking:
+
+``` lua
+  mSpaceControlShow = { 'E', '3', 'T', '2' }, -- default: all mSpaces in original order
+```
+
+
+In case you would like to change the padding, color and/or opacity of mSpace Control, add the following to your `init.lua`, and alter the values according to your liking. Apart from the padding, values between 0 and 1 are possible:
+
+``` lua
+  mSpaceControlConfig = { 
+    60, -- outer padding; default: 60
+    60, -- inner padding; default: 60
+    0, -- red; default: 0
+    0, -- green; default: 0
+    0, -- blue; default: 0
+    0.9, -- opacity; default: 0.9
+  },
+```
+
+
 ### Applications To Be Left Alone by EnhancedSpaces
 Any operating system has dialogs and windows of a more temporary nature, such as Spotlight or Alfred, that are dealt with differently than standard 'persistent' application windows. Hammerspoon's list of such windows and dialogs by its very nature cannot be comprehensive, as new applications are being developed. 
 

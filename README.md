@@ -401,6 +401,9 @@ Now, by pressing `modifierSnapKey1` and `j`, for example, the active window snap
 
 
 ## Using Mouse/Trackpad
+
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/demo2.gif' />
+
 Similar to many operations, at times it can be simpler and faster if you use both your keyboard and pointing device at the same time. Thus EnhancedSpaces provides an alternative by enabling the use of a pointing device whenever it has the potential of being beneficial. 
 
 ### Move Windows to Adjacent mSpaces

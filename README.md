@@ -725,7 +725,7 @@ This is the resulting menu:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/overview.jpg' class="rotate90" width=500 />
 
-mSpace Control enables you to see a preview of all your mSpaces or, optionally, a selection of your mSpaces. To enable this feature, add the following lines to your `init.lua`:
+mSpace Control enables you to see a preview of all your mSpaces or, optionally, a preview of a selection of your mSpaces. To enable this feature, add the following lines to your `init.lua`:
 
 ``` lua
   -- mSpace Control

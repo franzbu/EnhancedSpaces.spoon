@@ -126,7 +126,14 @@ The lines below represent the default setup, and you don't need to add them to y
 
 ``` lua
   modifierMS = { 'ctrl' }, -- default: { 'ctrl' }
-  modifierMSKeys = { 'a', 's', 'd', 'f', 'q', 'w' }, -- default: { 'a', 's', 'd', 'f', 'q', 'w' }
+  modifierMSKeys = {
+    'a', -- cycle through mSpaces; default; 'a'
+    's', -- cycle through mSpaces (other direction); default; 's'
+    'd', -- send active window to left mSpace; default; 'd'
+    'f', -- send active window to right mSpace; default; 'f'
+    'q', -- send active window to left mSpace and switch there; default; 'q'
+    'w', -- send active window to right mSpace and switch there; default; 'w'
+  },
 ```
 
 When applying changes to the modifiers, always make sure that you substitute them with other modifiers, i.e., { 'cmd' }, { 'alt' }, { 'ctrl' }, { 'shift' } or combinations of modifiers, e.g., { 'alt', 'ctrl' }.
@@ -147,7 +154,14 @@ EnhancedSpaces:new({
   startmSpace = 'E', -- default: 2
 
   modifierMS = { 'ctrl' }, -- default: { 'ctrl' }
-  modifierMSKeys = { 'a', 's', 'd', 'f', 'q', 'w' }, -- default: { 'a', 's', 'd', 'f', 'q', 'w' }
+  modifierMSKeys = {
+    'a', -- cycle through mSpaces; default; 'a'
+    's', -- cycle through mSpaces (other direction); default; 's'
+    'd', -- send active window to left mSpace; default; 'd'
+    'f', -- send active window to right mSpace; default; 'f'
+    'q', -- send active window to left mSpace and switch there; default; 'q'
+    'w', -- send active window to right mSpace and switch there; default; 'w'
+  },
 
 
   --  ______________ modifications to EnhancedSpaces above this line ______________

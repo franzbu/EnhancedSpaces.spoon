@@ -755,7 +755,6 @@ In case you would like to change the padding, color and/or opacity of mSpace Con
 
 You can select an mSpace by selecting it with your pointing device, which automatically closes mSpace Control; mSpace Control can also be dismissed by pressing `Esc` or by clicking any area of mSpace Control besides the mSpaces.
 
-Note: when mSpace Control is initiated, due to the necessity of having to take screenshots of all mSpaces it might take a second or two to get everything ready.  
 
 ### Applications To Be Left Alone by EnhancedSpaces
 Any operating system has dialogs and windows of a more temporary nature, such as Spotlight or Alfred, that are dealt with differently than standard 'persistent' application windows. Hammerspoon's list of such windows and dialogs by its very nature cannot be comprehensive, as new applications are being developed. 

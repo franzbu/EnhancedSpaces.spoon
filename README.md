@@ -571,7 +571,8 @@ In case you would like to change the size, color and/or opacity of the grid indi
       1, -- red; default: 1
       0, -- green; default: 0
       0, -- blue; default: 0
-      0.33 }, -- opacity; default: 0.33 
+      0.33 -- opacity; default: 0.33
+    },  
 ```
 
 ### Popup Menus

@@ -457,7 +457,7 @@ As long as windows are resized - or moved within the borders of the screen -, it
 
 ## Additional Features
 ### Open Windows in Pre-Arranged mSpaces
-If you want EnhancedSpaces to automatically move windows to specific mSpaces when they are opened, add the following to your `init.lua`: 
+If you want EnhancedSpaces to automatically move windows to specific mSpaces, add the following to your `init.lua`: 
 
 ``` lua
   openAppMSpace = {

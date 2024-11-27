@@ -759,6 +759,21 @@ In case you would like to change the padding, color and/or opacity of mSpace Con
 You can select an mSpace by selecting it with your pointing device, which automatically closes mSpace Control; mSpace Control can also be dismissed by pressing `Esc` or by clicking any area of mSpace Control besides the mSpaces.
 
 
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/overview_frame.jpg' width=500 />
+
+You can highlight the currently active mSpace by framing it. To do so, add the following to your `init.lua`. Apart from the frame thickness, values between 0 and 1 are possible:
+
+``` lua
+  mSpaceControlFrame = { 
+    5, -- frame thickness
+    1, -- red
+    0, -- green
+    0, -- blue
+    1, -- opacity
+  }, -- default: { '' }
+```
+
+
 ### Applications To Be Left Alone by EnhancedSpaces
 Any operating system has dialogs and windows of a more temporary nature, such as Spotlight or Alfred, that are dealt with differently than standard 'persistent' application windows. Hammerspoon's list of such windows and dialogs by its very nature cannot be comprehensive, as new applications are being developed. 
 

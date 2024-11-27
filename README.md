@@ -726,7 +726,7 @@ This is the resulting menu:
 ## Experimental Features
 ### mSpace Control
 
-<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/overview.jpg' class="rotate90" width=500 />
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/overview_frame.jpg' width=500 />
 
 mSpace Control enables you to see a preview of all your mSpaces or, optionally, a preview of a selection of your mSpaces. To enable this feature, add the following lines to your `init.lua`:
 
@@ -759,9 +759,9 @@ In case you would like to change the padding, color and/or opacity of mSpace Con
 You can select an mSpace by selecting it with your pointing device, which automatically closes mSpace Control; mSpace Control can also be dismissed by pressing `Esc` or by clicking any area of mSpace Control besides the mSpaces.
 
 
-<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/overview_frame.jpg' width=500 />
 
-You can highlight the currently active mSpace by framing it. To do so, add the following to your `init.lua`. Apart from the frame thickness, values between 0 and 1 are possible:
+
+The currently active mSpace can be highlighted as can be seen in the picture above. To do so, add the following to your `init.lua`. Apart from the frame thickness, values between 0 and 1 are possible:
 
 ``` lua
   mSpaceControlFrame = { 

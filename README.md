@@ -100,7 +100,7 @@ Clicking EnhancedSpaces' icon in the menu bar, a menu like this is shown:
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_swap.png' width='380'>
 
 
-The next entry in the menu shows the currently active window (in case there is no active window, for example, when you're on an empty mSpace, this entry is empty by design); here you can toggle the references of the window (more about this feature in the section [Same Window on More Than One mSpace](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#same-window-on-more-than-one-mspace)).
+The next entry in the menu shows the currently active window (in case there is no active window, for example, when you're on an empty mSpace, this entry is empty by design); here you can toggle the references of the window; more about this feature in the section [Same Window on More Than One mSpace](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#same-window-on-more-than-one-mspace)).
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu3.png' width='200'>
 
@@ -139,12 +139,12 @@ The lines below represent the default setup, and you don't need to add them to y
   },
 ```
 
-When applying changes to the modifiers, always make sure that you substitute them with other modifiers, i.e., { 'cmd' }, { 'alt' }, { 'ctrl' }, { 'shift' } or combinations of modifiers, e.g., { 'alt', 'ctrl' }.
-
 In case you want to disable this hotkey, change the line above as follows:
 ``` lua
   modifierMS = { '' }, -- default: { 'ctrl' }
 ```
+
+When changing modifiers, make sure that you substitute them with other modifiers such as { 'cmd' }, { 'alt' }, { 'ctrl' }, { 'shift' } and combinations of modifiers, e.g., { 'alt', 'ctrl' }.
 
 Just in case it is not entirely clear where to add these lines or future modifications in your file `init.lua`:
 

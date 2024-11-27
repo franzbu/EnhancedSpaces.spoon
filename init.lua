@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.41.2"
+EnhancedSpaces.version = "0.9.41.3"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -677,6 +677,18 @@ function panView()
               },
               trackMouseDown = true,
             }, 1)
+            frameCanvas:mouseCallback(function()
+              goToSpace(panSpace)
+              hs.timer.doAfter(0.0000001, function() -- prevent watchdogs windowFocused and windowMoved from being triggered
+                boolMSpaceControl = false
+              end)
+        
+              for j = 1, #canvasMSpaceControl do
+                canvasMSpaceControl[j]:delete()
+              end
+              baseCanvas:delete()
+              frameCanvas:delete()
+            end)
 
           local cvW = canvasMSpaceControl[k]:frame().w
           local cvH = canvasMSpaceControl[k]:frame().h
@@ -748,7 +760,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.41.2\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.41.3\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),

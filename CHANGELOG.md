@@ -1,5 +1,9 @@
 # v0.9.40
 
+* mSpace Control: currently active mSpace can be [highlighted](https://github.com/franzbu/EnhancedSpaces.spoon#mspace-control).
+
+# v0.9.40
+
 * new feature: [mSpace Control](https://github.com/franzbu/EnhancedSpaces.spoon#mspace-control)
 
 # v0.9.39

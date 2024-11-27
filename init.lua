@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.41.1"
+EnhancedSpaces.version = "0.9.41.2"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -646,6 +646,8 @@ function panView()
     mSpaceControlY = mSpaceControlX
   end
 
+
+
   for i = 1, mSpaceControlX do
     for j = 1, mSpaceControlY do
       if k > #mSpaceControlShow then break end
@@ -693,7 +695,7 @@ function panView()
           print('imgRatioH: ' .. imgRatioH)
           --]]
 
-          if imgRatioH >= imgRatioW then
+          if imgRatioH > imgRatioW then
             local imgHeightNew = imgH * imgRatioW
             local deltaHeight = (cvH - imgHeightNew) / 2
 
@@ -714,15 +716,13 @@ function panView()
               canvasMSpaceControl[k]:frame().h + 2 * ft
             ))
           end
-
-          frameCanvas:show()
-          canvasMSpaceControl[k]:show()
         end
       end
-
       k = k + 1
     end
   end
+  frameCanvas:show() -- show at the end, so frame is painted on top of adjacent mSpaces
+  canvasMSpaceControl[currentMSpace]:show() -- necessary, otherwise frameCanvas would be on top
 end
 
 
@@ -748,7 +748,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.41.1\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.41.2\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),

@@ -764,6 +764,7 @@ You can select an mSpace by selecting it with your pointing device, which automa
 The currently active mSpace can be highlighted as can be seen in the picture above. To do so, add the following to your `init.lua`. Apart from the frame thickness, values between 0 and 1 are possible:
 
 ``` lua
+  -- hightlight currently active mSpace
   mSpaceControlFrame = { 
     5, -- frame thickness
     1, -- red

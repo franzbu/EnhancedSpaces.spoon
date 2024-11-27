@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.41"
+EnhancedSpaces.version = "0.9.41.1"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -250,7 +250,7 @@ function EnhancedSpaces:new(options)
   filter.default:subscribe(filter.windowOnScreen, function(w)
     if not enteredFullscreen then -- 'windowOnScreen' is triggered when leaving fullscreen, which is hereby counteracted
       --print('____________ windowOnScreen ____________')-- .. winMSpaces[getPosWinMSpaces(w)].appName)   
-      if indexOpenAppMSpace(w) ~= nil and not contextMenuTelegram() then 
+      if indexOpenAppMSpace(w) ~= nil and not contextMenuTelegram() then -- with Telegram context menu open, other windows aren't assigned mSpaces when opened
         refreshWinTables()
         moveMiddleAfterMouseMinimized(w)
         assignMS(w, true)
@@ -583,7 +583,7 @@ function panView()
     canvasMSpaceControl[i]:insertElement(
       {
         image = imgMSpaceControl[i],
-        action = 'fill',
+        action = 'strokeAndFill',
         type = 'image',
         trackMouseDown = true,
       },1)
@@ -675,24 +675,50 @@ function panView()
               },
               trackMouseDown = true,
             }, 1)
-            local cvW = canvasMSpaceControl[k]:frame().w
-            local cvH = canvasMSpaceControl[k]:frame().h
-            local imgW = imgMSpaceControl[k]:size().w
-            local imgH = imgMSpaceControl[k]:size().h
-            local imgRatio = cvW / imgW
-            local imgHeightNew = imgH * imgRatio
+
+          local cvW = canvasMSpaceControl[k]:frame().w
+          local cvH = canvasMSpaceControl[k]:frame().h
+          local imgW = imgMSpaceControl[k]:size().w
+          local imgH = imgMSpaceControl[k]:size().h
+
+          local imgRatioW = cvW / imgW
+          local imgRatioH = cvH / imgH
+
+          --[[
+          print('cvW: ' .. cvW)
+          print('cvH: ' .. cvH)
+          print('imgW: ' .. imgW)
+          print('imgH: ' .. imgH)
+          print('imgRatioW: ' .. imgRatioW)
+          print('imgRatioH: ' .. imgRatioH)
+          --]]
+
+          if imgRatioH >= imgRatioW then
+            local imgHeightNew = imgH * imgRatioW
             local deltaHeight = (cvH - imgHeightNew) / 2
-          frameCanvas:frame(hs.geometry.new(
-            canvasMSpaceControl[k]:topLeft().x - ft,
-            canvasMSpaceControl[k]:topLeft().y + deltaHeight - ft,
-            canvasMSpaceControl[k]:frame().w + 2 * ft,
-            imgHeightNew + 2 * ft
-          ))
+
+            frameCanvas:frame(hs.geometry.new(
+              canvasMSpaceControl[k]:topLeft().x - ft,
+              canvasMSpaceControl[k]:topLeft().y + deltaHeight - ft,
+              canvasMSpaceControl[k]:frame().w + 2 * ft,
+              imgHeightNew + 2 * ft
+            ))
+          else
+            local imgWidthNew = imgW * imgRatioH
+            local deltaWidth = (cvW - imgWidthNew) / 2
+
+            frameCanvas:frame(hs.geometry.new(
+              canvasMSpaceControl[k]:topLeft().x + deltaWidth - ft,
+              canvasMSpaceControl[k]:topLeft().y - ft,
+              imgWidthNew + 2 * ft,
+              canvasMSpaceControl[k]:frame().h + 2 * ft
+            ))
+          end
+
           frameCanvas:show()
           canvasMSpaceControl[k]:show()
         end
       end
-
 
       k = k + 1
     end
@@ -722,7 +748,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.41\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.41.1\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),

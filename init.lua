@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.41.3"
+EnhancedSpaces.version = "0.9.41.4"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -565,9 +565,9 @@ end
 -- mSpace Control
 boolMSpaceControl = false
 canvasMSpaceControl = {}
-imgMSpaceControl = {}
 function panView()
   boolMSpaceControl = true
+  local imgMSpaceControl = {}
 
   max = hs.screen.mainScreen():frame()
   maxWithMB = hs.screen.mainScreen():fullFrame()
@@ -576,7 +576,6 @@ function panView()
   local panSpace = currentMSpace
   for i = 1, #mSpaceControlShow do
     goToSpace(indexOf(mspaces, mSpaceControlShow[i]))
-    --img1 = img1:setSize({w = img1:size().w / 3, h = img1:size().h / 3})
     imgMSpaceControl[i] = hs.screen.mainScreen():snapshot(hs.geometry.new(0, heightMB, max.w, max.h)):setSize({w = max.w / 2, h = max.h / 2})
 
     canvasMSpaceControl[i] = hs.canvas:new()
@@ -760,7 +759,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.41.3\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.41.4\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),

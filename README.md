@@ -728,7 +728,7 @@ This is the resulting menu:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/overview_frame.jpg' width=500 />
 
-mSpace Control enables you to see a preview of all your mSpaces or, optionally, a preview of a selection of your mSpaces. To enable this feature, add the following lines to your `init.lua`:
+mSpace Control shows a preview of all your mSpaces or, in case you don't want all your mSpaces in mSpace Control, a preview of a selection of your mSpaces. To enable this feature, add the following lines to your `init.lua`:
 
 ``` lua
   -- mSpace Control
@@ -739,7 +739,7 @@ mSpace Control enables you to see a preview of all your mSpaces or, optionally, 
 By default, mSpace Control shows all your mSpaces in their original order. In case you'd like to exclude mSpaces from mSpace Control or change their order, add the following line to your `init.lua` and adjust it to your liking:
 
 ``` lua
-  mSpaceControlShow = { 'E', '3', 'T', '2' }, -- default: all mSpaces in original order
+  mSpaceControlShow = { 'E', '3', 'T', '2' },
 ```
 
 
@@ -757,9 +757,7 @@ In case you would like to change the padding, color and/or opacity of mSpace Con
   },
 ```
 
-You can select an mSpace by selecting it with your pointing device, which automatically closes mSpace Control; mSpace Control can also be dismissed by pressing `Esc` or by clicking any area of mSpace Control besides the mSpaces.
-
-
+In mSpace Control you can switch to any mSpace by clicking on it with your pointing device, which automatically closes mSpace Control; mSpace Control can also be closed by pressing `Esc` or by clicking on any area of mSpace Control besides the previews of the mSpaces.
 
 
 The currently active mSpace can be highlighted as can be seen in the picture above. To do so, add the following to your `init.lua`. Apart from the frame thickness, values between 0 and 1 are possible:

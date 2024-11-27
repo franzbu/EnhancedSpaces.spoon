@@ -746,6 +746,7 @@ By default, mSpace Control shows all your mSpaces in their original order. In ca
 In case you would like to change the padding, color and/or opacity of mSpace Control, add the following to your `init.lua`, and adjust the values to your liking. Apart from the padding (be aware that due to the aspect ratio of the previews of the mSpaces, the values of the outer and inner padding are relative rather than absolute), values between 0 and 1 are possible:
 
 ``` lua
+  -- configure mSpace Control
   mSpaceControlConfig = { 
     60, -- outer padding; default: 60
     60, -- inner padding; default: 60

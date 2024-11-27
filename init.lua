@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.40"
+EnhancedSpaces.version = "0.9.41"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -114,6 +114,8 @@ function EnhancedSpaces:new(options)
   mSpaceControlKey = options.mSpaceControlKey or 's'
   mSpaceControlShow = options.mSpaceControlShow or mspaces
   mSpaceControlConfig = options.mSpaceControlConfig or { 60, 60, 0, 0, 0, 0.9 }
+
+  mSpaceControlFrame = options.mSpaceControlFrame or  { '' }
   -- pressing 'Esc' closes mSpaceControl
   if mSpaceControlModifier[1] ~= '' then
     keyboardTrackerMSpaceControl = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, function(e)
@@ -123,6 +125,7 @@ function EnhancedSpaces:new(options)
           canvasMSpaceControl[i]:delete()
         end
         baseCanvas:delete()
+        frameCanvas:delete()
       end
     end)
     keyboardTrackerMSpaceControl:start()
@@ -236,7 +239,7 @@ function EnhancedSpaces:new(options)
     -- for avoiding switching of focus after force-closing a window in fullscreen-mode: set 'enteredFullscreen' to false if fullscreen window has been force-closed (then 'fullscreenedWindowID' is not present)
     -- when force-closing window, 'enteredFullscreen' needs to be set to 'false'
     if w:id() == fullscreenedWindowID then
-      hs.timer.doAfter(3, function() 
+      hs.timer.doAfter(3, function()
         enteredFullscreen = false
         --goToSpace(currentMSpace)
         refreshWinTables()
@@ -496,6 +499,7 @@ function EnhancedSpaces:new(options)
         canvasMSpaceControl[i]:delete()
       end
       baseCanvas:delete()
+      frameCanvas:delete()
     end
   end)
 
@@ -558,12 +562,12 @@ function EnhancedSpaces:new(options)
 end
 
 
--- mSpaceControl
+-- mSpace Control
 boolMSpaceControl = false
+canvasMSpaceControl = {}
+imgMSpaceControl = {}
 function panView()
   boolMSpaceControl = true
-  canvasMSpaceControl = {}
-  imgMSpaceControl = {}
 
   max = hs.screen.mainScreen():frame()
   maxWithMB = hs.screen.mainScreen():fullFrame()
@@ -572,7 +576,8 @@ function panView()
   local panSpace = currentMSpace
   for i = 1, #mSpaceControlShow do
     goToSpace(indexOf(mspaces, mSpaceControlShow[i]))
-    imgMSpaceControl[i] = hs.screen.mainScreen():snapshot(hs.geometry.new(0, heightMB, max.w, max.h))
+    --img1 = img1:setSize({w = img1:size().w / 3, h = img1:size().h / 3})
+    imgMSpaceControl[i] = hs.screen.mainScreen():snapshot(hs.geometry.new(0, heightMB, max.w, max.h)):setSize({w = max.w / 2, h = max.h / 2})
 
     canvasMSpaceControl[i] = hs.canvas:new()
     canvasMSpaceControl[i]:insertElement(
@@ -580,7 +585,6 @@ function panView()
         image = imgMSpaceControl[i],
         action = 'fill',
         type = 'image',
-        --roundedRectRadii = { xRadius = 5.0, yRadius = 5.0 },
         trackMouseDown = true,
       },1)
     canvasMSpaceControl[i]:mouseCallback(function()
@@ -593,6 +597,7 @@ function panView()
         canvasMSpaceControl[j]:delete()
       end
       baseCanvas:delete()
+      frameCanvas:delete()
     end)
   end
   goToSpace(panSpace)
@@ -602,7 +607,7 @@ function panView()
     {
       action = 'fill',
       type = 'rectangle',
-      fillColor = { 
+      fillColor = {
         red = mSpaceControlConfig[3],
         green = mSpaceControlConfig[4],
         blue = mSpaceControlConfig[5],
@@ -619,6 +624,7 @@ function panView()
       canvasMSpaceControl[i]:delete()
     end
     baseCanvas:delete()
+    frameCanvas:delete()
   end)
 
   baseCanvas:frame(hs.geometry.new(0, 0, maxWithMB.w, maxWithMB.h))
@@ -650,6 +656,44 @@ function panView()
         (maxWithMB.h - 2 * p1 - 2 * p2) / mSpaceControlX -- h
       ))
       canvasMSpaceControl[k]:show()
+
+
+      -- frame around current mSpace
+      if mSpaceControlFrame[1] ~= '' then
+        local ft = mSpaceControlFrame[1] -- frame thickness
+        if k == currentMSpace then
+          frameCanvas = hs.canvas:new()
+          frameCanvas:insertElement(
+            {
+              action = 'fill',
+              type = 'rectangle',
+              fillColor = {
+                red = mSpaceControlFrame[2],
+                green = mSpaceControlFrame[3],
+                blue = mSpaceControlFrame[4],
+                alpha = mSpaceControlFrame[5],
+              },
+              trackMouseDown = true,
+            }, 1)
+            local cvW = canvasMSpaceControl[k]:frame().w
+            local cvH = canvasMSpaceControl[k]:frame().h
+            local imgW = imgMSpaceControl[k]:size().w
+            local imgH = imgMSpaceControl[k]:size().h
+            local imgRatio = cvW / imgW
+            local imgHeightNew = imgH * imgRatio
+            local deltaHeight = (cvH - imgHeightNew) / 2
+          frameCanvas:frame(hs.geometry.new(
+            canvasMSpaceControl[k]:topLeft().x - ft,
+            canvasMSpaceControl[k]:topLeft().y + deltaHeight - ft,
+            canvasMSpaceControl[k]:frame().w + 2 * ft,
+            imgHeightNew + 2 * ft
+          ))
+          frameCanvas:show()
+          canvasMSpaceControl[k]:show()
+        end
+      end
+
+
       k = k + 1
     end
   end
@@ -678,7 +722,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.40\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.41\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),
@@ -893,7 +937,7 @@ function createToggleRefMenu()
           winMSpaces[posWin].mspace[i] = not winMSpaces[posWin].mspace[i]
         end
         --goToSpace(currentMSpace) -- refresh screen
-        refreshWinTables() 
+        refreshWinTables()
       end,
     })
   end
@@ -924,7 +968,7 @@ function createSendWindowMenuItems(w)
         checked = true, 
         disabled = true,
       })
-    else 
+    else
       table.insert(moveWindowMenuItems, { 
         title = mspaces[i],
         checked = winMSpaces[getPosWinMSpaces(w)].mspace[i],

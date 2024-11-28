@@ -760,7 +760,7 @@ In case you'd like to change the padding, color and/or opacity of mSpace Control
 
 As has been mentioned, mSpace Control enables you to switch to any mSpace by clicking on its preview window. You can close mSpace Control by pressing mSpace Control's keyboard shortcut again, by pressing `Esc`, or by clicking in the background.
 
-To cycle through your mSpaces, keep `mSpaceControlModifier` pressed - or press it again while mSpace Control is open - and repeat pressing and releasing `mSpaceControlKey`.
+To cycle through your mSpaces, keep `mSpaceControlModifier` pressed - or press it again while mSpace Control is open - and repeat pressing and releasing `mSpaceControlKey`. To cycle through your mSpaces in reverse order, additionally press `shift`.
 
 To change thickness, color and/or opacity of the frame that highlights the current mSpace, add the following to your `init.lua`; apart from the frame thickness, values between 0 and 1 are possible:
 

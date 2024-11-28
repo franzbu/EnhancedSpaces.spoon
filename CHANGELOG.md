@@ -1,3 +1,7 @@
+# v0.9.43
+
+* mSpace Control: you can cycle through mSpaces both directions by pressing additionally `shift`
+
 # v0.9.42
 
 * mSpace Control : new feature - cycle through mSpaces

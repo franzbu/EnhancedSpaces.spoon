@@ -732,7 +732,7 @@ Furthermore, as these features aren't final yet, there might still be changes to
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/overview_frame.jpg' width=700 />
 
-mSpace Control shows a preview of all or - if you choose so - a selection of your mSpaces and enables you to switch between them by cycling through them via keyboard shortcut or by clicking on them. To enable mSpace Control, add the following lines to your `init.lua`:
+mSpace Control shows a preview of all or - if you so choose - a selection of your mSpaces and enables you to switch between them by cycling through them via keyboard shortcut or by clicking on them. To enable mSpace Control, add the following lines to your `init.lua`:
 
 ``` lua
   -- mSpace Control

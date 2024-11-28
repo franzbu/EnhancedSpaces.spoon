@@ -743,7 +743,7 @@ By default, mSpace Control shows all your mSpaces in their original order. In ca
 ```
 
 
-In case you would like to change the padding, color and/or opacity of mSpace Control, add the following to your `init.lua`, and adjust the values to your liking. Apart from the padding (be aware that due to the aspect ratio of the previews of the mSpaces, the values of the outer and inner padding are relative rather than absolute), values between 0 and 1 are possible:
+In case you'd like to change the padding, color and/or opacity of mSpace Control, add the following to your `init.lua`, and adjust the values to your liking. Apart from the padding (be aware that due to the aspect ratio of the previews of the mSpaces, the values of the outer and inner padding are relative rather than absolute), values between 0 and 1 are possible:
 
 ``` lua
   -- configure mSpace Control
@@ -757,8 +757,7 @@ In case you would like to change the padding, color and/or opacity of mSpace Con
   },
 ```
 
-In mSpace Control you can switch to any mSpace by clicking on it with your pointing device, which automatically closes mSpace Control; mSpace Control can also be closed by pressing `Esc` or by clicking on any area of mSpace Control besides the previews of the mSpaces.
-
+In mSpace Control you can switch to any mSpace by clicking on it. You can close mSpace Control by pressing mSpace Control's keyboard shortcut again or by pressing `Esc`.
 
 The currently active mSpace can be highlighted as can be seen in the picture above. To do so, add the following to your `init.lua`. Apart from the frame thickness, values between 0 and 1 are possible:
 

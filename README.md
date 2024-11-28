@@ -146,7 +146,7 @@ In case you want to disable this hotkey, change the line above as follows:
 
 When changing modifiers, make sure that you substitute them with other modifiers such as { 'cmd' }, { 'alt' }, { 'ctrl' }, { 'shift' } and combinations of modifiers, e.g., { 'alt', 'ctrl' }.
 
-Just in case it is not entirely clear where to add these lines or future modifications in your file `init.lua`:
+Just in case it is not entirely clear where to add these lines or future modifications to your file `init.lua`:
 
 ``` lua
 local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')

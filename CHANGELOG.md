@@ -1,4 +1,8 @@
-# v0.9.40
+# v0.9.42
+
+* mSpace Control : new feature - cycle through mSpaces
+
+# v0.9.41
 
 * mSpace Control: currently active mSpace can be [highlighted](https://github.com/franzbu/EnhancedSpaces.spoon#mspace-control).
 

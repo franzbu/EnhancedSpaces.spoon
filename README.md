@@ -732,8 +732,8 @@ mSpace Control shows a preview of all or a selection of your mSpaces. To enable 
 
 ``` lua
   -- mSpace Control
-  mSpaceControlModifier = { 'cmd', 'ctrl' }, -- default: { '' }
-  mSpaceControlKey = 's', -- default: 's'
+  mSpaceControlModifier = { 'alt' }, -- default: { '' }
+  mSpaceControlKey = 'a', -- default: 'a'
 ```
 
 By default, mSpace Control shows all your mSpaces in their original order. In case you'd like to exclude mSpaces from mSpace Control or change their order, add the following line to your `init.lua` and adjust it to your liking:
@@ -759,17 +759,19 @@ In case you'd like to change the padding, color and/or opacity of mSpace Control
 
 In mSpace Control you can switch to any mSpace by clicking on it. You can close mSpace Control by pressing mSpace Control's keyboard shortcut again, by pressing `Esc`, or by clicking in the background.
 
-As an additional feature, the currently active mSpace can be highlighted; you can see this in the picture above. To do so, add the following to your `init.lua`. You can adjust the frame to your liking; apart from the frame thickness, values between 0 and 1 are possible:
+mSpace Control provides another way to switch to another mSpace; if you keep `mSpaceControlModifier` pressed - or press it again while mSpace Control is still open - and press `mSpaceControlKey` repeatedly, you cycle through all mSpaces.
+
+To change thickness, color and/or opacity of the frame, add the following to your `init.lua`; apart from the frame thickness, values between 0 and 1 are possible:
 
 ``` lua
   -- hightlight currently active mSpace
   mSpaceControlFrame = { 
-    3, -- frame thickness
-    1, -- red
-    0, -- green
-    0, -- blue
-    1, -- opacity
-  }, -- default: { '' }
+    3, -- frame thickness; default: 3
+    1, -- red; default: 1
+    0, -- green; default: 0
+    0, -- blue; default: 0
+    1, -- opacity; default: 1
+  },
 ```
 
 

@@ -779,7 +779,7 @@ In case you'd like to change the padding, color and/or opacity of mSpace Control
 
 
 ### Applications To Be Left Alone by EnhancedSpaces
-Any operating system has dialogs and windows of a more temporary nature, such as Spotlight or Alfred, that are dealt with differently than standard 'persistent' application windows. Hammerspoon's list of such windows and dialogs by its very nature cannot be comprehensive, as new applications are being developed. 
+Any operating system has dialogs and windows of a temporary nature, such as Spotlight or Alfred, that are dealt with differently than standard 'persistent' application windows. Hammerspoon's list of such applications by its very nature cannot be comprehensive, which is why you can extend it. Feedback of successfully applied additions is welcome, so they can be added to save other users time. 
 
 Should you encounter windows that behave erratically such as claiming focus when they shouldn't, you can add these applications to the list of windows to be left alone by adding the following lines to the configuration of EnhancedSpaces in your `init.lua`:
 
@@ -793,14 +793,14 @@ Should you encounter windows that behave erratically such as claiming focus when
     'MenuMetersApp', 'DemoPro', 'DockHelper', 'Maccy', 'Albert', 'Alfred',
   },
 ```
-As has been hinted at, the above list is Hammerspoon's, extended with a few others; they are 'DockHelper', 'Maccy', 'Albert', and 'Alfred'.
+As has been hinted at, the above list is Hammerspoon's, extended by 'DockHelper', 'Maccy', 'Albert', and 'Alfred'.
 
-Adding your own applications is as easy as adding their names to the list ('application name' followed by a comma). You are advised to keep the default entries.
+Adding your own applications is as easy as adding their names ('application name' followed by a comma). You are advised not to change the listed entries unless you know what you're doing.
 
-To get the names of open applications, you can use the method referred to in [Additional Features -
+To get the names of open applications for adding them to this list, you can use the method referred to in [Additional Features -
 Open Windows in Pre-Arranged mSpaces](https://github.com/franzbu/EnhancedSpaces.spoon#open-windows-in-pre-arranged-mspaces)
 
-The list above represents the default setup, and you only need to add it to your `init.lua` on case you want to extend it. 
+The list above represents the default setup, and you don't need to add it to your `init.lua` unless you want to extend it. 
 
 ### Startup Commands
 In case you would like EnhancedSpaces to execute commands at startup, you can add those commands do your `init.lua`:
@@ -810,6 +810,7 @@ In case you would like EnhancedSpaces to execute commands at startup, you can ad
     'command 1',
     'command 2',
     'command 3',
+    ...
   },
 ```
 Below is an example for starting [JankyBorders](https://github.com/FelixKratz/JankyBorders):

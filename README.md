@@ -728,7 +728,7 @@ This is the resulting menu:
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/overview_frame.jpg' width=500 />
 
-mSpace Control shows a preview of all your mSpaces or a preview of a selection of your mSpaces. To enable this feature, add the following lines to your `init.lua`:
+mSpace Control shows a preview of all or a selection of your mSpaces. To enable mSpace Control, add the following lines to your `init.lua`:
 
 ``` lua
   -- mSpace Control
@@ -757,14 +757,14 @@ In case you'd like to change the padding, color and/or opacity of mSpace Control
   },
 ```
 
-In mSpace Control you can switch to any mSpace by clicking on it. You can close mSpace Control by pressing mSpace Control's keyboard shortcut again or by pressing `Esc`.
+In mSpace Control you can switch to any mSpace by clicking on it. You can close mSpace Control by pressing mSpace Control's keyboard shortcut again, by pressing `Esc`, or by clicking in the background.
 
-The currently active mSpace can be highlighted as can be seen in the picture above. To do so, add the following to your `init.lua`. Apart from the frame thickness, values between 0 and 1 are possible:
+As an additional feature, the currently active mSpace can be highlighted; you can see this in the picture above. To do so, add the following to your `init.lua`. You can adjust the frame to your liking; apart from the frame thickness, values between 0 and 1 are possible:
 
 ``` lua
   -- hightlight currently active mSpace
   mSpaceControlFrame = { 
-    5, -- frame thickness
+    3, -- frame thickness
     1, -- red
     0, -- green
     0, -- blue

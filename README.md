@@ -117,7 +117,7 @@ Selecting `Get Windows` you see a list of all open windows that are not on your 
 
 It is also possible to use popup menus; more about that feature in the section [Additional Features - Popup Menus](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#popup-menus)
 
-For additional functionality there is the possibility of using modifier keys with your menus, for example, for creating references of a window on all mSpaces at once, or for tagging along with a window when sending it to another mSpace; more about that feature in section [Advanced Menu Features](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#advanced-menu-features).
+For additional functionality there is the possibility for using modifier keys with your menus, for example, for creating references of a window on all mSpaces at once, or for tagging along with a window when sending it to another mSpace; more about that feature in section [Advanced Menu Features](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#advanced-menu-features).
 
 There you can also see how to change the menu entries, for example, to your preferred language. Additionally, you can see how to include Hammerspoon's menu into EnhancedSpaces', which has the additional benefit of making Hammerspoon's menu redundant, i.e., you can then remove it from your menu bar.
 

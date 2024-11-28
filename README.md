@@ -739,6 +739,7 @@ mSpace Control shows a preview of all or a selection of your mSpaces. To enable 
 By default, mSpace Control shows all your mSpaces in their original order. In case you'd like to exclude mSpaces from mSpace Control or change their order, add the following line to your `init.lua` and adjust it to your liking:
 
 ``` lua
+  -- exclude mSpaces and/or change their order of appearance
   mSpaceControlShow = { 'E', '3', 'T', '2' },
 ```
 

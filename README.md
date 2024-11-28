@@ -25,7 +25,7 @@ EnhancedSpaces has increased my productivity with macOS. May it do the same for 
 ## Introduction
 EnhancedSpaces requires [Hammerspoon](https://www.hammerspoon.org/), so in case you haven't used the latter yet, go ahead with its installation.
 
-You can simply regard Hammerspoon as a requirement for EnhancedSpaces; you install it alongside EnhancedSpaces and then forget about it. Which is perfectly fine.
+You can simply regard Hammerspoon as a requirement for EnhancedSpaces; you install it alongside EnhancedSpaces and then forget about it.
 
 However, Hammerspoon might be worthy of a second look in case you're interested in improving workflows on your Mac. Let me demonstrate that with an example:
 

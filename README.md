@@ -726,7 +726,7 @@ This is the resulting menu:
 ## Experimental Features
 Features listed here have undergone some testing and are supposed to work as expected; however, as they have yet to be thoroughly tested, the occational hiccup should not be entirely unexpected. 
 
-Furthermore, as these features aren't final yet, there might still be changes to its implementation, so if one of these features stops working after an update, please have a look at the documentation below to make the necessary adjustments to your `init.lua`.
+Furthermore, as these features aren't final yet, there might still be changes to its implementation, so if one of these features stops working after an update, please return to this documentation in order to implement the necessary adjustments to your `init.lua`.
 
 ### mSpace Control
 

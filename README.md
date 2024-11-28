@@ -740,7 +740,7 @@ mSpace Control shows a preview of all or - if you choose so - a selection of you
   mSpaceControlKey = 'a', -- default: 'a'
 ```
 
-To cycle through your mSpaces, keep `mSpaceControlModifier` pressed - or press it again while mSpace Control is open - and repeat pressing and releasing `mSpaceControlKey`. To cycle through your mSpaces in reverse order, additionally press `shift`.
+To cycle through your mSpaces, keep `mSpaceControlModifier` pressed - or press it again while mSpace Control is open - and use `mSpaceControlKey` for cycling. To cycle through your mSpaces in reverse order, additionally press `shift`.
 
 To change thickness, color and/or opacity of the frame that highlights the current mSpace, add the following to your `init.lua`; apart from the frame thickness, values between 0 and 1 are possible:
 

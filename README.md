@@ -81,7 +81,7 @@ echo -e "local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')\nEnhancedSpaces:n
 Reload Hammerspoon's configuration (menu bar icon - 'Reload Config') and you're ready to go. All you see for now is a new icon in your menu bar indicating your current mSpace, so let's find out how you can interact with your new mSpaces.
 
 ## Menu
-You can use keyboard shortcuts for handling windows and mSpaces; however, sometimes it is convenient to get things done via menu - even more so at the beginning, when the muscle memory regarding the new hotkeys might not yet be at full steam.
+You can use keyboard shortcuts for handling windows and mSpaces; however, sometimes it can be convenient to get things done via menu - even more so at the beginning, when the muscle memory regarding the new hotkeys might not yet be at full steam.
 
 EnhancedSpaces' menu can be used to switch to another mSpace with or without moving a window along, to swap windows, to get a window from another mSpace, and to create references of windows, i.e., the already mentioned 'sticky windows', which means that the same window can be shown on more than one mSpace - more about references of windows in the section [Same Window on More Than One mSpace](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#same-window-on-more-than-one-mspace).
 

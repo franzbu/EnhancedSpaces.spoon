@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.42"
+EnhancedSpaces.version = "0.9.42.1"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -115,7 +115,7 @@ function EnhancedSpaces:new(options)
   mSpaceControlShow = options.mSpaceControlShow or mspaces  
   mSpaceControlConfig = options.mSpaceControlConfig or { 60, 60, 0, 0, 0, 0.9 }
 
-  mSpaceControlFrame = options.mSpaceControlFrame or  { '' }
+  mSpaceControlFrame = options.mSpaceControlFrame or  { 3, 1, 0, 0, 1, }
 
   -- cycle throuth mSpaces
   mSpaceCyclePos = currentMSpace
@@ -791,7 +791,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.42\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.42.1\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),

@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.42.1"
+EnhancedSpaces.version = "0.9.43"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -117,29 +117,39 @@ function EnhancedSpaces:new(options)
 
   mSpaceControlFrame = options.mSpaceControlFrame or  { 3, 1, 0, 0, 1, }
 
-  -- cycle throuth mSpaces
+  -- cycle through mSpaces
   mSpaceCyclePos = currentMSpace
-  --mSpaceControlModifier = { 'ctrl' }
-  --mSpaceControlKey = 'tab'
   mSpaceCycleCount = 0
   hs.hotkey.bind(mSpaceControlModifier, mSpaceControlKey, function()
     if not boolMSpaceControl then
       mSpaceControl()
-    else -- if mSpaceControlModifier[1] ~= '' and boolMSpaceControl then
+    else
       frameCanvas[mSpaceCyclePos]:delete()
-
       mSpaceCyclePos = getnextMSpaceNumber(mSpaceCyclePos)
       frameCanvas[mSpaceCyclePos]:show()
       canvasMSpaceControl[mSpaceCyclePos]:show()
     end
     mSpaceCycleCount = mSpaceCycleCount + 1
   end)
+  -- reverse order by pressing additionally 'shift'
+  hs.hotkey.bind(mergeModifiers(mSpaceControlModifier, { 'shift' }), mSpaceControlKey, function()
+    if not boolMSpaceControl then
+      mSpaceControl()
+    else
+      frameCanvas[mSpaceCyclePos]:delete()
+      mSpaceCyclePos = getprevMSpaceNumber(mSpaceCyclePos)
+      frameCanvas[mSpaceCyclePos]:show()
+      canvasMSpaceControl[mSpaceCyclePos]:show()
+    end
+    mSpaceCycleCount = mSpaceCycleCount + 1
+  end)
+
   prevmSpaceControlModifier = nil
   keyboardTrackerMSpaceControl = hs.eventtap.new({ hs.eventtap.event.types.flagsChanged }, function(e)
     local flags = eventToArray(e:getFlags())
     -- since on mSpaceControlModifier release the flag is 'nil', var 'prevmSpaceControlModifier' is used
-    if modifiersEqual(prevmSpaceControlModifier, mSpaceControlModifier) and boolMSpaceControl and mSpaceCycleCount > 1 then
-      goToSpace( mSpaceCyclePos)
+    if modifiersEqual(prevmSpaceControlModifier, mSpaceControlModifier) and flags[1] == nil and boolMSpaceControl and mSpaceCycleCount > 1 then
+      goToSpace(mSpaceCyclePos)
       hs.timer.doAfter(0.0000001, function()
         boolMSpaceControl = false
         mSpaceCycleCount = 0
@@ -155,7 +165,7 @@ function EnhancedSpaces:new(options)
     prevmSpaceControlModifier = flags
   end)
   keyboardTrackerMSpaceControl:start()
-  -- pressing 'Esc' closes mSpaceControl
+  -- pressing 'Esc' closes mSpace Control
   if mSpaceControlModifier[1] ~= '' then
     keyboardTrackerMSpaceControlEsc = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, function(e)
       if e:getKeyCode() == 53 and boolMSpaceControl then
@@ -698,73 +708,71 @@ function mSpaceControl()
         canvasMSpaceControl[k]:show()
 
         -- frame around current mSpace
-        if mSpaceControlFrame[1] ~= '' then
-          local ft = mSpaceControlFrame[1] -- frame thickness
-          --if k == currentMSpace then
-            frameCanvas[k] = hs.canvas:new()
-            frameCanvas[k]:insertElement(
-              {
-                action = 'fill',
-                type = 'rectangle',
-                fillColor = {
-                  red = mSpaceControlFrame[2],
-                  green = mSpaceControlFrame[3],
-                  blue = mSpaceControlFrame[4],
-                  alpha = mSpaceControlFrame[5],
-                },
-                trackMouseDown = true,
-              }, 1)
-              frameCanvas[k]:mouseCallback(function()
-                goToSpace(currentMSpace)
-                hs.timer.doAfter(0.0000001, function() -- prevent watchdogs windowFocused and windowMoved from being triggered
-                  boolMSpaceControl = false
-                  mSpaceCycleCount = 0
-                end)
-          
-                for j = 1, #canvasMSpaceControl do
-                  canvasMSpaceControl[j]:delete()
-                  frameCanvas[j]:delete()
-                end
-                baseCanvas:delete()
-              end)
+      if mSpaceControlFrame[1] ~= '' then
+        local ft = mSpaceControlFrame[1] -- frame thickness
 
-            local cvW = canvasMSpaceControl[k]:frame().w
-            local cvH = canvasMSpaceControl[k]:frame().h
-            local imgW = imgMSpaceControl[k]:size().w
-            local imgH = imgMSpaceControl[k]:size().h
+        frameCanvas[k] = hs.canvas:new()
+        frameCanvas[k]:insertElement(
+          {
+            action = 'fill',
+            type = 'rectangle',
+            fillColor = {
+              red = mSpaceControlFrame[2],
+              green = mSpaceControlFrame[3],
+              blue = mSpaceControlFrame[4],
+              alpha = mSpaceControlFrame[5],
+            },
+            trackMouseDown = true,
+          }, 1)
+        frameCanvas[k]:mouseCallback(function()
+          goToSpace(currentMSpace)
+          hs.timer.doAfter(0.0000001, function() -- prevent watchdogs windowFocused and windowMoved from being triggered
+            boolMSpaceControl = false
+            mSpaceCycleCount = 0
+          end)
 
-            local imgRatioW = cvW / imgW
-            local imgRatioH = cvH / imgH
-            
-            if imgRatioH > imgRatioW then
-              local imgHeightNew = imgH * imgRatioW
-              local deltaHeight = (cvH - imgHeightNew) / 2
+          for j = 1, #canvasMSpaceControl do
+            canvasMSpaceControl[j]:delete()
+            frameCanvas[j]:delete()
+          end
+          baseCanvas:delete()
+        end)
 
-              frameCanvas[k]:frame(hs.geometry.new(
-                canvasMSpaceControl[k]:topLeft().x - ft,
-                canvasMSpaceControl[k]:topLeft().y + deltaHeight - ft,
-                canvasMSpaceControl[k]:frame().w + 2 * ft,
-                imgHeightNew + 2 * ft
-              ))
-            else
-              local imgWidthNew = imgW * imgRatioH
-              local deltaWidth = (cvW - imgWidthNew) / 2
+        local cvW = canvasMSpaceControl[k]:frame().w
+        local cvH = canvasMSpaceControl[k]:frame().h
+        local imgW = imgMSpaceControl[k]:size().w
+        local imgH = imgMSpaceControl[k]:size().h
 
-              frameCanvas[k]:frame(hs.geometry.new(
-                canvasMSpaceControl[k]:topLeft().x + deltaWidth - ft,
-                canvasMSpaceControl[k]:topLeft().y - ft,
-                imgWidthNew + 2 * ft,
-                canvasMSpaceControl[k]:frame().h + 2 * ft
-              ))
-            end
-          --end
+        local imgRatioW = cvW / imgW
+        local imgRatioH = cvH / imgH
 
+        if imgRatioH > imgRatioW then
+          local imgHeightNew = imgH * imgRatioW
+          local deltaHeight = (cvH - imgHeightNew) / 2
+
+          frameCanvas[k]:frame(hs.geometry.new(
+            canvasMSpaceControl[k]:topLeft().x - ft,
+            canvasMSpaceControl[k]:topLeft().y + deltaHeight - ft,
+            canvasMSpaceControl[k]:frame().w + 2 * ft,
+            imgHeightNew + 2 * ft
+          ))
+        else
+          local imgWidthNew = imgW * imgRatioH
+          local deltaWidth = (cvW - imgWidthNew) / 2
+
+          frameCanvas[k]:frame(hs.geometry.new(
+            canvasMSpaceControl[k]:topLeft().x + deltaWidth - ft,
+            canvasMSpaceControl[k]:topLeft().y - ft,
+            imgWidthNew + 2 * ft,
+            canvasMSpaceControl[k]:frame().h + 2 * ft
+          ))
         end
-        k = k + 1
       end
+      k = k + 1
     end
-    frameCanvas[currentMSpace]:show() -- show at the end, so frame is on top of adjacent mSpaces
-    canvasMSpaceControl[currentMSpace]:show() -- necessary, otherwise frameCanvas would be on top
+  end
+  frameCanvas[currentMSpace]:show() -- show at the end, so frame is on top of adjacent mSpaces
+  canvasMSpaceControl[currentMSpace]:show() -- necessary, otherwise frameCanvas would be on top
   --end)
 end
 
@@ -791,7 +799,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.42.1\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.43\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),
@@ -1688,7 +1696,7 @@ end
 
 function modifiersEqual(a, b)
   if a == nil or b == nil then return false end
-  if #a ~= #b then return false end 
+  if #a ~= #b then return false end
   table.sort(a)
   table.sort(b)
   for i = 1, #a do

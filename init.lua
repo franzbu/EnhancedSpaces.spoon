@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.41.6"
+EnhancedSpaces.version = "0.9.42"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -109,26 +109,66 @@ function EnhancedSpaces:new(options)
   swapKey = options.swapKey or 'escape'
   swapSwitchFocus = options.swapSwitchFocus or false
 
-  -- mSpaceControl
+  -- mSpace Control
   mSpaceControlModifier = options.mSpaceControlModifier or { '' }
-  mSpaceControlKey = options.mSpaceControlKey or 's'
-  mSpaceControlShow = options.mSpaceControlShow or mspaces
+  mSpaceControlKey = options.mSpaceControlKey or 'a'
+  mSpaceControlShow = options.mSpaceControlShow or mspaces  
   mSpaceControlConfig = options.mSpaceControlConfig or { 60, 60, 0, 0, 0, 0.9 }
 
   mSpaceControlFrame = options.mSpaceControlFrame or  { '' }
+
+  -- cycle throuth mSpaces
+  mSpaceCyclePos = currentMSpace
+  --mSpaceControlModifier = { 'ctrl' }
+  --mSpaceControlKey = 'tab'
+  mSpaceCycleCount = 0
+  hs.hotkey.bind(mSpaceControlModifier, mSpaceControlKey, function()
+    if not boolMSpaceControl then
+      mSpaceControl()
+    else -- if mSpaceControlModifier[1] ~= '' and boolMSpaceControl then
+      frameCanvas[mSpaceCyclePos]:delete()
+
+      mSpaceCyclePos = getnextMSpaceNumber(mSpaceCyclePos)
+      frameCanvas[mSpaceCyclePos]:show()
+      canvasMSpaceControl[mSpaceCyclePos]:show()
+    end
+    mSpaceCycleCount = mSpaceCycleCount + 1
+  end)
+  prevmSpaceControlModifier = nil
+  keyboardTrackerMSpaceControl = hs.eventtap.new({ hs.eventtap.event.types.flagsChanged }, function(e)
+    local flags = eventToArray(e:getFlags())
+    -- since on mSpaceControlModifier release the flag is 'nil', var 'prevmSpaceControlModifier' is used
+    if modifiersEqual(prevmSpaceControlModifier, mSpaceControlModifier) and boolMSpaceControl and mSpaceCycleCount > 1 then
+      goToSpace( mSpaceCyclePos)
+      hs.timer.doAfter(0.0000001, function()
+        boolMSpaceControl = false
+        mSpaceCycleCount = 0
+      end)
+
+      for i = 1, #canvasMSpaceControl do
+        canvasMSpaceControl[i]:delete()
+        frameCanvas[i]:delete()
+      end
+      baseCanvas:delete()
+
+    end
+    prevmSpaceControlModifier = flags
+  end)
+  keyboardTrackerMSpaceControl:start()
   -- pressing 'Esc' closes mSpaceControl
   if mSpaceControlModifier[1] ~= '' then
-    keyboardTrackerMSpaceControl = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, function(e)
+    keyboardTrackerMSpaceControlEsc = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, function(e)
       if e:getKeyCode() == 53 and boolMSpaceControl then
         boolMSpaceControl = false
+        mSpaceCycleCount = 0
         for i = 1, #canvasMSpaceControl do
           canvasMSpaceControl[i]:delete()
+          frameCanvas[i]:delete()
         end
         baseCanvas:delete()
-        frameCanvas:delete()
       end
     end)
-    keyboardTrackerMSpaceControl:start()
+    keyboardTrackerMSpaceControlEsc:start()
   end
 
   --window_filter.lua: windows to disregard
@@ -263,6 +303,7 @@ function EnhancedSpaces:new(options)
   end)
 
   filter.default:subscribe(filter.windowFocused, function(w)
+    if boolMC then return end
     --print('____________ windowFocused ____________ ' .. winMSpaces[getPosWinMSpaces(w)].appName)
     if w:frame().h == maxWithMB.h then
       enteredFullscreen = true
@@ -273,10 +314,12 @@ function EnhancedSpaces:new(options)
       refreshWinTables()
       cmdTabFocus()
     end
+    --end)
   end)
 
   -- 'window_filter.lua' has been adjusted: 'local WINDOWMOVED_DELAY=0.01' instead of '0.5' to get rid of delay
   filter.default:subscribe(filter.windowMoved, function(w)
+    if boolMC then return end
     --print('____________ windowMoved ____________' .. winMSpaces[getPosWinMSpaces(w)].appName .. ', ' .. w:frame().h)
     if w:frame().h == maxWithMB.h then
       enteredFullscreen = true
@@ -489,20 +532,6 @@ function EnhancedSpaces:new(options)
     end
   end
 
-  -- mSpaceControl
-  hs.hotkey.bind(mSpaceControlModifier, mSpaceControlKey, function()
-    if not boolMSpaceControl then
-      mSpaceControl()
-    else
-      boolMSpaceControl = false
-      for i = 1, #canvasMSpaceControl do
-        canvasMSpaceControl[i]:delete()
-      end
-      baseCanvas:delete()
-      frameCanvas:delete()
-    end
-  end)
-
   -- keyboard shortcuts - snapping windows into grid postions
   if modifierSnap1[1] ~= '' then
     for i = 1, #modifierSnapKeys[1] do
@@ -565,6 +594,8 @@ end
 -- mSpace Control
 boolMSpaceControl = false
 canvasMSpaceControl = {}
+frameCanvas = {}
+boolMC = false
 function mSpaceControl()
   boolMSpaceControl = true
   local imgMSpaceControl = {}
@@ -574,6 +605,7 @@ function mSpaceControl()
   heightMB = maxWithMB.h - max.h
 
   local panSpace = currentMSpace
+  boolMC = true
   for i = 1, #mSpaceControlShow do
     --hs.timer.doAfter(0.0000001, function()
       goToSpace(indexOf(mspaces, mSpaceControlShow[i]))
@@ -588,18 +620,22 @@ function mSpaceControl()
         },1)
       canvasMSpaceControl[i]:mouseCallback(function()
         goToSpace(indexOf(mspaces, mSpaceControlShow[i]))
-        hs.timer.doAfter(0.0000000001, function() -- prevent watchdogs windowFocused and windowMoved from being triggered
+        hs.timer.doAfter(0.0000000001, function() -- prevent watchdogs 'windowFocused' and 'windowMoved' from being triggered
           boolMSpaceControl = false
+          mSpaceCycleCount = 0
         end)
 
         for j = 1, #canvasMSpaceControl do
           canvasMSpaceControl[j]:delete()
+          frameCanvas[j]:delete()
         end
         baseCanvas:delete()
-        frameCanvas:delete()
       end)
     --end)
   end
+  hs.timer.doAfter(0.5, function() -- prevent watchdogs 'windowFocused' and 'windowMoved' from being triggered
+    boolMC = false 
+  end)
 
   --hs.timer.doAfter(0.0001, function()
     goToSpace(panSpace)
@@ -621,13 +657,14 @@ function mSpaceControl()
       goToSpace(currentMSpace)
       hs.timer.doAfter(0.0000001, function()
         boolMSpaceControl = false
+        mSpaceCycleCount = 0
       end)
 
       for i = 1, #canvasMSpaceControl do
         canvasMSpaceControl[i]:delete()
+        frameCanvas[i]:delete()
       end
       baseCanvas:delete()
-      frameCanvas:delete()
     end)
 
     baseCanvas:frame(hs.geometry.new(0, 0, maxWithMB.w, maxWithMB.h))
@@ -663,9 +700,9 @@ function mSpaceControl()
         -- frame around current mSpace
         if mSpaceControlFrame[1] ~= '' then
           local ft = mSpaceControlFrame[1] -- frame thickness
-          if k == currentMSpace then
-            frameCanvas = hs.canvas:new()
-            frameCanvas:insertElement(
+          --if k == currentMSpace then
+            frameCanvas[k] = hs.canvas:new()
+            frameCanvas[k]:insertElement(
               {
                 action = 'fill',
                 type = 'rectangle',
@@ -677,17 +714,18 @@ function mSpaceControl()
                 },
                 trackMouseDown = true,
               }, 1)
-              frameCanvas:mouseCallback(function()
+              frameCanvas[k]:mouseCallback(function()
                 goToSpace(currentMSpace)
                 hs.timer.doAfter(0.0000001, function() -- prevent watchdogs windowFocused and windowMoved from being triggered
                   boolMSpaceControl = false
+                  mSpaceCycleCount = 0
                 end)
           
                 for j = 1, #canvasMSpaceControl do
                   canvasMSpaceControl[j]:delete()
+                  frameCanvas[j]:delete()
                 end
                 baseCanvas:delete()
-                frameCanvas:delete()
               end)
 
             local cvW = canvasMSpaceControl[k]:frame().w
@@ -702,7 +740,7 @@ function mSpaceControl()
               local imgHeightNew = imgH * imgRatioW
               local deltaHeight = (cvH - imgHeightNew) / 2
 
-              frameCanvas:frame(hs.geometry.new(
+              frameCanvas[k]:frame(hs.geometry.new(
                 canvasMSpaceControl[k]:topLeft().x - ft,
                 canvasMSpaceControl[k]:topLeft().y + deltaHeight - ft,
                 canvasMSpaceControl[k]:frame().w + 2 * ft,
@@ -712,19 +750,20 @@ function mSpaceControl()
               local imgWidthNew = imgW * imgRatioH
               local deltaWidth = (cvW - imgWidthNew) / 2
 
-              frameCanvas:frame(hs.geometry.new(
+              frameCanvas[k]:frame(hs.geometry.new(
                 canvasMSpaceControl[k]:topLeft().x + deltaWidth - ft,
                 canvasMSpaceControl[k]:topLeft().y - ft,
                 imgWidthNew + 2 * ft,
                 canvasMSpaceControl[k]:frame().h + 2 * ft
               ))
             end
-          end
+          --end
+
         end
         k = k + 1
       end
     end
-    frameCanvas:show() -- show at the end, so frame is painted on top of adjacent mSpaces
+    frameCanvas[currentMSpace]:show() -- show at the end, so frame is on top of adjacent mSpaces
     canvasMSpaceControl[currentMSpace]:show() -- necessary, otherwise frameCanvas would be on top
   --end)
 end
@@ -752,7 +791,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.41.6\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.42\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),
@@ -1739,6 +1778,7 @@ function goToSpace(target)
   end
   --]]
   currentMSpace = target
+   mSpaceCyclePos = currentMSpace
   menubar:setTitle(mspaces[target])
 
   --adjust wallpaper

@@ -1,3 +1,7 @@
+# v0.9.44
+
+* mSpace Control: improved capturing of mSpaces
+
 # v0.9.43
 
 * mSpace Control: you can cycle through mSpaces both directions by pressing additionally `shift`

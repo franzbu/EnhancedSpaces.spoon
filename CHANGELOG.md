@@ -1,3 +1,7 @@
+# v0.9.47
+
+* mSpace Control: fixed issue with reverse cycling
+
 # v0.9.46
 
 * mSpace Control: option to [keep Hammerspoon Console window in check](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#mspace-control)

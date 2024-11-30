@@ -745,7 +745,7 @@ To cycle through your mSpaces, keep `mSpaceControlModifier` pressed - or press i
 To change thickness, color and/or opacity of the frame that highlights the current mSpace, add the following to your `init.lua`; apart from the frame thickness, values between 0 and 1 are possible:
 
 ``` lua
-  -- hightlight currently active mSpace
+  -- mSpace Control: hightlight currently active mSpace
   mSpaceControlFrame = { 
     3, -- frame thickness; default: 3
     1, -- red; default: 1
@@ -758,7 +758,7 @@ To change thickness, color and/or opacity of the frame that highlights the curre
 By default, mSpace Control shows all your mSpaces in their original order. In case you'd like to exclude mSpaces from mSpace Control or change their order, add the following to your `init.lua` and make the changes you like:
 
 ``` lua
-  -- exclude mSpaces and/or change their order of appearance
+  -- mSpace Control: exclude mSpaces and/or change their order of appearance
   mSpaceControlShow = { 'E', '3', 'T', '2' },
 ```
 
@@ -780,7 +780,7 @@ In case you'd like to change the padding, color and/or opacity of mSpace Control
 Note: In mSpace Control, the Hammerspoon Console is shown on all preview mSpaces; in case you'd like to prevent that, add the following to your `init.lua`:
 
 ``` lua
-  -- hide Hammerspoon Console
+  -- mSpace Control: hide Hammerspoon Console
   mSpaceControlHideHSC = true, -- default: false
 ```
 

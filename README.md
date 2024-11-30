@@ -779,7 +779,7 @@ In case you'd like to change the padding, color and/or opacity of mSpace Control
 
 Note: In mSpace Control, the Hammerspoon Console is shown on all preview mSpaces; in case you'd like to prevent that, add the following to your `init.lua`:
 
-´´´ lua
+``` lua
   -- hide Hammerspoon Console
   mSpaceControlHideHSC = true, -- default: false
 ```

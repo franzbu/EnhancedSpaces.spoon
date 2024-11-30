@@ -5,21 +5,21 @@
 ## First Things First: Who Is This For? 
 It is not only power users who sooner or later feel restricted by the confinements of a single screen; there is no such thing as too much space. A multi-monitor arrangement is the obvious remedy; however, there is a lesser-known solution that enables the user to have more than one screen on a single display: virtual screens or, as they are called in EnhancedSpaces, mSpaces.
 
-mSpaces have both advantages and disadvantages when compared to multi-monitor arrangements. One of the advantages is that you don't have to move your head around to look at another screen - using mSpaces is like swapping the monitors of your multi-monitor arrangement by means of a keyboard shortcut. An obvious disadvantage of mSpaces is that you can't look at more than one of them at a time; however, while every user prefers a different workflow, for many of us looking at two or more monitors simultaneously is simply unnecessary, in which case the benefits of mSpaces comfortably outweigh the downsides.
+mSpaces have both advantages and disadvantages when compared to multi-monitor arrangements. One of the advantages is that you don't have to move your head around to look at another screen - using mSpaces is like swapping the monitors of your multi-monitor arrangement by means of a keyboard shortcut. An obvious disadvantage of mSpaces is that you can't look at more than one of them at a time; however, while every user prefers a different workflow, for many of us looking at two or more monitors simultaneously is unnecessary, in which case the benefits of mSpaces comfortably outweigh the downsides.
 
-I dismissed my multi-monitor arrangement in favor of virtual screens years ago and have not looked back. I started out using macOS' built-in Spaces and also used various alternatives; however, something was always missing, which eventually led to the development of an application that manages virtual screens and windows the way I've envisioned it. Enter EnhancedSpaces.
+I dismissed my multi-monitor arrangement in favor of virtual screens years ago and have not looked back. I started out using macOS' built-in Spaces and also tried various alternatives; however, something was always missing, which eventually led to the decision to develop an application that manages virtual screens and windows the way I've envisioned it. Enter EnhancedSpaces.
 
-One of EnhancedSpaces' main design goals has been to make managing mSpaces and windows intuitive and efficient. A screen and window manager does its job best when you hardly notice it. In other words: Your windows have the right size and are in the right place with you investing the least possible time and energy to get there. 
+One of EnhancedSpaces' main design goals has been to make managing mSpaces and windows intuitive and efficient. A screen and window manager does its job best when you hardly notice it or, in other words, your windows have the right size and are in the right place with you investing the least possible time and energy to get there. 
 
-EnhancedSpaces' features include using [sticky windows](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#same-window-on-more-than-one-mspace), [swapping windows](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#swapping-windows), [showing all mSpaces](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#mspace-control) on a grid with the possibility to cycle through them, and [automatically opening windows](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#open-windows-in-pre-arranged-mspaces) on predefined mSpaces in predefined sizes and positions. Using EnhancedSpaces' window manager you can resize and rearrange your windows with keyboard shortcuts or with your mouse or trackpad. Additionally, the most common features are also available via [menu](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#menu) and [popup menu](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#popup-menus).
+EnhancedSpaces' features include using [sticky windows](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#same-window-on-more-than-one-mspace), [swapping windows](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#swapping-windows), [showing all mSpaces](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#mspace-control) on a grid while you can cycle through them, and [opening windows](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#open-windows-in-pre-arranged-mspaces) automatically on predefined mSpaces in predefined sizes and positions. Using EnhancedSpaces' window manager you can resize and rearrange your windows with keyboard shortcuts or with your mouse or trackpad. Additionally, the most common features are also available via [menu](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#menu) and [popup menu](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#popup-menus).
 
-Focus has also been given to making EnhancedSpaces a pleasure to use. So can you customize EnhancedSpaces' menus to your needs, for example, change them to your preferred language, set [individual wallpapers](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#custom-wallpapers) for each of your mSpaces, change the appearance of the window switcher, and [resize windows](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#manual-resizing) into all directions using the whole area of the windows rather than just their borders.
+Focus has also been given to making EnhancedSpaces a pleasure to use. So can you customize EnhancedSpaces' menus to your needs, for example, change them to your preferred language, set [individual wallpapers](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#custom-wallpapers) for each of your mSpaces, change the appearance of the window switcher, and [resize windows](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#manual-resizing) in all directions using the whole area of the windows rather than just their borders.
 
-Another appeal of EnhancedSpaces is that managing both virtual screens and windows results in synergies that are impossible to achieve when using separate applications, for example, you can drag a window - with your pointing device placed within the whole area of the window, not only its title bar - beyond the borders of the screen and have it reemerge on another mSpace.
+Another appeal of EnhancedSpaces is that managing both virtual screens and windows results in synergies that are impossible to achieve when using separate applications, for example, you can drag a window beyond the borders of the screen and have it reemerge on another mSpace.
 
-So who is EnhancedSpaces for? It has been made for users who like working on multiple screens and want something more efficient and customizable than Apple's Spaces. 
+So who is EnhancedSpaces for? It has been made for users who want to use multiple screens and want an efficient and customizable application to manage them. 
 
-EnhancedSpaces has increased my productivity with macOS. May it do the same for you.
+EnhancedSpaces has increased my productivity with macOS in a way no other space manager has. May it do the same for you.
 
 
 ## Introduction
@@ -58,11 +58,9 @@ mkdir -p ~/.hammerspoon/Spoons && git clone https://github.com/franzbu/EnhancedS
 ```
 
 ## Setting up EnhancedSpaces
-Configuring EnhancedSpaces involves rolling up your sleeves and grabbing your keyboard. While it is understandable that even some power users prefer a graphical user interface for adjusting the preferences of their applications, there are substantial advantages to text based configuration that are easily missed unless experienced first-hand. 
+EnhancedSpaces pretty much runs out of the box. Apart from the initial setup - which, as you'll see in a minute, can also be done running a terminal command - you only need to deal with Hammerspoon's configuration file when you want to add customizations.
 
-One such benefit is that once you've got the knack of it, making changes to your setup is straightforward and efficient, which are reasons why you have become interested in EnhancedSpaces in the first place, right?
-
-Once you've installed EnhancedSpaces, add the following lines to the file `~/.hammerspoon/init.lua` (you can edit that file by clicking the Hammerspoon icon in your menu bar and choosing 'Open Config'). You might also want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you are greeted with:
+So once you've installed EnhancedSpaces, add the following lines to the file `~/.hammerspoon/init.lua` (you can edit that file by clicking the Hammerspoon icon in your menu bar and choosing 'Open Config'). You might also want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you are greeted with:
 
 ``` lua
 local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')
@@ -72,7 +70,7 @@ EnhancedSpaces:new({
 })
 ```
 
-If you'd like to go ahead without delay, the following terminal command can be used as an alternative to manually editing `init.lua`. In this case the default options are used, which means that the mSpaces `1`, `2`, and `3`are created, with `2` as the default mSpace:
+The following terminal command can be used as an alternative to manually editing `init.lua`. In that case the default options are used, which means that the mSpaces `1`, `2`, and `3`are created, with `2` as the default mSpace:
 
 ```bash
 echo -e "local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')\nEnhancedSpaces:new({\nmSpaces = { '1', '2', '3' }, -- default: { '1', '2', '3' }\nstartmSpace = '2', -- default: 2\n})" >> ~/.hammerspoon/init.lua
@@ -144,7 +142,7 @@ In case you want to disable this hotkey, change the line above as follows:
   modifierMS = { '' }, -- default: { 'ctrl' }
 ```
 
-When changing modifiers, make sure that you substitute them with other modifiers such as { 'cmd' }, { 'alt' }, { 'ctrl' }, { 'shift' } and combinations of modifiers, e.g., { 'alt', 'ctrl' }.
+Whenever changing modifiers, make sure to substitute them with other modifiers such as { 'cmd' }, { 'alt' }, { 'ctrl' }, { 'shift' } and combinations of modifiers, e.g., { 'alt', 'ctrl' }.
 
 Just in case it is not entirely clear where to add these lines or future modifications to your file `init.lua`:
 
@@ -166,12 +164,11 @@ EnhancedSpaces:new({
     'w', -- send active window to right mSpace and switch there; default: 'w'
   },
 
-
   --  ______________ modifications to EnhancedSpaces above this line ______________
 })
 ```
 
-The order of the modifications is entirely up to you.
+The order in which you add the potential modifications discussed below is entirely up to you.
 
 ### Switch Directly to Any mSpace
 For switching directly to any mSpace, press the Option key (`alt`) and the key for your mSpace, for example, `3`.

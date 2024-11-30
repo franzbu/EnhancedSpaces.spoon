@@ -777,6 +777,8 @@ In case you'd like to change the padding, color and/or opacity of mSpace Control
   },
 ```
 
+Note: The Hammerspoon Console consits of a proprietary window that behaves differently and would thus need specific treatment for showing correctly in mSpace Control's preview mSpaces. I doubt that anybody are generally working with a Hammerspoon Console open, which is why I haven't fixed that. However, let me know if I'm mistaken.
+
 
 ### Applications To Be Left Alone by EnhancedSpaces
 Any operating system has dialogs and windows of a temporary nature, such as Spotlight or Alfred, that are dealt with differently than standard 'persistent' application windows. Hammerspoon's list of such applications by its very nature cannot be comprehensive, which is why you can extend it. Feedback of successfully applied additions is welcome, so they can be added to save other users time. 

@@ -777,7 +777,12 @@ In case you'd like to change the padding, color and/or opacity of mSpace Control
   },
 ```
 
-Note: The Hammerspoon Console consits of a proprietary window that behaves differently and would thus need specific treatment for showing correctly in mSpace Control's preview mSpaces. I doubt that anybody are generally working with a Hammerspoon Console open, which is why I haven't fixed that. However, let me know if I'm mistaken.
+Note: In mSpace Control, the Hammerspoon Console is shown on all preview mSpaces; in case you'd like to prevent that, add the following to your `init.lua`:
+
+´´´ lua
+  -- hide Hammerspoon Console
+  mSpaceControlHideHSC = true, -- default: false
+```
 
 
 ### Applications To Be Left Alone by EnhancedSpaces

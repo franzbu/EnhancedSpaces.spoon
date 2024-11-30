@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.46"
+EnhancedSpaces.version = "0.9.47"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -132,8 +132,9 @@ function EnhancedSpaces:new(options)
     end
     mSpaceCycleCount = mSpaceCycleCount + 1
   end)
-  -- reverse order by pressing additionally 'shift'
-  hs.hotkey.bind(mergeModifiers(mSpaceControlModifier, { 'shift' }), mSpaceControlKey, function()
+  -- reverse order by additionally pressing 'shift'
+  mSpaceControlModifierReverse = mergeModifiers(mSpaceControlModifier, { 'shift' })
+  hs.hotkey.bind(mSpaceControlModifierReverse, mSpaceControlKey, function()
     if not boolMSpaceControl then
       mSpaceControl()
     else
@@ -149,7 +150,7 @@ function EnhancedSpaces:new(options)
   keyboardTrackerMSpaceControl = hs.eventtap.new({ hs.eventtap.event.types.flagsChanged }, function(e)
     local flags = eventToArray(e:getFlags())
     -- since on mSpaceControlModifier release the flag is 'nil', var 'prevmSpaceControlModifier' is used
-    if modifiersEqual(prevmSpaceControlModifier, mSpaceControlModifier) and flags[1] == nil and boolMSpaceControl and mSpaceCycleCount > 1 then
+    if (modifiersEqual(prevmSpaceControlModifier, mSpaceControlModifier) or modifiersEqual(prevmSpaceControlModifier, mSpaceControlModifierReverse) or modifiersEqual(prevmSpaceControlModifier, { 'shift'}) or modifiersEqual(prevmSpaceControlModifier, { 'alt'})) and flags[1] == nil and boolMSpaceControl and mSpaceCycleCount > 1 then
       goToSpace(mSpaceCyclePos)
       hs.timer.doAfter(0.0000001, function()
         boolMSpaceControl = false
@@ -845,7 +846,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.46\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.47\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),

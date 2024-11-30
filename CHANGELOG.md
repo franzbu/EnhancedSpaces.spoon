@@ -1,3 +1,7 @@
+# v0.9.46
+
+* mSpace Control: option to [keep Hammerspoon Console window in check](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#mspace-control)
+
 # v0.9.45
 
 * mSpace Control: improvements and bug fixes

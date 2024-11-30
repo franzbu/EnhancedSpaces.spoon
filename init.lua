@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.45"
+EnhancedSpaces.version = "0.9.46"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -114,8 +114,9 @@ function EnhancedSpaces:new(options)
   mSpaceControlKey = options.mSpaceControlKey or 'a'
   mSpaceControlShow = options.mSpaceControlShow or mspaces
   mSpaceControlConfig = options.mSpaceControlConfig or { 60, 60, 0, 0, 0, 0.9 }
-
   mSpaceControlFrame = options.mSpaceControlFrame or  { 3, 1, 0, 0, 1, }
+  mSpaceControlHideHSC = options.mSpaceControlHideHSC or false -- hide Hammerspoon Console
+
 
   -- cycle through mSpaces
   mSpaceCyclePos = currentMSpace
@@ -602,6 +603,22 @@ function EnhancedSpaces:new(options)
 end
 
 
+-- create snapshot of mSpace
+function snapshotMSpace(indexMS)
+  max = hs.screen.mainScreen():frame()
+  maxWithMB = hs.screen.mainScreen():fullFrame()
+  heightMB = maxWithMB.h - max.h
+  for i in pairs(winMSpaces) do
+    if winMSpaces[i].mspace[indexMS] then
+      winMSpaces[i].win:move(winMSpaces[i].frame[indexMS]) -- unhide window
+    else
+      winMSpaces[i].win:setTopLeft(hs.geometry.point(max.w - 1, max.h)) -- hide window
+    end
+  end
+  hs.timer.usleep(16000)
+  return hs.screen.mainScreen():snapshot(hs.geometry.new(0, heightMB, max.w, max.h)):setSize({ w = max.w / 2, h = max.h / 2 })
+end
+
 -- mSpace Control
 boolMSpaceControl = false
 canvasMSpaceControl = {}
@@ -609,49 +626,50 @@ frameCanvas = {}
 boolMC = false
 function mSpaceControl()
   boolMSpaceControl = true
-  local imgMSpaceControl = {}
-
   boolMC = true
+  local imgMSpaceControl = {}
+  local hscWait = 0
+  if mSpaceControlHideHSC then
+    hs.console.alpha(0)
+    hscWait = 0.001 -- time for hs.console.alpha to settle in
+  end
 
-  -- create snapshots of mSpaces
-  -- avoid having to switch to current mSpace for snapshot
+  -- create snapshots of mSpaces -> taking snapshot of current mSpace directly
   local imgCMS = hs.screen.mainScreen():snapshot(hs.geometry.new(0, heightMB, max.w, max.h)):setSize({ w = max.w / 2, h = max.h / 2 })
-  for i = 1, #mSpaceControlShow do
-    if indexOf(mspaces, mSpaceControlShow[i]) == currentMSpace then
-      imgMSpaceControl[i] = imgCMS 
-    else
-      imgMSpaceControl[i] = snapshotMSpace(indexOf(mspaces, mSpaceControlShow[i]))
-    end
-  end
-
-
-   -- create canvases with previews of mSpaces
-   for i = 1, #mSpaceControlShow do
-    canvasMSpaceControl[i] = hs.canvas:new()
-    canvasMSpaceControl[i]:insertElement(
-      {
-        image = imgMSpaceControl[i],
-        type = 'image',
-        trackMouseDown = true,
-      }, 1)
-    canvasMSpaceControl[i]:mouseCallback(function()
-      goToSpace(indexOf(mspaces, mSpaceControlShow[i]))
-      hs.timer.doAfter(0.0000000001,
-        function() -- prevent watchdogs 'windowFocused' and 'windowMoved' from being triggered
-          boolMSpaceControl = false
-          mSpaceCycleCount = 0
-        end)
-
-      for j = 1, #canvasMSpaceControl do
-        canvasMSpaceControl[j]:delete()
-        frameCanvas[j]:delete()
+  hs.timer.doAfter(hscWait, function()
+    for i = 1, #mSpaceControlShow do
+      if indexOf(mspaces, mSpaceControlShow[i]) == currentMSpace then
+        imgMSpaceControl[i] = imgCMS
+      elseif imgMSpaceControl[i] == nil then
+        imgMSpaceControl[i] = snapshotMSpace(indexOf(mspaces, mSpaceControlShow[i]))
       end
-      baseCanvas:delete()
-    end)
-  end
+    end
 
+    -- create canvases with previews of mSpaces
+    for i = 1, #mSpaceControlShow do
+      canvasMSpaceControl[i] = hs.canvas:new()
+      canvasMSpaceControl[i]:insertElement(
+        {
+          image = imgMSpaceControl[i],
+          type = 'image',
+          trackMouseDown = true,
+        }, 1)
+      canvasMSpaceControl[i]:mouseCallback(function()
+        goToSpace(indexOf(mspaces, mSpaceControlShow[i]))
+        hs.timer.doAfter(0.0000000001,
+          function() -- prevent watchdogs 'windowFocused' and 'windowMoved' from being triggered
+            boolMSpaceControl = false
+            mSpaceCycleCount = 0
+          end)
 
-  --hs.timer.doAfter(0.1, function()
+        for j = 1, #canvasMSpaceControl do
+          canvasMSpaceControl[j]:delete()
+          frameCanvas[j]:delete()
+        end
+        baseCanvas:delete()
+      end)
+    end
+
     baseCanvas = hs.canvas:new()
     baseCanvas:insertElement(
       {
@@ -793,26 +811,15 @@ function mSpaceControl()
     frameCanvas[currentMSpace]:show() -- show at the end, so frame is on top of adjacent mSpaces
     canvasMSpaceControl[currentMSpace]:show() -- necessary, otherwise frameCanvas would be on top
     goToSpace(currentMSpace)
-  --end)
-
+  end)
   hs.timer.doAfter(0.6, function() -- prevent watchdogs 'windowFocused' and 'windowMoved' from being triggered
     boolMC = false
   end)
-end
--- create snapshot of mSpace
-function snapshotMSpace(indexMS)
-  max = hs.screen.mainScreen():frame()
-  maxWithMB = hs.screen.mainScreen():fullFrame()
-  heightMB = maxWithMB.h - max.h
-  for i in pairs(winMSpaces) do
-    if winMSpaces[i].mspace[indexMS] then
-      winMSpaces[i].win:move(winMSpaces[i].frame[indexMS]) -- unhide window
-    else
-      winMSpaces[i].win:setTopLeft(hs.geometry.point(max.w - 1, max.h)) -- hide window
-    end
+  if mSpaceControlHideHSC then
+    hs.timer.doAfter(0.001, function()
+      hs.console.alpha(1)
+    end)
   end
-  hs.timer.usleep(10000)
-  return hs.screen.mainScreen():snapshot(hs.geometry.new(0, heightMB, max.w, max.h)):setSize({ w = max.w / 2, h = max.h / 2 })
 end
 
 
@@ -838,7 +845,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.45\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.46\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),

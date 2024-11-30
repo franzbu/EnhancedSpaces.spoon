@@ -1,3 +1,7 @@
+# v0.9.45
+
+* mSpace Control: improvements and bug fixes
+
 # v0.9.44
 
 * mSpace Control: improved capturing of mSpaces

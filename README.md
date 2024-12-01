@@ -729,7 +729,7 @@ Furthermore, as these features aren't final yet, there might still be changes to
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/overview_frame.jpg' width=700 />
 
-mSpace Control shows a preview of all or - if you so choose - a selection of your mSpaces and enables you to switch between them by cycling through them via keyboard shortcut or by using your pointing device. To enable mSpace Control, add the following lines to your `init.lua`:
+mSpace Control shows a preview of all or - if you so choose - a selection of your mSpaces and enables you to switch between mSpaces by cycling through them via keyboard shortcut or by using your pointing device. To enable mSpace Control, add the following lines to your `init.lua` and adjust the keys in case you prefer to use different ones:
 
 ``` lua
   -- mSpace Control
@@ -737,7 +737,7 @@ mSpace Control shows a preview of all or - if you so choose - a selection of you
   mSpaceControlKey = 'a', -- default: 'a'
 ```
 
-To cycle through your mSpaces, keep `mSpaceControlModifier` pressed - or press it again while mSpace Control is open - and use `mSpaceControlKey` for cycling. To cycle through your mSpaces in reverse order, additionally press `shift`.
+To open mSpace Control, press and release `mSpaceControlModifier` and `mSpaceControlKey`. To cycle through your mSpaces, keep `mSpaceControlModifier` pressed - or press it again while mSpace Control is open - and use `mSpaceControlKey` for cycling. For cycling in reverse order additionally press `shift`.
 
 To change thickness, color and/or opacity of the frame that highlights the current mSpace, add the following to your `init.lua`; apart from the frame thickness, values between 0 and 1 are possible:
 
@@ -774,7 +774,7 @@ In case you'd like to change the padding, color and/or opacity of mSpace Control
   },
 ```
 
-Note: In mSpace Control, the Hammerspoon Console is shown on all preview mSpaces; in case you'd like to prevent that, add the following to your `init.lua`:
+Note: In the unlikely case you're using the Hammerspoon Console on a regular basis, you can prevent it from being shown on all previews of the mSpaces. To do so, add the following to your `init.lua`:
 
 ``` lua
   -- mSpace Control: fix Hammerspoon Console

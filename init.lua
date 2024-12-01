@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.47"
+EnhancedSpaces.version = "0.9.48"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -102,6 +102,20 @@ function EnhancedSpaces:new(options)
   gridIndicator = options.gridIndicator or { 20, 1, 0, 0, 0.33 }
 
   customWallpaper = options.customWallpaper or false
+  wallpapers = {}
+  if customWallpaper then
+    wallpapers = createWallpapers()
+    createWallpapers()
+  else
+    for i = 1, #mspaces do
+      --wallpapers[i] = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/wallpapers/default.jpg')
+      wallpapers[i] = hs.image.imageFromURL(hs.screen.mainScreen():desktopImageURL())
+    end
+  end
+
+
+ 
+
 
   startupCommands = options.startupCommands or nil
 
@@ -117,7 +131,6 @@ function EnhancedSpaces:new(options)
   mSpaceControlFrame = options.mSpaceControlFrame or  { 3, 1, 0, 0, 1, }
   mSpaceControlHideHSC = options.mSpaceControlHideHSC or false -- hide Hammerspoon Console
 
-
   -- cycle through mSpaces
   mSpaceCyclePos = currentMSpace
   mSpaceCycleCount = 0
@@ -129,6 +142,9 @@ function EnhancedSpaces:new(options)
       mSpaceCyclePos = getnextMSpaceNumber(mSpaceCyclePos)
       frameCanvas[mSpaceCyclePos]:show()
       canvasMSpaceControl[mSpaceCyclePos]:show()
+      for i = 1, #canvasWin do
+        canvasWin[i]:show()
+      end
     end
     mSpaceCycleCount = mSpaceCycleCount + 1
   end)
@@ -142,6 +158,9 @@ function EnhancedSpaces:new(options)
       mSpaceCyclePos = getprevMSpaceNumber(mSpaceCyclePos)
       frameCanvas[mSpaceCyclePos]:show()
       canvasMSpaceControl[mSpaceCyclePos]:show()
+      for i = 1, #canvasWin do
+        canvasWin[i]:show()
+      end
     end
     mSpaceCycleCount = mSpaceCycleCount + 1
   end)
@@ -161,6 +180,9 @@ function EnhancedSpaces:new(options)
         canvasMSpaceControl[i]:delete()
         frameCanvas[i]:delete()
       end
+      for i = 1, #canvasWin do
+        canvasWin[i]:delete()
+      end
       baseCanvas:delete()
 
     end
@@ -176,6 +198,9 @@ function EnhancedSpaces:new(options)
         for i = 1, #canvasMSpaceControl do
           canvasMSpaceControl[i]:delete()
           frameCanvas[i]:delete()
+        end
+        for i = 1, #canvasWin do
+          canvasWin[i]:delete()
         end
         baseCanvas:delete()
         refreshMSpaces() -- refresh mSpace
@@ -237,10 +262,12 @@ function EnhancedSpaces:new(options)
     winMSpaces[i] = {}
     winMSpaces[i].win = winAll[i]
     winMSpaces[i].appName = winAll[i]:application():name() -- ':application():name()' causes errors if used 'later', mostly when creating menu
+    winMSpaces[i].snapshot = {}
     winMSpaces[i].mspace = {}
     winMSpaces[i].frame = {}
     for k = 1, #mspaces do
       winMSpaces[i].frame[k] = winAll[i]:frame()
+      winMSpaces[i].snapshot[k] = winAll[i]:snapshot()
       if k == currentMSpace then
         winMSpaces[i].mspace[k] = true
       else
@@ -316,8 +343,8 @@ function EnhancedSpaces:new(options)
   end)
 
   filter.default:subscribe(filter.windowFocused, function(w)
-    if boolMC then return end
-    --print('____________ windowFocused ____________ ' .. winMSpaces[getPosWinMSpaces(w)].appName)
+    --if boolMC then return end
+    print('____________ windowFocused ____________ ' .. winMSpaces[getPosWinMSpaces(w)].appName)
     if w:frame().h == maxWithMB.h then
       enteredFullscreen = true
       fullscreenedWindowID = w:id()
@@ -332,8 +359,8 @@ function EnhancedSpaces:new(options)
 
   -- 'window_filter.lua' has been adjusted: 'local WINDOWMOVED_DELAY=0.01' instead of '0.5' to get rid of delay
   filter.default:subscribe(filter.windowMoved, function(w)
-    if boolMC then return end
-    --print('____________ windowMoved ____________' .. winMSpaces[getPosWinMSpaces(w)].appName .. ', ' .. w:frame().h)
+    --if boolMC then return end
+    print('____________ windowMoved ____________' .. winMSpaces[getPosWinMSpaces(w)].appName .. ', ' .. w:frame().h)
     if w:frame().h == maxWithMB.h then
       enteredFullscreen = true
       fullscreenedWindowID = w:id()
@@ -341,12 +368,14 @@ function EnhancedSpaces:new(options)
       adjustWinFrame(w)
       refreshWinTables()
     end
+    --refresh snapshot
+    winMSpaces[getPosWinMSpaces(w)].snapshot[currentMSpace] = w:snapshot()
   end)
 
   -- next 2 filters are for avoiding calling assignMS(_, true) after unfullscreening a window ('windowOnScreen' is called for each window after a window gets unfullscreened)
   enteredFullscreen = false
   fullscreenedWindowID = 0
-  --[[ -- doesn't get triggered reliably
+  --[[ -- doesn't get triggered reliably -> workaround has been implemented instead
   filter.default:subscribe(filter.windowFullscreened, function(w)
     print('_____!!!_______ windowFullscreened ____________' .. winMSpaces[getPosWinMSpaces(w)].appName)
     enteredFullscreen = true
@@ -604,251 +633,247 @@ function EnhancedSpaces:new(options)
 end
 
 
--- create snapshot of mSpace
-function snapshotMSpace(indexMS)
-  max = hs.screen.mainScreen():frame()
-  maxWithMB = hs.screen.mainScreen():fullFrame()
-  heightMB = maxWithMB.h - max.h
-  for i in pairs(winMSpaces) do
-    if winMSpaces[i].mspace[indexMS] then
-      winMSpaces[i].win:move(winMSpaces[i].frame[indexMS]) -- unhide window
+-- mSpace Control: prepare wallpapers
+function createWallpapers()
+  local wp = {}
+  for i = 1, #mspaces do
+    if hs.fs.displayName(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/wallpapers/' .. mspaces[i] .. '.jpg') then
+      wp[i] = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/wallpapers/' .. mspaces[i] .. '.jpg')
     else
-      winMSpaces[i].win:setTopLeft(hs.geometry.point(max.w - 1, max.h)) -- hide window
+      wp[i] = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/wallpapers/default.jpg')
     end
   end
-  hs.timer.usleep(16000)
-  return hs.screen.mainScreen():snapshot(hs.geometry.new(0, heightMB, max.w, max.h)):setSize({ w = max.w / 2, h = max.h / 2 })
+  return wp
 end
 
 -- mSpace Control
 boolMSpaceControl = false
-canvasMSpaceControl = {}
-frameCanvas = {}
-boolMC = false
+canvasMSpaceControl = {} -- canvases containing one mSpace preview each
+frameCanvas = {} -- fr ame for highlighting current mSpace
+canvasWin = {} -- 
 function mSpaceControl()
   boolMSpaceControl = true
-  boolMC = true
-  local imgMSpaceControl = {}
-  local hscWait = 0
-  if mSpaceControlHideHSC then
-    hs.console.alpha(0)
-    hscWait = 0.001 -- time for hs.console.alpha to settle in
-  end
 
-  -- create snapshots of mSpaces -> taking snapshot of current mSpace directly
-  local imgCMS = hs.screen.mainScreen():snapshot(hs.geometry.new(0, heightMB, max.w, max.h)):setSize({ w = max.w / 2, h = max.h / 2 })
-  hs.timer.doAfter(hscWait, function()
-    for i = 1, #mSpaceControlShow do
-      if indexOf(mspaces, mSpaceControlShow[i]) == currentMSpace then
-        imgMSpaceControl[i] = imgCMS
-      elseif imgMSpaceControl[i] == nil then
-        imgMSpaceControl[i] = snapshotMSpace(indexOf(mspaces, mSpaceControlShow[i]))
+  -- create canvases with previews of mSpaces
+  for i = 1, #mSpaceControlShow do
+    canvasMSpaceControl[i] = hs.canvas:new()
+    canvasMSpaceControl[i]:insertElement(
+    {
+      image = wallpapers[i],
+      imageScaling = 'scaleToFit',
+      type = 'image',
+      trackMouseDown = true,
+    }, 1)
+    canvasMSpaceControl[i]:mouseCallback(function()
+      goToSpace(indexOf(mspaces, mSpaceControlShow[i]))
+      hs.timer.doAfter(0.0000000001,
+        function() -- prevent watchdogs 'windowFocused' and 'windowMoved' from being triggered
+          boolMSpaceControl = false
+          mSpaceCycleCount = 0
+        end)
+
+      for j = 1, #canvasMSpaceControl do
+        canvasMSpaceControl[j]:delete()
+        frameCanvas[j]:delete()
       end
-    end
-
-    -- create canvases with previews of mSpaces
-    for i = 1, #mSpaceControlShow do
-      canvasMSpaceControl[i] = hs.canvas:new()
-      canvasMSpaceControl[i]:insertElement(
-        {
-          image = imgMSpaceControl[i],
-          type = 'image',
-          trackMouseDown = true,
-        }, 1)
-      canvasMSpaceControl[i]:mouseCallback(function()
-        goToSpace(indexOf(mspaces, mSpaceControlShow[i]))
-        hs.timer.doAfter(0.0000000001,
-          function() -- prevent watchdogs 'windowFocused' and 'windowMoved' from being triggered
-            boolMSpaceControl = false
-            mSpaceCycleCount = 0
-          end)
-
-        for j = 1, #canvasMSpaceControl do
-          canvasMSpaceControl[j]:delete()
-          frameCanvas[j]:delete()
-        end
-        baseCanvas:delete()
-      end)
-    end
-
-    baseCanvas = hs.canvas:new()
-    baseCanvas:insertElement(
-      {
-        action = 'fill',
-        type = 'rectangle',
-        fillColor = {
-          red = mSpaceControlConfig[3],
-          green = mSpaceControlConfig[4],
-          blue = mSpaceControlConfig[5],
-          alpha = mSpaceControlConfig[6]
-        },
-        trackMouseDown = true,
-      }, 1)
-    baseCanvas:mouseCallback(function()
-      goToSpace(currentMSpace)
-      hs.timer.doAfter(0.0000001, function()
-        boolMSpaceControl = false
-        mSpaceCycleCount = 0
-      end)
-
-      for i = 1, #canvasMSpaceControl do
-        canvasMSpaceControl[i]:delete()
-        frameCanvas[i]:delete()
+      for j = 1, #canvasWin do
+        canvasWin[j]:delete()
       end
       baseCanvas:delete()
     end)
+  end
 
-    baseCanvas:frame(hs.geometry.new(0, 0, maxWithMB.w, maxWithMB.h))
-    baseCanvas:show()
+  baseCanvas = hs.canvas:new()
+  baseCanvas:insertElement(
+  {
+    action = 'fill',
+    type = 'rectangle',
+    fillColor = {
+      red = mSpaceControlConfig[3],
+      green = mSpaceControlConfig[4],
+      blue = mSpaceControlConfig[5],
+      alpha = mSpaceControlConfig[6]
+    },
+    trackMouseDown = true,
+  }, 1)
+  baseCanvas:mouseCallback(function()
+    goToSpace(currentMSpace)
+    hs.timer.doAfter(0.0000001, function()
+      boolMSpaceControl = false
+      mSpaceCycleCount = 0
+    end)
 
-    local k = 1
-    local p1 = mSpaceControlConfig[1]
-    local p2 = mSpaceControlConfig[2]
-    if #mSpaceControlShow <= 4 then
-      mSpaceControlX = 2
-      mSpaceControlY = 2
-    elseif #mSpaceControlShow <= 6 then
-      mSpaceControlX = 2
-      mSpaceControlY = 3
-    elseif #mSpaceControlShow <= 9 then
-      mSpaceControlX = 3
-      mSpaceControlY = 3
-    elseif #mSpaceControlShow <= 12 then
-      mSpaceControlX = 3
-      mSpaceControlY = 4
-    elseif #mSpaceControlShow <= 16 then
-      mSpaceControlX = 4
-      mSpaceControlY = 4
-    elseif #mSpaceControlShow <= 20 then
-      mSpaceControlX = 4
-      mSpaceControlY = 5
-    elseif #mSpaceControlShow <= 25 then
-      mSpaceControlX = 5
-      mSpaceControlY = 5
-    elseif #mSpaceControlShow <= 30 then
-      mSpaceControlX = 5
-      mSpaceControlY = 6
-    else
-      mSpaceControlX = math.ceil(math.sqrt(#mSpaceControlShow))
-      mSpaceControlY = mSpaceControlX
+    for i = 1, #canvasMSpaceControl do
+      canvasMSpaceControl[i]:delete()
+      frameCanvas[i]:delete()
     end
+    for i = 1, #canvasWin do
+      canvasWin[i]:delete()
+    end
+    baseCanvas:delete()
+  end)
+  baseCanvas:frame(hs.geometry.new(0, 0, maxWithMB.w, maxWithMB.h))
+  baseCanvas:show()
 
-    for i = 1, mSpaceControlX do
-      for j = 1, mSpaceControlY do
-        if k > #mSpaceControlShow then break end
-        canvasMSpaceControl[k]:frame(hs.geometry.new(
-          p1 - p2 + (j - 1) * (maxWithMB.w - 2 * p1) / mSpaceControlY + p2, -- x
-          p1 - p2 + (i - 1) * (maxWithMB.h - 2 * p1) / mSpaceControlX + p2, -- y
-          (maxWithMB.w - 2 * p1 - 2 * p2) / mSpaceControlY,                 -- w
-          (maxWithMB.h - 2 * p1 - 2 * p2) / mSpaceControlX                  -- h
-        ))
-        canvasMSpaceControl[k]:show()
 
-        -- frame around current mSpace
-        if mSpaceControlFrame[1] ~= '' then
-          local ft = mSpaceControlFrame[1] -- frame thickness
+  local k = 1
+  local p1 = mSpaceControlConfig[1]
+  local p2 = mSpaceControlConfig[2]
+  local ft = mSpaceControlFrame[1] -- frame thickness
+  if #mSpaceControlShow <= 4 then
+    mSpaceControlX = 2
+    mSpaceControlY = 2
+  elseif #mSpaceControlShow <= 6 then
+    mSpaceControlX = 2
+    mSpaceControlY = 3
+  elseif #mSpaceControlShow <= 9 then
+    mSpaceControlX = 3
+    mSpaceControlY = 3
+  elseif #mSpaceControlShow <= 12 then
+    mSpaceControlX = 3
+    mSpaceControlY = 4
+  elseif #mSpaceControlShow <= 16 then
+    mSpaceControlX = 4
+    mSpaceControlY = 4
+  elseif #mSpaceControlShow <= 20 then
+    mSpaceControlX = 4
+    mSpaceControlY = 5
+  elseif #mSpaceControlShow <= 25 then
+    mSpaceControlX = 5
+    mSpaceControlY = 5
+  elseif #mSpaceControlShow <= 30 then
+    mSpaceControlX = 5
+    mSpaceControlY = 6
+  else
+    mSpaceControlX = math.ceil(math.sqrt(#mSpaceControlShow))
+    mSpaceControlY = mSpaceControlX
+  end
+  local screenRatio = max.h / max.w
+  print('screenRatio: ' .. screenRatio)
+  for i = 1, mSpaceControlX do
+    for j = 1, mSpaceControlY do
+      if k > #mSpaceControlShow then break end
+      canvasMSpaceControl[k]:frame(hs.geometry.new(
+        --p1 - p2 + (j - 1) * (max.w - 2 * p1) / mSpaceControlY + p2, -- x
+        p1 + p2 + (j - 1) * ((max.w - 2 * p1) / mSpaceControlY - 2 * p2) + (j-1) * 2 * p2, -- x
+        --p1 - p2 + (i - 1) * (max.h - 2 * p1) / mSpaceControlX + p2, -- y
+        p1 + p2 + (i - 1) * (((max.w - 2 * p1 - 2 * p2) / mSpaceControlY) * screenRatio) + (i-1) * 2 * p2, -- y
+        (max.w - 2 * p1) / mSpaceControlY - 2 * p2,                 -- w
+        --(maxWithMB.h - 2 * p1 - 2 * p2) / mSpaceControlX                -- h
+        ((max.w - 2 * p1 - 2 * p2) / mSpaceControlY) * screenRatio  -- h
+      ))
+      canvasMSpaceControl[k]:show()
 
-          frameCanvas[k] = hs.canvas:new()
-          frameCanvas[k]:insertElement(
-            {
-              action = 'fill',
-              type = 'rectangle',
-              fillColor = {
-                red = mSpaceControlFrame[2],
-                green = mSpaceControlFrame[3],
-                blue = mSpaceControlFrame[4],
-                alpha = mSpaceControlFrame[5],
-              },
-              trackMouseDown = true,
-            }, 1)
-          frameCanvas[k]:mouseCallback(function()
-            goToSpace(currentMSpace)
-            hs.timer.doAfter(0.0000001,
-              function() -- prevent watchdogs windowFocused and windowMoved from being triggered
-                boolMSpaceControl = false
-                mSpaceCycleCount = 0
-              end)
+      -- frame around current mSpace
+      if mSpaceControlFrame[1] ~= '' then
+        frameCanvas[k] = hs.canvas:new()
+        frameCanvas[k]:insertElement(
+        {
+          action = 'fill',
+          type = 'rectangle',
+          fillColor = {
+            red = mSpaceControlFrame[2],
+            green = mSpaceControlFrame[3],
+            blue = mSpaceControlFrame[4],
+            alpha = mSpaceControlFrame[5],
+          },
+          trackMouseDown = true,
+        }, 1)
+        frameCanvas[k]:mouseCallback(function()
+          goToSpace(currentMSpace)
+          hs.timer.doAfter(0.0000001,
+            function() -- prevent watchdogs windowFocused and windowMoved from being triggered
+              boolMSpaceControl = false
+              mSpaceCycleCount = 0
+            end)
 
-            for j = 1, #canvasMSpaceControl do
-              canvasMSpaceControl[j]:delete()
-              frameCanvas[j]:delete()
-            end
-            baseCanvas:delete()
-          end)
-
-          local cvW = canvasMSpaceControl[k]:frame().w
-          local cvH = canvasMSpaceControl[k]:frame().h
-          local imgW = imgMSpaceControl[k]:size().w
-          local imgH = imgMSpaceControl[k]:size().h
-
-          local imgRatioW = cvW / imgW
-          local imgRatioH = cvH / imgH
-
-          if imgRatioH > imgRatioW then
-            local imgHeightNew = imgH * imgRatioW
-            local deltaHeight = (cvH - imgHeightNew) / 2
-
-            frameCanvas[k]:frame(hs.geometry.new(
-              canvasMSpaceControl[k]:topLeft().x - ft,
-              canvasMSpaceControl[k]:topLeft().y + deltaHeight - ft,
-              canvasMSpaceControl[k]:frame().w + 2 * ft,
-              imgHeightNew + 2 * ft
-            ))
-          else
-            local imgWidthNew = imgW * imgRatioH
-            local deltaWidth = (cvW - imgWidthNew) / 2
-
-            frameCanvas[k]:frame(hs.geometry.new(
-              canvasMSpaceControl[k]:topLeft().x + deltaWidth - ft,
-              canvasMSpaceControl[k]:topLeft().y - ft,
-              imgWidthNew + 2 * ft,
-              canvasMSpaceControl[k]:frame().h + 2 * ft
-            ))
+          for j = 1, #canvasMSpaceControl do
+            canvasMSpaceControl[j]:delete()
+            frameCanvas[j]:delete()
           end
-        end
-        k = k + 1
+          for j = 1, #canvasWin do
+            canvasWin[j]:delete()
+          end
+          baseCanvas:delete()
+        end)
+        frameCanvas[k]:frame(hs.geometry.new(
+          canvasMSpaceControl[k]:frame().x - ft,
+          canvasMSpaceControl[k]:frame().y - ft,
+          canvasMSpaceControl[k]:frame().w + 2 * ft,
+          canvasMSpaceControl[k]:frame().h + 2 * ft
+        ))
+      end
+      k = k + 1
+    end
+  end
+
+  frameCanvas[currentMSpace]:show() -- show at the end, so frame is on top of adjacent mSpaces
+  canvasMSpaceControl[currentMSpace]:show() -- necessary, otherwise frameCanvas would be on top
+
+  -- insert windows
+  local l = 1
+  for i = 1, #mspaces do
+    local ratioW = canvasMSpaceControl[i]:frame().w / max.w
+    local ratioH = canvasMSpaceControl[i]:frame().h / max.h
+    for j = 1, #winMSpaces do
+      if winMSpaces[j].mspace[i] then
+        canvasWin[l] = hs.canvas:new()
+        canvasWin[l]:insertElement(
+        {
+          image = winMSpaces[j].snapshot[i],
+          --imageAlpha = 0.86,
+          --action = 'fill',
+          type = 'image',
+          imageScaling = 'scaleToFit',
+          imageAlignment = 'topLeft',
+          trackMouseDown = true,
+        }, 1)
+        canvasWin[l]:frame(hs.geometry.new(
+          winMSpaces[j].frame[i].x * ratioW + canvasMSpaceControl[i]:frame().x,
+          winMSpaces[j].frame[i].y * ratioH - heightMB * ratioH + canvasMSpaceControl[i]:frame().y,
+          winMSpaces[j].frame[i].w * ratioW,
+          winMSpaces[j].frame[i].h * ratioH
+        ))
+        canvasWin[l]:show()
+        l = l + 1
       end
     end
-    frameCanvas[currentMSpace]:show() -- show at the end, so frame is on top of adjacent mSpaces
-    canvasMSpaceControl[currentMSpace]:show() -- necessary, otherwise frameCanvas would be on top
-    goToSpace(currentMSpace)
-  end)
-  hs.timer.doAfter(0.6, function() -- prevent watchdogs 'windowFocused' and 'windowMoved' from being triggered
-    boolMC = false
-  end)
-  if mSpaceControlHideHSC then
-    hs.timer.doAfter(0.001, function()
-      hs.console.alpha(1)
-    end)
   end
+  goToSpace(currentMSpace)
 end
 
 
 function refreshMenu()
   mainMenu = {
-    { title = "mSpaces",
+    {
+      title = "mSpaces",
       menu = createMSpaceMenu(),
     },
     { title = "-" },
-    { title = menuTitles.swap, disabled = trueIfZero(_windowsOnCurrentMS),
+    {
+      title = menuTitles.swap, disabled = trueIfZero(_windowsOnCurrentMS),
       menu = createSwapWindowMenu(),
     },
     { title = "-" },
-    { title = getToggleRefWindow()[1], disabled = getToggleRefWindow()[2],
+    {
+      title = getToggleRefWindow()[1], disabled = getToggleRefWindow()[2],
       menu = createToggleRefMenu(),
     },
     { title = "-" },
-    { title = menuTitles.send, disabled = trueIfZero(windowsOnCurrentMS),
+    {
+      title = menuTitles.send, disabled = trueIfZero(windowsOnCurrentMS),
       menu = createSendWindowMenu(),
     },
-    { title = menuTitles.get, disabled = trueIfZero(windowsNotOnCurrentMS),
+    {
+      title = menuTitles.get, disabled = trueIfZero(windowsNotOnCurrentMS),
       menu = createGetWindowMenu(),
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.47\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.48\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
-    { title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
+    {
+      title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
       menu = hsMenu(),
     },
   }
@@ -856,22 +881,27 @@ function refreshMenu()
 
   mbMainPopup = hs.menubar.new(false)
   mainPopupMenu = {
-    { title = "mSpaces",
+    {
+      title = "mSpaces",
       menu = createMSpaceMenu(),
     },
     { title = "-" },
-    { title = menuTitles.swap, disabled = trueIfZero(_windowsOnCurrentMS),
+    {
+      title = menuTitles.swap, disabled = trueIfZero(_windowsOnCurrentMS),
       menu = createSwapWindowMenu(),
     },
     { title = "-" },
-    { title = getToggleRefWindow()[1], disabled = getToggleRefWindow()[2],
+    {
+      title = getToggleRefWindow()[1], disabled = getToggleRefWindow()[2],
       menu = createToggleRefMenu(),
     },
     { title = "-" },
-    { title = menuTitles.send, disabled = trueIfZero(windowsOnCurrentMS),
+    {
+      title = menuTitles.send, disabled = trueIfZero(windowsOnCurrentMS),
       menu = createSendWindowMenu(),
     },
-    { title = menuTitles.get, disabled = trueIfZero(windowsNotOnCurrentMS),
+    {
+      title = menuTitles.get, disabled = trueIfZero(windowsNotOnCurrentMS),
       menu = createGetWindowMenu(),
     },
   }
@@ -879,7 +909,8 @@ function refreshMenu()
 
   mbSwapPopup = hs.menubar.new(false)
   swapWindowMenu = {
-    { title = menuTitles.swap, disabled = trueIfZero(_windowsOnCurrentMS),
+    {
+      title = menuTitles.swap, disabled = trueIfZero(_windowsOnCurrentMS),
       menu = createSwapWindowMenu(),
     },
   }
@@ -888,7 +919,8 @@ function refreshMenu()
   mbSendPopup = hs.menubar.new(false)
   sendWindowMenu = {
     { title = "-" },
-    { title = menuTitles.send, disabled = trueIfZero(windowsOnCurrentMS),
+    {
+      title = menuTitles.send, disabled = trueIfZero(windowsOnCurrentMS),
       menu = createSendWindowMenu(),
     },
   }
@@ -896,7 +928,8 @@ function refreshMenu()
 
   mbGetPopup = hs.menubar.new(false)
   getWindowMenu = {
-    { title = menuTitles.get, disabled = trueIfZero(windowsNotOnCurrentMS),
+    { 
+      title = menuTitles.get, disabled = trueIfZero(windowsNotOnCurrentMS),
       menu = createGetWindowMenu(),
     },
   }
@@ -1838,11 +1871,10 @@ function goToSpace(target)
 
   --adjust wallpaper
   if customWallpaper then
-    local screen = hs.screen.mainScreen()
     if hs.fs.displayName(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/wallpapers/' .. mspaces[currentMSpace] .. '.jpg') then
-      screen:desktopImageURL('file://' .. hs.configdir .. '/Spoons/EnhancedSpaces.spoon/wallpapers/' .. mspaces[currentMSpace] .. '.jpg')
+      hs.screen.mainScreen():desktopImageURL('file://' .. hs.configdir .. '/Spoons/EnhancedSpaces.spoon/wallpapers/' .. mspaces[currentMSpace] .. '.jpg')
     else
-      screen:desktopImageURL('file://' .. hs.configdir .. '/Spoons/EnhancedSpaces.spoon/wallpapers/default.jpg')
+      hs.screen.mainScreen():desktopImageURL('file://' .. hs.configdir .. '/Spoons/EnhancedSpaces.spoon/wallpapers/default.jpg')
     end
   end
 
@@ -1895,12 +1927,14 @@ function refreshWinTables()
       table.insert(winMSpaces, {})
       winMSpaces[#winMSpaces].win = winAll[i]
       winMSpaces[#winMSpaces].appName = winAll[i]:application():name()
+      winMSpaces[#winMSpaces].snapshot = {}
       winMSpaces[#winMSpaces].mspace = {}
       winMSpaces[#winMSpaces].frame = {}
       for k = 1, #mspaces do
         winMSpaces[#winMSpaces].frame[k] = winAll[i]:frame()
         if k == currentMSpace then
           winMSpaces[#winMSpaces].mspace[k] = true
+          winMSpaces[#winMSpaces].snapshot[k] = winAll[i]:snapshot()
         else
           winMSpaces[#winMSpaces].mspace[k] = false
         end

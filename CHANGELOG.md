@@ -1,3 +1,7 @@
+# v0.9.48
+
+* mSpace Control completely rewritten
+
 # v0.9.47
 
 * mSpace Control: fixed issue with reverse cycling

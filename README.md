@@ -775,7 +775,7 @@ In case you'd like to change the padding, color and/or opacity of mSpace Control
   },
 ```
 
-Note: mSpace Control is in its early stages, so expect more to come.
+Note: mSpace Control is in its early stages of development, so expect more to come.
 
 
 ### Applications To Be Left Alone by EnhancedSpaces

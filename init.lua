@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.48"
+EnhancedSpaces.version = "0.9.48.1"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -108,14 +108,9 @@ function EnhancedSpaces:new(options)
     createWallpapers()
   else
     for i = 1, #mspaces do
-      --wallpapers[i] = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/wallpapers/default.jpg')
       wallpapers[i] = hs.image.imageFromURL(hs.screen.mainScreen():desktopImageURL())
     end
   end
-
-
- 
-
 
   startupCommands = options.startupCommands or nil
 
@@ -130,6 +125,7 @@ function EnhancedSpaces:new(options)
   mSpaceControlConfig = options.mSpaceControlConfig or { 60, 60, 0, 0, 0, 0.9 }
   mSpaceControlFrame = options.mSpaceControlFrame or  { 3, 1, 0, 0, 1, }
   mSpaceControlHideHSC = options.mSpaceControlHideHSC or false -- hide Hammerspoon Console
+  mSpaceControlWinOpacity = options.mSpaceControlWinOpacity or 1
 
   -- cycle through mSpaces
   mSpaceCyclePos = currentMSpace
@@ -821,7 +817,7 @@ function mSpaceControl()
         canvasWin[l]:insertElement(
         {
           image = winMSpaces[j].snapshot[i],
-          --imageAlpha = 0.86,
+          imageAlpha = mSpaceControlWinOpacity,
           --action = 'fill',
           type = 'image',
           imageScaling = 'scaleToFit',
@@ -870,7 +866,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.48\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.48.1\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     {
       title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
@@ -984,7 +980,6 @@ function getModifiersMods(mods)
   end
   return t
 end
-
 
 
 -- swap windows on current mSpace
@@ -1900,7 +1895,6 @@ function moveToSpace(target, origin, boolKeyboard)
   end
   refreshWinTables()
 end
-
 
 function refreshWinTables()
   winAll = filter_all:getWindows() --hs.window.sortByFocused)

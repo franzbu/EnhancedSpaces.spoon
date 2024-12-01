@@ -752,13 +752,14 @@ To change thickness, color and/or opacity of the frame that highlights the curre
   },
 ```
 
+<!--
 By default, mSpace Control shows all your mSpaces in their original order. In case you'd like to exclude mSpaces from mSpace Control or change their order, add the following to your `init.lua` and make the changes you like:
 
 ``` lua
   -- mSpace Control: exclude mSpaces and/or change their order of appearance
   mSpaceControlShow = { 'E', '3', 'T', '2' },
 ```
-
+-->
 
 In case you'd like to change the padding, color and/or opacity of mSpace Control, add the following to your `init.lua`, and adjust the values to your liking. Apart from the padding (be aware that due to the fixed aspect ratio of the previews of the mSpaces, the values for the outer and inner padding are relative rather than absolute), values between 0 and 1 are possible:
 
@@ -774,12 +775,7 @@ In case you'd like to change the padding, color and/or opacity of mSpace Control
   },
 ```
 
-Note: In the unlikely case you're using the Hammerspoon Console on a regular basis, you can prevent it from being shown on all previews of the mSpaces. To do so, add the following to your `init.lua`:
-
-``` lua
-  -- mSpace Control: fix Hammerspoon Console
-  mSpaceControlHideHSC = true, -- default: false
-```
+Note: mSpace Control is in its early stages, so expect more to come.
 
 
 ### Applications To Be Left Alone by EnhancedSpaces

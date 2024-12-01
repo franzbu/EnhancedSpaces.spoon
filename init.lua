@@ -340,7 +340,7 @@ function EnhancedSpaces:new(options)
 
   filter.default:subscribe(filter.windowFocused, function(w)
     --if boolMC then return end
-    print('____________ windowFocused ____________ ' .. winMSpaces[getPosWinMSpaces(w)].appName)
+    --print('____________ windowFocused ____________ ' .. winMSpaces[getPosWinMSpaces(w)].appName)
     if w:frame().h == maxWithMB.h then
       enteredFullscreen = true
       fullscreenedWindowID = w:id()
@@ -356,7 +356,7 @@ function EnhancedSpaces:new(options)
   -- 'window_filter.lua' has been adjusted: 'local WINDOWMOVED_DELAY=0.01' instead of '0.5' to get rid of delay
   filter.default:subscribe(filter.windowMoved, function(w)
     --if boolMC then return end
-    print('____________ windowMoved ____________' .. winMSpaces[getPosWinMSpaces(w)].appName .. ', ' .. w:frame().h)
+    --print('____________ windowMoved ____________' .. winMSpaces[getPosWinMSpaces(w)].appName .. ', ' .. w:frame().h)
     if w:frame().h == maxWithMB.h then
       enteredFullscreen = true
       fullscreenedWindowID = w:id()
@@ -745,7 +745,6 @@ function mSpaceControl()
     mSpaceControlY = mSpaceControlX
   end
   local screenRatio = max.h / max.w
-  print('screenRatio: ' .. screenRatio)
   for i = 1, mSpaceControlX do
     for j = 1, mSpaceControlY do
       if k > #mSpaceControlShow then break end

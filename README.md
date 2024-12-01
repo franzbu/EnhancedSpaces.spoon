@@ -783,7 +783,7 @@ As a little gimmick, you can change the opacity of the windows in mSpace Control
 ```
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/overview2.jpg' width=700 />
 
-Note: mSpace Control is in its early stages of development, so expect more to come.
+Note: mSpace Control is in its early stages of development, so please understand that this feature still has some rough edges. You can help smoothing them out by reporting any issues you encounter. Thank you.
 
 
 ### Applications To Be Left Alone by EnhancedSpaces

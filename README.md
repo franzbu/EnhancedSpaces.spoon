@@ -775,6 +775,14 @@ In case you'd like to change the padding, color and/or opacity of mSpace Control
   },
 ```
 
+As a little gimmick, you can change the opacity of the windows in mSpace Control by adding the following to your `init.lua`:
+
+``` lua
+  -- mSpace Control: opacity of windows
+  mSpaceControlWinOpacity = 0.82, -- default: 1
+```
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/overview2.jpg' width=700 />
+
 Note: mSpace Control is in its early stages of development, so expect more to come.
 
 

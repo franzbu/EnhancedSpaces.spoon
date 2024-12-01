@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.48.1"
+EnhancedSpaces.version = "0.9.49"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -811,11 +811,11 @@ function mSpaceControl()
     local ratioW = canvasMSpaceControl[i]:frame().w / max.w
     local ratioH = canvasMSpaceControl[i]:frame().h / max.h
     for j = 1, #winMSpaces do
-      if winMSpaces[j].mspace[i] then
+      if winMSpaces[#winMSpaces - j + 1].mspace[i] then
         canvasWin[l] = hs.canvas:new()
         canvasWin[l]:insertElement(
         {
-          image = winMSpaces[j].snapshot[i],
+          image = winMSpaces[#winMSpaces - j + 1].snapshot[i],
           imageAlpha = mSpaceControlWinOpacity,
           --action = 'fill',
           type = 'image',
@@ -824,10 +824,10 @@ function mSpaceControl()
           trackMouseDown = true,
         }, 1)
         canvasWin[l]:frame(hs.geometry.new(
-          winMSpaces[j].frame[i].x * ratioW + canvasMSpaceControl[i]:frame().x,
-          winMSpaces[j].frame[i].y * ratioH - heightMB * ratioH + canvasMSpaceControl[i]:frame().y,
-          winMSpaces[j].frame[i].w * ratioW,
-          winMSpaces[j].frame[i].h * ratioH
+          winMSpaces[#winMSpaces - j + 1].frame[i].x * ratioW + canvasMSpaceControl[i]:frame().x,
+          winMSpaces[#winMSpaces - j + 1].frame[i].y * ratioH - heightMB * ratioH + canvasMSpaceControl[i]:frame().y,
+          winMSpaces[#winMSpaces - j + 1].frame[i].w * ratioW,
+          winMSpaces[#winMSpaces - j + 1].frame[i].h * ratioH
         ))
         canvasWin[l]:show()
         l = l + 1
@@ -865,7 +865,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.48.1\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.49\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     {
       title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
@@ -979,6 +979,7 @@ function getModifiersMods(mods)
   end
   return t
 end
+
 
 
 -- swap windows on current mSpace
@@ -1894,6 +1895,7 @@ function moveToSpace(target, origin, boolKeyboard)
   end
   refreshWinTables()
 end
+
 
 function refreshWinTables()
   winAll = filter_all:getWindows() --hs.window.sortByFocused)

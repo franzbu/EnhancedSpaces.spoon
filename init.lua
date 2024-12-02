@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.50.2"
+EnhancedSpaces.version = "0.9.51"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -340,8 +340,8 @@ function EnhancedSpaces:new(options)
   end)
 
   filter.default:subscribe(filter.windowFocused, function(w)
-    --if boolMC then return end
     --print('____________ windowFocused ____________ ' .. winMSpaces[getPosWinMSpaces(w)].appName)
+    refreshSnapshots(currentMSpace)
     if w:frame().h == maxWithMB.h then
       enteredFullscreen = true
       fullscreenedWindowID = w:id()
@@ -349,14 +349,14 @@ function EnhancedSpaces:new(options)
     --if not enteredFullscreen and w:frame().h ~= maxWithMB.h then
     if w:frame().h ~= maxWithMB.h and not boolMSpaceControl then -- and not enteredFullscreen then
       refreshWinTables()
-      cmdTabFocus()
+      cmdTabFocus(w)
     end
     --end)
   end)
 
   -- 'window_filter.lua' has been adjusted: 'local WINDOWMOVED_DELAY=0.01' instead of '0.5' to get rid of delay
   filter.default:subscribe(filter.windowMoved, function(w)
-    --if boolMC then return end
+    refreshSnapshots(currentMSpace)
     --print('____________ windowMoved ____________' .. winMSpaces[getPosWinMSpaces(w)].appName .. ', ' .. w:frame().h)
     if w:frame().h == maxWithMB.h then
       enteredFullscreen = true
@@ -365,9 +365,7 @@ function EnhancedSpaces:new(options)
       adjustWinFrame(w)
       refreshWinTables()
     end
-    --refresh snapshot
-    --winMSpaces[getPosWinMSpaces(w)].snapshot[currentMSpace] = w:snapshot():setSize({w = img1:size().w / 2, h = img1:size().h / 2})
-  end)
+   end)
 
   -- next 2 filters are for avoiding calling assignMS(_, true) after unfullscreening a window ('windowOnScreen' is called for each window after a window gets unfullscreened)
   enteredFullscreen = false
@@ -624,11 +622,6 @@ function EnhancedSpaces:new(options)
     end
   end
 
-  -- refresh window snapshots for mSpace Control
-  hs.timer.doEvery(1, function()
-    --refreshSnapshots(currentMSpace)
-  end)
-
   refreshWinTables()
   moveResize.clickHandler:start()
   return moveResize
@@ -811,32 +804,57 @@ function mSpaceControl()
   frameCanvas[currentMSpace]:show() -- show at the end, so frame is on top of adjacent mSpaces
   canvasMSpaceControl[currentMSpace]:show() -- necessary, otherwise frameCanvas would be on top
 
-  -- insert windows --fb
-  local l = 1
+  -- insert windows
   for i = 1, #mspaces do
     local ratioW = canvasMSpaceControl[i]:frame().w / max.w
     local ratioH = canvasMSpaceControl[i]:frame().h / max.h
-    for j = 1, #winMSpaces do
-      if winMSpaces[#winMSpaces - j + 1].mspace[i] then
-        canvasWin[l] = hs.canvas:new()
-        canvasWin[l]:insertElement(
+    for j = #winMSpaces, 1, -1 do -- last focused 'painted' last, so it is in foreground
+      if winMSpaces[j].mspace[i] then
+        table.insert(canvasWin, hs.canvas:new())
+        canvasWin[#canvasWin]:insertElement(
         {
-          image = winMSpaces[#winMSpaces - j + 1].snapshot[i],
+          image = winMSpaces[j].snapshot[i],
           imageAlpha = mSpaceControlWinOpacity,
-          --action = 'fill',
           type = 'image',
           imageScaling = 'scaleToFit',
-          imageAlignment = 'topLeft',
+          --imageAlignment = 'topLeft',
           trackMouseDown = true,
+          id = winMSpaces[j].win:id(),
         }, 1)
-        canvasWin[l]:frame(hs.geometry.new(
-          winMSpaces[#winMSpaces - j + 1].frame[i].x * ratioW + canvasMSpaceControl[i]:frame().x,
-          winMSpaces[#winMSpaces - j + 1].frame[i].y * ratioH - heightMB * ratioH + canvasMSpaceControl[i]:frame().y,
-          winMSpaces[#winMSpaces - j + 1].frame[i].w * ratioW,
-          winMSpaces[#winMSpaces - j + 1].frame[i].h * ratioH
+        --canvasWin[#canvasWin]:canvasMouseEvents(true, true, false, false) -- ([down], [up], [enterExit], [move])
+        canvasWin[#canvasWin]:mouseCallback(function(a, event, id, x, y) -- (canvas object, event, id, x, y)
+          -- unreliable for giving focus to window on clicked canvasWin: winMSpaces[j] -> 'winMSpaces[j].win:id()' handed as 'id' works
+          goToSpace(i)
+          -- reason unclear: winMSpaces[j] unreliable, 
+          for o = 1, #winMSpaces do
+            if winMSpaces[o].win:id() == id then
+              winMSpaces[o].win:focus()
+            end
+          end
+
+          -- cleaning up
+          hs.timer.doAfter(0.0000001, function()
+            boolMSpaceControl = false
+            mSpaceCycleCount = 0
+          end)
+
+          for n = 1, #canvasMSpaceControl do
+            canvasMSpaceControl[n]:delete()
+            frameCanvas[n]:delete()
+          end
+          for n = 1, #canvasWin do
+            canvasWin[n]:delete()
+          end
+          baseCanvas:delete()
+        end)
+
+        canvasWin[#canvasWin]:frame(hs.geometry.new(
+          winMSpaces[j].frame[i].x * ratioW + canvasMSpaceControl[i]:frame().x,
+          winMSpaces[j].frame[i].y * ratioH - heightMB * ratioH + canvasMSpaceControl[i]:frame().y,
+          winMSpaces[j].frame[i].w * ratioW,
+          winMSpaces[j].frame[i].h * ratioH
         ))
-        canvasWin[l]:show()
-        l = l + 1
+        canvasWin[#canvasWin]:show()
       end
     end
   end
@@ -871,7 +889,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.50.2\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.51\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     {
       title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
@@ -1914,7 +1932,7 @@ end
 function refreshSnapshots(msp)
   for i = 1, #winMSpaces do
     if winMSpaces[i].mspace[msp] then
-      winMSpaces[i].snapshot[msp] = winMSpaces[i].win:snapshot():setSize({w =  winMSpaces[i].win:size().w / 2, h =  winMSpaces[i].win:size().h / 2})
+      winMSpaces[i].snapshot[msp] = winMSpaces[i].win:snapshot() --:setSize({w =  winMSpaces[i].win:size().w / 2, h =  winMSpaces[i].win:size().h / 2})
     end
   end
 end
@@ -2012,13 +2030,14 @@ end
 
 
 -- when standard window switchers such as AltTab or macOS' cmd-tab are used, cmdTabFocus() switches to correct mSpace
-function cmdTabFocus()
+function cmdTabFocus(w)
   -- when choosing to switch to window by cycling through all apps, go to mSpace of chosen window
-  if hs.window.focusedWindow() ~= nil and winMSpaces[getPosWinMSpaces(hs.window.focusedWindow())] ~= nil then
-    if not winMSpaces[getPosWinMSpaces(hs.window.focusedWindow())].mspace[currentMSpace] then -- in case focused window is not on current mSpace, switch to the one containing it
+  if w ~= nil and winMSpaces[getPosWinMSpaces(w)] ~= nil then
+    if not winMSpaces[getPosWinMSpaces(w)].mspace[currentMSpace] then -- in case focused window is not on current mSpace, switch to the one containing it
       for i = 1, #mspaces do
-        if winMSpaces[getPosWinMSpaces(hs.window.focusedWindow())].mspace[i] then
+        if winMSpaces[getPosWinMSpaces(w)].mspace[i] then
           goToSpace(i)
+          w:focus()
           break
         end
       end
@@ -2090,7 +2109,10 @@ function assignMS(w, boolgotoSpace)
         winMSpaces[getPosWinMSpaces(w)].mspace[j] = true
         -- in case position is given and also outer and inner padding are given
         if openAppMSpace[i][3] ~= nil and openAppMSpace[i][4] ~= nil and openAppMSpace[i][5] ~= nil then
-          winMSpaces[getPosWinMSpaces(w)].frame[j] = snap(openAppMSpace[i][3], openAppMSpace[i][4], openAppMSpace[i][5])
+          --winMSpaces[getPosWinMSpaces(w)].frame[j] = snap(openAppMSpace[i][3], openAppMSpace[i][4], openAppMSpace[i][5])
+          for k = 1, #mspaces do
+            winMSpaces[getPosWinMSpaces(w)].frame[k] = snap(openAppMSpace[i][3], openAppMSpace[i][4], openAppMSpace[i][5])
+          end
         -- in case position is given without outer/inner padding
         elseif openAppMSpace[i][3] ~= nil then
           --winMSpaces[getPosWinMSpaces(w)].frame[j] = snap(openAppMSpace[i][3])

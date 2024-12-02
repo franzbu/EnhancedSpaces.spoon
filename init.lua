@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.49"
+EnhancedSpaces.version = "0.9.50"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -108,9 +108,14 @@ function EnhancedSpaces:new(options)
     createWallpapers()
   else
     for i = 1, #mspaces do
+      --wallpapers[i] = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/wallpapers/default.jpg')
       wallpapers[i] = hs.image.imageFromURL(hs.screen.mainScreen():desktopImageURL())
     end
   end
+
+
+ 
+
 
   startupCommands = options.startupCommands or nil
 
@@ -623,6 +628,11 @@ function EnhancedSpaces:new(options)
     end
   end
 
+  -- refresh window snapshots for mSpace Control
+  hs.timer.doEvery(0.5, function()
+    --refreshSnapshots(currentMSpace)
+  end)
+
   refreshWinTables()
   moveResize.clickHandler:start()
   return moveResize
@@ -865,7 +875,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.49\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.50\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     {
       title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
@@ -1897,6 +1907,15 @@ function moveToSpace(target, origin, boolKeyboard)
 end
 
 
+function refreshSnapshots(msp)
+  for i = 1, #winMSpaces do
+    if winMSpaces[i].mspace[msp] then
+      winMSpaces[i].snapshot[msp] = winMSpaces[i].win:snapshot()
+    end
+  end
+end
+
+
 function refreshWinTables()
   winAll = filter_all:getWindows() --hs.window.sortByFocused)
   -- remove minimized/closed windows
@@ -1933,6 +1952,18 @@ function refreshWinTables()
         else
           winMSpaces[#winMSpaces].mspace[k] = false
         end
+      end
+    end
+  end
+
+  -- sort winMSpaces the same way as winAll, i.e., last focused first
+  for i = 1, #winAll do
+    for j = 1, #winMSpaces do
+      local k = getPosWinMSpaces(winAll[i])
+      if winMSpaces[k] ~= i then
+        table.insert(winMSpaces, i, winMSpaces[k])
+        table.remove(winMSpaces, k + 1)
+        break
       end
     end
   end

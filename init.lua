@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.51.1"
+EnhancedSpaces.version = "0.9.52"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -817,12 +817,11 @@ function mSpaceControl()
           imageAlpha = mSpaceControlWinOpacity,
           type = 'image',
           imageScaling = 'scaleToFit',
-          --imageAlignment = 'topLeft',
           trackMouseDown = true,
           id = winMSpaces[j].win:id(),
         }, 1)
-        --canvasWin[#canvasWin]:canvasMouseEvents(true, true, false, false) -- ([down], [up], [enterExit], [move])
-        canvasWin[#canvasWin]:mouseCallback(function(a, event, id, x, y) -- (canvas object, event, id, x, y)
+        ---[[--canvasWin[#canvasWin]:canvasMouseEvents(true, true, false, false) -- ([down], [up], [enterExit], [move])
+        canvasWin[#canvasWin]:mouseCallback(function(_, _, id) -- (canvas object, event, id, x, y)
           -- unreliable for giving focus to window on clicked canvasWin: winMSpaces[j] -> 'winMSpaces[j].win:id()' handed as 'id' works
           goToSpace(i)
           -- reason unclear: winMSpaces[j] unreliable, 
@@ -836,7 +835,6 @@ function mSpaceControl()
               break
             end
           end
-
           -- cleaning up
           hs.timer.doAfter(0.0000001, function()
             boolMSpaceControl = false
@@ -852,6 +850,7 @@ function mSpaceControl()
           end
           baseCanvas:delete()
         end)
+        --]]
 
         canvasWin[#canvasWin]:frame(hs.geometry.new(
           winMSpaces[j].frame[i].x * ratioW + canvasMSpaceControl[i]:frame().x,
@@ -869,6 +868,10 @@ end
 
 function refreshMenu()
   mainMenu = {
+    {
+      title = "mSpace Control",
+      fn = function(mods) mSpaceControl() end
+    },
     {
       title = "mSpaces",
       menu = createMSpaceMenu(),
@@ -894,7 +897,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.51.1\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.52\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     {
       title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),

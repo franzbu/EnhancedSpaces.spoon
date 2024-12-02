@@ -1,3 +1,7 @@
+# v0.9.50
+
+* mSpace Control: general improvements
+
 # v0.9.49
 
 * mSpace Control: fixed focus of windows

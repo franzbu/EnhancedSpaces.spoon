@@ -1,4 +1,7 @@
+# v0.9.52
 
+* mSpace Control: menu title added
+  
 # v0.9.51
 
 * mSpace Control: windows in preview mSpaces clickable to directly switch there

@@ -1,10 +1,8 @@
-# v0.9.50.2
 
-* bug fixes
+# v0.9.51
 
-# v0.9.50.1
-
-* mSpace Control: windows that have been moved to other mSpaces are now shown correctly
+* mSpace Control: windows in preview mSpaces clickable to directly switch there
+* various fixes
 
 # v0.9.50
 

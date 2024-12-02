@@ -1,3 +1,7 @@
+# v0.9.50.2
+
+* bug fixes
+
 # v0.9.50.1
 
 * mSpace Control: windows that have been moved to other mSpaces are now shown correctly

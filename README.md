@@ -739,6 +739,8 @@ mSpace Control shows a preview of your mSpaces and enables you to switch between
 
 To open mSpace Control, press and release `mSpaceControlModifier` and `mSpaceControlKey`. To cycle through your mSpaces, keep `mSpaceControlModifier` pressed - or press it again while mSpace Control is open - and use `mSpaceControlKey` for cycling. For cycling in reverse order additionally press `shift`.
 
+You can also click on any preview mSpace to switch there; clicking on an individual window in a preview mSpace switches there, activates that window, and places the pointer at the center of that window. 
+
 To change thickness, color and/or opacity of the frame that highlights the current mSpace, add the following to your `init.lua`; apart from the frame thickness, you can use values between 0 and 1:
 
 ``` lua

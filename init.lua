@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.50.1"
+EnhancedSpaces.version = "0.9.50.2"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -112,10 +112,6 @@ function EnhancedSpaces:new(options)
       wallpapers[i] = hs.image.imageFromURL(hs.screen.mainScreen():desktopImageURL())
     end
   end
-
-
- 
-
 
   startupCommands = options.startupCommands or nil
 
@@ -268,7 +264,7 @@ function EnhancedSpaces:new(options)
     winMSpaces[i].frame = {}
     for k = 1, #mspaces do
       winMSpaces[i].frame[k] = winAll[i]:frame()
-      winMSpaces[i].snapshot[k] = winAll[i]:snapshot()
+      winMSpaces[i].snapshot[k] = winAll[i]:snapshot():setSize({w = winAll[i]:size().w / 2, h = winAll[i]:size().h / 2})
       if k == currentMSpace then
         winMSpaces[i].mspace[k] = true
       else
@@ -370,7 +366,7 @@ function EnhancedSpaces:new(options)
       refreshWinTables()
     end
     --refresh snapshot
-    winMSpaces[getPosWinMSpaces(w)].snapshot[currentMSpace] = w:snapshot()
+    --winMSpaces[getPosWinMSpaces(w)].snapshot[currentMSpace] = w:snapshot():setSize({w = img1:size().w / 2, h = img1:size().h / 2})
   end)
 
   -- next 2 filters are for avoiding calling assignMS(_, true) after unfullscreening a window ('windowOnScreen' is called for each window after a window gets unfullscreened)
@@ -629,7 +625,7 @@ function EnhancedSpaces:new(options)
   end
 
   -- refresh window snapshots for mSpace Control
-  hs.timer.doEvery(0.5, function()
+  hs.timer.doEvery(1, function()
     --refreshSnapshots(currentMSpace)
   end)
 
@@ -655,7 +651,7 @@ end
 -- mSpace Control
 boolMSpaceControl = false
 canvasMSpaceControl = {} -- canvases containing one mSpace preview each
-frameCanvas = {} -- fr ame for highlighting current mSpace
+frameCanvas = {} -- frame for highlighting current mSpace
 canvasWin = {} -- 
 function mSpaceControl()
   boolMSpaceControl = true
@@ -815,7 +811,7 @@ function mSpaceControl()
   frameCanvas[currentMSpace]:show() -- show at the end, so frame is on top of adjacent mSpaces
   canvasMSpaceControl[currentMSpace]:show() -- necessary, otherwise frameCanvas would be on top
 
-  -- insert windows
+  -- insert windows --fb
   local l = 1
   for i = 1, #mspaces do
     local ratioW = canvasMSpaceControl[i]:frame().w / max.w
@@ -875,7 +871,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.50.1\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.50.2\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     {
       title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
@@ -1918,7 +1914,7 @@ end
 function refreshSnapshots(msp)
   for i = 1, #winMSpaces do
     if winMSpaces[i].mspace[msp] then
-      winMSpaces[i].snapshot[msp] = winMSpaces[i].win:snapshot()
+      winMSpaces[i].snapshot[msp] = winMSpaces[i].win:snapshot():setSize({w =  winMSpaces[i].win:size().w / 2, h =  winMSpaces[i].win:size().h / 2})
     end
   end
 end
@@ -1956,7 +1952,7 @@ function refreshWinTables()
         winMSpaces[#winMSpaces].frame[k] = winAll[i]:frame()
         if k == currentMSpace then
           winMSpaces[#winMSpaces].mspace[k] = true
-          winMSpaces[#winMSpaces].snapshot[k] = winAll[i]:snapshot()
+          winMSpaces[#winMSpaces].snapshot[k] = winAll[i]:snapshot():setSize({w =  winAll[i]:size().w / 2, h =  winAll[i]:size().h / 2})
         else
           winMSpaces[#winMSpaces].mspace[k] = false
         end
@@ -2097,12 +2093,18 @@ function assignMS(w, boolgotoSpace)
           winMSpaces[getPosWinMSpaces(w)].frame[j] = snap(openAppMSpace[i][3], openAppMSpace[i][4], openAppMSpace[i][5])
         -- in case position is given without outer/inner padding
         elseif openAppMSpace[i][3] ~= nil then
-          winMSpaces[getPosWinMSpaces(w)].frame[j] = snap(openAppMSpace[i][3])
+          --winMSpaces[getPosWinMSpaces(w)].frame[j] = snap(openAppMSpace[i][3])
+          for k = 1, #mspaces do
+            winMSpaces[getPosWinMSpaces(w)].frame[k] = snap(openAppMSpace[i][3])
+          end
         -- app given without additional parameters
         else --point/rect
-          winMSpaces[getPosWinMSpaces(w)].frame[indexOf(mspaces, openAppMSpace[i][2])] = hs.geometry.rect(max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h)                                                                                                      -- put window in middle of screen
+          --winMSpaces[getPosWinMSpaces(w)].frame[indexOf(mspaces, openAppMSpace[i][2])] = hs.geometry.rect(max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h) -- put window in middle of screen
+          for k = 1, #mspaces do
+            winMSpaces[getPosWinMSpaces(w)].frame[k] = hs.geometry.rect(max.w / 2 - w:frame().w / 2, max.h / 2 - w:frame().h / 2, w:frame().w, w:frame().h) -- put window in middle of screen
+          end
         end
-        if boolgotoSpace then                                                                                                                                                                      -- not when EnhancedSpaces is started
+        if boolgotoSpace then -- not when EnhancedSpaces is started
           goToSpace(indexOf(mspaces, openAppMSpace[i][2]))
         end
       elseif getPosWinMSpaces(w) ~= nil then

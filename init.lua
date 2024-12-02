@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.50"
+EnhancedSpaces.version = "0.9.50.1"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -875,7 +875,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.50\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.50.1\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     {
       title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
@@ -1901,8 +1901,16 @@ function moveToSpace(target, origin, boolKeyboard)
   if boolKeyboard then
     winMSpaces[getPosWinMSpaces(fwin)].frame[target] = winMSpaces[getPosWinMSpaces(fwin)].frame[origin]
   else  --point/rect
-    winMSpaces[getPosWinMSpaces(fwin)].frame[target] = hs.geometry.rect(max.w / 2 - fwin:frame().w / 2, max.h / 2 - fwin:frame().h / 2, fwin:frame().w, fwin:frame().h) -- put window in middle of screen            
+    winMSpaces[getPosWinMSpaces(fwin)].frame[target] = hs.geometry.rect(
+      max.w / 2 - fwin:frame().w / 2, 
+      max.h / 2 - fwin:frame().h / 2, 
+      fwin:frame().w, fwin:frame().h
+    ) -- put window in middle of screen            
   end
+  -- move snapshot
+  winMSpaces[getPosWinMSpaces(fwin)].snapshot[target] = winMSpaces[getPosWinMSpaces(fwin)].snapshot[origin]
+  winMSpaces[getPosWinMSpaces(fwin)].snapshot[origin] = nil
+
   refreshWinTables()
 end
 

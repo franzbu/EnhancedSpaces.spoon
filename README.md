@@ -729,7 +729,7 @@ Furthermore, as these features aren't final yet, there might still be changes to
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/overview_frame.jpg' width=700 />
 
-mSpace Control provides a visual way of handling your mSpaces and windows. It shows a preview of your mSpaces and enables you to switch between them via keyboard or pointing device. You can also select individual windows, which are then activated with the pointer at their center. 
+mSpace Control provides previews of your mSpaces and enables you to switch between them via keyboard or pointing device. You can also select individual windows, which are then activated with the pointer at their center. 
 
 To enable mSpace Control, add the following lines to your `init.lua` and adjust the keys in case you prefer to use different ones:
 
@@ -765,13 +765,12 @@ By default, mSpace Control shows all your mSpaces in their original order. In ca
 ```
 -->
 
-In case you'd like to change the padding, color and/or opacity of mSpace Control, add the following to your `init.lua`, and adjust the values to your liking. Regarding the padding, be aware that the values for the outer and inner padding are relative rather than absolute due to the fixed aspect ratio of the mSpace previews. For adjusting color and opacity you can use values between 0 and 1.
+In case you'd like to change the padding, color and/or opacity of mSpace Control, add the following to your `init.lua`, and adjust the values to your liking. For adjusting color and opacity you can use values between 0 and 1.
 
 ``` lua
   -- configure mSpace Control
   mSpaceControlConfig = { 
-    60, -- outer padding; default: 60
-    60, -- inner padding; default: 60
+    50, -- padding; default: 50
     0, -- red; default: 0
     0, -- green; default: 0
     0, -- blue; default: 0

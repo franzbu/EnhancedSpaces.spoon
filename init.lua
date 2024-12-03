@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.52"
+EnhancedSpaces.version = "0.9.53"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -123,7 +123,8 @@ function EnhancedSpaces:new(options)
   mSpaceControlModifier = options.mSpaceControlModifier or { '' }
   mSpaceControlKey = options.mSpaceControlKey or 'a'
   mSpaceControlShow = options.mSpaceControlShow or mspaces
-  mSpaceControlConfig = options.mSpaceControlConfig or { 60, 60, 0, 0, 0, 0.9 }
+  mSpaceControlConfig = options.mSpaceControlConfig or { 50, 0, 0, 0, 0.9 }
+  if mSpaceControlConfig[1] < 1 then mSpaceControlConfig[1] = 1 end
   mSpaceControlFrame = options.mSpaceControlFrame or  { 3, 1, 0, 0, 1, }
   mSpaceControlHideHSC = options.mSpaceControlHideHSC or false -- hide Hammerspoon Console
   mSpaceControlWinOpacity = options.mSpaceControlWinOpacity or 1
@@ -249,7 +250,8 @@ function EnhancedSpaces:new(options)
   )
 
   max = hs.screen.mainScreen():frame()
-  maxWithMB = hs.screen.mainScreen():frame()
+  maxWithMB = hs.screen.mainScreen():fullFrame()
+  heightMB = maxWithMB.h - max.h -- height menu bar
 
   filter = dofile(hs.spoons.resourcePath('lib/window_filter.lua'))
   filter_all = filter.new()
@@ -684,10 +686,10 @@ function mSpaceControl()
     action = 'fill',
     type = 'rectangle',
     fillColor = {
-      red = mSpaceControlConfig[3],
-      green = mSpaceControlConfig[4],
-      blue = mSpaceControlConfig[5],
-      alpha = mSpaceControlConfig[6]
+      red = mSpaceControlConfig[2],
+      green = mSpaceControlConfig[3],
+      blue = mSpaceControlConfig[4],
+      alpha = mSpaceControlConfig[5]
     },
     trackMouseDown = true,
   }, 1)
@@ -710,11 +712,6 @@ function mSpaceControl()
   baseCanvas:frame(hs.geometry.new(0, 0, maxWithMB.w, maxWithMB.h))
   baseCanvas:show()
 
-
-  local k = 1
-  local p1 = mSpaceControlConfig[1]
-  local p2 = mSpaceControlConfig[2]
-  local ft = mSpaceControlFrame[1] -- frame thickness
   if #mSpaceControlShow <= 4 then
     mSpaceControlX = 2
     mSpaceControlY = 2
@@ -743,18 +740,21 @@ function mSpaceControl()
     mSpaceControlX = math.ceil(math.sqrt(#mSpaceControlShow))
     mSpaceControlY = mSpaceControlX
   end
-  local screenRatio = max.h / max.w
+  local padH = mSpaceControlConfig[1] / 1000 * max.w / mSpaceControlY
+  local ft = mSpaceControlFrame[1] -- frame thickness
+  local screenRatio = maxWithMB.h / max.w
+  local mSpacePreviewW = (max.w - 2 * padH) / mSpaceControlY - 2 * padH
+  local mSpacePreviewH = mSpacePreviewW * screenRatio
+  local padV = (maxWithMB.h - mSpaceControlX * mSpacePreviewH) / (mSpaceControlX + 1)
+  local k = 1
   for i = 1, mSpaceControlX do
     for j = 1, mSpaceControlY do
       if k > #mSpaceControlShow then break end
       canvasMSpaceControl[k]:frame(hs.geometry.new(
-        --p1 - p2 + (j - 1) * (max.w - 2 * p1) / mSpaceControlY + p2, -- x
-        p1 + p2 + (j - 1) * ((max.w - 2 * p1) / mSpaceControlY - 2 * p2) + (j-1) * 2 * p2, -- x
-        --p1 - p2 + (i - 1) * (max.h - 2 * p1) / mSpaceControlX + p2, -- y
-        p1 + p2 + (i - 1) * (((max.w - 2 * p1 - 2 * p2) / mSpaceControlY) * screenRatio) + (i-1) * 2 * p2, -- y
-        (max.w - 2 * p1) / mSpaceControlY - 2 * p2,                 -- w
-        --(maxWithMB.h - 2 * p1 - 2 * p2) / mSpaceControlX                -- h
-        ((max.w - 2 * p1 - 2 * p2) / mSpaceControlY) * screenRatio  -- h
+        2 * padH + (j - 1) * mSpacePreviewW + (j-1) * 2 * padH, -- x
+        i * padV + (i - 1) * mSpacePreviewH, -- y
+        mSpacePreviewW, -- w
+        mSpacePreviewH -- h
       ))
       canvasMSpaceControl[k]:show()
 
@@ -781,12 +781,12 @@ function mSpaceControl()
               mSpaceCycleCount = 0
             end)
 
-          for j = 1, #canvasMSpaceControl do
-            canvasMSpaceControl[j]:delete()
-            frameCanvas[j]:delete()
+          for o = 1, #canvasMSpaceControl do
+            canvasMSpaceControl[o]:delete()
+            frameCanvas[o]:delete()
           end
-          for j = 1, #canvasWin do
-            canvasWin[j]:delete()
+          for o = 1, #canvasWin do
+            canvasWin[o]:delete()
           end
           baseCanvas:delete()
         end)
@@ -828,8 +828,8 @@ function mSpaceControl()
           for o = 1, #winMSpaces do
             if winMSpaces[o].win:id() == id then
               winMSpaces[o].win:focus()
-              hs.mouse.absolutePosition(
-                hs.geometry.point(winMSpaces[o].win:frame().x + winMSpaces[o].win:frame().w / 2, 
+              hs.mouse.absolutePosition(hs.geometry.point(
+                winMSpaces[o].win:frame().x + winMSpaces[o].win:frame().w / 2,
                 winMSpaces[o].win:frame().y + winMSpaces[o].win:frame().h / 2
               ))
               break
@@ -897,7 +897,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.52\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.53\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     {
       title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),

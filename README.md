@@ -721,7 +721,7 @@ This is the resulting menu:
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/menu_hs2_ger.png' width='360'>
 
 ## Experimental Features
-Features listed here have undergone some testing and are supposed to work as expected; however, as they have yet to be thoroughly tested, the occational hiccup should not be entirely unexpected. 
+Features in this section have undergone some testing and are supposed to work as expected; however, as they have yet to be thoroughly tested, the occational hiccup should not be entirely unexpected. 
 
 Furthermore, as these features aren't final yet, there might still be changes to its implementation, so if one of these features stops working after an update, please return to this documentation in order to implement the necessary adjustments to your `init.lua`.
 
@@ -729,7 +729,7 @@ Furthermore, as these features aren't final yet, there might still be changes to
 
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/overview_frame.jpg' width=700 />
 
-mSpace Control provides previews of your mSpaces and enables you to switch between them via keyboard or pointing device. You can also select individual windows. 
+mSpace Control provides previews of your mSpaces and enables you to switch between them via keyboard or pointing device. mSpace Control also allows you to select windows individually. 
 
 To enable mSpace Control, add the following lines to your `init.lua` and adjust the keys in case you prefer to use different ones:
 
@@ -741,9 +741,9 @@ To enable mSpace Control, add the following lines to your `init.lua` and adjust 
 
 To open mSpace Control, press and release `mSpaceControlModifier` and `mSpaceControlKey`. To cycle through your mSpaces, keep `mSpaceControlModifier` pressed - or press it again while mSpace Control is open - and use `mSpaceControlKey` for cycling. For cycling in reverse order additionally press `shift`. You can also open mSpace Control via menu.
 
-You can click on any preview mSpace to instantly switch there; clicking on an individual window activates that window and places the pointer at the center of it. 
+You can click on any preview of the mSpaces to instantly switch there; selecting an individual window activates it and places the pointer at the center of it. 
 
-To change thickness, color and/or opacity of the frame highlighting the current mSpace, add the following to your `init.lua`; apart from the frame thickness, you can use values between 0 and 1:
+To change thickness, color and/or opacity of the frame highlighting the current mSpace, add the following to your `init.lua`; for adjusting color and opacity you can use values between 0 and 1:
 
 ``` lua
   -- mSpace Control: hightlight currently active mSpace

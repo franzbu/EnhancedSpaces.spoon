@@ -44,7 +44,7 @@ end)
 
 These few lines of Hammerspoon code enable you to connect to one of PIA's VPN servers using the keyboard shortcut `Command-Shift-s`, while `Command-Shift-d` disconnects from the VPN server. 
 
-Even if you're unfamiliar with writing code, there is a plethora of ready-made examples out there, and even without ever having written any code, it's easy to adjust the above lines to, for instance, connecting to your VPN server using `c` in your hotkey instead of `s`, right?
+Even if you're unfamiliar with writing code, there is a plethora of ready-made examples out there. Even without ever having written any code, it's easy to adjust the above lines to, for instance, connecting to your VPN server using `c` in your hotkey instead of `s`, right?
 
 But let's move our focus back to EnhancedSpaces.
 

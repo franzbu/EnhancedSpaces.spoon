@@ -1,3 +1,8 @@
+# v0.9.53
+
+* mSpace Control: added visual improvements
+* note: due to adjustments, it is necessary to change `mSpaceControlConfig` in your `init.lua` as [pointed out](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#mspace-control)
+
 # v0.9.52
 
 * mSpace Control: menu title added

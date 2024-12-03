@@ -58,7 +58,7 @@ mkdir -p ~/.hammerspoon/Spoons && git clone https://github.com/franzbu/EnhancedS
 ```
 
 ## Setting up EnhancedSpaces
-EnhancedSpaces pretty much runs out of the box. Apart from the initial setup - which, as you'll see in a minute, can also be done running a terminal command - you only need to deal with Hammerspoon's configuration file when you want to add customizations.
+EnhancedSpaces pretty much runs hits the ground running. Apart from the initial setup - which, as you'll see in a minute, can also be done running a terminal command - you don't need to deal with Hammerspoon's configuration file unless you want to change the default setup.
 
 So once you've installed EnhancedSpaces, add the following lines to the file `~/.hammerspoon/init.lua` (you can edit that file by clicking the Hammerspoon icon in your menu bar and choosing 'Open Config'). You might also want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you are greeted with:
 

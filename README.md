@@ -19,7 +19,7 @@ Another appeal of EnhancedSpaces is that managing both virtual screens and windo
 
 So who is EnhancedSpaces for? It has been made for users who want to use multiple screens and want an efficient and customizable application to manage them. 
 
-EnhancedSpaces has increased my productivity with macOS in a way no other space manager has. May it do the same for you.
+EnhancedSpaces has increased my productivity in macOS. May it do the same for you.
 
 
 ## Introduction

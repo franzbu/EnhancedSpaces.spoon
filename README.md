@@ -1,6 +1,6 @@
 # EnhancedSpaces
 
-<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/overview.jpg' class="rotate90" />
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/overview_frame.jpg' width=700 />
 
 ## First Things First: Who Is This For? 
 Many people sooner or later feel restricted by the confinements of a single screen; there is no such thing as too much space. A multi-monitor arrangement is the obvious remedy; however, there is a lesser-known solution that enables the user to have more than one screen on a single display: virtual screens or, as they are called in EnhancedSpaces, mSpaces.
@@ -724,9 +724,6 @@ Features in this section have undergone some testing and are supposed to work as
 Furthermore, as these features aren't final yet, there might still be changes to its implementation, so if one of these features stops working after an update, please return to this documentation in order to implement the necessary adjustments to your `init.lua`.
 
 ### mSpace Control
-
-<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/overview_frame.jpg' width=700 />
-
 mSpace Control provides previews of your mSpaces and enables you to switch between them via keyboard or pointing device. mSpace Control also allows you to select windows individually. 
 
 To enable mSpace Control, add the following lines to your `init.lua` and adjust the keys in case you prefer to use different ones:

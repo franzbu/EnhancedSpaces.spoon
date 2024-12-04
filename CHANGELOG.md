@@ -1,3 +1,7 @@
+# v0.9.54
+
+* dock set to autohide
+
 # v0.9.53
 
 * mSpace Control: added visual improvements

@@ -147,7 +147,7 @@ Just in case it is not entirely clear where to add these lines or future modific
 ``` lua
 local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')
 EnhancedSpaces:new({
-  --  ______________ modifications to EnhancedSpaces below this line ______________
+ --  ______________ modifications to EnhancedSpaces below this line ______________
 
   mSpaces = { '1', '2', '3', 'E', 'T' }, -- default: { '1', '2', '3' }
   startmSpace = 'E', -- default: 2
@@ -162,11 +162,11 @@ EnhancedSpaces:new({
     'w', -- send active window to right mSpace and switch there; default: 'w'
   },
 
-  --  ______________ modifications to EnhancedSpaces above this line ______________
+ --  ______________ modifications to EnhancedSpaces above this line ______________
 })
 ```
 
-The order in which you add the potential modifications discussed below is entirely up to you.
+In case you add more modifications, it is entirely up to you which order you put them in, just make sure they're within the boundaries shown above.
 
 ### Switch Directly to Any mSpace
 For switching directly to any mSpace, press the Option key (`alt`) and the key for your mSpace, for example, `3`.

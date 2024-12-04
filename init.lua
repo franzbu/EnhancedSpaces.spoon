@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.53"
+EnhancedSpaces.version = "0.9.54"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -37,6 +37,30 @@ end
 function EnhancedSpaces:new(options)
   hs.window.animationDuration = 0
   options = options or {}
+
+  -- hide dock
+  --hs.eventtap.keyStroke({'command', 'option'}, 'd')
+  local gsub = string.gsub
+  local function shellArg(x)
+    return [[']] .. gsub(x, [[']], [['\'']]) .. [[']]
+  end
+  local function applescript(x)
+    hs.execute('osascript -e '..shellArg(x))
+  end
+    local setDockAutohideScript = [[
+    tell application "System Events"
+      tell dock preferences
+        set autohide to %s
+      end tell
+    end tell
+  ]]
+  local function setDockAutohide(autohide)
+    applescript(setDockAutohideScript:format(autohide and 'true' or 'false'))
+  end
+  local function toggleDockAutohide()
+    applescript(setDockAutohideScript:format('not autohide'))
+  end
+  setDockAutohide(true)
 
   pM = options.outerPadding or 5
   local innerPadding = options.innerPadding or 5
@@ -897,7 +921,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.53\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.54\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     {
       title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),

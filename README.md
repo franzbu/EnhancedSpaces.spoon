@@ -44,7 +44,7 @@ end)
 
 These few lines of Hammerspoon code enable you to connect to one of PIA's VPN servers using the keyboard shortcut `Command-Shift-s`, while `Command-Shift-d` disconnects from the VPN server. 
 
-There is a plethora of ready-made examples out there, and even without ever having written any code, it's easy to adjust the above lines to, for instance, connecting to your VPN server using `c` in your hotkey instead of `s`, right?
+There is a plethora of ready-made examples available, and even without ever having written any code, it's easy to adjust the above lines to, for instance, connecting to your VPN server using `c` in your hotkey instead of `s`, right?
 
 But let's move our focus back to EnhancedSpaces.
 
@@ -58,9 +58,7 @@ mkdir -p ~/.hammerspoon/Spoons && git clone https://github.com/franzbu/EnhancedS
 ```
 
 ## Setting up EnhancedSpaces
-EnhancedSpaces pretty much runs hits the ground running. Apart from the initial setup - which, as you'll see in a minute, can also be done running a terminal command - you don't need to deal with Hammerspoon's configuration file unless you want to change the default setup.
-
-So once you've installed EnhancedSpaces, add the following lines to the file `~/.hammerspoon/init.lua` (you can edit that file by clicking the Hammerspoon icon in your menu bar and choosing 'Open Config'). You might also want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you are greeted with:
+Once you've installed EnhancedSpaces, add the following lines to the file `~/.hammerspoon/init.lua` (you can edit that file by clicking the Hammerspoon icon in your menu bar and choosing 'Open Config'). You might also want to adjust the amount and names of your mSpaces and `startmSpace`, which is the mSpace you are greeted with:
 
 ``` lua
 local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')
@@ -70,7 +68,7 @@ EnhancedSpaces:new({
 })
 ```
 
-The following terminal command can be used as an alternative to manually editing `init.lua`. In that case the default options are used, which means that the mSpaces `1`, `2`, and `3`are created, with `2` as the default mSpace:
+The following terminal command can be used as an alternative to manually editing `init.lua`. In this case the default options are used, which means that the mSpaces `1`, `2`, and `3`are created, with `2` as the default mSpace:
 
 ```bash
 echo -e "local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')\nEnhancedSpaces:new({\nmSpaces = { '1', '2', '3' }, -- default: { '1', '2', '3' }\nstartmSpace = '2', -- default: 2\n})" >> ~/.hammerspoon/init.lua
@@ -79,9 +77,9 @@ echo -e "local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')\nEnhancedSpaces:n
 Reload Hammerspoon's configuration (menu bar icon - 'Reload Config') and you're ready to go. All you see for now is a new icon in your menu bar indicating your current mSpace, so let's find out how you can interact with your new mSpaces.
 
 ## Menu
-You can use keyboard shortcuts for handling windows and mSpaces; however, sometimes it can be convenient to get things done via menu - even more so at the beginning, when the muscle memory regarding the new hotkeys might not yet be at full steam.
+You can use keyboard shortcuts for handling windows and mSpaces; however, sometimes it can be convenient to get things done via menu.
 
-EnhancedSpaces' menu can be used to switch to another mSpace with or without moving a window along, to swap windows, to get a window from another mSpace, and to create references of windows, i.e., the already mentioned 'sticky windows', which means that the same window can be shown on more than one mSpace - more about references of windows in the section [Same Window on More Than One mSpace](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#same-window-on-more-than-one-mspace).
+EnhancedSpaces' menu lets you switch to another mSpace with or without moving a window along, swap windows, get a window from another mSpace, and create references of windows, i.e., the already mentioned 'sticky windows', which means that the same window can be shown on more than one mSpace - more about references of windows in the section [Same Window on More Than One mSpace](https://github.com/franzbu/EnhancedSpaces.spoon/tree/main#same-window-on-more-than-one-mspace).
 
 Clicking EnhancedSpaces' icon in the menu bar, a menu like this is shown:
 

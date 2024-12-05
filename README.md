@@ -48,8 +48,6 @@ There is a plethora of ready-made examples available, and even without ever havi
 
 But let's move our focus back to EnhancedSpaces.
 
-Note: EnhancedSpaces sets the dock to autohide for all features to work properly. So move your mouse to the bottom of the screen (or to the screen border you dock is situated) for the dock to become visible. In case you want to have the dock visible at all times, simply press `Command-Option-D` after closing EnhancedSpaces.
-
 ## Installation
 Download EnhancedSpaces and move the folder to `~/.hammerspoon/Spoons`. Make sure the name of the folder is `EnhancedSpaces.spoon`. 
 

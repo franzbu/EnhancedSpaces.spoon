@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.55"
+EnhancedSpaces.version = "0.9.55.1"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -307,7 +307,7 @@ function EnhancedSpaces:new(options)
     heightMB = maxFF.h - max.h
     heightDock = 0
 
-    hs.timer.doAfter(0.0000001, function()
+    hs.timer.doAfter(0.00001, function()
       initiateAtStart()
       refreshWinTables()
       moveResize.clickHandler:start()
@@ -316,7 +316,7 @@ function EnhancedSpaces:new(options)
   else -- with dock
     local hfmd = hs.screen.mainScreen():frame() -- height frame with menu bar and dock in it
     setDockAutohide(true)
-    hs.timer.doAfter(0.0000001, function()
+    hs.timer.doAfter(0.00001, function()
       local hfm = hs.screen.mainScreen():frame() -- height frame with menu bar in it
       heightDock = hfm.h - hfmd.h
       heightMB = maxFF.h - hfm.h
@@ -1012,7 +1012,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.55\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.55.1\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     {
       title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
@@ -1480,9 +1480,9 @@ function EnhancedSpaces:handleClick()
 
       local win = getWindowUnderMouse():focus()
       local frame = win:frame()
-      max = win:screen():frame()
-      maxFF = win:screen():fullFrame()
-      heightMB = maxFF.h - max.h -- height menu bar
+      --max = win:screen():frame()
+      --maxFF = win:screen():fullFrame()
+      --heightMB = maxFF.h - max.h -- height menu bar
       local xNew = frame.x
       local yNew = frame.y
       local wNew = frame.w
@@ -2030,7 +2030,7 @@ end
 
 function moveToSpace(target, origin, boolKeyboard)
   local fwin = hs.window.focusedWindow()
-  max = fwin:screen():frame()
+  --max = fwin:screen():frame()
   fwin:setTopLeft(hs.geometry.point(max.w - 1, max.h))
   winMSpaces[getPosWinMSpaces(fwin)].mspace[target] = true
   winMSpaces[getPosWinMSpaces(fwin)].mspace[origin] = false
@@ -2139,7 +2139,7 @@ end
 
 
 function refreshMSpaces()
-  max = hs.screen.mainScreen():frame()
+  --max = hs.screen.mainScreen():frame()
   for i,v in pairs(winMSpaces) do
     if winMSpaces[i].mspace[currentMSpace] == true then
       --winMSpaces[i].win:setFrame(winMSpaces[i].frame[target]) -- 'unhide' window
@@ -2172,7 +2172,7 @@ end
 function adjustWinFrame(w)
   -- subscribed filter for some reason takes a couple of seconds to trigger method -> alternative: hs.timer.doEvery()
   if w ~= nil then
-    max = w:screen():frame()
+    --max = w:screen():frame()
     if w:topLeft().x < max.w - 2 then -- prevents subscriber-method to refresh coordinates of window that has just been 'hidden'
       if winMSpaces[getPosWinMSpaces(w)] ~= nil then
         winMSpaces[getPosWinMSpaces(w)].frame[currentMSpace] = w:frame()
@@ -2195,7 +2195,7 @@ end
 
 function refWinMSpace(target) -- add 'copy' of window on current mSpace to target mSpace
   local fwin = hs.window.focusedWindow()
-  max = fwin:screen():frame()
+  --max = fwin:screen():frame()
   winMSpaces[getPosWinMSpaces(fwin)].mspace[target] = true
   -- copy frame from original mSpace
   winMSpaces[getPosWinMSpaces(fwin)].frame[target] = winMSpaces[getPosWinMSpaces(fwin)].frame[currentMSpace]
@@ -2206,7 +2206,7 @@ end
 
 function derefWinMSpace()
   local fwin = hs.window.focusedWindow()
-  max = fwin:screen():frame()
+  --max = fwin:screen():frame()
   winMSpaces[getPosWinMSpaces(fwin)].mspace[currentMSpace] = false
   -- in case all 'mspace' are 'false', close window
   local all_false = true
@@ -2301,9 +2301,9 @@ function snap(scenario, pMl, pIl)
     pM = pMl
     pI = pIl
   end
-  maxFF = hs.window.focusedWindow():screen():fullFrame()
-  max = hs.window.focusedWindow():screen():frame()
-  heightMB = maxFF.h - max.h   -- height menu bar
+  --maxFF = hs.window.focusedWindow():screen():fullFrame()
+  --max = hs.window.focusedWindow():screen():frame()
+  --heightMB = maxFF.h - max.h   -- height menu bar
   local xNew = 0
   local yNew = 0
   local wNew = 0

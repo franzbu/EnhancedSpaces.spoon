@@ -1,3 +1,7 @@
+# v0.9.58
+
+* bug fixes
+
 # v0.9.57
 
 * dock-related and other bug fixes

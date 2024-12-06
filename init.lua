@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.57"
+EnhancedSpaces.version = "0.9.58"
 EnhancedSpaces.spoonPath = scriptPath()
 
 local function tableToMap(table)
@@ -119,7 +119,7 @@ function EnhancedSpaces:new(options)
   swapSwitchFocus = options.swapSwitchFocus or false
 
   -- mSpace Control
-  mSpaceControlModifier = options.mSpaceControlModifier or { '' }
+  mSpaceControlModifier = options.mSpaceControlModifier or { 'alt' }
   mSpaceControlKey = options.mSpaceControlKey or 'a'
   mSpaceControlShow = options.mSpaceControlShow or mspaces
   mSpaceControlConfig = options.mSpaceControlConfig or { 50, 0, 0, 0, 0.9 }
@@ -680,13 +680,6 @@ function initiateAtStart()
     end)
   end
 
-  -- startup commands
-  if startupCommands ~= nil then
-    for i = 1, #startupCommands do
-      os.execute(startupCommands[i])
-    end
-  end
-
   if not autohideDock then
     -- has to be triggered later than 'setDockAutohide(true)'
     setDockAutohide(false)
@@ -964,7 +957,7 @@ function refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.57\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.58\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     {
       title = hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
@@ -2096,7 +2089,7 @@ function refreshMSpaces()
       --winMSpaces[i].win:setFrame(winMSpaces[i].frame[target]) -- 'unhide' window
       winMSpaces[i].win:move(winMSpaces[i].frame[currentMSpace]) -- 'unhide' window
     else
-      winMSpaces[i].win:setTopLeft(hs.geometry.point(max.w - 1, max.h))
+      winMSpaces[i].win:setTopLeft(hs.geometry.point(max.w - 0.0001, max.h - 0.0001))
       --winMSpaces[i].win:move(hs.geometry.point(max.w - 1, max.h, winMSpaces[i].win:frame().x, winMSpaces[i].win:frame().y)) 
     end
   end

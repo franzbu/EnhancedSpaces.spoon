@@ -1,3 +1,7 @@
+# v0.9.57
+
+* dock-related and other bug fixes
+
 # v0.9.54
 
 * dock set to autohide as temporary fix

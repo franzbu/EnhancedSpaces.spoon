@@ -1,7 +1,7 @@
 # v0.9.59
 
 * EnhancedSpaces namespace is used for functions
-* bugfixes
+* bug fixes
 
 # v0.9.58
 
@@ -9,7 +9,7 @@
 
 # v0.9.57
 
-* dock-related and other bug fixes
+* dock-related fixes and other bug fixes
 
 # v0.9.54
 

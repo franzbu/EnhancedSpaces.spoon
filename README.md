@@ -138,6 +138,14 @@ The lines below represent the default setup, and you don't need to add them to y
 In case you want to disable this hotkey, change the line above as follows:
 ``` lua
   modifierMS = { '' }, -- default: { 'ctrl' }
+  modifierMSKeys = {
+    '', -- cycle through mSpaces; default: 'a'
+    '', -- cycle through mSpaces (other direction); default: 's'
+    '', -- send active window to left mSpace; default: 'd'
+    '', -- send active window to right mSpace; default: 'f'
+    '', -- send active window to left mSpace and switch there; default: 'q'
+    '', -- send active window to right mSpace and switch there; default: 'w'
+  },
 ```
 
 Whenever changing modifiers, make sure to substitute them with other modifiers such as { 'cmd' }, { 'alt' }, { 'ctrl' }, { 'shift' } and combinations of modifiers, e.g., { 'alt', 'ctrl' }.
@@ -246,6 +254,7 @@ For cycling through the windows of your current mSpace in reverse order, additio
 In case you want to disable this hotkey, change the line above as follows:
 ``` lua
   modifierSwitchWin = { '' }, -- default: { 'alt' }
+  modifierSwitchWinKeys = { '', '' }, -- default: { 'tab', 'escape' }
 ```
 
 
@@ -521,6 +530,7 @@ For disabling this hotkey, add the following line to your `init.lua`:
 
 ``` lua
   swapModifier = { '' },  -- default: { 'ctrl' }
+  swapKey = '', -- default: 'escape'
 ```
 
 By default, the focus stays with the same window; in case you prefer the focus to switch to the other window (and thus remain in the same position), add the following line to your `init.lua`:

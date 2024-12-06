@@ -1,3 +1,8 @@
+# v0.9.59
+
+* EnhancedSpaces namespace is used for functions
+* bugfixes
+
 # v0.9.58
 
 * bug fixes

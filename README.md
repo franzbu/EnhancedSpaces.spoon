@@ -730,7 +730,7 @@ To enable mSpace Control, add the following lines to your `init.lua` and adjust 
 
 ``` lua
   -- mSpace Control
-  mSpaceControlModifier = { 'alt' }, -- default: { '' }
+  mSpaceControlModifier = { 'alt' }, -- default: { 'alt' }
   mSpaceControlKey = 'a', -- default: 'a'
 ```
 

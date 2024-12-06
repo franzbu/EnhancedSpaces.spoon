@@ -9,10 +9,10 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.59"
+EnhancedSpaces.version = "0.9.59.1"
 EnhancedSpaces.spoonPath = scriptPath()
 
-local function tableToMap(table)
+function EnhancedSpaces:tableToMap(table)
   local map = {}
   for _, v in pairs(table) do
     map[v] = true
@@ -20,7 +20,7 @@ local function tableToMap(table)
   return map
 end
 
-local function getWindowUnderMouse()
+function EnhancedSpaces:getWindowUnderMouse()
   local my_pos = hs.geometry.new(hs.mouse.absolutePosition())
   local my_screen = hs.mouse.getCurrentScreen()
   return hs.fnutils.find(hs.window.orderedWindows(), function(w)
@@ -28,7 +28,7 @@ local function getWindowUnderMouse()
   end)
 end
 
-local function buttonNameToEventType(name, optionName)
+function EnhancedSpaces:buttonNameToEventType(name, optionName)
   if name == 'left' then return hs.eventtap.event.types.leftMouseDown end
   if name == 'right' then return hs.eventtap.event.types.rightMouseDown end
   error(optionName .. ': only "left" and "right" mouse button supported, got ' .. name)
@@ -158,9 +158,9 @@ function EnhancedSpaces:new(options)
   }
 
   local moveResize = {
-    disabledApps = tableToMap(options.disabledApps or {}),
-    moveStartMouseEvent = buttonNameToEventType('left', 'moveMouseButton'),
-    resizeStartMouseEvent = buttonNameToEventType('right', 'resizeMouseButton'),
+    disabledApps = self:tableToMap(options.disabledApps or {}),
+    moveStartMouseEvent = self:buttonNameToEventType('left', 'moveMouseButton'),
+    resizeStartMouseEvent = self:buttonNameToEventType('right', 'resizeMouseButton'),
   }
 
   setmetatable(moveResize, self)
@@ -966,7 +966,7 @@ function EnhancedSpaces:refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.59\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.59.1\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     {
       title = self:hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
@@ -1415,7 +1415,7 @@ function EnhancedSpaces:handleClick()
     end
 
     if isMoving or isResizing then
-      local currentWindow = getWindowUnderMouse()
+      local currentWindow = self:getWindowUnderMouse()
       if #self.disabledApps >= 1 then
         if self.disabledApps[currentWindow:application():name()] then
           return nil
@@ -1423,7 +1423,7 @@ function EnhancedSpaces:handleClick()
       end
 
       -- prevent error when clicking on screen (and not window) with pressed modifier(s)
-      if type(getWindowUnderMouse()) == "nil" then
+      if type(self:getWindowUnderMouse()) == "nil" then
         self.cancelHandler:start()
         self.dragHandler:stop()
         self.clickHandler:stop()
@@ -1431,7 +1431,7 @@ function EnhancedSpaces:handleClick()
         return true
       end
 
-      local win = getWindowUnderMouse():focus()
+      local win = self:getWindowUnderMouse():focus()
       local frame = win:frame()
       max = win:screen():frame()
       --maxFF = win:screen():fullFrame()

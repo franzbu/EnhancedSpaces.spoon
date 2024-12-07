@@ -9,7 +9,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.59.1"
+EnhancedSpaces.version = "0.9.60"
 EnhancedSpaces.spoonPath = scriptPath()
 
 function EnhancedSpaces:tableToMap(table)
@@ -56,8 +56,8 @@ function EnhancedSpaces:new(options)
   mbGetPopupKey = options.mbGetPopupKey or nil
   mbSwapPopupKey = options.mbSwapPopupKey or nil
 
-  modifier1 = options.modifier1 or { 'alt' } 
-  modifier2 = options.modifier2 or { 'ctrl' } 
+  modifier1 = options.modifier1 or { 'alt' }
+  modifier2 = options.modifier2 or { 'ctrl' }
   modifier1_2 = self:mergeModifiers(modifier1, modifier2)
 
   modifierReference = options.modifierReference or { 'ctrl', 'shift' }
@@ -69,7 +69,7 @@ function EnhancedSpaces:new(options)
   openAppMSpace = options.openAppMSpace or nil
 
   modifierSwitchWin = options.modifierSwitchWin or modifier1
-  modifierSwitchWinKeys = options.modifierSwitchWinKeys or { 'tab', 'escape' }
+  modifierSwitchWinKeys = options.modifierSwitchWinKeys or { 'a', 'q' }
 
   modifierSnap1 = options.modifierSnap1 or { 'cmd', 'alt' }
   modifierSnap2 = options.modifierSnap2 or { 'cmd', 'ctrl' }
@@ -90,7 +90,7 @@ function EnhancedSpaces:new(options)
   modifierMoveWinMSpace = options.modifierMoveWinMSpace or modifier1_2
 
   local margin = options.margin or 0.3
-  m = margin * 100 / 2
+  resizeMargin = margin * 100 / 2
 
   useResize = options.resize or false
 
@@ -114,8 +114,8 @@ function EnhancedSpaces:new(options)
 
   startupCommands = options.startupCommands or nil
 
-  swapModifier = options.swapModifier or { 'ctrl' }
-  swapKey = options.swapKey or 'escape'
+  swapModifier = options.swapModifier or { 'alt' }
+  swapKey = options.swapKey or 's'
   swapSwitchFocus = options.swapSwitchFocus or false
 
   -- mSpace Control
@@ -145,8 +145,6 @@ function EnhancedSpaces:new(options)
     thumbnailSize = 112,
     showSelectedTitle = false, -- show larger title for the currently selected window
   }
-
-
 
   --window_filter.lua: windows to disregard
   SKIP_APPS_TRANSIENT_WINDOWS = options.SKIP_APPS_TRANSIENT_WINDOWS or {
@@ -966,7 +964,7 @@ function EnhancedSpaces:refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.59.1\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.60\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     {
       title = self:hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
@@ -1341,32 +1339,32 @@ function EnhancedSpaces:handleDrag()
       end
       return true
     elseif useResize then
-      if mH <= -m and mV <= m and mV > -m then -- 9 o'clock
+      if deltaMH <= -resizeMargin and deltaMV <= resizeMargin and deltaMV > -resizeMargin then -- 9 o'clock
         local geomNew = hs.geometry.new(current.x + dx, current.y)--, current.w - dx, current.h)
         geomNew.x2 = bottomRight.x
         geomNew.y2 = bottomRight.y
         hs.window.focusedWindow():move(geomNew, nil, false, 0)
-      elseif mH <= -m and mV <= -m then -- 10:30
+      elseif deltaMH <= -resizeMargin and deltaMV <= -resizeMargin then -- 10:30
         local geomNew = hs.geometry.new(current.x + dx, current.y + dy)--, current.w - dx, current.h - dy)
         geomNew.x2 = bottomRight.x
         geomNew.y2 = bottomRight.y
         hs.window.focusedWindow():move(geomNew, nil, false, 0)
-      elseif mH > -m and mH <= m and mV <= -m then -- 12 o'clock
+      elseif deltaMH > -resizeMargin and deltaMH <= resizeMargin and deltaMV <= -resizeMargin then -- 12 o'clock
         local geomNew = hs.geometry.new(current.x, current.y + dy)--, current.w, current.h - dy)
         geomNew.x2 = bottomRight.x
         geomNew.y2 = bottomRight.y
         hs.window.focusedWindow():move(geomNew, nil, false, 0)
-      elseif mH > m and mV <= -m then -- 1:30
+      elseif deltaMH > resizeMargin and deltaMV <= -resizeMargin then -- 1:30
         local geomNew = hs.geometry.new(current.x, current.y + dy, current.w + dx, current.h - dy)
         geomNew.y2 = bottomRight.y
         hs.window.focusedWindow():move(geomNew, nil, false, 0)
-      elseif mH > m and mV > -m and mV <= m then -- 3 o'clock
+      elseif deltaMH > resizeMargin and deltaMV > -resizeMargin and deltaMV <= resizeMargin then -- 3 o'clock
         hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y, current.w + dx, current.h), nil, false, 0)
-      elseif mH > m and mV > m then -- 4:30
+      elseif deltaMH > resizeMargin and deltaMV > resizeMargin then -- 4:30
         hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y, current.w + dx, current.h + dy), nil, false, 0)
-      elseif mV > m and mH <= m and mH > -m then -- 6 o'clock
+      elseif deltaMV > resizeMargin and deltaMH <= resizeMargin and deltaMH > -resizeMargin then -- 6 o'clock
         hs.window.focusedWindow():move(hs.geometry.new(current.x, current.y, current.w, current.h + dy), nil, false, 0)
-      elseif mH <= -m and mV > m then -- 7:30
+      elseif deltaMH <= -resizeMargin and deltaMV > resizeMargin then -- 7:30
         local geomNew = hs.geometry.new(current.x + dx, current.y, current.w - dx, current.h + dy)
         geomNew.x2 = bottomRight.x
         hs.window.focusedWindow():move(geomNew, nil, false, 0)
@@ -1444,11 +1442,11 @@ function EnhancedSpaces:handleClick()
       local mousePos = hs.mouse.absolutePosition()
       local mx = wNew + xNew - mousePos.x -- distance between right border of window and cursor
       local dmah = wNew / 2 - mx -- absolute delta: mid window - cursor
-      mH = dmah * 100 / wNew -- delta from mid window: -50(left border of window) to 50 (left border)
+      deltaMH = dmah * 100 / wNew -- delta from mid window: -50(left border of window) to 50 (left border)
 
       local my = hNew + yNew - mousePos.y
       local dmav = hNew / 2 - my
-      mV = dmav * 100 / hNew -- delta from mid window in %: from -50(=top border of window) to 50 (bottom border)
+      deltaMV = dmav * 100 / hNew -- delta from mid window in %: from -50(=top border of window) to 50 (bottom border)
 
       -- show canvases for visually supporting automatic window positioning and resizing
       local thickness = gridIndicator[1] -- thickness of bar

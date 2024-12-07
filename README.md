@@ -238,7 +238,7 @@ As before, the lines below represent the default setup, and you don't need to ad
 ``` lua
   -- keyboard shortcuts for switching between windows on current mSpace and between references
   modifierSwitchWin = { 'alt' }, -- default: { 'alt' }
-  modifierSwitchWinKeys = { 'tab', 'escape' }, -- default: { 'tab', 'escape' }
+  modifierSwitchWinKeys = { 'a', 'q' }, -- default: { 'a', 'q' }
 ```
 
 For cycling through the windows of your current mSpace in reverse order, additionally press `shift`.
@@ -513,8 +513,8 @@ In the scenario above, Google Chrome and Safari are placed in the left and right
 Pressing `Ctrl` and `Escape`, your active window swaps places with another window of your choice. In case you'd like to change the keys, add the following lines to your `init.lua` and adjust them to your liking:
 
 ``` lua
-  swapModifier = { 'ctrl' }, -- default: { 'ctrl' }
-  swapKey = 'escape', -- default: 'escape'
+  swapModifier = { 'alt' }, -- default: { 'alt' }
+  swapKey = 's', -- default: 's'
 ```
 
 For disabling this hotkey, add the following line to your `init.lua`:
@@ -731,7 +731,7 @@ To enable mSpace Control, add the following lines to your `init.lua` and adjust 
 ``` lua
   -- mSpace Control
   mSpaceControlModifier = { 'alt' }, -- default: { 'alt' }
-  mSpaceControlKey = 'a', -- default: 'a'
+  mSpaceControlKey = 'tab', -- default: 'tab'
 ```
 
 To open mSpace Control, press and release `mSpaceControlModifier` and `mSpaceControlKey`. To cycle through your mSpaces, keep `mSpaceControlModifier` pressed - or press it again while mSpace Control is open - and use `mSpaceControlKey` for cycling. For cycling in reverse order additionally press `shift`. You can also open mSpace Control via menu.

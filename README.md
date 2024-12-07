@@ -450,7 +450,69 @@ As long as windows are resized - or moved within the borders of the screen -, it
 - Additional feature: If you drag a window beyond the bottom border of the screen and `modifier1` or `modifier2` is released before the left mouse button, the window will be minimized.
 
 
+
 ## Additional Features
+### mSpace Control
+mSpace Control provides previews of your mSpaces and enables you to switch between them via keyboard or pointing device. mSpace Control also allows you to select windows individually. 
+
+To enable mSpace Control, add the following lines to your `init.lua` and adjust the keys in case you prefer to use different ones:
+
+``` lua
+  -- mSpace Control
+  mSpaceControlModifier = { 'alt' }, -- default: { 'alt' }
+  mSpaceControlKey = 'tab', -- default: 'tab'
+```
+
+To open mSpace Control, press and release `mSpaceControlModifier` and `mSpaceControlKey`. To cycle through your mSpaces, keep `mSpaceControlModifier` pressed - or press it again while mSpace Control is open - and use `mSpaceControlKey` for cycling. For cycling in reverse order additionally press `shift`. You can also open mSpace Control via menu.
+
+You can click on any preview of the mSpaces to instantly switch there; selecting an individual window activates it and places the pointer at the center of it. 
+
+To change thickness, color and/or opacity of the frame highlighting the current mSpace, add the following to your `init.lua`; for adjusting color and opacity you can use values between 0 and 1:
+
+``` lua
+  -- mSpace Control: hightlight currently active mSpace
+  mSpaceControlFrame = { 
+    3, -- frame thickness; default: 3
+    1, -- red; default: 1
+    0, -- green; default: 0
+    0, -- blue; default: 0
+    1, -- opacity; default: 1
+  },
+```
+
+<!--
+By default, mSpace Control shows all your mSpaces in their original order. In case you'd like to exclude mSpaces from mSpace Control or change their order, add the following to your `init.lua` and make the changes you like:
+
+``` lua
+  -- mSpace Control: exclude mSpaces and/or change their order of appearance
+  mSpaceControlShow = { 'E', '3', 'T', '2' },
+```
+-->
+
+In case you'd like to change the padding, color and/or opacity of mSpace Control, add the following to your `init.lua`, and adjust the values to your liking. For adjusting color and opacity you can use values between 0 and 1.
+
+``` lua
+  -- configure mSpace Control
+  mSpaceControlConfig = { 
+    50, -- padding; default: 50
+    0, -- red; default: 0
+    0, -- green; default: 0
+    0, -- blue; default: 0
+    0.9, -- opacity; default: 0.9
+  },
+```
+
+You can change the opacity of the windows in mSpace Control by adding the following to your `init.lua`:
+
+``` lua
+  -- mSpace Control: opacity of windows
+  mSpaceControlWinOpacity = 0.82, -- default: 1
+```
+
+<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/overview2.jpg' width=700 />
+
+
+
 ### Open Windows in Pre-Arranged mSpaces
 If you want EnhancedSpaces to automatically move windows to specific mSpaces, add the following to your `init.lua`: 
 
@@ -722,65 +784,6 @@ This is the resulting menu:
 Features in this section have undergone some testing and are supposed to work as expected; however, as they have yet to be thoroughly tested, the occational hiccup should not be entirely unexpected. 
 
 Furthermore, as these features aren't final yet, there might still be changes to its implementation, so if one of these features stops working after an update, please return to this documentation in order to implement the necessary adjustments to your `init.lua`.
-
-### mSpace Control
-mSpace Control provides previews of your mSpaces and enables you to switch between them via keyboard or pointing device. mSpace Control also allows you to select windows individually. 
-
-To enable mSpace Control, add the following lines to your `init.lua` and adjust the keys in case you prefer to use different ones:
-
-``` lua
-  -- mSpace Control
-  mSpaceControlModifier = { 'alt' }, -- default: { 'alt' }
-  mSpaceControlKey = 'tab', -- default: 'tab'
-```
-
-To open mSpace Control, press and release `mSpaceControlModifier` and `mSpaceControlKey`. To cycle through your mSpaces, keep `mSpaceControlModifier` pressed - or press it again while mSpace Control is open - and use `mSpaceControlKey` for cycling. For cycling in reverse order additionally press `shift`. You can also open mSpace Control via menu.
-
-You can click on any preview of the mSpaces to instantly switch there; selecting an individual window activates it and places the pointer at the center of it. 
-
-To change thickness, color and/or opacity of the frame highlighting the current mSpace, add the following to your `init.lua`; for adjusting color and opacity you can use values between 0 and 1:
-
-``` lua
-  -- mSpace Control: hightlight currently active mSpace
-  mSpaceControlFrame = { 
-    3, -- frame thickness; default: 3
-    1, -- red; default: 1
-    0, -- green; default: 0
-    0, -- blue; default: 0
-    1, -- opacity; default: 1
-  },
-```
-
-<!--
-By default, mSpace Control shows all your mSpaces in their original order. In case you'd like to exclude mSpaces from mSpace Control or change their order, add the following to your `init.lua` and make the changes you like:
-
-``` lua
-  -- mSpace Control: exclude mSpaces and/or change their order of appearance
-  mSpaceControlShow = { 'E', '3', 'T', '2' },
-```
--->
-
-In case you'd like to change the padding, color and/or opacity of mSpace Control, add the following to your `init.lua`, and adjust the values to your liking. For adjusting color and opacity you can use values between 0 and 1.
-
-``` lua
-  -- configure mSpace Control
-  mSpaceControlConfig = { 
-    50, -- padding; default: 50
-    0, -- red; default: 0
-    0, -- green; default: 0
-    0, -- blue; default: 0
-    0.9, -- opacity; default: 0.9
-  },
-```
-
-You can change the opacity of the windows in mSpace Control by adding the following to your `init.lua`:
-
-``` lua
-  -- mSpace Control: opacity of windows
-  mSpaceControlWinOpacity = 0.82, -- default: 1
-```
-
-<img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/overview2.jpg' width=700 />
 
 
 ### Applications To Be Left Alone by EnhancedSpaces

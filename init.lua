@@ -1,7 +1,9 @@
+--[[
 local function scriptPath()
   local str = debug.getinfo(2, "S").source:sub(2)
   return str:match("(.*/)")
 end
+--]]
 
 local EnhancedSpaces = {}
 
@@ -9,8 +11,8 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.60"
-EnhancedSpaces.spoonPath = scriptPath()
+EnhancedSpaces.version = "0.9.60.1"
+--EnhancedSpaces.spoonPath = scriptPath()
 
 function EnhancedSpaces:tableToMap(table)
   local map = {}
@@ -699,6 +701,7 @@ function EnhancedSpaces:initiateAtStart()
 end
 
 -- mSpace Control: prepare wallpapers
+---[[
 function EnhancedSpaces:createWallpapers()
   local wp = {}
   for i = 1, #mspaces do
@@ -710,6 +713,21 @@ function EnhancedSpaces:createWallpapers()
   end
   return wp
 end
+--]]
+--[[
+function EnhancedSpaces:createWallpapers()
+  local wp = {}
+  for i = 1, #mspaces do
+    if hs.fs.displayName(hs.spoons.resourcePath('wallpapers/' .. mspaces[i] .. '.jpg')) then
+      hs.alert.show('safasdf')
+      wp[i] = hs.image.imageFromPath(hs.spoons.resourcePath('wallpapers/' .. mspaces[i] .. '.jpg'))
+    else
+      wp[i] = hs.image.imageFromPath(hs.spoons.resourcePath('wallpapers/default.jpg'))
+    end
+  end
+  return wp
+end
+--]]
 
 -- mSpace Control
 boolMSpaceControl = false
@@ -964,7 +982,7 @@ function EnhancedSpaces:refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.60\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.60.1\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     {
       title = self:hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
@@ -1961,8 +1979,9 @@ function EnhancedSpaces:goToSpace(target)
   currentMSpace = target
    mSpaceCyclePos = currentMSpace
   menubar:setTitle(mspaces[target])
-
+  --hs.spoons.resourcePath
   --adjust wallpaper
+  ---[[
   if customWallpaper then
     if hs.fs.displayName(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/wallpapers/' .. mspaces[currentMSpace] .. '.jpg') then
       hs.screen.mainScreen():desktopImageURL('file://' .. hs.configdir .. '/Spoons/EnhancedSpaces.spoon/wallpapers/' .. mspaces[currentMSpace] .. '.jpg')
@@ -1970,6 +1989,16 @@ function EnhancedSpaces:goToSpace(target)
       hs.screen.mainScreen():desktopImageURL('file://' .. hs.configdir .. '/Spoons/EnhancedSpaces.spoon/wallpapers/default.jpg')
     end
   end
+  --]]
+  --[[
+  if customWallpaper then
+    if hs.fs.displayName(hs.spoons.resourcePath('wallpapers/' .. mspaces[currentMSpace] .. '.jpg')) then
+      hs.screen.mainScreen():desktopImageURL('file://' .. hs.spoons.resourcePath('wallpapers/' .. mspaces[currentMSpace] .. '.jpg'))
+    else
+      hs.screen.mainScreen():desktopImageURL('file://' .. hs.spoons.resourcePath('wallpapers/default.jpg'))
+    end
+  end
+  --]]
 
   self:refreshWinTables()
 

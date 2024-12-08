@@ -346,7 +346,7 @@ function EnhancedSpaces:initiateAtStart()
   fullscreenedWindowID = 0
   ---[[ -- doesn't get triggered reliably; workaround has been implemented instead
   filter.default:subscribe(filter.windowFullscreened, function(w)
-    print('_____!!!_______ windowFullscreened ____________' .. winMSpaces[self:getPosWinMSpaces(w)].appName)
+    --print('_____!!!_______ windowFullscreened ____________' .. winMSpaces[self:getPosWinMSpaces(w)].appName)
     enteredFullscreen = true
     fullscreenedWindowID = w:id()
   end)

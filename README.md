@@ -76,6 +76,8 @@ echo -e "local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')\nEnhancedSpaces:n
 
 Reload Hammerspoon's configuration (menu bar icon - 'Reload Config') and you're ready to go. All you see for now is a new icon in your menu bar indicating your current mSpace, so let's find out how you can interact with your new mSpaces.
 
+One thing you might want to do right away if to set up the feature to [Open Windows in Pre-Arranged mSpaces](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#open-windows-in-pre-arranged-mspaces) as it saves you the time and hassle to move windows to their mSpaces and screen positions after EnhancedSpaces is restarted.
+
 ## Menu
 You can use keyboard shortcuts for handling windows and mSpaces; however, sometimes it can be convenient to get things done via menu.
 

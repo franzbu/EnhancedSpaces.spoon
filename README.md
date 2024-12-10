@@ -78,8 +78,6 @@ echo -e "local EnhancedSpaces = hs.loadSpoon('EnhancedSpaces')\nEnhancedSpaces:n
 
 Reload Hammerspoon's configuration (menu bar icon - 'Reload Config') and you're ready to go. All you see for now is a new icon in your menu bar indicating your current mSpace, so let's find out how you can interact with your new mSpaces.
 
-One thing you might want to do right away if to set up the feature to [Open Windows in Pre-Arranged mSpaces](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#open-windows-in-pre-arranged-mspaces) as it saves you the time and hassle to move windows to their mSpaces and screen positions after EnhancedSpaces is restarted.
-
 ## Menu
 You can use keyboard shortcuts for handling windows and mSpaces; however, sometimes it can be convenient to get things done via menu.
 
@@ -229,6 +227,9 @@ In case you'd like to change the key for dereferencing a window, for example, if
   deReferenceKey = '0', -- default: '0'
 
 ```
+
+One thing you might want to do sooner rather than later is to set up the feature to [open windows in pre-arranged mSpaces](https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md#open-windows-in-pre-arranged-mspaces) as it saves you the time and hassle to move windows to their mSpaces and screen positions after EnhancedSpaces is restarted.
+
 
 ### Switching Between Windows
 Apart from switching between all of your open windows, for which you can continue using macOS' integrated window switcher (Command-Tab) or the third party switcher of your choice, such as [AltTab](https://alt-tab-macos.netlify.app/), additional possibilities have been implemented in EnhancedSpaces for window-switching, namely (1) switching between the windows on the current mSpace and (2) switching between references of windows ('sticky windows').

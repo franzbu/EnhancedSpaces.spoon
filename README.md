@@ -457,7 +457,7 @@ As long as windows are resized - or moved within the borders of the screen -, it
 ## mSpace Control
 mSpace Control provides previews of your mSpaces and enables you to switch between them via keyboard or pointing device. mSpace Control also allows you to select windows individually. 
 
-Press `alt` and `tab` to open mSpace Control; in case you'd like to change the keys, add the following lines to your `init.lua` and adjust the keys to your liking:
+Press `alt` and `tab` to open mSpace Control; in case you'd like to change these keys, add the following lines to your `init.lua` and make the adjustments you like:
 
 ``` lua
   -- mSpace Control
@@ -465,7 +465,9 @@ Press `alt` and `tab` to open mSpace Control; in case you'd like to change the k
   mSpaceControlKey = 'tab', -- default: 'tab'
 ```
 
-To cycle through your mSpaces, keep `mSpaceControlModifier` pressed - or press it again while mSpace Control is open - and use `mSpaceControlKey` for cycling. For cycling in reverse order additionally press `shift`. You can also open mSpace Control via menu.
+To cycle through your mSpaces, keep `mSpaceControlModifier` pressed - or press it again while mSpace Control is open - and use `mSpaceControlKey` for cycling. For cycling in reverse order additionally press `shift`. 
+
+mSpace Control can also be opened via menu.
 
 You can click on any preview of the mSpaces to instantly switch there; selecting an individual window activates it and places the pointer at the center of it. 
 

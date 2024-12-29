@@ -454,11 +454,10 @@ As long as windows are resized - or moved within the borders of the screen -, it
 
 
 
-## Additional Features
-### mSpace Control
+## mSpace Control
 mSpace Control provides previews of your mSpaces and enables you to switch between them via keyboard or pointing device. mSpace Control also allows you to select windows individually. 
 
-To enable mSpace Control, add the following lines to your `init.lua` and adjust the keys in case you prefer to use different ones:
+Press `alt` and `tab` to open mSpace Control; in case you'd like to change the keys, add the following lines to your `init.lua` and adjust the keys to your liking:
 
 ``` lua
   -- mSpace Control
@@ -466,7 +465,7 @@ To enable mSpace Control, add the following lines to your `init.lua` and adjust 
   mSpaceControlKey = 'tab', -- default: 'tab'
 ```
 
-To open mSpace Control, press and release `mSpaceControlModifier` and `mSpaceControlKey`. To cycle through your mSpaces, keep `mSpaceControlModifier` pressed - or press it again while mSpace Control is open - and use `mSpaceControlKey` for cycling. For cycling in reverse order additionally press `shift`. You can also open mSpace Control via menu.
+To cycle through your mSpaces, keep `mSpaceControlModifier` pressed - or press it again while mSpace Control is open - and use `mSpaceControlKey` for cycling. For cycling in reverse order additionally press `shift`. You can also open mSpace Control via menu.
 
 You can click on any preview of the mSpaces to instantly switch there; selecting an individual window activates it and places the pointer at the center of it. 
 
@@ -515,7 +514,7 @@ You can change the opacity of the windows in mSpace Control by adding the follow
 <img src='https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/doc/overview2.jpg' width=700 />
 
 
-
+# Additional Features
 ### Open Windows in Pre-Arranged mSpaces
 If you want EnhancedSpaces to automatically move windows to specific mSpaces, add the following to your `init.lua`: 
 

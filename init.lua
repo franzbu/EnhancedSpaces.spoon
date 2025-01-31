@@ -11,7 +11,7 @@ EnhancedSpaces.author = "Franz B. <csaa6335@gmail.com>"
 EnhancedSpaces.homepage = "https://github.com/franzbu/EnhancedSpaces.spoon"
 EnhancedSpaces.license = "MIT"
 EnhancedSpaces.name = "EnhancedSpaces"
-EnhancedSpaces.version = "0.9.60.1"
+EnhancedSpaces.version = "0.9.61"
 --EnhancedSpaces.spoonPath = scriptPath()
 
 function EnhancedSpaces:tableToMap(table)
@@ -982,7 +982,7 @@ function EnhancedSpaces:refreshMenu()
     },
     { title = "-" },
     { title = menuTitles.help, fn = function() os.execute('/usr/bin/open https://github.com/franzbu/EnhancedSpaces.spoon/blob/main/README.md') end },
-    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.60.1\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
+    { title = menuTitles.about, fn =  function() hs.dialog.blockAlert('EnhancedSpaces', 'v0.9.61\n\n\nMakes you more productive.\nUse your time for what really matters.') end },
     { title = "-" },
     {
       title = self:hsTitle(), --image = hs.image.imageFromPath(hs.configdir .. '/Spoons/EnhancedSpaces.spoon/images/hs.png'):setSize({ h = 15, w = 15 }),
@@ -2124,7 +2124,7 @@ function refreshMSpaces()
       --winMSpaces[i].win:setFrame(winMSpaces[i].frame[target]) -- 'unhide' window
       winMSpaces[i].win:move(winMSpaces[i].frame[currentMSpace]) -- 'unhide' window
     else
-      winMSpaces[i].win:setTopLeft(hs.geometry.point(max.w - 0.0001, max.h - 0.0001))
+      winMSpaces[i].win:setTopLeft(hs.geometry.point(max.w - 1, max.h - 1))
       --winMSpaces[i].win:move(hs.geometry.point(max.w - 1, max.h, winMSpaces[i].win:frame().x, winMSpaces[i].win:frame().y)) 
     end
   end

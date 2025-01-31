@@ -1,3 +1,7 @@
+# v0.9.61
+
+* adjustments for macOS 15.3
+
 # v0.9.60
 
 * changes regarding default (modifier) keys: (1) to switch between windows of current mSpace: alt-a; references of a window alt-q; (2) to open mSpace Control: alt-tab; (3) to swap windows: alt-s

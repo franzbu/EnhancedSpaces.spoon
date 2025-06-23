@@ -1,3 +1,7 @@
+# v0.9.61.1
+
+* fixed startup issue, thanks to tshort
+
 # v0.9.61
 
 * adjustments for macOS 15.3

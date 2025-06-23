@@ -235,7 +235,10 @@ function EnhancedSpaces:initiateAtStart()
     winMSpaces[i].frame = {}
     for k = 1, #mspaces do
       winMSpaces[i].frame[k] = winAll[i]:frame()
-      winMSpaces[i].snapshot[k] = winAll[i]:snapshot():setSize({w = winAll[i]:size().w / 2, h = winAll[i]:size().h / 2})
+      local s = winAll[i]:snapshot()
+      if s then
+        winMSpaces[i].snapshot[k] = s:setSize({w = winAll[i]:size().w / 2, h = winAll[i]:size().h / 2})
+      end
       if k == currentMSpace then
         winMSpaces[i].mspace[k] = true
       else
